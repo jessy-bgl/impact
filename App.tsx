@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { registerRootComponent } from "expo";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
-export default function App() {
+import { Emissions } from "./src/infra/screens/Emissions";
+import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.content}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Emissions" component={Emissions} />
+          </Stack.Navigator>
+        </View>
+      </SafeAreaView>
+    </NavigationContainer>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+  },
+  content: {
+    flex: 1,
+    width: "100%",
+    maxWidth: 550,
   },
 });
+
+export default registerRootComponent(App);
+
+serviceWorkerRegistration.register();

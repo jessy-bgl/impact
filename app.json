@@ -1,5 +1,6 @@
 {
   "expo": {
+    "githubUrl": "https://github.com/jessy-bgl/impact",
     "name": "impact",
     "slug": "impact",
     "version": "1.0.0",
@@ -11,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
