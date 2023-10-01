@@ -1,3 +1,3 @@
 export const Emissions = () => {
-  return <div />;
+  return <div>Emissions</div>;
 };
