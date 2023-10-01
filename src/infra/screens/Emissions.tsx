@@ -1,3 +1,8 @@
+import { useTranslation } from "react-i18next";
+import { Text } from "react-native-paper";
+
 export const Emissions = () => {
-  return <div>Emissions</div>;
+  const { t } = useTranslation("common");
+
+  return <Text>{t("emissions")}</Text>;
 };

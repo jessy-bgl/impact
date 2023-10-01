@@ -7,6 +7,7 @@ import { createMaterialBottomTabNavigator } from "react-native-paper/react-navig
 
 import { Emissions } from "./src/infra/screens/Emissions";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
+import "./src/infra/traductions/i18n";
 
 const Tab = createMaterialBottomTabNavigator();
 
