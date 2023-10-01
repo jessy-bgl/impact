@@ -9,6 +9,9 @@ module.exports = async function (env, argv) {
   // Create the default config
   const config = await createExpoWebpackConfigAsync(env, argv);
 
+  // resolve victory-native as victory for the Web app
+  config.resolve.alias["victory-native"] = "victory";
+
   if (isEnvProduction) {
     config.plugins.push(
       // Generate a service worker script that will precache, and keep up to date,
