@@ -5,7 +5,7 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { PaperProvider, MD3DarkTheme } from "react-native-paper";
 import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 
-import { Emissions } from "./src/infra/screens/Emissions";
+import { Emissions } from "./src/infra/screens/emissions/Emissions";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 import "./src/infra/traductions/i18n";
 
