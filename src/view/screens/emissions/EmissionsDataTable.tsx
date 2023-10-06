@@ -16,7 +16,7 @@ export const EmissionsDataTable = ({ emissionsByCategory }: Props) => {
     <DataTable>
       <DataTable.Header>
         <DataTable.Title>{t("category")}</DataTable.Title>
-        <DataTable.Title numeric>{t("emissions")}</DataTable.Title>
+        <DataTable.Title numeric>{t("annualEmissions")}</DataTable.Title>
         <DataTable.Title numeric>{t("part")}</DataTable.Title>
       </DataTable.Header>
 
@@ -27,7 +27,7 @@ export const EmissionsDataTable = ({ emissionsByCategory }: Props) => {
           </DataTable.Cell>
 
           <DataTable.Cell numeric>
-            {emissionsCategory.value} kgCO2/{t("year")}
+            {emissionsCategory.value} kgCO2
           </DataTable.Cell>
 
           <DataTable.Cell numeric>
