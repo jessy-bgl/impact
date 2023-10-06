@@ -2,5 +2,15 @@
   "impactDistributionTitle": "Répartition de mon impact par catégorie",
   "2030goal": "Objectif : 2 tCO2/an en 2030",
   "estimate": "Estimer mon impact carbone",
-  "year": "an"
+  "year": "an",
+  "category": "Catégorie",
+  "emissions": "Emissions",
+  "part": "Proportion",
+  "categories": {
+    "transport": "Transports",
+    "housing": "Logement",
+    "food": "Alimentation",
+    "goods": "Biens",
+    "numeric": "Usage numérique"
+  }
 }

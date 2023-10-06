@@ -16,6 +16,8 @@ const AppTheme = {
   colors: {
     ...MD3DarkTheme.colors,
     primary: "#59B158",
+    onPrimary: "#111",
+    inversePrimary: "#fff",
   },
 };
 

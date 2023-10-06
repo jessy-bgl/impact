@@ -6,7 +6,7 @@ export enum EmissionCategories {
   NUMERIC = "numeric",
 }
 
-export class EmissionCategory {
+export class EmissionsByCategory {
   public color: string = "";
   public icon: string = "";
 

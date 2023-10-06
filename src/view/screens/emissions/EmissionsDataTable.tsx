@@ -1,32 +1,35 @@
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { DataTable, Text } from "react-native-paper";
+import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { EmissionCategory } from "../../../domain/models/emissionCategories";
+import { EmissionsByCategory } from "../../../domain/models/EmissionCategories";
 
 type Props = {
-  emissionCategories: EmissionCategory[];
+  emissionsByCategory: EmissionsByCategory[];
 };
 
-export const EmissionsDataTable = ({ emissionCategories }: Props) => {
+export const EmissionsDataTable = ({ emissionsByCategory }: Props) => {
   const { t } = useTranslation("emissions");
+  const { colors } = useTheme();
 
   return (
     <DataTable>
       <DataTable.Header>
-        <DataTable.Title>Catégorie</DataTable.Title>
-        <DataTable.Title numeric>Emissions</DataTable.Title>
-        <DataTable.Title numeric>Proportion</DataTable.Title>
+        <DataTable.Title>{t("category")}</DataTable.Title>
+        <DataTable.Title numeric>{t("emissions")}</DataTable.Title>
+        <DataTable.Title numeric>{t("part")}</DataTable.Title>
       </DataTable.Header>
 
-      {emissionCategories.map((emissionsCategory) => (
+      {emissionsByCategory.map((emissionsCategory) => (
         <DataTable.Row key={emissionsCategory.type}>
           <DataTable.Cell style={{ alignItems: "center" }}>
-            {emissionsCategory.type}
+            {t(`categories.${emissionsCategory.type}`)}
           </DataTable.Cell>
+
           <DataTable.Cell numeric>
             {emissionsCategory.value} kgCO2/{t("year")}
           </DataTable.Cell>
+
           <DataTable.Cell numeric>
             <View
               style={{
@@ -40,7 +43,7 @@ export const EmissionsDataTable = ({ emissionCategories }: Props) => {
                 justifyContent: "center",
               }}
             >
-              <Text style={{ color: "black", fontSize: 12 }}>
+              <Text style={{ color: colors.background, fontSize: 12 }}>
                 {emissionsCategory.part}%
               </Text>
             </View>
