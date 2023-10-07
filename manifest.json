@@ -2,15 +2,23 @@
   "background_color": "#ffffff",
   "display": "standalone",
   "lang": "en",
-  "name": "impact",
-  "short_name": "impact",
-  "start_url": "/?utm_source=web_app_manifest",
+  "name": "Impact",
+  "short_name": "Impact",
+  "start_url": "/",
   "orientation": "portrait",
+  "theme_color": "#000",
   "icons": [
     {
       "src": "./icon.png",
-      "sizes": "144x144",
-      "type": "image/png"
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
