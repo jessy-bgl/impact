@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/impact/static/js/main.a41a3026.js",
+    "main.js": "/impact/static/js/main.39455cc3.js",
     "static/js/246.52fefaaa.js": "/impact/static/js/246.52fefaaa.js",
     "static/media/MaterialCommunityIcons.ttf": "/impact/static/media/MaterialCommunityIcons.5d42b4e60858731e7b65.ttf",
     "favicon.ico": "/impact/favicon.ico",
@@ -9,11 +9,11 @@
     "favicon-16.png": "/impact/favicon-16.png",
     "manifest.json": "/impact/manifest.json",
     "serve.json": "/impact/serve.json",
-    "main.a41a3026.js.map": "/impact/static/js/main.a41a3026.js.map",
+    "main.39455cc3.js.map": "/impact/static/js/main.39455cc3.js.map",
     "246.52fefaaa.js.map": "/impact/static/js/246.52fefaaa.js.map"
   },
   "entrypoints": [
     "static/js/246.52fefaaa.js",
-    "static/js/main.a41a3026.js"
+    "static/js/main.39455cc3.js"
   ]
 }
