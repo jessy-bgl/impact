@@ -16,7 +16,7 @@
     "prepare": "husky install .husky",
     "test": "jest",
     "deploy": "gh-pages -d web-build",
-    "predeploy": "expo export:web"
+    "predeploy": "expo export:web && cp ./assets/icon.png ./web-build/icon.png"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
