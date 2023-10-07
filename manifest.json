@@ -5,5 +5,12 @@
   "name": "impact",
   "short_name": "impact",
   "start_url": "/?utm_source=web_app_manifest",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "../assets/icon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
 }
