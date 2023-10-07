@@ -7,11 +7,11 @@ import { EmissionsRepository } from "../../domain/repositories/EmissionsReposito
 export class EmissionsRepositoryStore implements EmissionsRepository {
   fetchEmissionsByCategory(): EmissionsByCategory[] {
     const emissionCategories = [
-      new EmissionsByCategory(EmissionCategories.TRANSPORT, 2000, 20),
+      new EmissionsByCategory(EmissionCategories.GOODS, 1000, 20),
+      new EmissionsByCategory(EmissionCategories.TRANSPORT, 2500, 20),
+      new EmissionsByCategory(EmissionCategories.OTHER, 500, 20),
       new EmissionsByCategory(EmissionCategories.FOOD, 2000, 20),
-      new EmissionsByCategory(EmissionCategories.HOUSING, 2000, 20),
-      new EmissionsByCategory(EmissionCategories.GOODS, 2000, 20),
-      new EmissionsByCategory(EmissionCategories.NUMERIC, 2000, 20),
+      new EmissionsByCategory(EmissionCategories.HOUSING, 1800, 20),
     ];
     return emissionCategories;
   }

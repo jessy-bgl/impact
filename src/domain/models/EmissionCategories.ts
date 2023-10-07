@@ -3,7 +3,7 @@ export enum EmissionCategories {
   HOUSING = "housing",
   FOOD = "food",
   GOODS = "goods",
-  NUMERIC = "numeric",
+  OTHER = "other",
 }
 
 export class EmissionsByCategory {
@@ -27,7 +27,7 @@ export class EmissionsByCategory {
         break;
       }
       case EmissionCategories.HOUSING: {
-        this.color = "coral";
+        this.color = "cadetblue";
         this.icon = "🏠";
         break;
       }
@@ -36,9 +36,9 @@ export class EmissionsByCategory {
         this.icon = "🛍️";
         break;
       }
-      case EmissionCategories.NUMERIC: {
-        this.color = "cornflowerblue";
-        this.icon = "💻";
+      case EmissionCategories.OTHER: {
+        this.color = "mediumslateblue";
+        this.icon = "🍃";
         break;
       }
     }
