@@ -20,8 +20,10 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
+    "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.14",
+    "deepmerge": "^4.3.1",
     "expo": "~49.0.13",
     "expo-status-bar": "~1.6.0",
     "i18next": "^23.5.1",

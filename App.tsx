@@ -1,17 +1,21 @@
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
-import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  NavigationContainer,
+  DarkTheme as NavigationTheme,
+} from "@react-navigation/native";
+import merge from "deepmerge";
 import { registerRootComponent } from "expo";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { PaperProvider, MD3DarkTheme } from "react-native-paper";
-import { createMaterialBottomTabNavigator } from "react-native-paper/react-navigation";
 
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 import { Emissions } from "./src/view/screens/emissions/Emissions";
 import "./src/view/traductions/i18n";
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
-const AppTheme = {
+const MaterialTheme = {
   ...MD3DarkTheme,
   colors: {
     ...MD3DarkTheme.colors,
@@ -21,20 +25,22 @@ const AppTheme = {
   },
 };
 
-const iconSize = 26;
+const AppTheme = merge(NavigationTheme, MaterialTheme);
+
+const iconSize = 24;
 
 const App = () => {
   return (
     <PaperProvider theme={AppTheme}>
-      <NavigationContainer>
+      <NavigationContainer theme={AppTheme}>
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
             <Tab.Navigator
               initialRouteName="Emissions"
-              activeColor={AppTheme.colors.primary}
-              // TODO: find a way to avoid inactive label color bug when specifying inactiveColor
-              // inactiveColor={AppTheme.colors.onSurfaceDisabled}
-              theme={{ colors: { secondaryContainer: undefined } }}
+              screenOptions={{
+                tabBarLabelPosition: "below-icon",
+                tabBarStyle: { height: 50, paddingBottom: 5 },
+              }}
             >
               <Tab.Screen
                 name="Emissions"
