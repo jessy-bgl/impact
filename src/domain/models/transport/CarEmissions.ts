@@ -1,6 +1,6 @@
 type CarSize = "small" | "medium" | "utility" | "sedan" | "suv";
 
-type CarType = "thermal" | "electric" | "hybrid";
+type CarEngine = "thermal" | "electric" | "hybrid";
 
 type FuelType = "diesel" | "gasoline" | "biofuels";
 
@@ -8,7 +8,7 @@ type CarEmissionsProps = {
   regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
-  type: CarType;
+  type: CarEngine;
   fuelType: FuelType;
   age: number;
   averageConsumption: number;
@@ -19,7 +19,7 @@ export class CarEmissions {
   regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
-  type: CarType;
+  type: CarEngine;
   fuelType: FuelType;
   age: number;
   averageConsumption;
