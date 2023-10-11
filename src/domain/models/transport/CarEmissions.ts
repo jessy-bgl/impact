@@ -1,50 +1,79 @@
-type CarSize = "small" | "medium" | "utility" | "sedan" | "suv";
+type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
 
 type CarEngine = "thermal" | "electric" | "hybrid";
 
 type FuelType = "diesel" | "gasoline" | "biofuels";
 
+// see p.80 of https://librairie.ademe.fr/cadic/7353/enquete-autopartage-2022-rapport.pdf
+const SHARED_CAR_KM_PER_YEAR = 15130;
+
+// https://librairie.ademe.fr/mobilite-et-transport/3273-elaboration-selon-les-principes-des-acv-des-bilans-energetiques-des-emissions-de-gaz-a-effet-de-serre-et-des-autres-impacts-environnementaux.html
+/// l / 100km
+const DefaultAverageFuelConsumption: Record<CarSize, number> = {
+  small: 5,
+  medium: 6,
+  vul: 6,
+  sedan: 7,
+  suv: 8,
+};
+
 type CarEmissionsProps = {
   regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
-  type: CarEngine;
+  engine: CarEngine;
   fuelType: FuelType;
   age: number;
-  averageConsumption: number;
+  averageFuelConsumption: number;
   averagePassengers: number;
 };
 
 export class CarEmissions {
-  regularUser: boolean;
+  private _regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
-  type: CarEngine;
+  engine: CarEngine;
   fuelType: FuelType;
   age: number;
-  averageConsumption;
+  averageFuelConsumption;
   averagePassengers;
+
+  lifetime = 10; // years
   emissionsPerYear: number = 0;
 
   constructor({
     regularUser = true,
     kmPerYear = 0, // km
     size = "medium",
-    type = "thermal",
+    engine = "thermal",
     fuelType = "gasoline",
     age = 5, // years
-    averageConsumption = 6, // l/100km
+    averageFuelConsumption = DefaultAverageFuelConsumption.medium, // l/100km
     averagePassengers = 1.2,
   }: CarEmissionsProps) {
-    this.regularUser = regularUser;
+    this._regularUser = regularUser;
     this.kmPerYear = kmPerYear;
     this.size = size;
-    this.type = type;
+    this.engine = engine;
     this.fuelType = fuelType;
     this.age = age;
-    this.averageConsumption = averageConsumption;
+    this.averageFuelConsumption = averageFuelConsumption;
     this.averagePassengers = averagePassengers;
     this.computeEmissionsPerYear();
+  }
+
+  public get regularUser() {
+    return this._regularUser;
+  }
+
+  public set regularUser(isRegularUser: boolean) {
+    this._regularUser = isRegularUser;
+    if (!isRegularUser) {
+      this.size = "medium";
+      this.engine = "thermal";
+      this.fuelType = "gasoline";
+      this.averageFuelConsumption = DefaultAverageFuelConsumption[this.size];
+    }
   }
 
   private computeEmissionsPerYear() {
@@ -53,15 +82,22 @@ export class CarEmissions {
     } else if (this.regularUser) {
       this.emissionsPerYear = this.computeRegularUserFootprint();
     } else if (!this.regularUser) {
-      this.emissionsPerYear = 0;
+      this.emissionsPerYear = this.computeNonRegularUserFootprint();
     }
   }
 
   private computeRegularUserFootprint(): number {
-    const carUseCarbonFootprint = this.carUseFootprint;
-    const amortizedManufacturing = this.amortizedManufacturingFootprint;
     return (
-      (carUseCarbonFootprint + amortizedManufacturing) / this.averagePassengers
+      (this.carUseFootprint + this.amortizedManufacturingFootprint) /
+      this.averagePassengers
+    );
+  }
+
+  private computeNonRegularUserFootprint(): number {
+    return (
+      ((this.manufacturingFootprint / this.lifetime) * this.rentalFactor +
+        this.carUseFootprint) /
+      this.averagePassengers
     );
   }
 
@@ -102,5 +138,9 @@ export class CarEmissions {
   private get amortization(): number {
     // TODO
     return 0;
+  }
+
+  private get rentalFactor(): number {
+    return this.kmPerYear / SHARED_CAR_KM_PER_YEAR;
   }
 }
