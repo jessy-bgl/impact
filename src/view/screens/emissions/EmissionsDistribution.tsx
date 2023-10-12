@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 import { VictoryLabel, VictoryPie } from "victory-native";
 
-import { EmissionsByCategory } from "../../../domain/models/EmissionCategories";
+import { EmissionsByCategory } from "../../../domain/models/transport/car/EmissionCategories";
 
 const pieWidth = 250;
 const pieHeight = 250;

@@ -1,7 +1,7 @@
 import {
   EmissionCategories,
   EmissionsByCategory,
-} from "../../domain/models/EmissionCategories";
+} from "../../domain/models/transport/car/EmissionCategories";
 import { EmissionsRepository } from "../../domain/repositories/EmissionsRepository";
 
 export class EmissionsRepositoryStore implements EmissionsRepository {

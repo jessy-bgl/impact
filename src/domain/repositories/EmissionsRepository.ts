@@ -1,4 +1,4 @@
-import { EmissionsByCategory } from "../models/EmissionCategories";
+import { EmissionsByCategory } from "../models/transport/car/EmissionCategories";
 
 export interface EmissionsRepository {
   fetchEmissionsByCategory(): EmissionsByCategory[];

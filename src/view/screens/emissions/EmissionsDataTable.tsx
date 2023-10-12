@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { EmissionsByCategory } from "../../../domain/models/EmissionCategories";
+import { EmissionsByCategory } from "../../../domain/models/transport/car/EmissionCategories";
 
 type Props = {
   emissionsByCategory: EmissionsByCategory[];

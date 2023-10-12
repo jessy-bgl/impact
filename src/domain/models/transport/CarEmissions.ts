@@ -19,7 +19,7 @@ import {
   sharedCarKmPerYear,
   thermalCarManufacturingFootprint,
   thermalMaintenanceFootprint,
-} from "./carDefaultValues";
+} from "./car/constants";
 
 export type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
 
