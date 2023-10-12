@@ -1,11 +1,24 @@
+/**
+ * footprint = kgCO2e or kgC02e/km
+ */
+
 import {
+  airConditionerFootprint,
+  averageCarKmPerYear,
   defaultAverageFootPrintPerLiter,
   defaultAverageFuelConsumption,
   defaultEngine,
   defaultFuelType,
   defaultSize,
-  lifetime,
+  electricCarFootprint,
+  electricCarManufacturingFootprint,
+  electricMediumCarFootprint,
+  electricSmallCarFootprint,
+  hybridCarManufacturingFootprint,
+  defaultCarLifetime,
   sharedCarKmPerYear,
+  thermalCarManufacturingFootprint,
+  thermalMaintenanceFootprint,
 } from "./carDefaultValues";
 
 export type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
@@ -32,13 +45,13 @@ export class CarEmissions {
   engine: CarEngine;
   fuelType: FuelType;
   age: number;
-  lifetime = lifetime;
+  lifetime = defaultCarLifetime;
   averageFuelConsumption;
   averagePassengers;
 
   constructor({
     regularUser = true,
-    kmPerYear = 0, // km
+    kmPerYear = averageCarKmPerYear, // km
     age = 5, // years
     size = defaultSize,
     engine = defaultEngine,
@@ -70,7 +83,7 @@ export class CarEmissions {
     }
   }
 
-  get emissionsPerYear(): number {
+  get annualEmissions(): number {
     if (this.kmPerYear === 0) return 0;
     if (this.regularUser) return this.regularUserFootprint;
     return this.nonRegularUserFootprint;
@@ -98,34 +111,33 @@ export class CarEmissions {
   // http://www2.ademe.fr/servlet/KBaseShow?catid=13655
   private get footprintPerKm(): number {
     if (this.engine === "electric") {
-      if (this.size === "small") return 0.0159;
-      if (this.size === "medium") return 0.0198;
-      return 0.0273;
+      if (this.size === "small") return electricSmallCarFootprint;
+      if (this.size === "medium") return electricMediumCarFootprint;
+      return electricCarFootprint;
     }
 
-    const thermalFootprintPerKm =
+    const thermalCarFootprint =
       (this.averageFuelConsumption / 100) *
       defaultAverageFootPrintPerLiter[this.fuelType];
 
-    if (this.engine === "hybrid") return thermalFootprintPerKm * 0.85;
+    if (this.engine === "hybrid") return thermalCarFootprint * 0.85;
 
-    return thermalFootprintPerKm;
+    return thermalCarFootprint;
   }
 
   private get footprintBasePerKm(): number {
-    return (
-      this.weightedMaintenanceFootprintPerKm + this.airConditionerFootprintPerKm
-    );
+    return this.weightedMaintenanceFootprint + this.airConditionerFootprint;
   }
 
-  private get weightedMaintenanceFootprintPerKm(): number {
-    // TODO
-    return 0;
+  // https://izi-by-edf.fr/blog/voiture-hybride-entretien/
+  private get weightedMaintenanceFootprint(): number {
+    if (this.engine === "hybrid") return thermalMaintenanceFootprint * 0.9;
+    if (this.engine === "electric") return thermalMaintenanceFootprint * 0.75;
+    return thermalMaintenanceFootprint;
   }
 
-  private get airConditionerFootprintPerKm(): number {
-    // TODO
-    return 0;
+  private get airConditionerFootprint(): number {
+    return airConditionerFootprint;
   }
 
   private get amortizedManufacturingFootprint(): number {
@@ -133,12 +145,15 @@ export class CarEmissions {
   }
 
   private get manufacturingFootprint(): number {
-    // TODO
-    return 0;
+    if (this.engine === "hybrid")
+      return hybridCarManufacturingFootprint[this.size];
+    if (this.engine === "electric")
+      return electricCarManufacturingFootprint[this.size];
+    return thermalCarManufacturingFootprint[this.size];
   }
 
   private get amortization(): number {
-    // TODO
+    if (this.age < 10) return 1 / defaultCarLifetime;
     return 0;
   }
 
