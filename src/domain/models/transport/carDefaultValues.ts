@@ -10,6 +10,13 @@ export const defaultAverageFuelConsumption: Record<CarSize, number> = {
   suv: 8,
 };
 
+// https://bilans-ges.ademe.fr/fr/basecarbone/donnees-consulter/liste-element?recherche=diesel
+export const defaultAverageFootPrintPerLiter: Record<FuelType, number> = {
+  diesel: 3.1,
+  gasoline: 2.7,
+  biofuels: 1.11,
+};
+
 // https://librairie.ademe.fr/cadic/7353/enquete-autopartage-2022-rapport.pdf (p. 80)
 export const sharedCarKmPerYear = 15130;
 

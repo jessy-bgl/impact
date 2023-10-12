@@ -1,4 +1,5 @@
 import {
+  defaultAverageFootPrintPerLiter,
   defaultAverageFuelConsumption,
   defaultEngine,
   defaultFuelType,
@@ -38,10 +39,10 @@ export class CarEmissions {
   constructor({
     regularUser = true,
     kmPerYear = 0, // km
+    age = 5, // years
     size = defaultSize,
     engine = defaultEngine,
     fuelType = defaultFuelType,
-    age = 5, // years
     averageFuelConsumption = defaultAverageFuelConsumption.medium, // l/100km
     averagePassengers = 1.2,
   }: CarEmissionsProps) {
@@ -94,9 +95,21 @@ export class CarEmissions {
     return this.kmPerYear * (this.footprintPerKm + this.footprintBasePerKm);
   }
 
+  // http://www2.ademe.fr/servlet/KBaseShow?catid=13655
   private get footprintPerKm(): number {
-    // TODO
-    return 0;
+    if (this.engine === "electric") {
+      if (this.size === "small") return 0.0159;
+      if (this.size === "medium") return 0.0198;
+      return 0.0273;
+    }
+
+    const thermalFootprintPerKm =
+      (this.averageFuelConsumption / 100) *
+      defaultAverageFootPrintPerLiter[this.fuelType];
+
+    if (this.engine === "hybrid") return thermalFootprintPerKm * 0.85;
+
+    return thermalFootprintPerKm;
   }
 
   private get footprintBasePerKm(): number {
