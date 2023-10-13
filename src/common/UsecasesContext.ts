@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
-import { EmissionsRepositoryStore } from "./data/store/EmissionsRepositoryStore";
-import { EmissionsRepository } from "./domain/repositories/EmissionsRepository";
-import { createUseFetchEmissionsByCategory } from "./domain/usecases/fetchEmissionsByCategory";
+import { EmissionsRepositoryStore } from "../data/store/EmissionsRepositoryStore";
+import { EmissionsRepository } from "../domain/repositories/EmissionsRepository";
+import { createUseFetchEmissionsByCategory } from "../domain/usecases/fetchEmissionsByCategory";
 
 interface Repositories {
   emissionsRepository: EmissionsRepository;

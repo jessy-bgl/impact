@@ -6,7 +6,7 @@ import { EmissionsDistribution } from "./EmissionsDistribution";
 import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
 import { EmissionsGoal } from "./EmissionsGoal";
 import { EmissionsTitle } from "./EmissionsTitle";
-import { UsecasesContext } from "../../../UsecasesContext";
+import { UsecasesContext } from "../../../common/UsecasesContext";
 
 export const Emissions = () => {
   const { useFetchEmissionsByCategory } = useContext(UsecasesContext);
