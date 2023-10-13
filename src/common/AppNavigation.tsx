@@ -7,7 +7,7 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { Emissions } from "../view/screens/emissions/Emissions";
-// import { Profile } from "../view/screens/profile/Profile";
+import { Profile } from "../view/screens/profile/Profile";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,7 +22,7 @@ export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 const iconSize = 24;
 
 export const AppNavigation = () => {
-  // const { t } = useTranslation("navigation");
+  const { t } = useTranslation("navigation");
 
   return (
     <Stack.Navigator initialRouteName="Home">
@@ -31,11 +31,11 @@ export const AppNavigation = () => {
         component={TabNavigator}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Profile"
         component={Profile}
         options={{ title: t("screens.Profile") }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };
@@ -48,6 +48,7 @@ const TabNavigator = () => {
       initialRouteName="Emissions"
       screenOptions={{
         // headerShown: false,
+        tabBarLabelPosition: "below-icon",
         tabBarStyle: { height: 50, paddingBottom: 5 },
       }}
     >
@@ -71,7 +72,7 @@ const TabNavigator = () => {
         name="TODO"
         component={Emissions}
         options={{
-          title: t("screens.Emissions"),
+          // title: t("screens.Emissions"),
           tabBarIcon: ({ color }) => {
             return <Icons name="tools" size={iconSize} color={color} />;
           },
@@ -81,7 +82,7 @@ const TabNavigator = () => {
         name="TODO2"
         component={Emissions}
         options={{
-          title: t("screens.Emissions"),
+          // title: t("screens.Emissions"),
           tabBarIcon: ({ color }) => {
             return <Icons name="tools" size={iconSize} color={color} />;
           },
@@ -91,7 +92,7 @@ const TabNavigator = () => {
         name="TODO3"
         component={Emissions}
         options={{
-          title: t("screens.Emissions"),
+          // title: t("screens.Emissions"),
           tabBarIcon: ({ color }) => {
             return <Icons name="tools" size={iconSize} color={color} />;
           },
