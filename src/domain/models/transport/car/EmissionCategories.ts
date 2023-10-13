@@ -15,6 +15,7 @@ export class EmissionsByCategory {
     public value: number,
     public part: number,
   ) {
+    this.part = Math.floor(part);
     switch (type) {
       case EmissionCategories.TRANSPORT: {
         this.color = "sandybrown";
