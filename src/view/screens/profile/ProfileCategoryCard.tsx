@@ -3,16 +3,16 @@ import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { EmissionsByCategory } from "../../../domain/models/transport/car/EmissionCategories";
+import { FootprintByCategory } from "../../../domain/models/transport/car/FootprintCategories";
 
 type Props = {
-  emissions: EmissionsByCategory;
+  footprint: FootprintByCategory;
   icon: IconSource;
   imageSource?: string;
 };
 
 export const ProfileCategoryCard = ({
-  emissions,
+  footprint,
   icon,
   imageSource,
 }: Props) => {
@@ -22,23 +22,23 @@ export const ProfileCategoryCard = ({
     <Card style={styles.card} onPress={() => {}}>
       <Card.Title
         title={t("transport")}
-        subtitle={`${emissions.value} ${t("footprintKgPerYear")}`}
+        subtitle={`${footprint.value} ${t("footprintKgPerYear")}`}
         left={(props: any) => (
           <Avatar.Icon
             {...props}
             icon={icon}
-            style={{ backgroundColor: emissions.color }}
+            style={{ backgroundColor: footprint.color }}
           />
         )}
         right={(props: any) => (
           <Avatar.Text
             {...props}
-            label={`${emissions.part} %`}
-            color={emissions.color}
+            label={`${footprint.part} %`}
+            color={footprint.color}
             style={{
               backgroundColor: null,
               borderWidth: 2,
-              borderColor: emissions.color,
+              borderColor: footprint.color,
               width: 40,
               height: 40,
             }}

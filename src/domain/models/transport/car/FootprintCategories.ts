@@ -1,4 +1,4 @@
-export enum EmissionCategories {
+export enum FootprintCategories {
   TRANSPORT = "transport",
   HOUSING = "housing",
   FOOD = "food",
@@ -6,38 +6,38 @@ export enum EmissionCategories {
   OTHER = "other",
 }
 
-export class EmissionsByCategory {
+export class FootprintByCategory {
   public color: string = "";
   public icon: string = "";
 
   constructor(
-    public category: EmissionCategories,
+    public category: FootprintCategories,
     public value: number,
     public part: number,
   ) {
     this.part = Math.floor(part);
     switch (category) {
-      case EmissionCategories.TRANSPORT: {
+      case FootprintCategories.TRANSPORT: {
         this.color = "sandybrown";
         this.icon = "🚗";
         break;
       }
-      case EmissionCategories.FOOD: {
+      case FootprintCategories.FOOD: {
         this.color = "plum";
         this.icon = "🍲";
         break;
       }
-      case EmissionCategories.HOUSING: {
+      case FootprintCategories.HOUSING: {
         this.color = "cadetblue";
         this.icon = "🏠";
         break;
       }
-      case EmissionCategories.GOODS: {
+      case FootprintCategories.GOODS: {
         this.color = "khaki";
         this.icon = "🛍️";
         break;
       }
-      case EmissionCategories.OTHER: {
+      case FootprintCategories.OTHER: {
         this.color = "mediumslateblue";
         this.icon = "🍃";
         break;

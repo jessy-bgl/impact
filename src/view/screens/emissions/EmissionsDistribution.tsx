@@ -2,25 +2,25 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 import { VictoryLabel, VictoryPie } from "victory-native";
 
-import { EmissionsByCategory } from "../../../domain/models/transport/car/EmissionCategories";
+import { FootprintByCategory } from "../../../domain/models/transport/car/FootprintCategories";
 
 const pieWidth = 250;
 const pieHeight = 250;
 
 type Props = {
-  emissionsByCategory: EmissionsByCategory[];
+  footprintByCategory: FootprintByCategory[];
 };
 
-export const EmissionsDistribution = ({ emissionsByCategory }: Props) => {
+export const EmissionsDistribution = ({ footprintByCategory }: Props) => {
   const { t } = useTranslation("emissions");
   const { colors } = useTheme();
 
-  const totalCO2 = emissionsByCategory.reduce((acc, obj) => acc + obj.value, 0);
+  const totalCO2 = footprintByCategory.reduce((acc, obj) => acc + obj.value, 0);
 
   return (
     <svg viewBox={`0 0 ${pieWidth} ${pieHeight}`}>
       <VictoryPie
-        colorScale={emissionsByCategory.map(({ color }) => color)}
+        colorScale={footprintByCategory.map(({ color }) => color)}
         standalone={false}
         width={pieWidth}
         height={pieHeight}
@@ -28,7 +28,7 @@ export const EmissionsDistribution = ({ emissionsByCategory }: Props) => {
         innerRadius={60}
         labelRadius={75}
         style={{ labels: { fontSize: 17 } }}
-        data={emissionsByCategory.map(({ icon, value }) => ({
+        data={footprintByCategory.map(({ icon, value }) => ({
           x: icon,
           y: value,
         }))}

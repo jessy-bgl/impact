@@ -7,12 +7,12 @@ import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
 import { EmissionsGoal } from "./EmissionsGoal";
 import { EmissionsTitle } from "./EmissionsTitle";
 import { UsecasesContext } from "../../../common/UsecasesContext";
-import { EmissionsByCategory } from "../../../domain/models/transport/car/EmissionCategories";
+import { FootprintByCategory } from "../../../domain/models/transport/car/FootprintCategories";
 
 export const Emissions = () => {
-  const { useFetchEmissionsByCategory } = useContext(UsecasesContext);
+  const { useFetchFootprintByCategory } = useContext(UsecasesContext);
 
-  const data: EmissionsByCategory[] = useFetchEmissionsByCategory();
+  const data: FootprintByCategory[] = useFetchFootprintByCategory();
 
   return (
     <ScrollView
@@ -23,7 +23,7 @@ export const Emissions = () => {
       </View>
 
       <View style={{ width: 300 }}>
-        <EmissionsDistribution emissionsByCategory={data} />
+        <EmissionsDistribution footprintByCategory={data} />
       </View>
 
       <View style={{ width: "90%" }}>
@@ -31,7 +31,7 @@ export const Emissions = () => {
       </View>
 
       <View style={{ width: "90%" }}>
-        <EmissionsDataTable emissionsByCategory={data} />
+        <EmissionsDataTable footprintByCategory={data} />
       </View>
 
       <View style={{ width: "90%", marginTop: 10, marginBottom: 10 }}>

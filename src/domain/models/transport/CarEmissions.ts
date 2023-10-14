@@ -83,7 +83,7 @@ export class CarEmissions {
     }
   }
 
-  get annualEmissions(): number {
+  get annualFootprint(): number {
     if (this.kmPerYear === 0) return 0;
     if (this.regularUser) return this.regularUserFootprint;
     return this.nonRegularUserFootprint;

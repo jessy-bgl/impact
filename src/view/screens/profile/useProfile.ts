@@ -2,21 +2,21 @@ import { useContext } from "react";
 
 import { UsecasesContext } from "../../../common/UsecasesContext";
 import {
-  EmissionCategories,
-  EmissionsByCategory,
-} from "../../../domain/models/transport/car/EmissionCategories";
+  FootprintCategories,
+  FootprintByCategory,
+} from "../../../domain/models/transport/car/FootprintCategories";
 
 export const useProfile = () => {
-  const { useFetchEmissionsByCategory } = useContext(UsecasesContext);
+  const { useFetchFootprintByCategory } = useContext(UsecasesContext);
 
-  const emissionsByCategory: EmissionsByCategory[] =
-    useFetchEmissionsByCategory();
+  const footprintByCategory: FootprintByCategory[] =
+    useFetchFootprintByCategory();
 
-  const transportEmissions = emissionsByCategory.find(
-    (emissions) => emissions.category === EmissionCategories.TRANSPORT,
+  const transportFootprint = footprintByCategory.find(
+    (footprint) => footprint.category === FootprintCategories.TRANSPORT,
   )!;
 
   return {
-    transportEmissions,
+    transportFootprint,
   };
 };

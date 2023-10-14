@@ -5,13 +5,13 @@ import { useProfile } from "./useProfile";
 import transportImage from "../../../../assets/images/transport.svg";
 
 export const Profile = () => {
-  const { transportEmissions } = useProfile();
+  const { transportFootprint } = useProfile();
 
   return (
     <View style={styles.container}>
       <ProfileCategoryCard
         icon="car"
-        emissions={transportEmissions}
+        footprint={transportFootprint}
         imageSource={transportImage}
       />
     </View>
