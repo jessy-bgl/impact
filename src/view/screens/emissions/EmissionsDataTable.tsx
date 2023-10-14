@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const EmissionsDataTable = ({ emissionsByCategory }: Props) => {
-  const { t } = useTranslation("emissions");
+  const { t } = useTranslation(["emissions", "common"]);
   const { colors } = useTheme();
 
   return (
@@ -23,13 +23,13 @@ export const EmissionsDataTable = ({ emissionsByCategory }: Props) => {
       {emissionsByCategory
         .sort((a, b) => b.value - a.value)
         .map((emissionsCategory) => (
-          <DataTable.Row key={emissionsCategory.type}>
+          <DataTable.Row key={emissionsCategory.category}>
             <DataTable.Cell style={{ alignItems: "center" }}>
-              {t(`categories.${emissionsCategory.type}`)}
+              {t(`categories.${emissionsCategory.category}`)}
             </DataTable.Cell>
 
             <DataTable.Cell numeric>
-              {emissionsCategory.value} kgCO2
+              {emissionsCategory.value} {t("common:footprintKg")}
             </DataTable.Cell>
 
             <DataTable.Cell numeric>

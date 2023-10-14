@@ -22,7 +22,7 @@ export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 const iconSize = 24;
 
 export const AppNavigation = () => {
-  const { t } = useTranslation("navigation");
+  const { t } = useTranslation("common");
 
   return (
     <Stack.Navigator initialRouteName="Home">
@@ -41,7 +41,7 @@ export const AppNavigation = () => {
 };
 
 const TabNavigator = () => {
-  const { t } = useTranslation("navigation");
+  const { t } = useTranslation("common");
 
   return (
     <Tab.Navigator

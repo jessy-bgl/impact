@@ -1,3 +1,10 @@
 {
-  "emissions": "Emissions"
+  "emissions": "Emissions",
+  "transport": "Transports",
+  "footprintKg": "kgCO2e",
+  "footprintKgPerYear": "kgCO2e/an",
+  "screens": {
+    "Emissions": "Emissions",
+    "Profile": "Profil"
+  }
 }

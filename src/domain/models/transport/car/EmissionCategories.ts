@@ -11,12 +11,12 @@ export class EmissionsByCategory {
   public icon: string = "";
 
   constructor(
-    public type: EmissionCategories,
+    public category: EmissionCategories,
     public value: number,
     public part: number,
   ) {
     this.part = Math.floor(part);
-    switch (type) {
+    switch (category) {
       case EmissionCategories.TRANSPORT: {
         this.color = "sandybrown";
         this.icon = "🚗";

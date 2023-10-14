@@ -7,11 +7,12 @@ import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
 import { EmissionsGoal } from "./EmissionsGoal";
 import { EmissionsTitle } from "./EmissionsTitle";
 import { UsecasesContext } from "../../../common/UsecasesContext";
+import { EmissionsByCategory } from "../../../domain/models/transport/car/EmissionCategories";
 
 export const Emissions = () => {
   const { useFetchEmissionsByCategory } = useContext(UsecasesContext);
 
-  const data = useFetchEmissionsByCategory();
+  const data: EmissionsByCategory[] = useFetchEmissionsByCategory();
 
   return (
     <ScrollView
