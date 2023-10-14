@@ -33,7 +33,7 @@ module.exports = async function (env, argv) {
         // See https://github.com/cra-template/pwa/issues/13#issuecomment-722667270
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         // eslint-disable-next-line prettier/prettier
-      })
+      }),
     );
   }
 

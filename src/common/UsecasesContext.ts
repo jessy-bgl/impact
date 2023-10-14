@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import { EmissionsRepositoryStore } from "../data/store/EmissionsRepositoryStore";
+import { EmissionsRepositoryStore } from "../data/repositories/EmissionsRepositoryStore";
 import { EmissionsRepository } from "../domain/repositories/EmissionsRepository";
 import { createUseFetchFootprintByCategory } from "../domain/usecases/fetchFootprintByCategory";
 
