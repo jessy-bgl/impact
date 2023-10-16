@@ -1,5 +1,5 @@
-import { FootprintByCategory } from "../models/transport/car/FootprintCategories";
+import { Footprints } from "../models/Footprint";
 
 export interface EmissionsRepository {
-  fetchFootprintByCategory(): FootprintByCategory[];
+  fetchFootprints(): Footprints;
 }

@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { FootprintByCategory } from "../../../domain/models/transport/car/FootprintCategories";
+import { Footprints } from "../../../domain/models/Footprint";
 
 type Props = {
-  footprintByCategory: FootprintByCategory[];
+  footprints: Footprints;
 };
 
-export const EmissionsDataTable = ({ footprintByCategory }: Props) => {
+export const EmissionsDataTable = ({ footprints }: Props) => {
   const { t } = useTranslation(["emissions", "common"]);
   const { colors } = useTheme();
 
@@ -20,7 +20,7 @@ export const EmissionsDataTable = ({ footprintByCategory }: Props) => {
         <DataTable.Title numeric>{t("part")}</DataTable.Title>
       </DataTable.Header>
 
-      {footprintByCategory
+      {Object.values(footprints)
         .sort((a, b) => b.value - a.value)
         .map((emissionsCategory) => (
           <DataTable.Row key={emissionsCategory.category}>

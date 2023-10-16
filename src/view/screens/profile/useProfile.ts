@@ -3,20 +3,15 @@ import { useContext } from "react";
 import { UsecasesContext } from "../../../common/UsecasesContext";
 import {
   FootprintCategories,
-  FootprintByCategory,
-} from "../../../domain/models/transport/car/FootprintCategories";
+  Footprints,
+} from "../../../domain/models/Footprint";
 
 export const useProfile = () => {
-  const { useFetchFootprintByCategory } = useContext(UsecasesContext);
+  const { useFetchFootprints } = useContext(UsecasesContext);
 
-  const footprintByCategory: FootprintByCategory[] =
-    useFetchFootprintByCategory();
-
-  const transportFootprint = footprintByCategory.find(
-    (footprint) => footprint.category === FootprintCategories.TRANSPORT,
-  )!;
+  const footprints: Footprints = useFetchFootprints();
 
   return {
-    transportFootprint,
+    transportFootprint: footprints[FootprintCategories.TRANSPORT],
   };
 };

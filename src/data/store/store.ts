@@ -3,19 +3,19 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 import {
-  defaultFootprintPerCategory,
+  defaultFootprints,
   defaultTotalFootprintPerYear,
 } from "./storeInitialValues";
-import { FootprintByCategory } from "../../domain/models/transport/car/FootprintCategories";
+import { Footprints } from "../../domain/models/Footprint";
 
 export type AppState = {
   totalFootprintPerYear: number;
-  footprintPerCategory: FootprintByCategory[];
+  footprints: Footprints;
 };
 
 const appStore = (): AppState => ({
   totalFootprintPerYear: defaultTotalFootprintPerYear,
-  footprintPerCategory: defaultFootprintPerCategory,
+  footprints: defaultFootprints,
 });
 
 const middlewares = (f: any) =>

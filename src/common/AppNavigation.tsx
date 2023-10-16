@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { Emissions } from "../view/screens/emissions/Emissions";
 import { Profile } from "../view/screens/profile/Profile";
+import { TransportProfil } from "../view/screens/profile/transport/Transport";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,7 @@ const Tab = createBottomTabNavigator();
 type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
+  TransportProfile: undefined;
 };
 
 export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -35,6 +37,11 @@ export const AppNavigation = () => {
         name="Profile"
         component={Profile}
         options={{ title: t("screens.Profile") }}
+      />
+      <Stack.Screen
+        name="TransportProfile"
+        component={TransportProfil}
+        options={{ title: t("screens.TransportProfile") }}
       />
     </Stack.Navigator>
   );

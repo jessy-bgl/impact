@@ -45,3 +45,5 @@ export class FootprintByCategory {
     }
   }
 }
+
+export type Footprints = Record<FootprintCategories, FootprintByCategory>;

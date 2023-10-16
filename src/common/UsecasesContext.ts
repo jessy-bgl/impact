@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 import { EmissionsRepositoryStore } from "../data/repositories/EmissionsRepositoryStore";
 import { EmissionsRepository } from "../domain/repositories/EmissionsRepository";
-import { createUseFetchFootprintByCategory } from "../domain/usecases/fetchFootprintByCategory";
+import { createUseFetchFootprints } from "../domain/usecases/fetchFootprints";
 
 interface Repositories {
   emissionsRepository: EmissionsRepository;
@@ -16,7 +16,7 @@ const initRepositories = (): Repositories => {
 
 const initUsecases = (repositories: Repositories) => {
   return {
-    useFetchFootprintByCategory: createUseFetchFootprintByCategory(
+    useFetchFootprints: createUseFetchFootprints(
       repositories.emissionsRepository,
     ),
   };

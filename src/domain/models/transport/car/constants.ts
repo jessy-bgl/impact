@@ -1,4 +1,4 @@
-import { CarEngine, CarSize, FuelType } from "../CarEmissions";
+import { CarEngine, CarSize, FuelType } from "./CarEmissions";
 
 export const defaultSize: CarSize = "medium";
 

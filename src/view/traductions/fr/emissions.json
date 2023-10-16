@@ -12,5 +12,8 @@
     "food": "Alimentation",
     "goods": "Biens",
     "other": "Divers"
+  },
+  "transport": {
+    "car": "Voiture"
   }
 }

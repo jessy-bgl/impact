@@ -5,6 +5,7 @@
   "footprintKgPerYear": "kgCO2e/an",
   "screens": {
     "Emissions": "Emissions",
-    "Profile": "Profil"
+    "Profile": "Profil",
+    "TransportProfile": "Transports"
   }
 }

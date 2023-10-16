@@ -1,5 +1,5 @@
 import { useAppStore } from "./store";
-import { FootprintByCategory } from "../../domain/models/transport/car/FootprintCategories";
+import { Footprints } from "../../domain/models/Footprint";
 
 export const appStoreActions = {
   getTotalFootprintPerYear: () => useAppStore.getState().totalFootprintPerYear,
@@ -10,11 +10,11 @@ export const appStoreActions = {
       totalFootprintPerYear: newValue,
     })),
 
-  getFootprintPerCategory: () => useAppStore.getState().footprintPerCategory,
+  getFootprintPerCategory: () => useAppStore.getState().footprints,
 
-  setFootprintPerCategory: (newValue: FootprintByCategory[]) =>
+  setFootprintPerCategory: (newValue: Footprints) =>
     useAppStore.setState((state) => ({
       ...state,
-      footprintPerCategory: newValue,
+      footprints: newValue,
     })),
 };

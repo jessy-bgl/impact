@@ -3,23 +3,25 @@ import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { FootprintByCategory } from "../../../domain/models/transport/car/FootprintCategories";
+import { FootprintByCategory } from "../../../domain/models/Footprint";
 
 type Props = {
   footprint: FootprintByCategory;
   icon: IconSource;
   imageSource?: string;
+  onClick: () => void;
 };
 
 export const ProfileCategoryCard = ({
   footprint,
   icon,
   imageSource,
+  onClick,
 }: Props) => {
   const { t } = useTranslation("common");
 
   return (
-    <Card style={styles.card} onPress={() => {}}>
+    <Card style={styles.card} onPress={onClick}>
       <Card.Title
         title={t("transport")}
         subtitle={`${footprint.value} ${t("footprintKgPerYear")}`}
