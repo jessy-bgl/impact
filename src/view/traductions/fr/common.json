@@ -1,4 +1,6 @@
 {
+  "yes": "oui",
+  "no": "non",
   "emissions": "Emissions",
   "transport": "Transports",
   "footprintKg": "kgCO2e",

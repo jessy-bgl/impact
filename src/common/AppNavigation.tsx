@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { Emissions } from "../view/screens/emissions/Emissions";
 import { Profile } from "../view/screens/profile/Profile";
-import { TransportProfil } from "../view/screens/profile/transport/Transport";
+import { TransportProfil } from "../view/screens/transport/Transport";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
