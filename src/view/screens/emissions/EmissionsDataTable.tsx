@@ -35,7 +35,6 @@ export const EmissionsDataTable = ({ footprints }: Props) => {
             <DataTable.Cell numeric>
               <View
                 style={{
-                  flex: 1,
                   width: 30,
                   height: 30,
                   borderRadius: 30 / 2,
