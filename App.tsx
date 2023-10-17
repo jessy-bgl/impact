@@ -1,32 +1,59 @@
-import {
-  NavigationContainer,
-  DarkTheme as NavigationTheme,
-} from "@react-navigation/native";
-import merge from "deepmerge";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
 import { registerRootComponent } from "expo";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { PaperProvider, MD3DarkTheme } from "react-native-paper";
+import { useEffect, useState } from "react";
+import {
+  Linking,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { ActivityIndicator, PaperProvider } from "react-native-paper";
 
+import { AppTheme } from "./AppTheme";
 import { AppNavigation } from "./src/common/AppNavigation";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
+
 import "./src/view/traductions/i18n";
 
-const MaterialTheme = {
-  ...MD3DarkTheme,
-  colors: {
-    ...MD3DarkTheme.colors,
-    primary: "#59B158",
-    onPrimary: "#111",
-    inversePrimary: "#fff",
-  },
-};
-
-const AppTheme = merge(NavigationTheme, MaterialTheme);
+const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 
 const App = () => {
+  const [isReady, setIsReady] = useState(!__DEV__);
+  const [initialState, setInitialState] = useState();
+
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const initialUrl = await Linking.getInitialURL();
+        if (Platform.OS !== "web" && initialUrl == null) {
+          // Only restore state if there's no deep link and we're not on web
+          const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
+          const state = savedStateString
+            ? JSON.parse(savedStateString)
+            : undefined;
+          if (state !== undefined) setInitialState(state);
+        }
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    if (!isReady) restoreState();
+  }, [isReady]);
+
+  if (!isReady) return <ActivityIndicator />;
+
   return (
     <PaperProvider theme={AppTheme}>
-      <NavigationContainer theme={AppTheme}>
+      <NavigationContainer
+        theme={AppTheme}
+        initialState={initialState}
+        onStateChange={(state) =>
+          AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+        }
+      >
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
             <AppNavigation />
