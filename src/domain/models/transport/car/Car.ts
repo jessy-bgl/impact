@@ -27,7 +27,7 @@ export type CarEngine = "thermal" | "electric" | "hybrid";
 
 export type FuelType = "diesel" | "gasoline" | "biofuels";
 
-type CarEmissionsProps = {
+type Props = {
   regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
@@ -38,7 +38,7 @@ type CarEmissionsProps = {
   averagePassengers: number;
 };
 
-export class CarEmissions {
+export class Car {
   private _regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
@@ -58,7 +58,7 @@ export class CarEmissions {
     fuelType = defaultFuelType,
     averageFuelConsumption = defaultAverageFuelConsumption.medium, // l/100km
     averagePassengers = 1.2,
-  }: CarEmissionsProps) {
+  }: Props) {
     this._regularUser = regularUser;
     this.kmPerYear = kmPerYear;
     this.size = size;

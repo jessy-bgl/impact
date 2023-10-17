@@ -1,6 +1,7 @@
 {
   "car": {
     "kmPerYear": "Distance parcourue à l'année",
-    "regularUser": "Utilisez-vous généralement la même voiture pour vous déplacer ?"
+    "regularUser": "Utilisez-vous généralement la même voiture pour vous déplacer ?",
+    "size": "Gabarit de la voiture"
   }
 }
