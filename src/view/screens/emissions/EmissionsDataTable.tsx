@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { Footprints } from "../../../domain/models/Footprint";
+import { Footprints } from "../../view-models/Footprint";
 
 type Props = {
   footprints: Footprints;
@@ -21,7 +21,7 @@ export const EmissionsDataTable = ({ footprints }: Props) => {
       </DataTable.Header>
 
       {Object.values(footprints)
-        .sort((a, b) => b.value - a.value)
+        .sort((a, b) => b.footprint - a.footprint)
         .map((emissionsCategory) => (
           <DataTable.Row key={emissionsCategory.category}>
             <DataTable.Cell style={{ alignItems: "center" }}>
@@ -29,7 +29,7 @@ export const EmissionsDataTable = ({ footprints }: Props) => {
             </DataTable.Cell>
 
             <DataTable.Cell numeric>
-              {emissionsCategory.value} {t("common:footprintKg")}
+              {emissionsCategory.footprint} {t("common:footprintKg")}
             </DataTable.Cell>
 
             <DataTable.Cell numeric>

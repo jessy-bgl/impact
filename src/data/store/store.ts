@@ -2,20 +2,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-import {
-  defaultFootprints,
-  defaultTotalFootprintPerYear,
-} from "./storeInitialValues";
-import { Footprints } from "../../domain/models/Footprint";
+import { defaultTransport } from "./storeInitialValues";
+import { Transport } from "../../domain/models/transport/Transport";
 
 export type AppState = {
-  totalFootprintPerYear: number;
-  footprints: Footprints;
+  transport: Transport;
 };
 
 const appStore = (): AppState => ({
-  totalFootprintPerYear: defaultTotalFootprintPerYear,
-  footprints: defaultFootprints,
+  transport: defaultTransport,
 });
 
 const middlewares = (f: any) =>

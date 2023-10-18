@@ -1,15 +1,8 @@
-import { useContext } from "react";
-
-import { UsecasesContext } from "../../../common/UsecasesContext";
-import {
-  FootprintCategories,
-  Footprints,
-} from "../../../domain/models/Footprint";
+import { FootprintCategories } from "../../../domain/models/Categories";
+import { useFootprints } from "../../view-models/useFootprints";
 
 export const useProfile = () => {
-  const { useFetchFootprints } = useContext(UsecasesContext);
-
-  const footprints: Footprints = useFetchFootprints();
+  const { footprints } = useFootprints();
 
   return {
     transportFootprint: footprints[FootprintCategories.TRANSPORT],

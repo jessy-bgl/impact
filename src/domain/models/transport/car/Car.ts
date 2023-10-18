@@ -28,18 +28,18 @@ export type CarEngine = "thermal" | "electric" | "hybrid";
 export type FuelType = "diesel" | "gasoline" | "biofuels";
 
 type Props = {
-  regularUser: boolean;
-  kmPerYear: number;
-  size: CarSize;
-  engine: CarEngine;
-  fuelType: FuelType;
-  age: number;
-  averageFuelConsumption: number;
-  averagePassengers: number;
+  regularUser?: boolean;
+  kmPerYear?: number;
+  size?: CarSize;
+  engine?: CarEngine;
+  fuelType?: FuelType;
+  age?: number;
+  averageFuelConsumption?: number;
+  averagePassengers?: number;
 };
 
 export class Car {
-  private _regularUser: boolean;
+  regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
   engine: CarEngine;
@@ -59,7 +59,7 @@ export class Car {
     averageFuelConsumption = defaultAverageFuelConsumption.medium, // l/100km
     averagePassengers = 1.2,
   }: Props) {
-    this._regularUser = regularUser;
+    this.regularUser = regularUser;
     this.kmPerYear = kmPerYear;
     this.size = size;
     this.engine = engine;
@@ -69,24 +69,17 @@ export class Car {
     this.averagePassengers = averagePassengers;
   }
 
-  public get regularUser() {
-    return this._regularUser;
+  public initValuesForNonRegularUser() {
+    this.size = defaultSize;
+    this.engine = defaultEngine;
+    this.fuelType = defaultFuelType;
+    this.averageFuelConsumption = defaultAverageFuelConsumption[this.size];
   }
 
-  public set regularUser(isRegularUser: boolean) {
-    this._regularUser = isRegularUser;
-    if (!isRegularUser) {
-      this.size = defaultSize;
-      this.engine = defaultEngine;
-      this.fuelType = defaultFuelType;
-      this.averageFuelConsumption = defaultAverageFuelConsumption[this.size];
-    }
-  }
-
-  get annualFootprint(): number {
+  public get annualFootprint(): number {
     if (this.kmPerYear === 0) return 0;
-    if (this.regularUser) return this.regularUserFootprint;
-    return this.nonRegularUserFootprint;
+    if (this.regularUser) return Math.floor(this.regularUserFootprint);
+    return Math.floor(this.nonRegularUserFootprint);
   }
 
   private get regularUserFootprint(): number {

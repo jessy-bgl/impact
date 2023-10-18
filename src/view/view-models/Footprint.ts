@@ -1,21 +1,16 @@
-export enum FootprintCategories {
-  TRANSPORT = "transport",
-  HOUSING = "housing",
-  FOOD = "food",
-  GOODS = "goods",
-  OTHER = "other",
-}
+import { FootprintCategories } from "../../domain/models/Categories";
 
 export class FootprintByCategory {
   public color: string = "";
   public icon: string = "";
+  public part: number;
 
   constructor(
     public category: FootprintCategories,
-    public value: number,
-    public part: number,
+    public footprint: number,
+    totalFootprint: number,
   ) {
-    this.part = Math.floor(part);
+    this.part = this.computePart(totalFootprint);
     switch (category) {
       case FootprintCategories.TRANSPORT: {
         this.color = "sandybrown";
@@ -44,6 +39,14 @@ export class FootprintByCategory {
       }
     }
   }
+
+  private computePart = (totalFootprint: number) =>
+    Math.floor((this.footprint / totalFootprint) * 100);
 }
 
 export type Footprints = Record<FootprintCategories, FootprintByCategory>;
+
+export const computeTotalAnnualFootprint = (footprints: Footprints) => {
+  const footprintByCategories = Object.values(footprints);
+  return footprintByCategories.reduce((acc, obj) => acc + obj.footprint, 0);
+};

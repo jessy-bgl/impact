@@ -1,20 +1,9 @@
 import { useAppStore } from "./store";
-import { Footprints } from "../../domain/models/Footprint";
+import { Transport } from "../../domain/models/transport/Transport";
 
 export const appStoreActions = {
-  getTotalFootprintPerYear: () => useAppStore.getState().totalFootprintPerYear,
+  getTransport: () => useAppStore.getState().transport,
 
-  setTotalFootprintPerYear: (newValue: number) =>
-    useAppStore.setState((state) => ({
-      ...state,
-      totalFootprintPerYear: newValue,
-    })),
-
-  getFootprintPerCategory: () => useAppStore.getState().footprints,
-
-  setFootprintPerCategory: (newValue: Footprints) =>
-    useAppStore.setState((state) => ({
-      ...state,
-      footprints: newValue,
-    })),
+  setTransport: (transport: Transport) =>
+    useAppStore.setState((state) => ({ ...state, transport })),
 };

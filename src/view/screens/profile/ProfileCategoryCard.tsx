@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { FootprintByCategory } from "../../../domain/models/Footprint";
+import { FootprintByCategory } from "../../view-models/Footprint";
 
 type Props = {
   footprint: FootprintByCategory;
@@ -24,7 +24,7 @@ export const ProfileCategoryCard = ({
     <Card style={styles.card} onPress={onClick}>
       <Card.Title
         title={t("transport")}
-        subtitle={`${footprint.value} ${t("footprintKgPerYear")}`}
+        subtitle={`${footprint.footprint} ${t("footprintKgPerYear")}`}
         left={(props: any) => (
           <Avatar.Icon
             {...props}

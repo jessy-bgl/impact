@@ -1,5 +1,6 @@
-import { Footprints } from "../models/Footprint";
+import { Transport } from "../models/transport/Transport";
 
 export interface EmissionsRepository {
-  fetchFootprints(): Footprints;
+  fetchTransport(): Transport;
+  updateTransport(transport: Transport): void;
 }

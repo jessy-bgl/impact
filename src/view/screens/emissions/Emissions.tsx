@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { ScrollView, View } from "react-native";
 
 import { EmissionsDataTable } from "./EmissionsDataTable";
@@ -6,13 +5,10 @@ import { EmissionsDistribution } from "./EmissionsDistribution";
 import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
 import { EmissionsGoal } from "./EmissionsGoal";
 import { EmissionsTitle } from "./EmissionsTitle";
-import { UsecasesContext } from "../../../common/UsecasesContext";
-import { Footprints } from "../../../domain/models/Footprint";
+import { useFootprints } from "../../view-models/useFootprints";
 
 export const Emissions = () => {
-  const { useFetchFootprints } = useContext(UsecasesContext);
-
-  const footprints: Footprints = useFetchFootprints();
+  const { footprints, totalAnnualFootprint } = useFootprints();
 
   return (
     <ScrollView
@@ -23,7 +19,10 @@ export const Emissions = () => {
       </View>
 
       <View style={{ width: 300 }}>
-        <EmissionsDistribution footprints={footprints} />
+        <EmissionsDistribution
+          footprints={footprints}
+          totalFootprint={totalAnnualFootprint}
+        />
       </View>
 
       <View style={{ width: "90%" }}>

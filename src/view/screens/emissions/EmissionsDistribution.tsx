@@ -2,30 +2,28 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 import { VictoryLabel, VictoryPie } from "victory-native";
 
-import { Footprints } from "../../../domain/models/Footprint";
+import { Footprints } from "../../view-models/Footprint";
 
 const pieWidth = 250;
 const pieHeight = 250;
 
 type Props = {
   footprints: Footprints;
+  totalFootprint: number;
 };
 
-export const EmissionsDistribution = ({ footprints }: Props) => {
+export const EmissionsDistribution = ({
+  footprints,
+  totalFootprint,
+}: Props) => {
   const { t } = useTranslation("emissions");
   const { colors } = useTheme();
-
-  const footprintPerCategories = Object.values(footprints);
-
-  const totalCO2 = footprintPerCategories.reduce(
-    (acc, obj) => acc + obj.value,
-    0,
-  );
+  const footprintByCategories = Object.values(footprints);
 
   return (
     <svg viewBox={`0 0 ${pieWidth} ${pieHeight}`}>
       <VictoryPie
-        colorScale={footprintPerCategories.map(({ color }) => color)}
+        colorScale={footprintByCategories.map(({ color }) => color)}
         standalone={false}
         width={pieWidth}
         height={pieHeight}
@@ -33,9 +31,9 @@ export const EmissionsDistribution = ({ footprints }: Props) => {
         innerRadius={60}
         labelRadius={75}
         style={{ labels: { fontSize: 17 } }}
-        data={footprintPerCategories.map(({ icon, value }) => ({
+        data={footprintByCategories.map(({ icon, footprint }) => ({
           x: icon,
-          y: value,
+          y: footprint,
         }))}
       />
       <VictoryLabel
@@ -43,7 +41,7 @@ export const EmissionsDistribution = ({ footprints }: Props) => {
         style={{ fontSize: 20, fill: colors.onBackground }}
         x={pieWidth / 2}
         y={pieHeight / 2}
-        text={`${(totalCO2 / 1000).toFixed(2)}\ntCO2/${t("year")}`}
+        text={`${(totalFootprint / 1000).toFixed(2)}\ntCO2/${t("year")}`}
       />
     </svg>
   );
