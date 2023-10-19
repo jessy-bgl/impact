@@ -5,17 +5,18 @@ export enum TransportCategories {
 }
 
 type Props = {
-  car: Car;
+  car?: Car;
 };
 
 export class Transport {
   car: Car;
 
   constructor({ car }: Props) {
-    this.car = car;
+    this.car = new Car(car ?? {});
   }
 
   public get annualFootprint(): number {
+    // TODO : ajouter les autres categories
     return this.car.annualFootprint;
   }
 }

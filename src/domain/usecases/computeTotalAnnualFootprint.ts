@@ -5,9 +5,7 @@ export const createUseComputeTotalAnnualFootprint = (
 ) =>
   function useComputeTotalAnnualFootprint() {
     const computeTotalAnnualFootprint = (): number => {
-      const { fetchTransport } = emissionsRepository;
-
-      const transport = fetchTransport();
+      const transport = emissionsRepository.fetchTransport();
 
       // TODO : ajouter les autres catégories
 
