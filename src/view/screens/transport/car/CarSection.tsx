@@ -8,9 +8,13 @@ import {
   SegmentedButtons,
   Divider,
 } from "react-native-paper";
-import RNPickerSelect from "react-native-picker-select";
 
 import { FormValues, useCar } from "./useCar";
+import {
+  carEngines,
+  carSizes,
+  fuelTypes,
+} from "../../../../domain/models/transport/car/Car";
 import { styles } from "../styles";
 
 export const CarSection = () => {
@@ -74,16 +78,164 @@ export const CarSection = () => {
 
         <View style={columnContainer}>
           <Text variant="labelLarge">{t("car.size")}</Text>
-          <View style={{ height: 20 }}>
-            <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
-              items={
-                [
-                  // TODO
-                ]
-              }
+          <View>
+            <Controller<FormValues>
+              name="size"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("size");
+                  }}
+                  buttons={carSizes.slice(0, 3).map((size) => ({
+                    value: size,
+                    label: t(`car.sizes.${size}`),
+                  }))}
+                />
+              )}
+            />
+            <Controller<FormValues>
+              name="size"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("size");
+                  }}
+                  buttons={carSizes.slice(3, 5).map((size) => ({
+                    value: size,
+                    label: t(`car.sizes.${size}`),
+                  }))}
+                />
+              )}
             />
           </View>
+        </View>
+
+        <Divider style={divider} />
+
+        <View style={columnContainer}>
+          <Text variant="labelLarge">{t("car.engine")}</Text>
+          <Controller<FormValues>
+            name="engine"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SegmentedButtons
+                density="small"
+                value={value}
+                onValueChange={(e) => {
+                  onChange(e);
+                  handleUpdate("engine");
+                }}
+                buttons={carEngines.map((engine) => ({
+                  value: engine,
+                  label: t(`car.engines.${engine}`),
+                }))}
+              />
+            )}
+          />
+        </View>
+
+        <Divider style={divider} />
+
+        <View style={columnContainer}>
+          <Text variant="labelLarge">{t("car.fuelType")}</Text>
+          <Controller<FormValues>
+            name="fuelType"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SegmentedButtons
+                density="small"
+                value={value}
+                onValueChange={(e) => {
+                  onChange(e);
+                  handleUpdate("fuelType");
+                }}
+                buttons={fuelTypes.map((fuelType) => ({
+                  value: fuelType,
+                  label: t(`car.fuelTypes.${fuelType}`),
+                }))}
+              />
+            )}
+          />
+        </View>
+
+        <Divider style={divider} />
+
+        <View style={rowContainer}>
+          <Text variant="labelLarge" style={{ flex: 2 }}>
+            {t("car.age")}
+          </Text>
+          <Controller<FormValues>
+            name="age"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                dense
+                mode="outlined"
+                keyboardType="numeric"
+                right={<TextInput.Affix />}
+                style={{ flex: 1 }}
+                onBlur={() => handleUpdate("age")}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+        </View>
+
+        <Divider style={divider} />
+
+        <View style={rowContainer}>
+          <Text variant="labelLarge" style={{ flex: 2 }}>
+            {t("car.averagePassengers")}
+          </Text>
+          <Controller<FormValues>
+            name="averagePassengers"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                dense
+                mode="outlined"
+                keyboardType="numeric"
+                right={<TextInput.Affix />}
+                style={{ flex: 1 }}
+                onBlur={() => handleUpdate("averagePassengers")}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+        </View>
+
+        <Divider style={divider} />
+
+        <View style={rowContainer}>
+          <Text variant="labelLarge" style={{ flex: 2 }}>
+            {t("car.averageFuelConsumption")}
+          </Text>
+          <Controller<FormValues>
+            name="averageFuelConsumption"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                dense
+                mode="outlined"
+                keyboardType="numeric"
+                right={<TextInput.Affix />}
+                style={{ flex: 1 }}
+                onBlur={() => handleUpdate("averageFuelConsumption")}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
         </View>
       </View>
     </List.Accordion>

@@ -22,10 +22,13 @@ import {
 } from "./constants";
 
 export type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
+export const carSizes: CarSize[] = ["small", "medium", "vul", "sedan", "suv"];
 
-export type CarEngine = "thermal" | "electric" | "hybrid";
+export type CarEngine = "thermal" | "hybrid" | "electric";
+export const carEngines: CarEngine[] = ["thermal", "hybrid", "electric"];
 
 export type FuelType = "diesel" | "gasoline" | "biofuels";
+export const fuelTypes: FuelType[] = ["diesel", "gasoline", "biofuels"];
 
 type Props = {
   regularUser?: boolean;

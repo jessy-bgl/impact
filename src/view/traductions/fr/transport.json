@@ -2,6 +2,28 @@
   "car": {
     "kmPerYear": "Distance parcourue à l'année",
     "regularUser": "Utilisez-vous généralement la même voiture pour vous déplacer ?",
-    "size": "Gabarit de la voiture"
+    "size": "Gabarit de la voiture",
+    "engine": "Type de moteur",
+    "fuelType": "Type de carburant",
+    "age": "Âge de la voiture (en années)",
+    "averagePassengers": "Nombre moyen de passagers",
+    "averageFuelConsumption": "Consommation moyenne de carburant (en L/100km)",
+    "sizes": {
+      "small": "Petite",
+      "medium": "Moyenne",
+      "vul": "VUL",
+      "sedan": "Berline",
+      "suv": "SUV"
+    },
+    "engines": {
+      "thermal": "Thermique",
+      "hybrid": "Hybride",
+      "electric": "Électrique"
+    },
+    "fuelTypes": {
+      "diesel": "Gazole",
+      "gasoline": "Essence E5 ou E10",
+      "biofuels": "Essence E85"
+    }
   }
 }

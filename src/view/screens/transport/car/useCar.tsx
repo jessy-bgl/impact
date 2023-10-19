@@ -20,6 +20,12 @@ export const useCar = () => {
     defaultValues: {
       kmPerYear: storedCar.kmPerYear.toString(),
       regularUser: storedCar.regularUser.toString(),
+      size: storedCar.size.toString(),
+      engine: storedCar.engine.toString(),
+      fuelType: storedCar.fuelType.toString(),
+      age: storedCar.age.toString(),
+      averagePassengers: storedCar.averagePassengers.toString(),
+      averageFuelConsumption: storedCar.averageFuelConsumption.toString(),
     },
   });
 
