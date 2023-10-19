@@ -14,6 +14,12 @@
     "other": "Divers"
   },
   "transport": {
-    "car": "Voiture"
+    "car": "Voiture",
+    "twoWheeler": "Deux-roues",
+    "plane": "Avion",
+    "boat": "Bateau",
+    "holidays": "Vacances",
+    "train": "Train",
+    "other": "Divers"
   }
 }
