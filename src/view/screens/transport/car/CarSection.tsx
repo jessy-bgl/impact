@@ -1,4 +1,4 @@
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import {
@@ -21,6 +21,7 @@ export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
   const { container, rowContainer, divider, columnContainer } = styles;
   const { control, handleUpdate } = useCar();
+  const regularUser = useWatch({ control, name: "regularUser" }) === "true";
 
   return (
     <List.Accordion
@@ -93,6 +94,7 @@ export const CarSection = () => {
                   buttons={carSizes.slice(0, 3).map((size) => ({
                     value: size,
                     label: t(`car.sizes.${size}`),
+                    disabled: !regularUser,
                   }))}
                 />
               )}
@@ -111,6 +113,7 @@ export const CarSection = () => {
                   buttons={carSizes.slice(3, 5).map((size) => ({
                     value: size,
                     label: t(`car.sizes.${size}`),
+                    disabled: !regularUser,
                   }))}
                 />
               )}
@@ -136,6 +139,7 @@ export const CarSection = () => {
                 buttons={carEngines.map((engine) => ({
                   value: engine,
                   label: t(`car.engines.${engine}`),
+                  disabled: !regularUser,
                 }))}
               />
             )}
@@ -160,7 +164,33 @@ export const CarSection = () => {
                 buttons={fuelTypes.map((fuelType) => ({
                   value: fuelType,
                   label: t(`car.fuelTypes.${fuelType}`),
+                  disabled: !regularUser,
                 }))}
+              />
+            )}
+          />
+        </View>
+
+        <Divider style={divider} />
+
+        <View style={rowContainer}>
+          <Text variant="labelLarge" style={{ flex: 2 }}>
+            {t("car.averageFuelConsumption")}
+          </Text>
+          <Controller<FormValues>
+            name="averageFuelConsumption"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                dense
+                disabled={!regularUser}
+                mode="outlined"
+                keyboardType="numeric"
+                right={<TextInput.Affix />}
+                style={{ flex: 1 }}
+                onBlur={() => handleUpdate("averageFuelConsumption")}
+                onChangeText={onChange}
+                value={value}
               />
             )}
           />
@@ -207,30 +237,6 @@ export const CarSection = () => {
                 right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("averagePassengers")}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-          />
-        </View>
-
-        <Divider style={divider} />
-
-        <View style={rowContainer}>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
-            {t("car.averageFuelConsumption")}
-          </Text>
-          <Controller<FormValues>
-            name="averageFuelConsumption"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
-                right={<TextInput.Affix />}
-                style={{ flex: 1 }}
-                onBlur={() => handleUpdate("averageFuelConsumption")}
                 onChangeText={onChange}
                 value={value}
               />
