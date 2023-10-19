@@ -45,8 +45,3 @@ export class FootprintByCategory {
 }
 
 export type Footprints = Record<FootprintCategories, FootprintByCategory>;
-
-export const computeTotalAnnualFootprint = (footprints: Footprints) => {
-  const footprintByCategories = Object.values(footprints);
-  return footprintByCategories.reduce((acc, obj) => acc + obj.footprint, 0);
-};
