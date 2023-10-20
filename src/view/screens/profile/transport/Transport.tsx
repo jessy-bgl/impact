@@ -8,7 +8,7 @@ import { PlaneSection } from "./plane/PlaneSection";
 import { TrainSection } from "./train/TrainSection";
 import { TwoWheelerSection } from "./two-wheeler/TwoWheelerSection";
 
-export const TransportProfil = () => {
+export const TransportProfile = () => {
   return (
     <List.Section>
       <CarSection />

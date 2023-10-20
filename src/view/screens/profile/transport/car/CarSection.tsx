@@ -16,7 +16,7 @@ import {
   carEngines,
   carSizes,
   fuelTypes,
-} from "../../../../domain/models/transport/car/Car";
+} from "../../../../../domain/models/transport/car/Car";
 import { styles } from "../styles";
 
 export const CarSection = () => {

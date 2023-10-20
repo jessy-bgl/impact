@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { Emissions } from "../view/screens/emissions/Emissions";
 import { Profile } from "../view/screens/profile/Profile";
-import { TransportProfil } from "../view/screens/transport/Transport";
+import { TransportProfile } from "../view/screens/profile/transport/Transport";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ export const AppNavigation = () => {
       />
       <Stack.Screen
         name="TransportProfile"
-        component={TransportProfil}
+        component={TransportProfile}
         options={{ title: t("screens.TransportProfile") }}
       />
     </Stack.Navigator>
