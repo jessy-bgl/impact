@@ -7,6 +7,8 @@ import {
   Text,
   SegmentedButtons,
   Divider,
+  HelperText,
+  Icon,
 } from "react-native-paper";
 
 import { FormValues, useCar } from "./useCar";
@@ -53,26 +55,39 @@ export const CarSection = () => {
 
         <Divider style={divider} />
 
-        <View style={rowContainer}>
-          <Text variant="labelLarge">{t("car.regularUser")}</Text>
-          <Controller<FormValues>
-            name="regularUser"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <SegmentedButtons
-                density="small"
-                value={value}
-                onValueChange={(e) => {
-                  onChange(e);
-                  handleUpdate("regularUser");
-                }}
-                buttons={[
-                  { value: "true", label: t("common:yes") },
-                  { value: "false", label: t("common:no") },
-                ]}
-              />
-            )}
-          />
+        <View style={!regularUser ? columnContainer : null}>
+          <View style={rowContainer}>
+            <Text variant="labelLarge">{t("car.regularUser")}</Text>
+            <Controller<FormValues>
+              name="regularUser"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("regularUser");
+                  }}
+                  buttons={[
+                    { value: "true", label: t("common:yes") },
+                    { value: "false", label: t("common:no") },
+                  ]}
+                />
+              )}
+            />
+          </View>
+          {!regularUser && (
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Icon source="information" size={15} />
+              <HelperText
+                type="info"
+                style={{ alignSelf: "flex-start", marginTop: 2 }}
+              >
+                {t("car.nonRegularUserHelperText")}
+              </HelperText>
+            </View>
+          )}
         </View>
 
         <Divider style={divider} />

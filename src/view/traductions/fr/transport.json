@@ -2,6 +2,7 @@
   "car": {
     "kmPerYear": "Distance parcourue à l'année",
     "regularUser": "Utilisez-vous généralement la même voiture pour vous déplacer ?",
+    "nonRegularUserHelperText": "Dans ce cas nous prendrons les valeurs par défaut d'une voiture moyenne.",
     "size": "Gabarit de la voiture",
     "engine": "Type de moteur",
     "fuelType": "Type de carburant",
