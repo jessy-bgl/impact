@@ -41,7 +41,7 @@ export const AppNavigation = () => {
       <Stack.Screen
         name="TransportProfile"
         component={TransportProfile}
-        options={{ title: t("screens.TransportProfile") }}
+        options={{ title: t("screens.Transport") }}
       />
     </Stack.Navigator>
   );

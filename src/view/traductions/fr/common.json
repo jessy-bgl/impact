@@ -8,6 +8,6 @@
   "screens": {
     "Emissions": "Emissions",
     "Profile": "Profil",
-    "TransportProfile": "Transports"
+    "Transport": "Transports"
   }
 }
