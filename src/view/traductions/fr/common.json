@@ -3,6 +3,10 @@
   "no": "non",
   "emissions": "Emissions",
   "transport": "Transports",
+  "housing": "Logement",
+  "food": "Alimentation",
+  "goods": "Biens",
+  "others": "Divers",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
   "screens": {

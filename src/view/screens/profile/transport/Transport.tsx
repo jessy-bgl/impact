@@ -1,3 +1,4 @@
+import { ScrollView } from "react-native";
 import { Divider, List } from "react-native-paper";
 
 import { BoatSection } from "./boat/BoatSection";
@@ -10,20 +11,22 @@ import { TwoWheelerSection } from "./two-wheeler/TwoWheelerSection";
 
 export const TransportProfile = () => {
   return (
-    <List.Section>
-      <CarSection />
-      <Divider />
-      <TwoWheelerSection />
-      <Divider />
-      <PlaneSection />
-      <Divider />
-      <BoatSection />
-      <Divider />
-      <TrainSection />
-      <Divider />
-      <HolidaysSection />
-      <Divider />
-      <OtherSection />
-    </List.Section>
+    <ScrollView>
+      <List.Section>
+        <CarSection />
+        <Divider />
+        <TwoWheelerSection />
+        <Divider />
+        <PlaneSection />
+        <Divider />
+        <BoatSection />
+        <Divider />
+        <TrainSection />
+        <Divider />
+        <HolidaysSection />
+        <Divider />
+        <OtherSection />
+      </List.Section>
+    </ScrollView>
   );
 };

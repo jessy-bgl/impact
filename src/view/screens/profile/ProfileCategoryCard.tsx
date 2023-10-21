@@ -6,6 +6,7 @@ import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 import { FootprintByCategory } from "../../view-models/Footprint";
 
 type Props = {
+  title: string;
   footprint: FootprintByCategory;
   icon: IconSource;
   imageSource?: string;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export const ProfileCategoryCard = ({
+  title,
   footprint,
   icon,
   imageSource,
@@ -23,7 +25,7 @@ export const ProfileCategoryCard = ({
   return (
     <Card style={styles.card} onPress={onClick}>
       <Card.Title
-        title={t("transport")}
+        title={title}
         subtitle={`${footprint.footprint} ${t("footprintKgPerYear")}`}
         left={(props: any) => (
           <Avatar.Icon
