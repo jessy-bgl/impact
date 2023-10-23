@@ -15,6 +15,7 @@
     "prettier": "prettier --write",
     "prepare": "husky install .husky",
     "test": "NODE_ENV=test jest",
+    "test:cov": "NODE_ENV=test jest --coverage",
     "deploy": "gh-pages -d web-build",
     "predeploy": "expo export:web && cp ./assets/icon.png ./web-build/icon.png"
   },
