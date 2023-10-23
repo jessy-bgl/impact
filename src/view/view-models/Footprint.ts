@@ -41,7 +41,9 @@ export class FootprintByCategory {
   }
 
   private computePart = (totalFootprint: number) =>
-    Math.floor((this.footprint / totalFootprint) * 100);
+    totalFootprint === 0
+      ? 0
+      : Math.floor((this.footprint / totalFootprint) * 100);
 }
 
 export type Footprints = Record<FootprintCategories, FootprintByCategory>;
