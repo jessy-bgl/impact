@@ -23,8 +23,8 @@
     },
     "fuelTypes": {
       "diesel": "Gazole",
-      "gasoline": "Essence E5 ou E10",
-      "biofuels": "Essence E85"
+      "gasoline": "E5 / E10",
+      "biofuels": "E85"
     }
   }
 }
