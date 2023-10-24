@@ -32,7 +32,7 @@ export const Emissions = () => {
         <EmissionsDataTable footprints={footprints} />
       </View>
 
-      <View style={{ width: "90%", marginTop: 10, marginBottom: 10 }}>
+      <View style={{ width: "90%", marginTop: 20, marginBottom: 20 }}>
         <EmissionsEstimationButton />
       </View>
     </ScrollView>
