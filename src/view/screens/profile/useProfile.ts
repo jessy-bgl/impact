@@ -9,6 +9,6 @@ export const useProfile = () => {
     housingFootprint: footprints[FootprintCategories.HOUSING],
     foodFootprint: footprints[FootprintCategories.FOOD],
     goodsFootprint: footprints[FootprintCategories.GOODS],
-    otherFootprint: footprints[FootprintCategories.OTHER],
+    publicServicesFootprint: footprints[FootprintCategories.PUBLIC_SERVICES],
   };
 };

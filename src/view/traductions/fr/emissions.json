@@ -11,7 +11,7 @@
     "housing": "Logement",
     "food": "Alimentation",
     "goods": "Biens",
-    "other": "Divers"
+    "publicServices": "Services publics"
   },
   "transport": {
     "car": "Voiture",

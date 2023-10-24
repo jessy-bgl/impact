@@ -42,8 +42,8 @@ export const useFootprints = () => {
       transport.annualFootprint,
       totalAnnualFootprint,
     ),
-    other: new FootprintByCategory(
-      FootprintCategories.OTHER,
+    publicServices: new FootprintByCategory(
+      FootprintCategories.PUBLIC_SERVICES,
       transport.annualFootprint,
       totalAnnualFootprint,
     ),

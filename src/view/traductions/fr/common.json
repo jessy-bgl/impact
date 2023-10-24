@@ -6,7 +6,7 @@
   "housing": "Logement",
   "food": "Alimentation",
   "goods": "Biens",
-  "others": "Divers",
+  "publicServices": "Services publics",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
   "screens": {

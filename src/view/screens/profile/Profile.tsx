@@ -17,7 +17,7 @@ export const Profile = () => {
     housingFootprint,
     foodFootprint,
     goodsFootprint,
-    // otherFootprint,
+    // publicServicesFootprint,
   } = useProfile();
   const { navigate } = useNavigation<AppNavigationProp>();
 

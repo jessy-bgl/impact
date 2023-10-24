@@ -3,5 +3,5 @@ export enum FootprintCategories {
   HOUSING = "housing",
   FOOD = "food",
   GOODS = "goods",
-  OTHER = "other",
+  PUBLIC_SERVICES = "publicServices",
 }

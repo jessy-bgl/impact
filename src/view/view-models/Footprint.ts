@@ -32,9 +32,9 @@ export class FootprintByCategory {
         this.icon = "🛍️";
         break;
       }
-      case FootprintCategories.OTHER: {
+      case FootprintCategories.PUBLIC_SERVICES: {
         this.color = "mediumslateblue";
-        this.icon = "🍃";
+        this.icon = "🏛";
         break;
       }
     }
