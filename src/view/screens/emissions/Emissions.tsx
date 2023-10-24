@@ -3,7 +3,6 @@ import { ScrollView, View } from "react-native";
 import { EmissionsDataTable } from "./EmissionsDataTable";
 import { EmissionsDistribution } from "./EmissionsDistribution";
 import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
-import { EmissionsGoal } from "./EmissionsGoal";
 import { EmissionsTitle } from "./EmissionsTitle";
 import { useFootprints } from "../../view-models/useFootprints";
 
@@ -25,9 +24,9 @@ export const Emissions = () => {
         />
       </View>
 
-      <View style={{ width: "90%" }}>
+      {/* <View style={{ width: "90%" }}>
         <EmissionsGoal />
-      </View>
+      </View> */}
 
       <View style={{ width: "90%" }}>
         <EmissionsDataTable footprints={footprints} />
