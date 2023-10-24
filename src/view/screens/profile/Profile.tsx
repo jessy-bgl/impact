@@ -7,6 +7,7 @@ import { useProfile } from "./useProfile";
 import foodImage from "../../../../assets/images/food.svg";
 import goodsImage from "../../../../assets/images/goods.svg";
 import housingImage from "../../../../assets/images/house.svg";
+import publicServicesImage from "../../../../assets/images/public_services.svg";
 import transportImage from "../../../../assets/images/transport.svg";
 import { AppNavigationProp } from "../../../common/AppNavigation";
 
@@ -17,7 +18,7 @@ export const Profile = () => {
     housingFootprint,
     foodFootprint,
     goodsFootprint,
-    // publicServicesFootprint,
+    publicServicesFootprint,
   } = useProfile();
   const { navigate } = useNavigation<AppNavigationProp>();
 
@@ -50,6 +51,13 @@ export const Profile = () => {
           icon="package"
           footprint={goodsFootprint}
           imageSource={goodsImage}
+          onClick={() => navigate("Profile")}
+        />
+        <ProfileCategoryCard
+          title={t("publicServices")}
+          icon="bank"
+          footprint={publicServicesFootprint}
+          imageSource={publicServicesImage}
           onClick={() => navigate("Profile")}
         />
       </View>
