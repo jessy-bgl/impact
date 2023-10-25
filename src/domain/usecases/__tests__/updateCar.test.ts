@@ -30,8 +30,10 @@ describe("updateCar", () => {
       const { updateCar } = createUseUpdateTransport(
         repositories.emissionsRepository,
       )();
+
       // Act
       updateCar({} as Car);
+
       // Assert
       expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
       expect(updateTransportSpy).toHaveBeenCalledTimes(1);
@@ -41,13 +43,15 @@ describe("updateCar", () => {
   it("should update transport with given car data when car have a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectData(fakeTransport);
+    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakeCarWithRegularUser = new Car({ regularUser: true });
     const { updateCar } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
+
     // Act
     updateCar(fakeCarWithRegularUser);
+
     // Assert
     expect(updateTransportSpy).toHaveBeenCalledWith({
       ...fakeTransport,
@@ -58,7 +62,7 @@ describe("updateCar", () => {
   it("should update transport with default car data when car have a non-regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectData(fakeTransport);
+    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const updateTransportSpy = jest.spyOn(
       repositories.emissionsRepository,
       "updateTransport",
@@ -73,8 +77,10 @@ describe("updateCar", () => {
     const { updateCar } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
+
     // Act
     updateCar(fakeCarWithNonRegularUser);
+
     // Assert
     expect(updateTransportSpy).toHaveBeenCalledWith({
       ...fakeTransport,

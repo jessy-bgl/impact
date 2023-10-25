@@ -1,5 +1,7 @@
 import { Car } from "./car/Car";
 
+// TODO : ajouter les autres categories
+
 export enum TransportCategories {
   CAR = "car",
 }
@@ -16,7 +18,6 @@ export class Transport {
   }
 
   public get annualFootprint(): number {
-    // TODO : ajouter les autres categories
     return this.car.annualFootprint;
   }
 }

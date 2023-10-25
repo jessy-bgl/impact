@@ -2,7 +2,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-import { defaultTransport } from "./storeInitialValues";
 import { Transport } from "../../domain/models/transport/Transport";
 
 export type AppState = {
@@ -10,7 +9,7 @@ export type AppState = {
 };
 
 const appStore = (): AppState => ({
-  transport: defaultTransport,
+  transport: new Transport({}),
 });
 
 const middlewares = (f: any) =>
