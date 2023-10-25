@@ -1,4 +1,5 @@
 import { initFakeRepositories } from "../../../common/UsecasesContext";
+import { PublicServices } from "../../models/public-services/PublicServices";
 import { Transport } from "../../models/transport/Transport";
 import { createUseComputeTotalAnnualFootprint } from "../computeTotalAnnualFootprint";
 
@@ -18,16 +19,22 @@ describe("computeTotalAnnualFootprint", () => {
     jest.clearAllMocks();
   });
 
-  it("should return total annual footprint", () => {
+  it("should return a total annual footprint equal the sum of each category annual footprint", () => {
     // Arrange
-    const fakeData = new Transport({});
-    repositories.emissionsRepository.injectData(fakeData);
+    // TODO : ajouter les autres categories
+    const fakeTransport = new Transport({});
+    const fakePublicServices = new PublicServices();
+    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const { computeTotalAnnualFootprint } =
       createUseComputeTotalAnnualFootprint(repositories.emissionsRepository)();
+
     // Act
     const result = computeTotalAnnualFootprint();
+
     // Assert
     expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
-    expect(result).toEqual(fakeData.annualFootprint);
+    const expectedAnnualFootprint =
+      fakeTransport.annualFootprint + fakePublicServices.annualFootprint;
+    expect(result).toEqual(expectedAnnualFootprint);
   });
 });
