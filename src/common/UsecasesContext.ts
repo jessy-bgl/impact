@@ -4,6 +4,7 @@ import { EmissionsInMemoryRepository } from "../data/repositories/EmissionsInMem
 import { EmissionsStoreRepository } from "../data/repositories/EmissionsStoreRepository";
 import { EmissionsRepository } from "../domain/repositories/EmissionsRepository";
 import { createUseComputeTotalAnnualFootprint } from "../domain/usecases/computeTotalAnnualFootprint";
+import { createUseFetchPublicServices } from "../domain/usecases/fetchPublicServices";
 import { createUseFetchTransport } from "../domain/usecases/fetchTransport";
 import { createUseUpdateTransport } from "../domain/usecases/updateTransport";
 
@@ -33,6 +34,7 @@ const initUsecases = (repositories: Repositories) => {
     useUpdateTransport: createUseUpdateTransport(emissionsRepository),
     useComputeTotalAnnualFootprint:
       createUseComputeTotalAnnualFootprint(emissionsRepository),
+    useFetchPublicServices: createUseFetchPublicServices(emissionsRepository),
   };
 };
 
