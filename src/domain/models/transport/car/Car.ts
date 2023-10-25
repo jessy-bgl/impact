@@ -19,6 +19,8 @@ import {
   sharedCarKmPerYear,
   thermalCarManufacturingFootprint,
   thermalMaintenanceFootprint,
+  defaultYears,
+  defaultAveragePassengers,
 } from "./constants";
 
 export type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
@@ -54,13 +56,13 @@ export class Car {
 
   constructor({
     regularUser = true,
-    kmPerYear = averageCarKmPerYear, // km
-    age = 5, // years
+    kmPerYear = averageCarKmPerYear,
+    age = defaultYears,
     size = defaultSize,
     engine = defaultEngine,
     fuelType = defaultFuelType,
     averageFuelConsumption = defaultAverageFuelConsumption.medium, // l/100km
-    averagePassengers = 1.2,
+    averagePassengers = defaultAveragePassengers,
   }: Props) {
     this.regularUser = regularUser;
     this.kmPerYear = kmPerYear;

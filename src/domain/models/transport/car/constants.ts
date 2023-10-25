@@ -6,6 +6,10 @@ export const defaultEngine: CarEngine = "thermal";
 
 export const defaultFuelType: FuelType = "gasoline";
 
+export const defaultYears = 5;
+
+export const defaultAveragePassengers = 1.2;
+
 // l / 100km
 // https://librairie.ademe.fr/mobilite-et-transport/3273-elaboration-selon-les-principes-des-acv-des-bilans-energetiques-des-emissions-de-gaz-a-effet-de-serre-et-des-autres-impacts-environnementaux.html
 export const defaultAverageFuelConsumption: Record<CarSize, number> = {
