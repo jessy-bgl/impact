@@ -8,14 +8,18 @@ import { FootprintCategories } from "../../domain/models/Categories";
 export const useFootprints = () => {
   const appStore = useAppStore((store) => store);
 
-  const { useFetchTransport, useComputeTotalAnnualFootprint } =
-    useContext(UsecasesContext);
+  const {
+    useFetchTransport,
+    useFetchPublicServices,
+    useComputeTotalAnnualFootprint,
+  } = useContext(UsecasesContext);
 
   const { computeTotalAnnualFootprint } = useComputeTotalAnnualFootprint();
   const { fetchTransport } = useFetchTransport();
+  const { fetchPublicServices } = useFetchPublicServices();
 
   const transport = useMemo(() => fetchTransport(), [appStore]);
-
+  const publicServices = useMemo(() => fetchPublicServices(), [appStore]);
   const totalAnnualFootprint = useMemo(
     () => computeTotalAnnualFootprint(),
     [appStore],
@@ -44,7 +48,7 @@ export const useFootprints = () => {
     ),
     publicServices: new FootprintByCategory(
       FootprintCategories.PUBLIC_SERVICES,
-      transport.annualFootprint,
+      publicServices.annualFootprint,
       totalAnnualFootprint,
     ),
   };
