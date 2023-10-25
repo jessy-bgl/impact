@@ -1,8 +1,10 @@
+import { PublicServices } from "../../domain/models/public-services/PublicServices";
 import { Transport } from "../../domain/models/transport/Transport";
 import { EmissionsRepository } from "../../domain/repositories/EmissionsRepository";
 
 export class EmissionsInMemoryRepository implements EmissionsRepository {
   private transport: Transport = new Transport({});
+  private publicServices: PublicServices = new PublicServices();
 
   fetchTransport(): Transport {
     return this.transport;
@@ -12,7 +14,11 @@ export class EmissionsInMemoryRepository implements EmissionsRepository {
     this.transport = new Transport(transport);
   }
 
-  injectData(transport: Transport): void {
+  fetchPublicServices(): PublicServices {
+    return this.publicServices;
+  }
+
+  injectFakeTransport(transport: Transport): void {
     this.transport = new Transport(transport);
   }
 }
