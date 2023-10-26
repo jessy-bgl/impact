@@ -1,9 +1,9 @@
 import { Car } from "../transport/car/Car";
 
 describe("Car", () => {
-  it("should give an annual footprint of 2231 kgCO2e with default values", () => {
+  it("should give an annual footprint of 2239 kgCO2e with default values", () => {
     const car = new Car({});
-    expect(car.annualFootprint).toBe(2231);
+    expect(car.annualFootprint).toBe(2239);
   });
 
   it("should give a default annual footprint of 0 kgCO2e if we drive 0 km / year", () => {

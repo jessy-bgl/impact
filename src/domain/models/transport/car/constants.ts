@@ -1,4 +1,5 @@
 import { CarEngine, CarSize, FuelType } from "./Car";
+import { g45 } from "../constants";
 
 export const defaultSize: CarSize = "medium";
 
@@ -36,18 +37,19 @@ export const sharedCarKmPerYear = 15130;
 // https://librairie.ademe.fr/mobilite-et-transport/1267-bilan-transversal-de-l-impact-de-l-electrification-par-segment.html
 export const defaultCarLifetime = 10; // years
 
-// https://nosgestesclimat.fr/documentation/empreinte-branche/G45?lang=fr
-export const g45 = 6140; // KtCO2e
-export const g45VehiclePart = 0.07;
-
 // https://www.insee.fr/fr/statistiques/2045167#tableau-figure1_radio1
-export const vehiclesInCirculation = 37880000 + 5977000;
+const vehiclesInCirculation = 37880000 + 5977000;
 
 // https://www.citepa.org/fr/secten/
 export const fluorinatedGasEmissions = 1374000000; // kgCO2e
 
+// https://nosgestesclimat.fr/documentation/empreinte-branche/G45?lang=fr
+export const g45VehicleMaintenancePart = 0.07;
+
 export const thermalMaintenanceFootprint =
-  (g45 * g45VehiclePart) / vehiclesInCirculation / averageCarKmPerYear;
+  (g45 * 1000000 * g45VehicleMaintenancePart) /
+  vehiclesInCirculation /
+  averageCarKmPerYear;
 
 export const airConditionerFootprint =
   fluorinatedGasEmissions / vehiclesInCirculation / averageCarKmPerYear;
