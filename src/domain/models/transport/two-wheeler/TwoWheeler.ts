@@ -3,6 +3,7 @@ import {
   thermalMaintenanceFootprint,
   twoWheelerDefaultFootprint,
 } from "./constants";
+import { WithAnnualFootprint } from "../types";
 
 export type TwoWheelerType =
   | "thermalScooter"
@@ -23,7 +24,7 @@ type Props = {
   kmPerYear?: number;
 };
 
-export class TwoWheeler {
+export class TwoWheeler implements WithAnnualFootprint {
   usage: boolean;
   type: TwoWheelerType;
   kmPerYear: number;

@@ -22,6 +22,7 @@ import {
   defaultYears,
   defaultAveragePassengers,
 } from "./constants";
+import { WithAnnualFootprint } from "../types";
 
 export type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
 export const carSizes: CarSize[] = ["small", "medium", "vul", "sedan", "suv"];
@@ -43,7 +44,7 @@ type Props = {
   averagePassengers?: number;
 };
 
-export class Car {
+export class Car implements WithAnnualFootprint {
   regularUser: boolean;
   kmPerYear: number;
   size: CarSize;
