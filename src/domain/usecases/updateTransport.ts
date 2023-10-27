@@ -1,4 +1,5 @@
 import { Car } from "../models/transport/car/Car";
+import { TwoWheeler } from "../models/transport/two-wheeler/TwoWheeler";
 import { EmissionsRepository } from "../repositories/EmissionsRepository";
 
 export const createUseUpdateTransport = (
@@ -15,5 +16,15 @@ export const createUseUpdateTransport = (
       emissionsRepository.updateTransport(newTransport);
     };
 
-    return { updateCar };
+    const updateTwoWheeler = (values: TwoWheeler) => {
+      const newTwoWheeler = new TwoWheeler(values);
+      if (!newTwoWheeler.usage) newTwoWheeler.resetValues();
+
+      const newTransport = emissionsRepository.fetchTransport();
+      newTransport.twoWheeler = newTwoWheeler;
+
+      emissionsRepository.updateTransport(newTransport);
+    };
+
+    return { updateCar, updateTwoWheeler };
   };
