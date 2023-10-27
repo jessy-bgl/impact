@@ -1,4 +1,4 @@
-import { Controller, useWatch } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import {
@@ -22,8 +22,7 @@ import { styles } from "../styles";
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
   const { container, rowContainer, divider, columnContainer } = styles;
-  const { control, handleUpdate } = useCar();
-  const regularUser = useWatch({ control, name: "regularUser" }) === "true";
+  const { control, handleUpdate, regularUser } = useCar();
 
   return (
     <List.Accordion

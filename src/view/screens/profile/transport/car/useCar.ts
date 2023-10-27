@@ -16,7 +16,7 @@ export const useCar = () => {
   const { useUpdateTransport } = useContext(UsecasesContext);
   const { updateCar } = useUpdateTransport();
 
-  const { control, getValues, setValue } = useForm<FormValues>({
+  const { control, getValues, setValue, watch } = useForm<FormValues>({
     defaultValues: {
       kmPerYear: storedCar.kmPerYear.toString(),
       regularUser: storedCar.regularUser.toString(),
@@ -37,5 +37,7 @@ export const useCar = () => {
     updateCar(storedCar);
   };
 
-  return { control, handleUpdate };
+  const regularUser = watch("regularUser") === "true";
+
+  return { control, handleUpdate, regularUser };
 };
