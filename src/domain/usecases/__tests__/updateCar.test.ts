@@ -24,23 +24,21 @@ describe("updateCar", () => {
     jest.clearAllMocks();
   });
 
-  describe("updateCar", () => {
-    it("should call emissionsRepository.fetchTransport and emissionsRepository.updateTransport", () => {
-      // Arrange
-      const { updateCar } = createUseUpdateTransport(
-        repositories.emissionsRepository,
-      )();
+  it("should call emissionsRepository.fetchTransport and emissionsRepository.updateTransport", () => {
+    // Arrange
+    const { updateCar } = createUseUpdateTransport(
+      repositories.emissionsRepository,
+    )();
 
-      // Act
-      updateCar({} as Car);
+    // Act
+    updateCar({} as Car);
 
-      // Assert
-      expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
-      expect(updateTransportSpy).toHaveBeenCalledTimes(1);
-    });
+    // Assert
+    expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
+    expect(updateTransportSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should update transport with given car data when car have a regular user", () => {
+  it("should update transport with given car data for a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
@@ -59,7 +57,7 @@ describe("updateCar", () => {
     });
   });
 
-  it("should update transport with default car data when car have a non-regular user", () => {
+  it("should update transport with default car data for a non-regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
