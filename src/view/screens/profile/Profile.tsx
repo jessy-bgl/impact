@@ -4,15 +4,13 @@ import { View, StyleSheet, ScrollView } from "react-native";
 
 import { ProfileCategoryCard } from "./ProfileCategoryCard";
 import { useProfile } from "./useProfile";
-import foodImage from "../../../../assets/images/food.svg";
-import goodsImage from "../../../../assets/images/goods.svg";
-import housingImage from "../../../../assets/images/house.svg";
-import publicServicesImage from "../../../../assets/images/public_services.svg";
-import transportImage from "../../../../assets/images/transport.svg";
 import { AppNavigationProp } from "../../../common/AppNavigation";
 
 export const Profile = () => {
   const { t } = useTranslation("common");
+
+  const { navigate } = useNavigation<AppNavigationProp>();
+
   const {
     transportFootprint,
     housingFootprint,
@@ -20,44 +18,43 @@ export const Profile = () => {
     goodsFootprint,
     publicServicesFootprint,
   } = useProfile();
-  const { navigate } = useNavigation<AppNavigationProp>();
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <ProfileCategoryCard
           title={t("transport")}
-          icon="car"
+          icon={transportFootprint.materialIcon}
           footprint={transportFootprint}
-          imageSource={transportImage}
+          imageSource={transportFootprint.image}
           onClick={() => navigate("TransportProfile")}
         />
         <ProfileCategoryCard
           title={t("housing")}
-          icon="home"
+          icon={housingFootprint.materialIcon}
           footprint={housingFootprint}
-          imageSource={housingImage}
+          imageSource={housingFootprint.image}
           onClick={() => navigate("Profile")}
         />
         <ProfileCategoryCard
           title={t("food")}
-          icon="food"
+          icon={foodFootprint.materialIcon}
           footprint={foodFootprint}
-          imageSource={foodImage}
+          imageSource={foodFootprint.image}
           onClick={() => navigate("Profile")}
         />
         <ProfileCategoryCard
           title={t("goods")}
-          icon="package"
+          icon={goodsFootprint.materialIcon}
           footprint={goodsFootprint}
-          imageSource={goodsImage}
+          imageSource={goodsFootprint.image}
           onClick={() => navigate("Profile")}
         />
         <ProfileCategoryCard
           title={t("publicServices")}
-          icon="bank"
+          icon={publicServicesFootprint.materialIcon}
           footprint={publicServicesFootprint}
-          imageSource={publicServicesImage}
+          imageSource={publicServicesFootprint.image}
           onClick={() => navigate("Profile")}
         />
       </View>
