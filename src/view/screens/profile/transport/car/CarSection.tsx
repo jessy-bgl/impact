@@ -6,7 +6,6 @@ import {
   TextInput,
   Text,
   SegmentedButtons,
-  Divider,
   HelperText,
   Icon,
 } from "react-native-paper";
@@ -17,11 +16,13 @@ import {
   carSizes,
   fuelTypes,
 } from "../../../../../domain/models/transport/car/Car";
-import { styles } from "../styles";
+import { ColumnContainer } from "../../components/ColumnContainer";
+import { ListContentContainer } from "../../components/ListContentContainer";
+import { ListItemDivider } from "../../components/ListItemDivider";
+import { RowContainer } from "../../components/RowContainer";
 
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
-  const { container, rowContainer, divider, columnContainer } = styles;
   const { control, handleUpdate, regularUser } = useCar();
 
   return (
@@ -29,8 +30,8 @@ export const CarSection = () => {
       title={t("emissions:transport.car")}
       left={(props) => <List.Icon {...props} icon="car" />}
     >
-      <View style={container}>
-        <View style={rowContainer}>
+      <ListContentContainer>
+        <RowContainer>
           <Text variant="labelLarge" style={{ flex: 1.5 }}>
             {t("car.kmPerYear")}
           </Text>
@@ -50,12 +51,12 @@ export const CarSection = () => {
               />
             )}
           />
-        </View>
+        </RowContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={!regularUser ? columnContainer : null}>
-          <View style={rowContainer}>
+        <ColumnContainer>
+          <RowContainer>
             <Text variant="labelLarge">{t("car.regularUser")}</Text>
             <Controller<FormValues>
               name="regularUser"
@@ -75,7 +76,7 @@ export const CarSection = () => {
                 />
               )}
             />
-          </View>
+          </RowContainer>
           {!regularUser && (
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Icon source="information" size={15} />
@@ -87,11 +88,11 @@ export const CarSection = () => {
               </HelperText>
             </View>
           )}
-        </View>
+        </ColumnContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={columnContainer}>
+        <ColumnContainer>
           <Text variant="labelLarge">{t("car.size")}</Text>
           <View>
             <Controller<FormValues>
@@ -133,11 +134,11 @@ export const CarSection = () => {
               )}
             />
           </View>
-        </View>
+        </ColumnContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={columnContainer}>
+        <ColumnContainer>
           <Text variant="labelLarge">{t("car.engine")}</Text>
           <Controller<FormValues>
             name="engine"
@@ -158,11 +159,11 @@ export const CarSection = () => {
               />
             )}
           />
-        </View>
+        </ColumnContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={columnContainer}>
+        <ColumnContainer>
           <Text variant="labelLarge">{t("car.fuelType")}</Text>
           <Controller<FormValues>
             name="fuelType"
@@ -183,11 +184,11 @@ export const CarSection = () => {
               />
             )}
           />
-        </View>
+        </ColumnContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={rowContainer}>
+        <RowContainer>
           <Text variant="labelLarge" style={{ flex: 2 }}>
             {t("car.averageFuelConsumption")}
           </Text>
@@ -208,11 +209,11 @@ export const CarSection = () => {
               />
             )}
           />
-        </View>
+        </RowContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={rowContainer}>
+        <RowContainer>
           <Text variant="labelLarge" style={{ flex: 2 }}>
             {t("car.age")}
           </Text>
@@ -232,11 +233,11 @@ export const CarSection = () => {
               />
             )}
           />
-        </View>
+        </RowContainer>
 
-        <Divider style={divider} />
+        <ListItemDivider />
 
-        <View style={rowContainer}>
+        <RowContainer>
           <Text variant="labelLarge" style={{ flex: 2 }}>
             {t("car.averagePassengers")}
           </Text>
@@ -256,8 +257,8 @@ export const CarSection = () => {
               />
             )}
           />
-        </View>
-      </View>
+        </RowContainer>
+      </ListContentContainer>
     </List.Accordion>
   );
 };
