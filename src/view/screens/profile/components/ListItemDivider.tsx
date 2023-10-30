@@ -1,6 +1,6 @@
 import { Divider } from "react-native-paper";
 
-import { styles } from "../transport/styles";
+import { styles } from "./styles";
 
 export const ListItemDivider = () => {
   const { divider } = styles;

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { View } from "react-native";
 
-import { styles } from "../transport/styles";
+import { styles } from "./styles";
 
 export const RowContainer = ({ children }: PropsWithChildren) => {
   const { rowContainer } = styles;
