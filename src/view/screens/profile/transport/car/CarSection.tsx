@@ -19,15 +19,21 @@ import {
 import { ColumnContainer } from "../../components/ColumnContainer";
 import { ListContentContainer } from "../../components/ListContentContainer";
 import { ListItemDivider } from "../../components/ListItemDivider";
+import { ListTitle } from "../../components/ListTitle";
 import { RowContainer } from "../../components/RowContainer";
 
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
-  const { control, handleUpdate, regularUser } = useCar();
+  const { control, handleUpdate, regularUser, annualFootprint } = useCar();
 
   return (
     <List.Accordion
-      title={t("emissions:transport.car")}
+      title={
+        <ListTitle
+          title={t("emissions:transport.car")}
+          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+        />
+      }
       left={(props) => <List.Icon {...props} icon="car" />}
     >
       <ListContentContainer>

@@ -13,9 +13,9 @@ export type FormValues = Omit<StringifyProperties<Car>, "annualFootprint">;
 
 export const useCar = () => {
   const storedCar = useAppStore((store) => store.transport.car);
-  const storeRegularUser = useAppStore(
-    (store) => store.transport.car.regularUser,
-  );
+  const storedRegularUser = storedCar.regularUser;
+  const annualFootprint = new Car(storedCar).annualFootprint;
+
   const { useUpdateTransport } = useContext(UsecasesContext);
   const { updateCar } = useUpdateTransport();
 
@@ -42,10 +42,10 @@ export const useCar = () => {
   };
 
   useEffect(() => {
-    if (!storeRegularUser) reset(getDefaultValues());
-  }, [storeRegularUser]);
+    if (!storedRegularUser) reset(getDefaultValues());
+  }, [storedRegularUser]);
 
   const regularUser = watch("regularUser") === "true";
 
-  return { control, handleUpdate, regularUser };
+  return { control, handleUpdate, regularUser, annualFootprint };
 };
