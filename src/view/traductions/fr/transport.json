@@ -26,5 +26,16 @@
       "gasoline": "E5 / E10",
       "biofuels": "E85"
     }
+  },
+  "twoWheeler": {
+    "usage": "Utilisez-vous un deux-roues motorisé ?",
+    "type": "Type de deux-roues",
+    "kmPerYear": "Distance parcourue à l'année",
+    "types": {
+      "thermalScooter": "Scooter thermique",
+      "electricScooter": "Scooter électrique",
+      "motorbikeLT250": "Moto < 250cc",
+      "motorbikeGT250": "Moto > 250cc"
+    }
   }
 }
