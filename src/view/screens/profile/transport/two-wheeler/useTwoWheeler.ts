@@ -1,13 +1,11 @@
 import { useContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "../../../../../common/UsecasesContext";
 import { useAppStore } from "../../../../../data/store/store";
 import { TwoWheeler } from "../../../../../domain/models/transport/two-wheeler/TwoWheeler";
-import {
-  StringifyProperties,
-  convertStringToType,
-} from "../../../../../types/utils";
+import { StringifyProperties } from "../../../../../types/utils";
+import { useUpdateForm } from "../../utils/useUpdateForm";
 
 export type FormValues = Omit<
   StringifyProperties<TwoWheeler>,
@@ -22,25 +20,17 @@ export const useTwhoWheeler = () => {
   const { useUpdateTransport } = useContext(UsecasesContext);
   const { updateTwoWheeler } = useUpdateTransport();
 
-  const getDefaultValues = () => ({
+  const getDefaultValues = (): DefaultValues<FormValues> => ({
     kmPerYear: storedTwoWheeler.kmPerYear.toString(),
     type: storedTwoWheeler.type.toString(),
     usage: storedTwoWheeler.usage.toString(),
   });
 
-  const { control, getValues, watch, reset } = useForm<FormValues>({
-    defaultValues: getDefaultValues(),
-  });
-
-  const handleUpdate = (field: keyof FormValues) => {
-    const stringValue = getValues(field);
-    const value = convertStringToType(
-      stringValue,
-      typeof storedTwoWheeler[field],
-    );
-    storedTwoWheeler[field] = value as never;
-    updateTwoWheeler(storedTwoWheeler);
-  };
+  const { handleUpdate, control, watch, reset } = useUpdateForm<TwoWheeler>(
+    getDefaultValues(),
+    storedTwoWheeler,
+    updateTwoWheeler,
+  );
 
   useEffect(() => {
     if (!storedTwoWheelerUsage) reset(getDefaultValues());
