@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import deepMerge from "deepmerge";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
@@ -17,6 +18,8 @@ const middlewares = (f: any) =>
     persist<AppState>(f, {
       name: "app-storage",
       storage: createJSONStorage(() => AsyncStorage),
+      merge: (persistedState, currentState) =>
+        deepMerge(currentState, persistedState as AppState),
     }),
   );
 
