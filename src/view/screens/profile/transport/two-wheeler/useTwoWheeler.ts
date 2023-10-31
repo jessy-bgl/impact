@@ -16,9 +16,8 @@ export type FormValues = Omit<
 
 export const useTwhoWheeler = () => {
   const storedTwoWheeler = useAppStore((store) => store.transport.twoWheeler);
-  const storedTwoWheelerUsage = useAppStore(
-    (store) => store.transport.twoWheeler.usage,
-  );
+  const storedTwoWheelerUsage = storedTwoWheeler.usage;
+  const annualFootprint = new TwoWheeler(storedTwoWheeler).annualFootprint;
 
   const { useUpdateTransport } = useContext(UsecasesContext);
   const { updateTwoWheeler } = useUpdateTransport();
@@ -49,5 +48,5 @@ export const useTwhoWheeler = () => {
 
   const usage = watch("usage") === "true";
 
-  return { control, handleUpdate, usage };
+  return { control, handleUpdate, usage, annualFootprint };
 };

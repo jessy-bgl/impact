@@ -8,15 +8,21 @@ import { TwoWheelerTypes } from "../../../../../domain/models/transport/two-whee
 import { ColumnContainer } from "../../components/ColumnContainer";
 import { ListContentContainer } from "../../components/ListContentContainer";
 import { ListItemDivider } from "../../components/ListItemDivider";
+import { ListTitle } from "../../components/ListTitle";
 import { RowContainer } from "../../components/RowContainer";
 
 export const TwoWheelerSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
-  const { control, handleUpdate, usage } = useTwhoWheeler();
+  const { control, handleUpdate, usage, annualFootprint } = useTwhoWheeler();
 
   return (
     <List.Accordion
-      title={t("emissions:transport.twoWheeler")}
+      title={
+        <ListTitle
+          title={t("emissions:transport.twoWheeler")}
+          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+        />
+      }
       left={(props) => <List.Icon {...props} icon="motorbike" />}
     >
       <ListContentContainer>
