@@ -76,7 +76,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="TODO"
+        name="Actions"
         component={Emissions}
         options={{
           // title: t("screens.Emissions"),
@@ -86,7 +86,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="TODO2"
+        name="Comparateur"
         component={Emissions}
         options={{
           // title: t("screens.Emissions"),
@@ -96,7 +96,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="TODO3"
+        name="Paramètres"
         component={Emissions}
         options={{
           // title: t("screens.Emissions"),
