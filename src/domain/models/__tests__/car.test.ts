@@ -6,7 +6,7 @@ describe("Car", () => {
     expect(car.annualFootprint).toBe(2239);
   });
 
-  it("should give a default annual footprint of 0 kgCO2e if we drive 0 km / year", () => {
+  it("should give an annual footprint of 0 kgCO2e if we drive 0 km / year", () => {
     const car = new Car({ kmPerYear: 0 });
     expect(car.annualFootprint).toBe(0);
   });
