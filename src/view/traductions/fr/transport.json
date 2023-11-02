@@ -37,5 +37,11 @@
       "motorbikeLT250": "Moto < 250cc",
       "motorbikeGT250": "Moto > 250cc"
     }
+  },
+  "plane": {
+    "usage": "Avez-vous pris l'avion au moins une fois ces 3 dernières années ?",
+    "hoursPerYearInShortHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de moins de 2h (court-courrier) ?",
+    "hoursPerYearInMediumHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de 2h à 6h (moyen-courrier) ?",
+    "hoursPerYearInLongHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de plus de 6h (long-courrier) ?"
   }
 }
