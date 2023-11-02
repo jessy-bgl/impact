@@ -51,6 +51,8 @@ export class Plane implements WithAnnualFootprint {
       defaultAverageSpeed["long"] *
       defaultAverageFootprintPerKm["long"];
 
-    return shortHaulFootprint + mediumHaulFootprint + longHaulFootprint;
+    return Math.round(
+      shortHaulFootprint + mediumHaulFootprint + longHaulFootprint,
+    );
   }
 }
