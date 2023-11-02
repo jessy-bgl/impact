@@ -38,7 +38,7 @@ describe("updateTwoWheeler", () => {
     expect(updateTransportSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should update transport with given two-wheeler data for a user", () => {
+  it("should update transport with given two-wheeler data for a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
