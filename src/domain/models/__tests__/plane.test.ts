@@ -6,6 +6,11 @@ describe("Plane", () => {
     expect(plane.annualFootprint).toBe(0);
   });
 
+  it("should give an annual footprint of 0 kgCO2e for a non-user", () => {
+    const plane = new Plane({ usage: false, hoursPerYearInLongHaul: 2 });
+    expect(plane.annualFootprint).toBe(0);
+  });
+
   it("should give an annual footprint of 238 kgCO2e with 2 hours of short haul", () => {
     const plane = new Plane({ usage: true, hoursPerYearInShortHaul: 2 });
     expect(plane.annualFootprint).toBe(238);

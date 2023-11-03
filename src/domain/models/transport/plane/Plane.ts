@@ -36,6 +36,8 @@ export class Plane implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
+    if (!this.usage) return 0;
+
     const shortHaulFootprint =
       this.hoursPerYearInShortHaul *
       defaultAverageSpeed["short"] *
