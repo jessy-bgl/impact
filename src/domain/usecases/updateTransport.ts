@@ -1,3 +1,4 @@
+import { Boat } from "../models/transport/boat/Boat";
 import { Car } from "../models/transport/car/Car";
 import { Plane } from "../models/transport/plane/Plane";
 import { TwoWheeler } from "../models/transport/two-wheeler/TwoWheeler";
@@ -37,5 +38,15 @@ export const createUseUpdateTransport = (
       emissionsRepository.updateTransport(newTransport);
     };
 
-    return { updateCar, updateTwoWheeler, updatePlane };
+    const updateBoat = (values: Boat) => {
+      const newBoat = new Boat(values);
+      if (!newBoat.usage) newBoat.resetValues();
+
+      const newTransport = emissionsRepository.fetchTransport();
+      newTransport.boat = newBoat;
+
+      emissionsRepository.updateTransport(newTransport);
+    };
+
+    return { updateCar, updateTwoWheeler, updatePlane, updateBoat };
   };

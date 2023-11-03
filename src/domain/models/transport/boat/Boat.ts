@@ -15,6 +15,11 @@ export class Boat implements WithAnnualFootprint {
     this.hoursPerYear = hoursPerYear;
   }
 
+  public resetValues() {
+    this.usage = false;
+    this.hoursPerYear = 0;
+  }
+
   public get annualFootprint(): number {
     if (!this.usage) return 0;
     return Math.round(this.hoursPerYear * averageSpeed * averageFootprintPerKm);
