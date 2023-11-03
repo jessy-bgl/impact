@@ -10,6 +10,7 @@ export class EmissionsStoreRepository implements EmissionsRepository {
       car: storedTransport.car,
       twoWheeler: storedTransport.twoWheeler,
       plane: storedTransport.plane,
+      boat: storedTransport.boat,
       // TODO : ajouter les autres catégories
     });
     return transport;
