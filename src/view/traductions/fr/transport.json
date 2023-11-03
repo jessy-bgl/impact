@@ -43,5 +43,9 @@
     "hoursPerYearInShortHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de moins de 2h (court-courrier) ?",
     "hoursPerYearInMediumHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de 2h à 6h (moyen-courrier) ?",
     "hoursPerYearInLongHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de plus de 6h (long-courrier) ?"
+  },
+  "boat": {
+    "usage": "Prenez-vous le ferry?",
+    "hoursPerYear": "Combien d'heures par an voyagez-vous en ferry ou croisière ?"
   }
 }
