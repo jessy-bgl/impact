@@ -43,6 +43,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "^0.19.9",
+    "react-native-webview": "13.2.2",
     "victory": "^36.6.11",
     "victory-native": "^40.0.2",
     "zustand": "^4.4.5"

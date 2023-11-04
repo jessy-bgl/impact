@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next";
-import { Text } from "react-native-paper";
+import { Platform } from "react-native";
+
+import { ComparatorForMobile } from "./ComparatorForMobile";
+import { ComparatorForWeb } from "./ComparatorForWeb";
 
 export const Comparator = () => {
-  const { t } = useTranslation(["common"]);
-
-  return (
-    <Text style={{ textAlign: "center", marginTop: 10 }}>
-      {t("comingSoon")}
-    </Text>
-  );
+  if (Platform.OS === "web") {
+    return <ComparatorForWeb />;
+  } else {
+    return <ComparatorForMobile />;
+  }
 };
