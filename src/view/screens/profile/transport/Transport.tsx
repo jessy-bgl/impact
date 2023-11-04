@@ -3,7 +3,6 @@ import { Divider, List } from "react-native-paper";
 
 import { BoatSection } from "./boat/BoatSection";
 import { CarSection } from "./car/CarSection";
-import { HolidaysSection } from "./holidays/HolidaysSection";
 import { OtherSection } from "./other/OtherSection";
 import { PlaneSection } from "./plane/PlaneSection";
 import { PublicSection } from "./public/PublicSection";
@@ -22,8 +21,6 @@ export const TransportProfile = () => {
         <BoatSection />
         <Divider />
         <PublicSection />
-        <Divider />
-        <HolidaysSection />
         <Divider />
         <OtherSection />
       </List.Section>
