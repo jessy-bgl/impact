@@ -1,9 +1,9 @@
-import { initFakeRepositories } from "../../../common/UsecasesContext";
-import { Transport } from "../../models/transport/Transport";
-import { Car } from "../../models/transport/car/Car";
-import { createUseUpdateTransport } from "../updateTransport";
+import { initFakeRepositories } from "../../../../common/UsecasesContext";
+import { Transport } from "../../../models/transport/Transport";
+import { Plane } from "../../../models/transport/plane/Plane";
+import { createUseUpdateTransport } from "../../updateTransport";
 
-describe("updateCar", () => {
+describe("updatePlane", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
   let updateTransportSpy: jest.SpyInstance;
   let fetchTransportSpy: jest.SpyInstance;
@@ -26,63 +26,63 @@ describe("updateCar", () => {
 
   it("should call emissionsRepository.fetchTransport and emissionsRepository.updateTransport", () => {
     // Arrange
-    const { updateCar } = createUseUpdateTransport(
+    const { updatePlane } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
 
     // Act
-    updateCar({} as Car);
+    updatePlane({} as Plane);
 
     // Assert
     expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
     expect(updateTransportSpy).toHaveBeenCalledTimes(1);
   });
 
-  it("should update transport with given car data for a regular user", () => {
+  it("should update transport with given two-wheeler data for a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
-    const fakeCarWithRegularUser = new Car({ regularUser: true });
-    const { updateCar } = createUseUpdateTransport(
+    const fakePlaneWithUsage = new Plane({
+      usage: true,
+      hoursPerYearInLongHaul: 2,
+      hoursPerYearInMediumHaul: 2,
+      hoursPerYearInShortHaul: 2,
+    });
+    const { updatePlane } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
 
     // Act
-    updateCar(fakeCarWithRegularUser);
+    updatePlane(fakePlaneWithUsage);
 
     // Assert
     expect(updateTransportSpy).toHaveBeenCalledWith({
       ...fakeTransport,
-      car: fakeCarWithRegularUser,
+      plane: fakePlaneWithUsage,
     });
   });
 
-  it("should update transport with default car data for a non-regular user", () => {
+  it("should update transport with default plane data for a non-user", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
-    const updateTransportSpy = jest.spyOn(
-      repositories.emissionsRepository,
-      "updateTransport",
-    );
-    const fakeCarWithNonRegularUser = new Car({
-      regularUser: false,
-      size: "small",
-      engine: "electric",
-      fuelType: "biofuels",
-      averageFuelConsumption: 1,
+    const fakePlaneWithoutUsage = new Plane({
+      usage: false,
+      hoursPerYearInLongHaul: 2,
+      hoursPerYearInMediumHaul: 2,
+      hoursPerYearInShortHaul: 2,
     });
-    const { updateCar } = createUseUpdateTransport(
+    const { updatePlane } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
 
     // Act
-    updateCar(fakeCarWithNonRegularUser);
+    updatePlane(fakePlaneWithoutUsage);
 
     // Assert
     expect(updateTransportSpy).toHaveBeenCalledWith({
       ...fakeTransport,
-      car: { ...new Car({ regularUser: false }) },
+      plane: { ...new Plane({ usage: false }) },
     });
   });
 });

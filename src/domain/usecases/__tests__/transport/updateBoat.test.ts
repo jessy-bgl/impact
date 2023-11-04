@@ -1,9 +1,9 @@
-import { initFakeRepositories } from "../../../common/UsecasesContext";
-import { Transport } from "../../models/transport/Transport";
-import { Plane } from "../../models/transport/plane/Plane";
-import { createUseUpdateTransport } from "../updateTransport";
+import { initFakeRepositories } from "../../../../common/UsecasesContext";
+import { Transport } from "../../../models/transport/Transport";
+import { Boat } from "../../../models/transport/boat/Boat";
+import { createUseUpdateTransport } from "../../updateTransport";
 
-describe("updatePlane", () => {
+describe("updateBoat", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
   let updateTransportSpy: jest.SpyInstance;
   let fetchTransportSpy: jest.SpyInstance;
@@ -26,12 +26,12 @@ describe("updatePlane", () => {
 
   it("should call emissionsRepository.fetchTransport and emissionsRepository.updateTransport", () => {
     // Arrange
-    const { updatePlane } = createUseUpdateTransport(
+    const { updateBoat } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
 
     // Act
-    updatePlane({} as Plane);
+    updateBoat({} as Boat);
 
     // Assert
     expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
@@ -42,23 +42,21 @@ describe("updatePlane", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
-    const fakePlaneWithUsage = new Plane({
+    const fakeBoatWithUsage = new Boat({
       usage: true,
-      hoursPerYearInLongHaul: 2,
-      hoursPerYearInMediumHaul: 2,
-      hoursPerYearInShortHaul: 2,
+      hoursPerYear: 4,
     });
-    const { updatePlane } = createUseUpdateTransport(
+    const { updateBoat } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
 
     // Act
-    updatePlane(fakePlaneWithUsage);
+    updateBoat(fakeBoatWithUsage);
 
     // Assert
     expect(updateTransportSpy).toHaveBeenCalledWith({
       ...fakeTransport,
-      plane: fakePlaneWithUsage,
+      boat: fakeBoatWithUsage,
     });
   });
 
@@ -66,23 +64,21 @@ describe("updatePlane", () => {
     // Arrange
     const fakeTransport = new Transport({});
     repositories.emissionsRepository.injectFakeTransport(fakeTransport);
-    const fakePlaneWithoutUsage = new Plane({
+    const fakeBoatWithoutUsage = new Boat({
       usage: false,
-      hoursPerYearInLongHaul: 2,
-      hoursPerYearInMediumHaul: 2,
-      hoursPerYearInShortHaul: 2,
+      hoursPerYear: 4,
     });
-    const { updatePlane } = createUseUpdateTransport(
+    const { updateBoat } = createUseUpdateTransport(
       repositories.emissionsRepository,
     )();
 
     // Act
-    updatePlane(fakePlaneWithoutUsage);
+    updateBoat(fakeBoatWithoutUsage);
 
     // Assert
     expect(updateTransportSpy).toHaveBeenCalledWith({
       ...fakeTransport,
-      plane: { ...new Plane({ usage: false }) },
+      boat: { ...new Boat({ usage: false }) },
     });
   });
 });

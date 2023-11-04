@@ -1,4 +1,4 @@
-import { PublicTransport } from "../transport/public-transport/PublicTransport";
+import { PublicTransport } from "../../transport/public-transport/PublicTransport";
 
 const testDataset = [
   {

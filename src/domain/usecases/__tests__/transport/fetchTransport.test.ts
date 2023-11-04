@@ -1,5 +1,5 @@
-import { initFakeRepositories } from "../../../common/UsecasesContext";
-import { createUseFetchTransport } from "../fetchTransport";
+import { initFakeRepositories } from "../../../../common/UsecasesContext";
+import { createUseFetchTransport } from "../../fetchTransport";
 
 describe("fetchTransport", () => {
   it("should call emissionsRepository.fetchTransport", () => {

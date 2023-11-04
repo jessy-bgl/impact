@@ -1,4 +1,4 @@
-import { Plane } from "../transport/plane/Plane";
+import { Plane } from "../../transport/plane/Plane";
 
 describe("Plane", () => {
   it("should give an annual footprint of 0 kgCO2e with default values", () => {
