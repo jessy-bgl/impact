@@ -47,5 +47,10 @@
   "boat": {
     "usage": "Prenez-vous le ferry?",
     "hoursPerYear": "Combien d'heures par an voyagez-vous en ferry ou croisière ?"
+  },
+  "public": {
+    "hoursPerYearInTrain": "Combien d'heures par an voyagez-vous en train ?",
+    "hoursPerWeekInBus": "Combien d'heures par semaine voyagez-vous en bus ?",
+    "hoursPerWeekInMetro": "Combien d'heures par semaine voyagez-vous en métro ou tram ?"
   }
 }
