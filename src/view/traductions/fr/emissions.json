@@ -19,7 +19,7 @@
     "plane": "Avion",
     "boat": "Bateau",
     "holidays": "Vacances",
-    "train": "Train",
+    "public": "Transports en commun",
     "other": "Divers"
   }
 }
