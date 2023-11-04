@@ -93,7 +93,9 @@ const TabNavigator = () => {
         options={{
           title: t("screens.Comparator"),
           tabBarIcon: ({ color }) => {
-            return <Icons name="tools" size={iconSize} color={color} />;
+            return (
+              <Icons name="compare-horizontal" size={iconSize} color={color} />
+            );
           },
         }}
       />
