@@ -6,9 +6,12 @@ import {
 } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 
+import { Actions } from "../view/screens/actions/Actions";
+import { Comparator } from "../view/screens/comparator/Comparator";
 import { Emissions } from "../view/screens/emissions/Emissions";
 import { Profile } from "../view/screens/profile/Profile";
 import { TransportProfile } from "../view/screens/profile/transport/Transport";
+import { Settings } from "../view/screens/settings/Settings";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,7 +57,6 @@ const TabNavigator = () => {
     <Tab.Navigator
       initialRouteName="Emissions"
       screenOptions={{
-        // headerShown: false,
         tabBarLabelPosition: "below-icon",
         tabBarStyle: { height: 50, paddingBottom: 5 },
       }}
@@ -77,9 +79,9 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Actions"
-        component={Emissions}
+        component={Actions}
         options={{
-          // title: t("screens.Emissions"),
+          title: t("screens.Actions"),
           tabBarIcon: ({ color }) => {
             return <Icons name="tools" size={iconSize} color={color} />;
           },
@@ -87,9 +89,9 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Comparateur"
-        component={Emissions}
+        component={Comparator}
         options={{
-          // title: t("screens.Emissions"),
+          title: t("screens.Comparator"),
           tabBarIcon: ({ color }) => {
             return <Icons name="tools" size={iconSize} color={color} />;
           },
@@ -97,9 +99,9 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Paramètres"
-        component={Emissions}
+        component={Settings}
         options={{
-          // title: t("screens.Emissions"),
+          title: t("screens.Settings"),
           tabBarIcon: ({ color }) => {
             return <Icons name="tools" size={iconSize} color={color} />;
           },

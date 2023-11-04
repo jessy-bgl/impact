@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { List } from "react-native-paper";
+import { List, Text } from "react-native-paper";
 
 import { ListContentContainer } from "../../components/ListContentContainer";
 
@@ -11,7 +11,9 @@ export const OtherSection = () => {
       title={t("emissions:transport.other")}
       left={(props) => <List.Icon {...props} icon="bike" />}
     >
-      <ListContentContainer />
+      <ListContentContainer>
+        <Text>{t("common:comingSoon")}</Text>
+      </ListContentContainer>
     </List.Accordion>
   );
 };

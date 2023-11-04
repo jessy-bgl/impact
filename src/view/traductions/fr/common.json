@@ -12,6 +12,10 @@
   "screens": {
     "Emissions": "Emissions",
     "Profile": "Profil",
-    "Transport": "Transports"
-  }
+    "Transport": "Transports",
+    "Actions": "Actions",
+    "Comparator": "Comparateur",
+    "Settings": "Paramètres"
+  },
+  "comingSoon": "Bientôt disponible"
 }
