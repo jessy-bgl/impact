@@ -3,7 +3,7 @@ import { List } from "react-native-paper";
 
 import { ListContentContainer } from "../../components/ListContentContainer";
 
-export const PublicSection = () => {
+export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
 
   return (

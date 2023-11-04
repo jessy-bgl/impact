@@ -5,7 +5,7 @@ import { BoatSection } from "./boat/BoatSection";
 import { CarSection } from "./car/CarSection";
 import { OtherSection } from "./other/OtherSection";
 import { PlaneSection } from "./plane/PlaneSection";
-import { PublicSection } from "./public/PublicSection";
+import { PublicTransportSection } from "./public-transport/PublicTransportSection";
 import { TwoWheelerSection } from "./two-wheeler/TwoWheelerSection";
 
 export const TransportProfile = () => {
@@ -20,7 +20,7 @@ export const TransportProfile = () => {
         <Divider />
         <BoatSection />
         <Divider />
-        <PublicSection />
+        <PublicTransportSection />
         <Divider />
         <OtherSection />
       </List.Section>
