@@ -9,9 +9,9 @@ import { useTranslation } from "react-i18next";
 import { Actions } from "../view/screens/actions/Actions";
 import { Comparator } from "../view/screens/comparator/Comparator";
 import { Emissions } from "../view/screens/emissions/Emissions";
+import { Objectives } from "../view/screens/objectives/Objectives";
 import { Profile } from "../view/screens/profile/Profile";
 import { TransportProfile } from "../view/screens/profile/transport/Transport";
-import { Settings } from "../view/screens/settings/Settings";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,8 +82,30 @@ const TabNavigator = () => {
         component={Actions}
         options={{
           title: t("screens.Actions"),
-          tabBarIcon: ({ color }) => {
-            return <Icons name="tools" size={iconSize} color={color} />;
+          tabBarIcon: ({ focused, color }) => {
+            return (
+              <Icons
+                name={focused ? "spa" : "spa-outline"}
+                size={iconSize}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Objectifs"
+        component={Objectives}
+        options={{
+          title: t("screens.Objectives"),
+          tabBarIcon: ({ focused, color }) => {
+            return (
+              <Icons
+                name={focused ? "check-circle" : "check-circle-outline"}
+                size={iconSize}
+                color={color}
+              />
+            );
           },
         }}
       />
@@ -96,16 +118,6 @@ const TabNavigator = () => {
             return (
               <Icons name="compare-horizontal" size={iconSize} color={color} />
             );
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Paramètres"
-        component={Settings}
-        options={{
-          title: t("screens.Settings"),
-          tabBarIcon: ({ color }) => {
-            return <Icons name="tools" size={iconSize} color={color} />;
           },
         }}
       />

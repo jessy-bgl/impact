@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Text } from "react-native-paper";
 
-export const Settings = () => {
+export const Objectives = () => {
   const { t } = useTranslation(["common"]);
 
   return (
