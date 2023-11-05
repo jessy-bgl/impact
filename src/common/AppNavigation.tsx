@@ -85,7 +85,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
-                name={focused ? "spa" : "spa-outline"}
+                name={focused ? "check-circle" : "check-circle-outline"}
                 size={iconSize}
                 color={color}
               />
@@ -101,7 +101,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
-                name={focused ? "check-circle" : "check-circle-outline"}
+                name={focused ? "medal" : "medal-outline"}
                 size={iconSize}
                 color={color}
               />
