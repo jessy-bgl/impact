@@ -11,11 +11,11 @@ export const ComparatorForWeb = () => {
     script.async = true;
 
     script.onload = () => {
-      const uselessDivToRemvoe = document
+      const uselessDivToRemove = document
         .getElementById("ademe-comparator")
         ?.querySelector("div")
         ?.querySelector("div");
-      uselessDivToRemvoe?.remove();
+      uselessDivToRemove?.remove();
     };
 
     scriptContainer.appendChild(script);
