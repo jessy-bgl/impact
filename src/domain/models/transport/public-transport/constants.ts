@@ -3,8 +3,6 @@ export const averageTrainFootprintPerKm = (0.0296 + 0.00236) / 2;
 
 export const defaultHoursPerYearInTrain = 1000;
 
-export const weeksInYear = 52;
-
 // cf Base Carbone 04/04/2022 (SNCF)
 const metroFootprintPerKm = 0.00329;
 
