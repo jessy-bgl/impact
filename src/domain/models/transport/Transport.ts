@@ -4,15 +4,6 @@ import { Plane } from "./plane/Plane";
 import { PublicTransport } from "./public-transport/PublicTransport";
 import { TwoWheeler } from "./two-wheeler/TwoWheeler";
 
-// TODO : ajouter les autres categories
-
-export enum TransportCategories {
-  CAR = "car",
-  TWO_WHEELER = "two-wheeler",
-  PLANE = "plane",
-  PUBLIC_TRANSPORT = "public-transport",
-}
-
 type Props = {
   car?: Car;
   twoWheeler?: TwoWheeler;
