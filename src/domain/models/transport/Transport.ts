@@ -3,6 +3,7 @@ import { Car } from "./car/Car";
 import { Plane } from "./plane/Plane";
 import { PublicTransport } from "./public-transport/PublicTransport";
 import { TwoWheeler } from "./two-wheeler/TwoWheeler";
+import { WithAnnualFootprint } from "./types";
 
 type Props = {
   car?: Car;
@@ -12,7 +13,7 @@ type Props = {
   publicTransport?: PublicTransport;
 };
 
-export class Transport {
+export class Transport implements WithAnnualFootprint {
   car: Car;
   twoWheeler: TwoWheeler;
   plane: Plane;
