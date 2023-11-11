@@ -1,5 +1,5 @@
 import {
-  lunchesAndDinersPerWeekByProfile,
+  lunchesAndDinersPerWeekByDiet,
   defaultLunchesAndDinersPerWeek,
   veganMealFootprint,
   vegetarianMealFootprint,
@@ -21,9 +21,9 @@ import {
   MilkType,
   LunchesAndDinersPerWeek,
   Frequency,
-  MealProfile,
-  Diets,
   Diet,
+  MealTypes,
+  MealType,
 } from "./types";
 import { daysInYear, weeksInYear } from "../../constants";
 import { WithAnnualFootprint } from "../../transport/types";
@@ -63,54 +63,63 @@ export class Meals implements WithAnnualFootprint {
     else this.milkType = milkType;
   }
 
-  public setMealProfile(mealProfile: MealProfile): void {
-    this.lunchesAndDinersPerWeek =
-      lunchesAndDinersPerWeekByProfile(mealProfile);
+  public setDiet(diet: Diet): void {
+    this.lunchesAndDinersPerWeek = lunchesAndDinersPerWeekByDiet(diet);
   }
 
-  private get lunchesAndDinersWeeklyFootprint(): number {
+  private get lunchesAndDinersAnnualFootprint(): number {
+    return this.lunchesAndDinersWeeklyFootprint * weeksInYear;
+  }
+
+  public get lunchesAndDinersWeeklyFootprint(): number {
     let weeklyFootprint = 0;
-    for (const diet in Diets) {
+    for (const mealType of MealTypes) {
       let mealFootprint = 0;
       let mealFootprintReduction = 0;
-      if (diet === "vegan") {
+      if (mealType === "vegan") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[diet as Diet] * veganMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType as MealType] *
+          veganMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.12 *
           localProductsFootprintReductionRate(this.localProducts);
-      } else if (diet === "vegetarian") {
+      } else if (mealType === "vegetarian") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[diet as Diet] * vegetarianMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType as MealType] *
+          vegetarianMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.08 *
           localProductsFootprintReductionRate(this.localProducts);
-      } else if (diet === "whiteMeat") {
+      } else if (mealType === "whiteMeat") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[diet as Diet] * whiteMeatMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType as MealType] *
+          whiteMeatMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.03 *
           localProductsFootprintReductionRate(this.localProducts);
-      } else if (diet === "redMeat") {
+      } else if (mealType === "redMeat") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[diet as Diet] * redMeatMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType as MealType] *
+          redMeatMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.01 *
           localProductsFootprintReductionRate(this.localProducts);
-      } else if (diet === "fish") {
+      } else if (mealType === "fattyFish") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[diet as Diet] * fishMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType as MealType] *
+          fishMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.05 *
           localProductsFootprintReductionRate(this.localProducts);
-      } else if (diet === "whiteFish") {
+      } else if (mealType === "whiteFish") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[diet as Diet] * whiteFishMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType as MealType] *
+          whiteFishMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.06 *
@@ -118,14 +127,14 @@ export class Meals implements WithAnnualFootprint {
       }
       weeklyFootprint += mealFootprint - mealFootprintReduction;
     }
-    return weeklyFootprint;
+    return Number(weeklyFootprint.toFixed(2));
   }
 
-  private get lunchesAndDinersAnnualFootprint(): number {
-    return this.lunchesAndDinersWeeklyFootprint * weeksInYear;
+  private get breakfastAnnualFootprint(): number {
+    return this.breakfastFootprint * daysInYear;
   }
 
-  private get breakfastFootprint(): number {
+  public get breakfastFootprint(): number {
     switch (this.breakfast) {
       case "continental": {
         return continentalBreakfastFootprint;
@@ -146,10 +155,6 @@ export class Meals implements WithAnnualFootprint {
         return 0;
       }
     }
-  }
-
-  private get breakfastAnnualFootprint(): number {
-    return this.breakfastFootprint * daysInYear;
   }
 
   private get seasonalProductsAnnualFootprint(): number {

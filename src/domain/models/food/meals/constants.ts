@@ -1,23 +1,18 @@
-import {
-  MealProfile,
-  LunchesAndDinersPerWeek,
-  MilkType,
-  Frequency,
-} from "./types";
+import { Diet, LunchesAndDinersPerWeek, MilkType, Frequency } from "./types";
 
 // https://nosgestesclimat.fr/documentation/alimentation/plats
 // https://www.bilans-ges.ademe.fr/documentation/UPLOAD_DOC_FR/index.htm?repas.htm
-export const lunchesAndDinersPerWeekByProfile = (
-  mealProfile: MealProfile,
+export const lunchesAndDinersPerWeekByDiet = (
+  diet: Diet,
 ): LunchesAndDinersPerWeek => {
-  switch (mealProfile) {
+  switch (diet) {
     case "vegan": {
       return {
         vegan: 14,
         vegetarian: 0,
         whiteMeat: 0,
         redMeat: 0,
-        fish: 0,
+        fattyFish: 0,
         whiteFish: 0,
       };
     }
@@ -27,7 +22,7 @@ export const lunchesAndDinersPerWeekByProfile = (
         vegetarian: 11,
         whiteMeat: 0,
         redMeat: 0,
-        fish: 0,
+        fattyFish: 0,
         whiteFish: 0,
       };
     }
@@ -37,7 +32,7 @@ export const lunchesAndDinersPerWeekByProfile = (
         vegetarian: 7,
         whiteMeat: 4,
         redMeat: 0,
-        fish: 1,
+        fattyFish: 1,
         whiteFish: 1,
       };
     }
@@ -47,7 +42,7 @@ export const lunchesAndDinersPerWeekByProfile = (
         vegetarian: 4,
         whiteMeat: 6,
         redMeat: 2,
-        fish: 1,
+        fattyFish: 1,
         whiteFish: 1,
       };
     }
@@ -57,7 +52,7 @@ export const lunchesAndDinersPerWeekByProfile = (
         vegetarian: 0,
         whiteMeat: 6,
         redMeat: 6,
-        fish: 1,
+        fattyFish: 1,
         whiteFish: 1,
       };
     }
@@ -68,7 +63,7 @@ export const lunchesAndDinersPerWeekByProfile = (
 };
 
 export const defaultLunchesAndDinersPerWeek: LunchesAndDinersPerWeek =
-  lunchesAndDinersPerWeekByProfile("regularMeatConsumer");
+  lunchesAndDinersPerWeekByDiet("regularMeatConsumer");
 
 // https://docs.google.com/spreadsheets/d/1SVYvBaaYDOUDcg5jX0eZFEColnWWIL8PCLMGrPR000o/edit#gid=1694091424
 export const veganMealFootprint = 0.785;

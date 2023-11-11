@@ -1,18 +1,18 @@
-export type Diet =
+export type MealType =
   | "vegetarian"
   | "vegan"
   | "whiteMeat"
   | "redMeat"
   | "whiteFish"
-  | "fish";
+  | "fattyFish";
 
-export const Diets: Diet[] = [
+export const MealTypes: MealType[] = [
   "vegetarian",
   "vegan",
   "whiteMeat",
   "redMeat",
   "whiteFish",
-  "fish",
+  "fattyFish",
 ];
 
 export type BreakfastType =
@@ -32,14 +32,24 @@ export const BreakfastTypes: BreakfastType[] = [
 
 export type MilkType = "cow" | "soy" | "oat";
 
-export type MealProfile =
+export const MilkTypes: MilkType[] = ["cow", "soy", "oat"];
+
+export type Diet =
   | "vegetarian"
   | "vegan"
   | "littleMeatConsumer"
   | "regularMeatConsumer"
   | "heavyMeatConsumer";
 
+export const Diets: Diet[] = [
+  "vegan",
+  "vegetarian",
+  "littleMeatConsumer",
+  "regularMeatConsumer",
+  "heavyMeatConsumer",
+];
+
 // the total must be equal to 14 (2 meals per day * 7 days)
-export type LunchesAndDinersPerWeek = Record<Diet, number>;
+export type LunchesAndDinersPerWeek = Record<MealType, number>;
 
 export type Frequency = "never" | "sometimes" | "often" | "always";
