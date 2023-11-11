@@ -90,11 +90,11 @@ export const milkAndCerealsBreakfastFootprint = (milkType: MilkType) => {
     case "cow": {
       return 0.468;
     }
-    case "soy": {
-      return 0.292;
-    }
     case "oat": {
       return 0.312;
+    }
+    case "soy": {
+      return 0.292;
     }
     default: {
       return 0.468;

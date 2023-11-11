@@ -6,6 +6,7 @@ import {
   Diet,
   Diets,
   BreakfastType,
+  MilkType,
 } from "../../../food/meals/types";
 
 describe("Meals", () => {
@@ -52,15 +53,16 @@ describe("Meals", () => {
   });
 
   describe("breakfast footprint", () => {
-    it.each<[number, BreakfastType]>(
-      breakfastDataset.map(({ expectedFootprint, type }) => [
+    it.each<[number, BreakfastType, MilkType]>(
+      breakfastDataset.map(({ expectedFootprint, type, milkType = "cow" }) => [
         expectedFootprint,
         type,
+        milkType,
       ]),
     )(
-      "should give a footprint equal to %d kgCO2e for a %s breakfast",
-      (expectedFootprint, breakfastType) => {
-        const meals = new Meals({ breakfast: breakfastType });
+      "should give a footprint equal to %d kgCO2e for a %s breakfast and %s milk",
+      (expectedFootprint, breakfastType, milkType) => {
+        const meals = new Meals({ breakfast: breakfastType, milkType });
         expect(meals.breakfastFootprint).toEqual(expectedFootprint);
       },
     );

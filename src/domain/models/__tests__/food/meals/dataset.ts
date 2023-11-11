@@ -1,4 +1,9 @@
-import { Diet, Frequency, BreakfastType } from "../../../food/meals/types";
+import {
+  Diet,
+  Frequency,
+  BreakfastType,
+  MilkType,
+} from "../../../food/meals/types";
 
 export const lunchesAndDinersDataset: {
   diet: Diet;
@@ -98,10 +103,13 @@ export const lunchesAndDinersDataset: {
 export const breakfastDataset: {
   type: BreakfastType;
   expectedFootprint: number;
+  milkType?: MilkType;
 }[] = [
   { type: "none", expectedFootprint: 0 },
   { type: "continental", expectedFootprint: 0.289 },
-  { type: "milk & cereals", expectedFootprint: 0.468 },
+  { type: "milk & cereals", milkType: "cow", expectedFootprint: 0.468 },
+  { type: "milk & cereals", milkType: "oat", expectedFootprint: 0.312 },
+  { type: "milk & cereals", milkType: "soy", expectedFootprint: 0.292 },
   { type: "british", expectedFootprint: 1.124 },
   { type: "vegan", expectedFootprint: 0.419 },
 ];
