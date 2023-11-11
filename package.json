@@ -59,6 +59,7 @@
     "gh-pages": "^6.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
     "workbox-background-sync": "^7.0.0",
     "workbox-broadcast-update": "^7.0.0",
