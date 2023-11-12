@@ -6,8 +6,8 @@ import {
   Diet,
   Diets,
   BreakfastType,
-  MilkType,
 } from "../../../food/meals/types";
+import { MilkType } from "../../../food/types";
 
 describe("Meals", () => {
   describe("setDiet - lunches and diners per week by diet", () => {
