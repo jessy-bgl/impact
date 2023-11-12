@@ -18,7 +18,6 @@ import {
 } from "./constants";
 import {
   BreakfastType,
-  MilkType,
   LunchesAndDinersPerWeek,
   Frequency,
   Diet,
@@ -27,6 +26,7 @@ import {
 } from "./types";
 import { daysInYear, weeksInYear } from "../../constants";
 import { WithAnnualFootprint } from "../../transport/types";
+import { MilkType } from "../types";
 
 type Props = {
   breakfast?: BreakfastType;

@@ -1,4 +1,5 @@
-import { Diet, LunchesAndDinersPerWeek, MilkType, Frequency } from "./types";
+import { Diet, LunchesAndDinersPerWeek, Frequency } from "./types";
+import { MilkType } from "../types";
 
 // https://nosgestesclimat.fr/documentation/alimentation/plats
 // https://www.bilans-ges.ademe.fr/documentation/UPLOAD_DOC_FR/index.htm?repas.htm
