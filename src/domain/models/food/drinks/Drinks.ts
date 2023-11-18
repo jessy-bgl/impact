@@ -8,6 +8,7 @@ import {
   sweetDrinkCoef,
 } from "./constants";
 import { weeksInYear } from "../../constants";
+import { WithAnnualFootprint } from "../../transport/types";
 import { MilkType } from "../types";
 
 export type HotDrink = "coffee" | "tea" | "chocolate";
@@ -23,7 +24,7 @@ type Props = {
   milkType?: MilkType;
 };
 
-export class Drinks {
+export class Drinks implements WithAnnualFootprint {
   hotDrinksPerWeek: HotDrinksPerWeek;
   bottledWater: boolean;
   sodaLitersPerWeek: number;
