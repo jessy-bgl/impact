@@ -14,7 +14,7 @@ export class FootprintByCategory {
   public image: string = "";
   public materialIcon: IconSource;
 
-  constructor(
+  private constructor(
     public category: FootprintCategories,
     public footprint: number,
     totalFootprint: number,
@@ -57,6 +57,60 @@ export class FootprintByCategory {
         break;
       }
     }
+  }
+
+  static forTransport(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintByCategory {
+    return new FootprintByCategory(
+      FootprintCategories.TRANSPORT,
+      footprint,
+      totalFootprint,
+    );
+  }
+
+  static forFood(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintByCategory {
+    return new FootprintByCategory(
+      FootprintCategories.FOOD,
+      footprint,
+      totalFootprint,
+    );
+  }
+  static forHousing(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintByCategory {
+    return new FootprintByCategory(
+      FootprintCategories.HOUSING,
+      footprint,
+      totalFootprint,
+    );
+  }
+
+  static forGoods(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintByCategory {
+    return new FootprintByCategory(
+      FootprintCategories.GOODS,
+      footprint,
+      totalFootprint,
+    );
+  }
+
+  static forPublicServices(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintByCategory {
+    return new FootprintByCategory(
+      FootprintCategories.PUBLIC_SERVICES,
+      footprint,
+      totalFootprint,
+    );
   }
 
   private computePart = (totalFootprint: number) =>
