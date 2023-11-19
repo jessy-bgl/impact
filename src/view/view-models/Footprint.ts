@@ -12,111 +12,105 @@ export class FootprintByCategory {
   public icon: string = "";
   public part: number;
   public image: string = "";
-  public materialIcon: IconSource;
+  public materialIcon: IconSource = "";
 
-  private constructor(
+  protected constructor(
     public category: FootprintCategories,
     public footprint: number,
     totalFootprint: number,
   ) {
     this.part = this.computePart(totalFootprint);
-    switch (category) {
-      case FootprintCategories.TRANSPORT: {
-        this.color = "sandybrown";
-        this.icon = "🚗";
-        this.materialIcon = "car";
-        this.image = transportImage;
-        break;
-      }
-      case FootprintCategories.FOOD: {
-        this.color = "plum";
-        this.icon = "🍲";
-        this.materialIcon = "food";
-        this.image = foodImage;
-        break;
-      }
-      case FootprintCategories.HOUSING: {
-        this.color = "cadetblue";
-        this.icon = "🏠";
-        this.materialIcon = "home";
-        this.image = housingImage;
-        break;
-      }
-      case FootprintCategories.GOODS: {
-        this.color = "khaki";
-        this.icon = "🛍️";
-        this.materialIcon = "package";
-        this.image = goodsImage;
-        break;
-      }
-      case FootprintCategories.PUBLIC_SERVICES: {
-        this.color = "mediumslateblue";
-        this.icon = "🏛";
-        this.materialIcon = "bank";
-        this.image = publicServicesImage;
-        break;
-      }
-    }
   }
 
   static forTransport(
     footprint: number,
     totalFootprint: number,
   ): FootprintByCategory {
-    return new FootprintByCategory(
-      FootprintCategories.TRANSPORT,
-      footprint,
-      totalFootprint,
-    );
+    return new FootprintCategoryTransport(footprint, totalFootprint);
   }
 
   static forFood(
     footprint: number,
     totalFootprint: number,
   ): FootprintByCategory {
-    return new FootprintByCategory(
-      FootprintCategories.FOOD,
-      footprint,
-      totalFootprint,
-    );
+    return new FootprintCategoryFood(footprint, totalFootprint);
   }
+
   static forHousing(
     footprint: number,
     totalFootprint: number,
   ): FootprintByCategory {
-    return new FootprintByCategory(
-      FootprintCategories.HOUSING,
-      footprint,
-      totalFootprint,
-    );
+    return new FootprintCategoryHousing(footprint, totalFootprint);
   }
 
   static forGoods(
     footprint: number,
     totalFootprint: number,
   ): FootprintByCategory {
-    return new FootprintByCategory(
-      FootprintCategories.GOODS,
-      footprint,
-      totalFootprint,
-    );
+    return new FootprintCategoryGoods(footprint, totalFootprint);
   }
 
   static forPublicServices(
     footprint: number,
     totalFootprint: number,
   ): FootprintByCategory {
-    return new FootprintByCategory(
-      FootprintCategories.PUBLIC_SERVICES,
-      footprint,
-      totalFootprint,
-    );
+    return new FootprintCategoryPublicServices(footprint, totalFootprint);
   }
 
   private computePart = (totalFootprint: number) =>
     totalFootprint === 0
       ? 0
       : Math.floor((this.footprint / totalFootprint) * 100);
+}
+
+class FootprintCategoryTransport extends FootprintByCategory {
+  constructor(footprint: number, totalFootprint: number) {
+    super(FootprintCategories.TRANSPORT, footprint, totalFootprint);
+    this.color = "sandybrown";
+    this.icon = "🚗";
+    this.materialIcon = "car";
+    this.image = transportImage;
+  }
+}
+
+class FootprintCategoryFood extends FootprintByCategory {
+  constructor(footprint: number, totalFootprint: number) {
+    super(FootprintCategories.FOOD, footprint, totalFootprint);
+    this.color = "plum";
+    this.icon = "🍲";
+    this.materialIcon = "food";
+    this.image = foodImage;
+  }
+}
+
+class FootprintCategoryHousing extends FootprintByCategory {
+  constructor(footprint: number, totalFootprint: number) {
+    super(FootprintCategories.HOUSING, footprint, totalFootprint);
+    this.color = "cadetblue";
+    this.icon = "🏠";
+    this.materialIcon = "home";
+    this.image = housingImage;
+  }
+}
+
+class FootprintCategoryGoods extends FootprintByCategory {
+  constructor(footprint: number, totalFootprint: number) {
+    super(FootprintCategories.GOODS, footprint, totalFootprint);
+    this.color = "khaki";
+    this.icon = "🛍️";
+    this.materialIcon = "package";
+    this.image = goodsImage;
+  }
+}
+
+class FootprintCategoryPublicServices extends FootprintByCategory {
+  constructor(footprint: number, totalFootprint: number) {
+    super(FootprintCategories.PUBLIC_SERVICES, footprint, totalFootprint);
+    this.color = "mediumslateblue";
+    this.icon = "🏛";
+    this.materialIcon = "bank";
+    this.image = publicServicesImage;
+  }
 }
 
 export type Footprints = Record<FootprintCategories, FootprintByCategory>;
