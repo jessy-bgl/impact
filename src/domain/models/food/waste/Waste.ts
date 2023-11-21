@@ -22,17 +22,14 @@ export const WasteBonuses: WasteBonus[] = [
   "stopAdvertisingSticker",
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-type WasteBonuses = Record<WasteBonus, boolean>;
-
 type Props = {
   quantity?: WasteQuantity;
-  wasteBonuses?: WasteBonuses;
+  wasteBonuses?: Record<WasteBonus, boolean>;
 };
 
 export class Waste implements WithAnnualFootprint {
   quantity: WasteQuantity;
-  wasteBonuses: WasteBonuses;
+  wasteBonuses: Record<WasteBonus, boolean>;
 
   constructor({ quantity, wasteBonuses }: Props) {
     this.quantity = quantity ?? "base";
@@ -45,7 +42,7 @@ export class Waste implements WithAnnualFootprint {
 
   public get annualFootprint(): number {
     if (this.quantity === "zero") return zeroWasteFootprint;
-    else return this.wasteFootprint;
+    else return Math.round(this.wasteFootprint);
   }
 
   private get wasteFootprint(): number {

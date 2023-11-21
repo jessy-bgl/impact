@@ -1,5 +1,5 @@
 // https://nosgestesclimat.fr/documentation/alimentation/d%C3%A9chets/niveau-z%C3%A9ro-d%C3%A9chets
-export const zeroWasteFootprint = 48.04;
+export const zeroWasteFootprint = 48;
 
 // https://nosgestesclimat.fr/documentation/alimentation/d%C3%A9chets/niveau-moyen
 export const householdWasteFootprint = 96.02;
