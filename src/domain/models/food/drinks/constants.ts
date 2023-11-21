@@ -49,8 +49,6 @@ const milkFootprint = (milkType: MilkType): number => {
     case "oat":
       // https://agribalyse.ademe.fr/app/aliments/18905#Boisson_à_base_d'avoine,_nature
       return 0.54;
-    default:
-      return 1.32;
   }
 };
 
