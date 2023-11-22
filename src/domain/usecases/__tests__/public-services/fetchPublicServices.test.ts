@@ -1,5 +1,5 @@
-import { initFakeRepositories } from "../../../common/UsecasesContext";
-import { createUseFetchPublicServices } from "../fetchPublicServices";
+import { initFakeRepositories } from "../../../../common/UsecasesContext";
+import { createUseFetchPublicServices } from "../../fetchPublicServices";
 
 describe("fetchPublicServices", () => {
   it("should call emissionsRepository.fetchPublicServices", () => {
