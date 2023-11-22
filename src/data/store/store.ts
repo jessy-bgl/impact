@@ -3,14 +3,17 @@ import deepMerge from "deepmerge";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
+import { Food } from "../../domain/models/food/Food";
 import { Transport } from "../../domain/models/transport/Transport";
 
 export type AppState = {
   transport: Transport;
+  food: Food;
 };
 
 const appStore = (): AppState => ({
   transport: new Transport({}),
+  food: new Food({}),
 });
 
 const middlewares = (f: any) =>
