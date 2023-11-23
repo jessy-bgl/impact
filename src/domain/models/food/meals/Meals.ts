@@ -67,6 +67,14 @@ export class Meals implements WithAnnualFootprint {
     this.lunchesAndDinersPerWeek = lunchesAndDinersPerWeekByDiet(diet);
   }
 
+  public get annualFootprint(): number {
+    return Math.round(
+      this.lunchesAndDinersAnnualFootprint +
+        this.breakfastAnnualFootprint +
+        this.seasonalProductsBonus,
+    );
+  }
+
   private get lunchesAndDinersAnnualFootprint(): number {
     return this.lunchesAndDinersWeeklyFootprint * weeksInYear;
   }
@@ -157,7 +165,7 @@ export class Meals implements WithAnnualFootprint {
     }
   }
 
-  private get seasonalProductsAnnualFootprint(): number {
+  private get seasonalProductsBonus(): number {
     return this.seasonalFactor * this.seasonPart;
   }
 
@@ -171,14 +179,6 @@ export class Meals implements WithAnnualFootprint {
     return (
       seasonalPercentage *
       (this.breakfastAnnualFootprint + this.lunchesAndDinersAnnualFootprint)
-    );
-  }
-
-  public get annualFootprint(): number {
-    return Math.round(
-      this.lunchesAndDinersAnnualFootprint +
-        this.breakfastAnnualFootprint +
-        this.seasonalProductsAnnualFootprint,
     );
   }
 }
