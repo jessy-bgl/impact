@@ -31,4 +31,8 @@ export class EmissionsInMemoryRepository implements EmissionsRepository {
   injectFakeTransport(transport: Transport): void {
     this.transport = new Transport(transport);
   }
+
+  injectFakeFood(food: Food): void {
+    this.food = new Food(food);
+  }
 }
