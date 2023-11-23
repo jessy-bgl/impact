@@ -6,11 +6,16 @@ export const createUseComputeTotalAnnualFootprint = (
   function useComputeTotalAnnualFootprint() {
     const computeTotalAnnualFootprint = (): number => {
       const transport = emissionsRepository.fetchTransport();
+      const food = emissionsRepository.fetchFood();
       const publicServices = emissionsRepository.fetchPublicServices();
 
       // TODO : ajouter les autres catégories
 
-      return transport.annualFootprint + publicServices.annualFootprint;
+      return (
+        transport.annualFootprint +
+        food.annualFootprint +
+        publicServices.annualFootprint
+      );
     };
 
     return { computeTotalAnnualFootprint };
