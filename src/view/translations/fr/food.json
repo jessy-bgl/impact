@@ -1,0 +1,12 @@
+{
+  "breakfast": {
+    "type": "Type de petit-déjeuner",
+    "types": {
+      "continental": "🥖🥐",
+      "british": "🥓🥚",
+      "vegan": "🥝🍌",
+      "milk & cereals": "🥣🥛",
+      "none": "Aucun"
+    }
+  }
+}

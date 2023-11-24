@@ -13,6 +13,9 @@
     "Emissions": "Emissions",
     "Profile": "Profil",
     "Transport": "Transports",
+    "Housing": "Logement",
+    "Food": "Alimentation",
+    "Goods": "Biens",
     "Actions": "Actions",
     "Comparator": "Comparateur",
     "Objectives": "Objectifs"

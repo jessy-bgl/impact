@@ -15,7 +15,7 @@ import { AppTheme } from "./AppTheme";
 import { AppNavigation } from "./src/common/AppNavigation";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 
-import "./src/view/traductions/i18n";
+import "./src/view/translations/i18n";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 

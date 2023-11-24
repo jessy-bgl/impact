@@ -20,5 +20,10 @@
     "boat": "Bateau",
     "public": "Transports en commun",
     "other": "Divers"
+  },
+  "food": {
+    "meals": "Repas",
+    "drinks": "Boissons",
+    "waste": "Déchets"
   }
 }
