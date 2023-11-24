@@ -38,7 +38,7 @@ type Props = {
 
 export class Meals implements WithAnnualFootprint {
   breakfast: BreakfastType;
-  milkType?: MilkType;
+  milkType: MilkType;
   lunchesAndDinersPerWeek: LunchesAndDinersPerWeek;
   localProducts: Frequency;
   seasonalProducts: Frequency;
@@ -59,8 +59,7 @@ export class Meals implements WithAnnualFootprint {
 
     this.seasonalProducts = seasonalProducts ?? "never";
 
-    if (breakfast === "milk & cereals") this.milkType = milkType ?? "cow";
-    else this.milkType = milkType;
+    this.milkType = milkType ?? "cow";
   }
 
   public setDiet(diet: Diet): void {
