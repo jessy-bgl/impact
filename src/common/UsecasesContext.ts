@@ -4,8 +4,10 @@ import { EmissionsInMemoryRepository } from "../data/repositories/EmissionsInMem
 import { EmissionsStoreRepository } from "../data/repositories/EmissionsStoreRepository";
 import { EmissionsRepository } from "../domain/repositories/EmissionsRepository";
 import { createUseComputeTotalAnnualFootprint } from "../domain/usecases/computeTotalAnnualFootprint";
+import { createUseFetchFood } from "../domain/usecases/fetchFood";
 import { createUseFetchPublicServices } from "../domain/usecases/fetchPublicServices";
 import { createUseFetchTransport } from "../domain/usecases/fetchTransport";
+import { createUseUpdateFood } from "../domain/usecases/updateFood";
 import { createUseUpdateTransport } from "../domain/usecases/updateTransport";
 
 const isTestMode = process.env.NODE_ENV === "test";
@@ -32,6 +34,8 @@ const initUsecases = (repositories: Repositories) => {
   return {
     useFetchTransport: createUseFetchTransport(emissionsRepository),
     useUpdateTransport: createUseUpdateTransport(emissionsRepository),
+    useFetchFood: createUseFetchFood(emissionsRepository),
+    useUpdateFood: createUseUpdateFood(emissionsRepository),
     useComputeTotalAnnualFootprint:
       createUseComputeTotalAnnualFootprint(emissionsRepository),
     useFetchPublicServices: createUseFetchPublicServices(emissionsRepository),
