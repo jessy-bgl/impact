@@ -11,6 +11,7 @@ import { Comparator } from "../view/screens/comparator/Comparator";
 import { Emissions } from "../view/screens/emissions/Emissions";
 import { Objectives } from "../view/screens/objectives/Objectives";
 import { Profile } from "../view/screens/profile/Profile";
+import { FoodProfile } from "../view/screens/profile/food/Food";
 import { TransportProfile } from "../view/screens/profile/transport/Transport";
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ type RootStackParamList = {
   Home: undefined;
   Profile: undefined;
   TransportProfile: undefined;
+  FoodProfile: undefined;
 };
 
 export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -45,6 +47,11 @@ export const AppNavigation = () => {
         name="TransportProfile"
         component={TransportProfile}
         options={{ title: t("screens.Transport") }}
+      />
+      <Stack.Screen
+        name="FoodProfile"
+        component={FoodProfile}
+        options={{ title: t("screens.Food") }}
       />
     </Stack.Navigator>
   );

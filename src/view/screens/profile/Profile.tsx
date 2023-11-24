@@ -41,7 +41,7 @@ export const Profile = () => {
           icon={foodFootprint.materialIcon}
           footprint={foodFootprint}
           imageSource={foodFootprint.image}
-          onClick={() => navigate("Profile")}
+          onClick={() => navigate("FoodProfile")}
         />
         <ProfileCategoryCard
           title={t("goods")}

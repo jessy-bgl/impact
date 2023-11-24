@@ -7,6 +7,22 @@
       "vegan": "🥝🍌",
       "milk & cereals": "🥣🥛",
       "none": "Aucun"
+    },
+    "milkType": "Type de lait",
+    "milkTypes": {
+      "cow": "🐄",
+      "soy": "🌱",
+      "oat": "🌾"
+    }
+  },
+  "diet": {
+    "type": "Type de régime alimentaire",
+    "types": {
+      "vegan": "Vegan",
+      "vegetarian": "Végétarien",
+      "littleMeatConsumer": "Peu de viande",
+      "regularMeatConsumer": "Viande régulièrement",
+      "heavyMeatConsumer": "Beaucoup de viande"
     }
   }
 }
