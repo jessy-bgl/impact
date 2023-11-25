@@ -7,8 +7,8 @@ import {
   defaultHotDrinksPerWeek,
   sweetDrinkCoef,
 } from "./constants";
-import { weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../../types";
+import { weeksInYear } from "@domain/models/constants";
+import { WithAnnualFootprint } from "@domain/models/types";
 import { MilkType } from "../types";
 
 export type HotDrink = "coffee" | "tea" | "chocolate";

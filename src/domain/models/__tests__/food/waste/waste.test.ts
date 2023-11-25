@@ -1,5 +1,9 @@
 import { wasteWithBonusesDataset, wasteWithoutBonusDataset } from "./dataset";
-import { Waste, WasteBonus, WasteQuantity } from "../../../food/waste/Waste";
+import {
+  Waste,
+  WasteBonus,
+  WasteQuantity,
+} from "@domain/models/food/waste/Waste";
 
 describe("Waste", () => {
   describe("Waste without bonus", () => {

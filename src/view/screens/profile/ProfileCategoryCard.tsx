@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { FootprintByCategory } from "../../view-models/Footprint";
+import { FootprintByCategory } from "@view/view-models/Footprint";
 
 type Props = {
   title: string;

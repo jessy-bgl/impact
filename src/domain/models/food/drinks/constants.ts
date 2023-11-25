@@ -1,5 +1,5 @@
 import { HotDrinksPerWeek } from "./Drinks";
-import { daysInYear } from "../../constants";
+import { daysInYear } from "@domain/models/constants";
 import { MilkType } from "../types";
 
 export const defaultHotDrinksPerWeek: HotDrinksPerWeek = {

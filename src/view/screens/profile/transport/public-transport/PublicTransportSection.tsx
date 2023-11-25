@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { List, Text, TextInput } from "react-native-paper";
 
 import { FormValues, usePublicTransport } from "./usePublicTransport";
-import { ListContentContainer } from "../../components/ListContentContainer";
-import { ListItemDivider } from "../../components/ListItemDivider";
-import { ListTitle } from "../../components/ListTitle";
-import { RowContainer } from "../../components/RowContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { ListTitle } from "@view/screens/profile/components/ListTitle";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 
 export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);

@@ -15,12 +15,12 @@ import {
   carEngines,
   carSizes,
   fuelTypes,
-} from "../../../../../domain/models/transport/car/Car";
-import { ColumnContainer } from "../../components/ColumnContainer";
-import { ListContentContainer } from "../../components/ListContentContainer";
-import { ListItemDivider } from "../../components/ListItemDivider";
-import { ListTitle } from "../../components/ListTitle";
-import { RowContainer } from "../../components/RowContainer";
+} from "@domain/models/transport/car/Car";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { ListTitle } from "@view/screens/profile/components/ListTitle";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);

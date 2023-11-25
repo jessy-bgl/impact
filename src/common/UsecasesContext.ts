@@ -1,14 +1,14 @@
 import { createContext } from "react";
 
-import { EmissionsInMemoryRepository } from "../data/repositories/EmissionsInMemoryRepository";
-import { EmissionsStoreRepository } from "../data/repositories/EmissionsStoreRepository";
-import { EmissionsRepository } from "../domain/repositories/EmissionsRepository";
-import { createUseComputeTotalAnnualFootprint } from "../domain/usecases/computeTotalAnnualFootprint";
-import { createUseFetchFood } from "../domain/usecases/fetchFood";
-import { createUseFetchPublicServices } from "../domain/usecases/fetchPublicServices";
-import { createUseFetchTransport } from "../domain/usecases/fetchTransport";
-import { createUseUpdateFood } from "../domain/usecases/updateFood";
-import { createUseUpdateTransport } from "../domain/usecases/updateTransport";
+import { EmissionsInMemoryRepository } from "@data/repositories/EmissionsInMemoryRepository";
+import { EmissionsStoreRepository } from "@data/repositories/EmissionsStoreRepository";
+import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/computeTotalAnnualFootprint";
+import { createUseFetchFood } from "@domain/usecases/fetchFood";
+import { createUseFetchPublicServices } from "@domain/usecases/fetchPublicServices";
+import { createUseFetchTransport } from "@domain/usecases/fetchTransport";
+import { createUseUpdateFood } from "@domain/usecases/updateFood";
+import { createUseUpdateTransport } from "@domain/usecases/updateTransport";
 
 const isTestMode = process.env.NODE_ENV === "test";
 

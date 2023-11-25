@@ -1,5 +1,5 @@
 import { drinksDataset } from "./dataset";
-import { Drinks } from "../../../food/drinks/Drinks";
+import { Drinks } from "@domain/models/food/drinks/Drinks";
 
 describe("Drinks", () => {
   it.each<[number, Drinks]>(

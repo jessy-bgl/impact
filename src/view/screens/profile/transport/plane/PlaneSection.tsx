@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
 
 import { FormValues, usePlane } from "./usePlane";
-import { ListContentContainer } from "../../components/ListContentContainer";
-import { ListItemDivider } from "../../components/ListItemDivider";
-import { ListTitle } from "../../components/ListTitle";
-import { RowContainer } from "../../components/RowContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { ListTitle } from "@view/screens/profile/components/ListTitle";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 
 export const PlaneSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);

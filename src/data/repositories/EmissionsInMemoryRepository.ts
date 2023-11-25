@@ -1,7 +1,7 @@
-import { Food } from "../../domain/models/food/Food";
-import { PublicServices } from "../../domain/models/public-services/PublicServices";
-import { Transport } from "../../domain/models/transport/Transport";
-import { EmissionsRepository } from "../../domain/repositories/EmissionsRepository";
+import { Food } from "@domain/models/food/Food";
+import { PublicServices } from "@domain/models/public-services/PublicServices";
+import { Transport } from "@domain/models/transport/Transport";
+import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
 
 export class EmissionsInMemoryRepository implements EmissionsRepository {
   private transport: Transport = new Transport({});

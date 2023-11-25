@@ -7,7 +7,7 @@ import {
   stopAdvertisingStickerBonus,
   zeroWasteFootprint,
 } from "./constants";
-import { WithAnnualFootprint } from "../../types";
+import { WithAnnualFootprint } from "@domain/models/types";
 
 export type WasteQuantity = "base" | "reduction" | "zero";
 

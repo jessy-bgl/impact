@@ -4,8 +4,8 @@ import {
   defaultHoursPerYearInTrain,
   averageMetroFootprintPerHour,
 } from "./constants";
-import { weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../../types";
+import { weeksInYear } from "@domain/models/constants";
+import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
   hoursPerYearInTrain?: number;

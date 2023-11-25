@@ -6,13 +6,13 @@ import {
 } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 
-import { Actions } from "../view/screens/actions/Actions";
-import { Comparator } from "../view/screens/comparator/Comparator";
-import { Emissions } from "../view/screens/emissions/Emissions";
-import { Objectives } from "../view/screens/objectives/Objectives";
-import { Profile } from "../view/screens/profile/Profile";
-import { FoodProfile } from "../view/screens/profile/food/Food";
-import { TransportProfile } from "../view/screens/profile/transport/Transport";
+import { Actions } from "@view/screens/actions/Actions";
+import { Comparator } from "@view/screens/comparator/Comparator";
+import { Emissions } from "@view/screens/emissions/Emissions";
+import { Objectives } from "@view/screens/objectives/Objectives";
+import { Profile } from "@view/screens/profile/Profile";
+import { FoodProfile } from "@view/screens/profile/food/Food";
+import { TransportProfile } from "@view/screens/profile/transport/Transport";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

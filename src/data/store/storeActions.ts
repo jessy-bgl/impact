@@ -1,6 +1,6 @@
 import { useAppStore } from "./store";
-import { Food } from "../../domain/models/food/Food";
-import { Transport } from "../../domain/models/transport/Transport";
+import { Food } from "@domain/models/food/Food";
+import { Transport } from "@domain/models/transport/Transport";
 
 export const appStoreActions = {
   getTransport: () => useAppStore.getState().transport,

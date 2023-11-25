@@ -4,7 +4,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 
 import { ProfileCategoryCard } from "./ProfileCategoryCard";
 import { useProfile } from "./useProfile";
-import { AppNavigationProp } from "../../../common/AppNavigation";
+import { AppNavigationProp } from "@common/AppNavigation";
 
 export const Profile = () => {
   const { t } = useTranslation("common");

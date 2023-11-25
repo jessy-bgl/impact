@@ -4,7 +4,7 @@ import { EmissionsDataTable } from "./EmissionsDataTable";
 import { EmissionsDistribution } from "./EmissionsDistribution";
 import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
 import { EmissionsTitle } from "./EmissionsTitle";
-import { useFootprints } from "../../view-models/useFootprints";
+import { useFootprints } from "@view/view-models/useFootprints";
 
 export const Emissions = () => {
   const { footprints, totalAnnualFootprint } = useFootprints();

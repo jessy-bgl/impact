@@ -1,4 +1,4 @@
-import { WasteBonus, WasteQuantity } from "../../../food/waste/Waste";
+import { WasteBonus, WasteQuantity } from "@domain/models/food/waste/Waste";
 
 export const wasteWithoutBonusDataset: {
   quantity: WasteQuantity;

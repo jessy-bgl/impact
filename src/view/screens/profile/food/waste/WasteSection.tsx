@@ -4,11 +4,11 @@ import { View } from "react-native";
 import { Checkbox, List, RadioButton, Text } from "react-native-paper";
 
 import { FormValues, useWaste } from "./useWaste";
-import { WasteQuantity } from "../../../../../domain/models/food/waste/Waste";
-import { ColumnContainer } from "../../components/ColumnContainer";
-import { ListContentContainer } from "../../components/ListContentContainer";
-import { ListItemDivider } from "../../components/ListItemDivider";
-import { ListTitle } from "../../components/ListTitle";
+import { WasteQuantity } from "@domain/models/food/waste/Waste";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { ListTitle } from "@view/screens/profile/components/ListTitle";
 
 export const WasteSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);

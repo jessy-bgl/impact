@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 import { VictoryLabel, VictoryPie } from "victory";
 
-import { Footprints } from "../../view-models/Footprint";
+import { Footprints } from "@view/view-models/Footprint";
 
 const pieWidth = 250;
 const pieHeight = 250;

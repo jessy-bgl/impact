@@ -1,4 +1,5 @@
 const createExpoWebpackConfigAsync = require("@expo/webpack-config");
+const fs = require("fs");
 const path = require("path");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
@@ -9,8 +10,21 @@ module.exports = async function (env, argv) {
   // Create the default config
   const config = await createExpoWebpackConfigAsync(env, argv);
 
-  // resolve victory-native as victory for the Web app
-  config.resolve.alias["victory-native"] = "victory";
+  config.resolve.alias = {
+    // resolve victory-native as victory for the Web app
+    "victory-native": "victory",
+  };
+
+  // Retrieve aliases from tsconfig
+  const rawTsConfig = fs.readFileSync("tsconfig.json", "utf8");
+  const jsonAliases = JSON.parse(rawTsConfig).compilerOptions.paths;
+
+  for (const alias in jsonAliases) {
+    const key = alias.substring(0, alias.length - 2);
+    let value = jsonAliases[alias][0];
+    value = value.substring(2, value.length - 2);
+    config.resolve.alias[key] = path.resolve(__dirname, value);
+  }
 
   if (isEnvProduction) {
     config.plugins.push(

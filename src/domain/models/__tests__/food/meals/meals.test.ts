@@ -1,13 +1,13 @@
 import { breakfastDataset, lunchesAndDinersDataset } from "./dataset";
-import { Meals } from "../../../food/meals/Meals";
-import { lunchesAndDinersPerWeekByDiet } from "../../../food/meals/constants";
+import { Meals } from "@domain/models/food/meals/Meals";
+import { lunchesAndDinersPerWeekByDiet } from "@domain/models/food/meals/constants";
 import {
   Frequency,
   Diet,
   Diets,
   BreakfastType,
-} from "../../../food/meals/types";
-import { MilkType } from "../../../food/types";
+} from "@domain/models/food/meals/types";
+import { MilkType } from "@domain/models/food/types";
 
 describe("Meals", () => {
   describe("setDiet - lunches and diners per week by diet", () => {

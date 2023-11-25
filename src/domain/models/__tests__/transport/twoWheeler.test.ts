@@ -1,4 +1,4 @@
-import { TwoWheeler } from "../../transport/two-wheeler/TwoWheeler";
+import { TwoWheeler } from "@domain/models/transport/two-wheeler/TwoWheeler";
 
 describe("TwoWheeler", () => {
   it("should consider we are not using it by default", () => {

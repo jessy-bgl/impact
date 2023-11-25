@@ -23,8 +23,8 @@ import {
   MealTypes,
   MealType,
 } from "./types";
-import { daysInYear, weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../../types";
+import { daysInYear, weeksInYear } from "@domain/models/constants";
+import { WithAnnualFootprint } from "@domain/models/types";
 import { MilkType } from "../types";
 
 type Props = {

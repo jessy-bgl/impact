@@ -1,11 +1,11 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import foodImage from "../../../assets/images/food.svg";
-import goodsImage from "../../../assets/images/goods.svg";
-import housingImage from "../../../assets/images/house.svg";
-import publicServicesImage from "../../../assets/images/public_services.svg";
-import transportImage from "../../../assets/images/transport.svg";
-import { FootprintCategories } from "../../domain/models/Categories";
+import foodImage from "@assets/images/food.svg";
+import goodsImage from "@assets/images/goods.svg";
+import housingImage from "@assets/images/house.svg";
+import publicServicesImage from "@assets/images/public_services.svg";
+import transportImage from "@assets/images/transport.svg";
+import { FootprintCategories } from "@domain/models/Categories";
 
 export class FootprintByCategory {
   public color: string = "";

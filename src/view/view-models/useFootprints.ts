@@ -1,8 +1,8 @@
 import { useContext, useMemo } from "react";
 
 import { FootprintByCategory, Footprints } from "./Footprint";
-import { UsecasesContext } from "../../common/UsecasesContext";
-import { useAppStore } from "../../data/store/store";
+import { UsecasesContext } from "@common/UsecasesContext";
+import { useAppStore } from "@data/store/store";
 
 export const useFootprints = () => {
   const appStore = useAppStore((store) => store);

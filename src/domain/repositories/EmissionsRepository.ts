@@ -1,6 +1,6 @@
-import { Food } from "../models/food/Food";
-import { PublicServices } from "../models/public-services/PublicServices";
-import { Transport } from "../models/transport/Transport";
+import { Food } from "@domain/models/food/Food";
+import { PublicServices } from "@domain/models/public-services/PublicServices";
+import { Transport } from "@domain/models/transport/Transport";
 
 export interface EmissionsRepository {
   fetchTransport(): Transport;
