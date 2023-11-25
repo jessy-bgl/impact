@@ -41,7 +41,7 @@ export const EmissionsDistribution = ({
         style={{ fontSize: 20, fill: colors.onBackground }}
         x={pieWidth / 2}
         y={pieHeight / 2}
-        text={`${(totalFootprint / 1000).toFixed(2)}\ntCO2/${t("year")}`}
+        text={`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
       />
     </svg>
   );
