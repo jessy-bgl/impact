@@ -4,10 +4,14 @@ import { View } from "react-native";
 import { List, SegmentedButtons, Text } from "react-native-paper";
 
 import { FormValues, useMeals } from "./useMeals";
-import { BreakfastTypes } from "../../../../../domain/models/food/meals/types";
+import {
+  BreakfastTypes,
+  Diets,
+} from "../../../../../domain/models/food/meals/types";
 import { MilkTypes } from "../../../../../domain/models/food/types";
 import { ColumnContainer } from "../../components/ColumnContainer";
 import { ListContentContainer } from "../../components/ListContentContainer";
+import { ListItemDivider } from "../../components/ListItemDivider";
 import { ListTitle } from "../../components/ListTitle";
 
 export const MealsSection = () => {
@@ -86,6 +90,50 @@ export const MealsSection = () => {
               />
             )}
           />
+        </ColumnContainer>
+
+        <ListItemDivider />
+
+        <ColumnContainer>
+          <Text variant="labelLarge">{t("diet.type")}</Text>
+          <View>
+            <Controller<FormValues>
+              name="diet"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("diet");
+                  }}
+                  buttons={Diets.slice(0, 3).map((type) => ({
+                    value: type,
+                    label: t(`diet.types.${type}`),
+                  }))}
+                />
+              )}
+            />
+            <Controller<FormValues>
+              name="diet"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("diet");
+                  }}
+                  buttons={Diets.slice(3, 5).map((type) => ({
+                    value: type,
+                    label: t(`diet.types.${type}`),
+                  }))}
+                />
+              )}
+            />
+          </View>
         </ColumnContainer>
       </ListContentContainer>
     </List.Accordion>

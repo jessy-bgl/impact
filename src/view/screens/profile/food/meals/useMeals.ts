@@ -8,10 +8,7 @@ import { BreakfastType } from "../../../../../domain/models/food/meals/types";
 import { StringifyProperties } from "../../../../../types/utils";
 import { useUpdateForm } from "../../utils/useUpdateForm";
 
-export type FormValues = Omit<
-  StringifyProperties<Meals>,
-  "annualFootprint" | "lunchesAndDinersPerWeek"
->;
+export type FormValues = Omit<StringifyProperties<Meals>, "annualFootprint">;
 
 export const useMeals = () => {
   const storedMeals = useAppStore((store) => store.food.meals);
