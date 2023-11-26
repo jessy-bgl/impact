@@ -12,11 +12,10 @@ import { MilkType } from "../../../food/types";
 describe("Meals", () => {
   describe("setDiet - lunches and diners per week by diet", () => {
     it.each<Diet>(Diets)(
-      "should update lunchesAndDinersPerWeek with %s diet default values " +
-        "and a total of 14 meals when calling 'setDiet' method",
+      "should set lunchesAndDinersPerWeek according to %s diet " +
+        "and the a total of meals per week should be 14",
       (diet) => {
-        const meal = new Meals({});
-        meal.setDiet(diet);
+        const meal = new Meals({ diet });
         expect(meal.lunchesAndDinersPerWeek).toEqual(
           lunchesAndDinersPerWeekByDiet(diet),
         );
@@ -41,10 +40,7 @@ describe("Meals", () => {
     )(
       `should give a weekly footprint equal to %i kgCO2e for a %s diet with a frequency of local products consommation of "%s"`,
       (expectedWeeklyFootprint, diet, localProducts) => {
-        const meals = new Meals({
-          localProducts,
-          lunchesAndDinersPerWeek: lunchesAndDinersPerWeekByDiet(diet),
-        });
+        const meals = new Meals({ localProducts, diet });
         expect(meals.lunchesAndDinersWeeklyFootprint).toEqual(
           expectedWeeklyFootprint,
         );
@@ -72,8 +68,8 @@ describe("Meals", () => {
     const meals = new Meals({
       breakfast: "continental",
       localProducts: "never",
+      diet: "regularMeatConsumer",
     });
-    meals.setDiet("regularMeatConsumer");
 
     it.each<[number, Frequency]>([
       [1773, "never"],

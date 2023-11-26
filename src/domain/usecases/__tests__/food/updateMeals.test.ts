@@ -1,7 +1,6 @@
 import { initFakeRepositories } from "../../../../common/UsecasesContext";
 import { Food } from "../../../models/food/Food";
 import { Meals } from "../../../models/food/meals/Meals";
-import { defaultLunchesAndDinersPerWeek } from "../../../models/food/meals/constants";
 import { createUseUpdateFood } from "../../updateFood";
 
 describe("updateMeals", () => {
@@ -42,7 +41,7 @@ describe("updateMeals", () => {
       seasonalProducts: "always",
       breakfast: "british",
       localProducts: "always",
-      lunchesAndDinersPerWeek: defaultLunchesAndDinersPerWeek,
+      diet: "vegetarian",
     });
 
     const { updateMeals } = createUseUpdateFood(

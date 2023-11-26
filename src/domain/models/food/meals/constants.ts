@@ -57,14 +57,8 @@ export const lunchesAndDinersPerWeekByDiet = (
         whiteFish: 1,
       };
     }
-    default: {
-      return defaultLunchesAndDinersPerWeek;
-    }
   }
 };
-
-export const defaultLunchesAndDinersPerWeek: LunchesAndDinersPerWeek =
-  lunchesAndDinersPerWeekByDiet("regularMeatConsumer");
 
 // https://docs.google.com/spreadsheets/d/1SVYvBaaYDOUDcg5jX0eZFEColnWWIL8PCLMGrPR000o/edit#gid=1694091424
 export const veganMealFootprint = 0.785;

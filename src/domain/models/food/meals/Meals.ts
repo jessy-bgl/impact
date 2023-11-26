@@ -1,6 +1,5 @@
 import {
   lunchesAndDinersPerWeekByDiet,
-  defaultLunchesAndDinersPerWeek,
   veganMealFootprint,
   vegetarianMealFootprint,
   whiteMeatMealFootprint,
@@ -31,7 +30,7 @@ import { MilkType } from "../types";
 type Props = {
   breakfast?: BreakfastType;
   milkType?: MilkType;
-  lunchesAndDinersPerWeek?: LunchesAndDinersPerWeek;
+  diet?: Diet;
   localProducts?: Frequency;
   seasonalProducts?: Frequency;
 };
@@ -39,6 +38,7 @@ type Props = {
 export class Meals implements WithAnnualFootprint {
   breakfast: BreakfastType;
   milkType: MilkType;
+  diet: Diet;
   lunchesAndDinersPerWeek: LunchesAndDinersPerWeek;
   localProducts: Frequency;
   seasonalProducts: Frequency;
@@ -46,24 +46,16 @@ export class Meals implements WithAnnualFootprint {
   constructor({
     breakfast,
     milkType,
-    lunchesAndDinersPerWeek,
+    diet,
     localProducts,
     seasonalProducts,
   }: Props) {
     this.breakfast = breakfast ?? "continental";
-
-    this.lunchesAndDinersPerWeek =
-      lunchesAndDinersPerWeek ?? defaultLunchesAndDinersPerWeek;
-
+    this.diet = diet ?? "regularMeatConsumer";
+    this.lunchesAndDinersPerWeek = lunchesAndDinersPerWeekByDiet(this.diet);
     this.localProducts = localProducts ?? "never";
-
     this.seasonalProducts = seasonalProducts ?? "never";
-
     this.milkType = milkType ?? "cow";
-  }
-
-  public setDiet(diet: Diet): void {
-    this.lunchesAndDinersPerWeek = lunchesAndDinersPerWeekByDiet(diet);
   }
 
   public get annualFootprint(): number {
