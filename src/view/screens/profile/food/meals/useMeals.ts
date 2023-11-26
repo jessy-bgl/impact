@@ -8,7 +8,10 @@ import { BreakfastType } from "../../../../../domain/models/food/meals/types";
 import { StringifyProperties } from "../../../../../types/utils";
 import { useUpdateForm } from "../../utils/useUpdateForm";
 
-export type FormValues = Omit<StringifyProperties<Meals>, "annualFootprint">;
+export type FormValues = Omit<
+  StringifyProperties<Meals>,
+  "annualFootprint" | "lunchesAndDinersPerWeek"
+>;
 
 export const useMeals = () => {
   const storedMeals = useAppStore((store) => store.food.meals);
@@ -21,16 +24,15 @@ export const useMeals = () => {
   const getDefaultValues = (): DefaultValues<FormValues> => ({
     breakfast: storedMeals.breakfast,
     milkType: storedMeals.milkType,
-    lunchesAndDinersPerWeek: storedMeals.lunchesAndDinersPerWeek.toString(),
+    diet: storedMeals.diet,
     localProducts: storedMeals.localProducts,
     seasonalProducts: storedMeals.seasonalProducts,
   });
 
-  const { handleUpdate, control, watch, setValue } = useUpdateForm<Meals>(
-    getDefaultValues(),
-    storedMeals,
-    updateMeals,
-  );
+  const { handleUpdate, control, watch, setValue } = useUpdateForm<
+    Meals,
+    FormValues
+  >(getDefaultValues(), storedMeals, updateMeals);
 
   useEffect(() => {
     if (storedBreakfast !== "milk & cereals") {

@@ -28,11 +28,10 @@ export const useCar = () => {
     averageFuelConsumption: storedCar.averageFuelConsumption.toString(),
   });
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<Car>(
-    getDefaultValues(),
-    storedCar,
-    updateCar,
-  );
+  const { handleUpdate, control, watch, reset } = useUpdateForm<
+    Car,
+    FormValues
+  >(getDefaultValues(), storedCar, updateCar);
 
   useEffect(() => {
     if (!storedRegularUser) reset(getDefaultValues());

@@ -26,11 +26,10 @@ export const useTwhoWheeler = () => {
     usage: storedTwoWheeler.usage.toString(),
   });
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<TwoWheeler>(
-    getDefaultValues(),
-    storedTwoWheeler,
-    updateTwoWheeler,
-  );
+  const { handleUpdate, control, watch, reset } = useUpdateForm<
+    TwoWheeler,
+    FormValues
+  >(getDefaultValues(), storedTwoWheeler, updateTwoWheeler);
 
   useEffect(() => {
     if (!storedTwoWheelerUsage) reset(getDefaultValues());

@@ -22,11 +22,10 @@ export const useBoat = () => {
     hoursPerYear: storedBoat.hoursPerYear.toString(),
   });
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<Boat>(
-    getDefaultValues(),
-    storedBoat,
-    updateBoat,
-  );
+  const { handleUpdate, control, watch, reset } = useUpdateForm<
+    Boat,
+    FormValues
+  >(getDefaultValues(), storedBoat, updateBoat);
 
   useEffect(() => {
     if (!storedBoatUsage) reset(getDefaultValues());

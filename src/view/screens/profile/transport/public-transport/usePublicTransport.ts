@@ -28,7 +28,7 @@ export const usePublicTransport = () => {
     hoursPerWeekInMetro: storedPublicTransport.hoursPerWeekInMetro.toString(),
   });
 
-  const { handleUpdate, control } = useUpdateForm<PublicTransport>(
+  const { handleUpdate, control } = useUpdateForm<PublicTransport, FormValues>(
     getDefaultValues(),
     storedPublicTransport,
     updatePublicTransport,

@@ -24,11 +24,10 @@ export const usePlane = () => {
     hoursPerYearInLongHaul: storedPlane.hoursPerYearInLongHaul.toString(),
   });
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<Plane>(
-    getDefaultValues(),
-    storedPlane,
-    updatePlane,
-  );
+  const { handleUpdate, control, watch, reset } = useUpdateForm<
+    Plane,
+    FormValues
+  >(getDefaultValues(), storedPlane, updatePlane);
 
   useEffect(() => {
     if (!storedPlaneUsage) reset(getDefaultValues());
