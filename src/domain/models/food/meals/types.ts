@@ -49,3 +49,10 @@ export const Diets: Diet[] = [
 export type LunchesAndDinersPerWeek = Record<MealType, number>;
 
 export type Frequency = "never" | "sometimes" | "often" | "always";
+
+export const Frequencies: Frequency[] = [
+  "never",
+  "sometimes",
+  "often",
+  "always",
+];
