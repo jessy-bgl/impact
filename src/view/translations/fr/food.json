@@ -24,5 +24,13 @@
       "regularMeatConsumer": "Viande régulièrement",
       "heavyMeatConsumer": "Beaucoup de viande"
     }
+  },
+  "localProducts": "Consommation de produits locaux",
+  "seasonalProducts": "Consommation de produits de saison",
+  "frequencies": {
+    "never": "Jamais",
+    "sometimes": "Parfois",
+    "often": "Souvent",
+    "always": "Toujours"
   }
 }
