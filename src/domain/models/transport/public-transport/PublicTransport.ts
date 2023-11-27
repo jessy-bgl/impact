@@ -5,7 +5,7 @@ import {
   averageMetroFootprintPerHour,
 } from "./constants";
 import { weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../types";
+import { WithAnnualFootprint } from "../../types";
 
 type Props = {
   hoursPerYearInTrain?: number;

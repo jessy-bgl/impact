@@ -7,7 +7,7 @@ import {
   stopAdvertisingStickerBonus,
   zeroWasteFootprint,
 } from "./constants";
-import { WithAnnualFootprint } from "../../transport/types";
+import { WithAnnualFootprint } from "../../types";
 
 export type WasteQuantity = "base" | "reduction" | "zero";
 export const WasteQuantities: WasteQuantity[] = ["base", "reduction", "zero"];

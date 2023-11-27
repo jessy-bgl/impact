@@ -1,7 +1,7 @@
 import { Drinks } from "./drinks/Drinks";
 import { Meals } from "./meals/Meals";
 import { Waste } from "./waste/Waste";
-import { WithAnnualFootprint } from "../transport/types";
+import { WithAnnualFootprint } from "../types";
 
 type Props = {
   meals?: Meals;

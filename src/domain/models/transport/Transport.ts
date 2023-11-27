@@ -3,7 +3,7 @@ import { Car } from "./car/Car";
 import { Plane } from "./plane/Plane";
 import { PublicTransport } from "./public-transport/PublicTransport";
 import { TwoWheeler } from "./two-wheeler/TwoWheeler";
-import { WithAnnualFootprint } from "./types";
+import { WithAnnualFootprint } from "../types";
 
 type Props = {
   car?: Car;

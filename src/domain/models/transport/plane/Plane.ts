@@ -1,5 +1,5 @@
 import { defaultAverageFootprintPerKm, defaultAverageSpeed } from "./constants";
-import { WithAnnualFootprint } from "../types";
+import { WithAnnualFootprint } from "../../types";
 
 export type haulFlight = "short" | "medium" | "long";
 

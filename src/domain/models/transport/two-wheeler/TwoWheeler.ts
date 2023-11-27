@@ -3,7 +3,7 @@ import {
   thermalMaintenanceFootprint,
   twoWheelerDefaultFootprint,
 } from "./constants";
-import { WithAnnualFootprint } from "../types";
+import { WithAnnualFootprint } from "../../types";
 
 export type TwoWheelerType =
   | "thermalScooter"

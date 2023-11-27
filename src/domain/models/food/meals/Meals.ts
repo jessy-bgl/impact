@@ -24,7 +24,7 @@ import {
   MealType,
 } from "./types";
 import { daysInYear, weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../../transport/types";
+import { WithAnnualFootprint } from "../../types";
 import { MilkType } from "../types";
 
 type Props = {

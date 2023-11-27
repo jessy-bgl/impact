@@ -1,5 +1,5 @@
 import { averageFootprintPerKm, averageSpeed } from "./constants";
-import { WithAnnualFootprint } from "../types";
+import { WithAnnualFootprint } from "../../types";
 
 type Props = {
   usage?: boolean;

@@ -8,7 +8,7 @@ import {
   sweetDrinkCoef,
 } from "./constants";
 import { weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../../transport/types";
+import { WithAnnualFootprint } from "../../types";
 import { MilkType } from "../types";
 
 export type HotDrink = "coffee" | "tea" | "chocolate";
