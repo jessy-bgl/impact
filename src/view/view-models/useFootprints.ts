@@ -9,15 +9,18 @@ export const useFootprints = () => {
 
   const {
     useFetchTransport,
+    useFetchFood,
     useFetchPublicServices,
     useComputeTotalAnnualFootprint,
   } = useContext(UsecasesContext);
 
   const { computeTotalAnnualFootprint } = useComputeTotalAnnualFootprint();
   const { fetchTransport } = useFetchTransport();
+  const { fetchFood } = useFetchFood();
   const { fetchPublicServices } = useFetchPublicServices();
 
   const transport = useMemo(() => fetchTransport(), [appStore]);
+  const food = useMemo(() => fetchFood(), [appStore]);
   const publicServices = useMemo(() => fetchPublicServices(), [appStore]);
   const totalAnnualFootprint = useMemo(
     () => computeTotalAnnualFootprint(),
@@ -30,7 +33,7 @@ export const useFootprints = () => {
       totalAnnualFootprint,
     ),
     food: FootprintByCategory.forFood(
-      transport.annualFootprint,
+      food.annualFootprint,
       totalAnnualFootprint,
     ),
     goods: FootprintByCategory.forGoods(
