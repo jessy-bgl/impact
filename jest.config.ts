@@ -1,5 +1,6 @@
-import * as fs from "fs";
 import type { Config } from "jest";
+
+import { getAliasesInTsConfig } from "./utils";
 
 export default async (): Promise<Config> => {
   const jestConfig: Config = {
@@ -13,13 +14,10 @@ export default async (): Promise<Config> => {
     moduleNameMapper: {},
   };
 
-  // Retrieve aliases from tsconfig
-  const rawTsConfig = fs.readFileSync("tsconfig.json", "utf8");
-  const jsonAliases = JSON.parse(rawTsConfig).compilerOptions.paths;
-
-  for (const alias in jsonAliases) {
+  const aliases = getAliasesInTsConfig();
+  for (const alias in aliases) {
     const key = "^" + alias.substring(0, alias.length - 1) + "(.*)$";
-    let value = jsonAliases[alias][0];
+    let value = aliases[alias][0];
     value = "<rootDir>" + value.substring(1, value.length - 1) + "$1";
     jestConfig.moduleNameMapper = {
       ...jestConfig.moduleNameMapper,

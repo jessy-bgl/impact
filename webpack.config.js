@@ -1,5 +1,6 @@
+import { getAliasesInTsConfig } from "./utils";
+
 const createExpoWebpackConfigAsync = require("@expo/webpack-config");
-const fs = require("fs");
 const path = require("path");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
@@ -15,13 +16,10 @@ module.exports = async function (env, argv) {
     "victory-native": "victory",
   };
 
-  // Retrieve aliases from tsconfig
-  const rawTsConfig = fs.readFileSync("tsconfig.json", "utf8");
-  const jsonAliases = JSON.parse(rawTsConfig).compilerOptions.paths;
-
-  for (const alias in jsonAliases) {
+  const aliases = getAliasesInTsConfig();
+  for (const alias in aliases) {
     const key = alias.substring(0, alias.length - 2);
-    let value = jsonAliases[alias][0];
+    let value = aliases[alias][0];
     value = value.substring(2, value.length - 2);
     config.resolve.alias[key] = path.resolve(__dirname, value);
   }
