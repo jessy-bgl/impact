@@ -13,9 +13,11 @@ export const useUpdateForm = <
 ) => {
   const { getValues, ...rest } = useForm<K>({ defaultValues });
 
-  const handleUpdate = (field: keyof T) => {
-    const stringValue = getValues(field as any) as string;
-    const value = convertStringToType(stringValue, typeof storedData[field]);
+  const handleUpdate = (field: any) => {
+    const stringValue = getValues(field);
+    const targetType = typeof storedData[field as keyof T];
+    if (targetType === "undefined") return;
+    const value = convertStringToType(stringValue, targetType);
     const updatedData = { ...storedData, [field]: value };
     updateUsecase(updatedData);
   };
