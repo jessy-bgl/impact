@@ -1,9 +1,12 @@
 import { PropsWithChildren } from "react";
-import { View } from "react-native";
+import { View, ViewStyle } from "react-native";
 
 import { styles } from "./styles";
 
-export const RowContainer = ({ children }: PropsWithChildren) => {
+export const RowContainer = ({
+  children,
+  style,
+}: PropsWithChildren & { style?: ViewStyle }) => {
   const { rowContainer } = styles;
-  return <View style={rowContainer}>{children}</View>;
+  return <View style={{ ...rowContainer, ...style }}>{children}</View>;
 };
