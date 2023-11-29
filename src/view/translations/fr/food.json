@@ -7,9 +7,11 @@
       "vegan": "🥝🍌",
       "milk & cereals": "🥣🥛",
       "none": "Aucun"
-    },
-    "milkType": "Type de lait",
-    "milkTypes": {
+    }
+  },
+  "milk": {
+    "type": "Type de lait",
+    "types": {
       "cow": "🐄",
       "soy": "🌱",
       "oat": "🌾"
@@ -32,5 +34,14 @@
     "sometimes": "Parfois",
     "often": "Souvent",
     "always": "Toujours"
+  },
+  "drinks": {
+    "hotDrinksPerWeek": "Consommation de boissons chaudes par semaine (nombre de tasses)",
+    "chocolatePerWeek": "Chocolat chaud",
+    "coffeePerWeek": "Café",
+    "teaPerWeek": "Thé",
+    "bottledWater": "Buvez-vous de l'eau en bouteille ?",
+    "sodaLitersPerWeek": "Consommation de soda par semaine (en litres)",
+    "alcoholLitersPerWeek": "Consommation d'alcool par semaine (en litres)"
   }
 }

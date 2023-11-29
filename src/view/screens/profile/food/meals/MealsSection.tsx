@@ -71,7 +71,7 @@ export const MealsSection = () => {
               )}
             />
           </View>
-          <Text variant="labelLarge">{t("breakfast.milkType")}</Text>
+          <Text variant="labelLarge">{t("milk.type")}</Text>
           <Controller<FormValues>
             name="milkType"
             control={control}
@@ -85,7 +85,7 @@ export const MealsSection = () => {
                 }}
                 buttons={MilkTypes.map((type) => ({
                   value: type,
-                  label: t(`breakfast.milkTypes.${type}`),
+                  label: t(`milk.types.${type}`),
                   disabled: !milkAndCerealsBreakfast,
                 }))}
               />
