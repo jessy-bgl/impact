@@ -49,9 +49,9 @@ export const useDrinks = () => {
     setValue(
       "hotDrinksPerWeek",
       JSON.stringify({
-        chocolate: chocolatePerWeek || 0,
-        coffee: coffeePerWeek || 0,
-        tea: teaPerWeek || 0,
+        chocolate: Number(chocolatePerWeek) || 0,
+        coffee: Number(coffeePerWeek) || 0,
+        tea: Number(teaPerWeek) || 0,
       }),
     );
     handleUpdate("hotDrinksPerWeek");

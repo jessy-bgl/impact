@@ -22,5 +22,5 @@ export const useUpdateForm = <
     updateUsecase(updatedData);
   };
 
-  return { handleUpdate, ...rest };
+  return { handleUpdate, getValues, ...rest };
 };

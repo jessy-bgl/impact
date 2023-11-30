@@ -10,12 +10,14 @@ import {
 import { WithAnnualFootprint } from "../../types";
 
 export type WasteQuantity = "base" | "reduction" | "zero";
+
 export const WasteQuantities: WasteQuantity[] = ["base", "reduction", "zero"];
 
 export type WasteBonus =
   | "wasteComposting"
   | "noFoodWaste"
   | "stopAdvertisingSticker";
+
 export const WasteBonuses: WasteBonus[] = [
   "wasteComposting",
   "noFoodWaste",
