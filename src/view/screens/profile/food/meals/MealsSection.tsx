@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { List, SegmentedButtons, Text } from "react-native-paper";
 
 import { FormValues, useMeals } from "./useMeals";
-import { 
+import {
   BreakfastTypes,
   Diets,
   Frequencies,
