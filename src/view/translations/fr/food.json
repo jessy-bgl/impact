@@ -43,5 +43,19 @@
     "bottledWater": "Buvez-vous de l'eau en bouteille ?",
     "sodaLitersPerWeek": "Consommation de soda par semaine (en litres)",
     "alcoholLitersPerWeek": "Consommation d'alcool par semaine (en litres)"
+  },
+  "waste": {
+    "quantity": "Comment estimeriez-vous la quantité de déchets que vous jetez ?",
+    "quantities": {
+      "zero": "Je suis zéro-déchet",
+      "reduction": "Je limite mes déchets",
+      "base": "Je jette sans faire attention"
+    },
+    "bonus": "Quels éco-gestes mettez-vous en place pour réduire vos déchets ?",
+    "bonuses": {
+      "wasteComposting": "Je composte",
+      "noFoodWaste": "Je ne jette pas de nourriture",
+      "stopAdvertisingSticker": "J'ai un autocollant \"stop pub\""
+    }
   }
 }
