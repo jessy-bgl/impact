@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
 
 import { FormValues, useDrinks } from "./useDrinks";
@@ -27,31 +26,10 @@ export const DrinksSection = () => {
       left={(props) => <List.Icon {...props} icon="water" />}
     >
       <ListContentContainer>
-        <RowContainer style={{ marginBottom: 10 }}>
+        <RowContainer>
           <Text variant="labelLarge" style={{ textAlign: "center" }}>
             {t("drinks.hotDrinksPerWeek")}
           </Text>
-        </RowContainer>
-
-        <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2.5 }}>
-            {t("drinks.chocolatePerWeek")}
-          </Text>
-          <Controller<FormValues>
-            name="chocolatePerWeek"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
-                style={{ flex: 1 }}
-                onBlur={() => handleUpdate("chocolatePerWeek")}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-          />
         </RowContainer>
         <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 2.5 }}>
@@ -93,7 +71,27 @@ export const DrinksSection = () => {
             )}
           />
         </RowContainer>
-        <ColumnContainer>
+        <RowContainer style={{ marginTop: 10 }}>
+          <Text variant="labelLarge" style={{ flex: 2.5 }}>
+            {t("drinks.chocolatePerWeek")}
+          </Text>
+          <Controller<FormValues>
+            name="chocolatePerWeek"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                dense
+                mode="outlined"
+                keyboardType="numeric"
+                style={{ flex: 1 }}
+                onBlur={() => handleUpdate("chocolatePerWeek")}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+        </RowContainer>
+        <ColumnContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge">{t("milk.type")}</Text>
           <Controller<FormValues>
             name="milkType"
@@ -118,29 +116,27 @@ export const DrinksSection = () => {
 
         <ListItemDivider />
 
-        <ColumnContainer>
+        <RowContainer>
           <Text variant="labelLarge">{t("drinks.bottledWater")}</Text>
-          <View>
-            <Controller<FormValues>
-              name="bottledWater"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("bottledWater");
-                  }}
-                  buttons={[
-                    { value: "true", label: t("common:yes") },
-                    { value: "false", label: t("common:no") },
-                  ]}
-                />
-              )}
-            />
-          </View>
-        </ColumnContainer>
+          <Controller<FormValues>
+            name="bottledWater"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <SegmentedButtons
+                density="small"
+                value={value}
+                onValueChange={(e) => {
+                  onChange(e);
+                  handleUpdate("bottledWater");
+                }}
+                buttons={[
+                  { value: "true", label: t("common:yes") },
+                  { value: "false", label: t("common:no") },
+                ]}
+              />
+            )}
+          />
+        </RowContainer>
 
         <ListItemDivider />
 
