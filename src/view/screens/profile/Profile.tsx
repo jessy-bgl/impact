@@ -25,36 +25,31 @@ export const Profile = () => {
         <ProfileCategoryCard
           title={t("transport")}
           icon={transportFootprint.materialIcon}
-          footprint={transportFootprint}
-          imageSource={transportFootprint.image}
+          footprintCategory={transportFootprint}
           onClick={() => navigate("TransportProfile")}
         />
         <ProfileCategoryCard
           title={t("housing")}
           icon={housingFootprint.materialIcon}
-          footprint={housingFootprint}
-          imageSource={housingFootprint.image}
+          footprintCategory={housingFootprint}
           onClick={() => navigate("Profile")}
         />
         <ProfileCategoryCard
           title={t("food")}
           icon={foodFootprint.materialIcon}
-          footprint={foodFootprint}
-          imageSource={foodFootprint.image}
+          footprintCategory={foodFootprint}
           onClick={() => navigate("FoodProfile")}
         />
         <ProfileCategoryCard
           title={t("goods")}
           icon={goodsFootprint.materialIcon}
-          footprint={goodsFootprint}
-          imageSource={goodsFootprint.image}
+          footprintCategory={goodsFootprint}
           onClick={() => navigate("Profile")}
         />
         <ProfileCategoryCard
           title={t("publicServices")}
           icon={publicServicesFootprint.materialIcon}
-          footprint={publicServicesFootprint}
-          imageSource={publicServicesFootprint.image}
+          footprintCategory={publicServicesFootprint}
           onClick={() => navigate("Profile")}
         />
       </View>

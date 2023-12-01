@@ -7,42 +7,42 @@ import { FootprintByCategory } from "../../view-models/Footprint";
 
 type Props = {
   title: string;
-  footprint: FootprintByCategory;
+  footprintCategory: FootprintByCategory;
   icon: IconSource;
-  imageSource?: string;
   onClick: () => void;
 };
 
 export const ProfileCategoryCard = ({
   title,
-  footprint,
+  footprintCategory,
   icon,
-  imageSource,
   onClick,
 }: Props) => {
   const { t } = useTranslation("common");
+
+  const { image, footprint, color, part } = footprintCategory;
 
   return (
     <Card style={styles.card} onPress={onClick}>
       <Card.Title
         title={title}
-        subtitle={`${footprint.footprint} ${t("footprintKgPerYear")}`}
+        subtitle={`${footprint} ${t("footprintKgPerYear")}`}
         left={(props: any) => (
           <Avatar.Icon
             {...props}
             icon={icon}
-            style={{ backgroundColor: footprint.color }}
+            style={{ backgroundColor: color }}
           />
         )}
         right={(props: any) => (
           <Avatar.Text
             {...props}
-            label={`${footprint.part} %`}
-            color={footprint.color}
+            label={`${part} %`}
+            color={color}
             style={{
               backgroundColor: null,
               borderWidth: 2,
-              borderColor: footprint.color,
+              borderColor: color,
               width: 40,
               height: 40,
             }}
@@ -52,7 +52,7 @@ export const ProfileCategoryCard = ({
       />
       <Card.Cover
         resizeMode="contain"
-        source={{ uri: imageSource }}
+        source={{ uri: image }}
         style={styles.image}
       />
     </Card>
