@@ -1,5 +1,5 @@
-import { CarEngine, CarSize, FuelType } from "./Car";
-import { g45 } from "../constants";
+import { CarSize, CarEngine, FuelType } from "@domain/models/transport/car/Car";
+import { g45 } from "@domain/models/transport/constants";
 
 export const defaultSize: CarSize = "medium";
 

@@ -10,7 +10,6 @@ import {
   Icon,
 } from "react-native-paper";
 
-import { FormValues, useCar } from "./useCar";
 import {
   carEngines,
   carSizes,
@@ -21,6 +20,7 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
+import { FormValues, useCar } from "./useCar";
 
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);

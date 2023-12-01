@@ -1,5 +1,5 @@
-import { breakfastDataset, lunchesAndDinersDataset } from "./dataset";
 import { Meals } from "@domain/models/food/meals/Meals";
+import { MilkType } from "@domain/models/food/types";
 import { lunchesAndDinersPerWeekByDiet } from "@domain/models/food/meals/constants";
 import {
   Frequency,
@@ -7,7 +7,7 @@ import {
   Diets,
   BreakfastType,
 } from "@domain/models/food/meals/types";
-import { MilkType } from "@domain/models/food/types";
+import { breakfastDataset, lunchesAndDinersDataset } from "./dataset";
 
 describe("Meals", () => {
   describe("setDiet - lunches and diners per week by diet", () => {

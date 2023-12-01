@@ -1,5 +1,5 @@
-import { TwoWheelerType } from "./TwoWheeler";
-import { g45 } from "../constants";
+import { g45 } from "@domain/models/transport/constants";
+import { TwoWheelerType } from "@domain/models/transport/two-wheeler/TwoWheeler";
 
 export const defaultTwoWheelerType: TwoWheelerType = "thermalScooter";
 

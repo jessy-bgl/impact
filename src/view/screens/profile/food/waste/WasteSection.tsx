@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Checkbox, List, RadioButton, Text } from "react-native-paper";
 
-import { FormValues, useWaste } from "./useWaste";
 import { WasteQuantity } from "@domain/models/food/waste/Waste";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
+import { FormValues, useWaste } from "./useWaste";
 
 export const WasteSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);

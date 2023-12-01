@@ -2,13 +2,13 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
 
-import { FormValues, useDrinks } from "./useDrinks";
 import { MilkTypes } from "@domain/models/food/types";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
+import { FormValues, useDrinks } from "./useDrinks";
 
 export const DrinksSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);

@@ -1,9 +1,9 @@
-import { Boat } from "./boat/Boat";
-import { Car } from "./car/Car";
-import { Plane } from "./plane/Plane";
-import { PublicTransport } from "./public-transport/PublicTransport";
-import { TwoWheeler } from "./two-wheeler/TwoWheeler";
-import { WithAnnualFootprint } from "../types";
+import { Boat } from "@domain/models/transport/boat/Boat";
+import { Car } from "@domain/models/transport/car/Car";
+import { Plane } from "@domain/models/transport/plane/Plane";
+import { PublicTransport } from "@domain/models/transport/public-transport/PublicTransport";
+import { TwoWheeler } from "@domain/models/transport/two-wheeler/TwoWheeler";
+import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
   car?: Car;

@@ -1,4 +1,4 @@
-import { useAppStore } from "./store";
+import { useAppStore } from "@data/store/store";
 import { Food } from "@domain/models/food/Food";
 import { Transport } from "@domain/models/transport/Transport";
 

@@ -1,7 +1,7 @@
-import { Drinks } from "./drinks/Drinks";
-import { Meals } from "./meals/Meals";
-import { Waste } from "./waste/Waste";
-import { WithAnnualFootprint } from "../types";
+import { Drinks } from "@domain/models/food/drinks/Drinks";
+import { Meals } from "@domain/models/food/meals/Meals";
+import { Waste } from "@domain/models/food/waste/Waste";
+import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
   meals?: Meals;

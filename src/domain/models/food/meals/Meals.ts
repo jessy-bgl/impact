@@ -1,6 +1,7 @@
 import {
   lunchesAndDinersPerWeekByDiet,
   veganMealFootprint,
+  localProductsFootprintReductionRate,
   vegetarianMealFootprint,
   whiteMeatMealFootprint,
   redMeatMealFootprint,
@@ -13,19 +14,18 @@ import {
   seasonalProductsPart,
   seasonalProductsRatio,
   seasonalPercentage,
-  localProductsFootprintReductionRate,
 } from "./constants";
+import { MilkType } from "@domain/models/food/types";
+import { WithAnnualFootprint } from "@domain/models/types";
+import { daysInYear, weeksInYear } from "@domain/models/constants";
 import {
   BreakfastType,
-  LunchesAndDinersPerWeek,
-  Frequency,
   Diet,
+  Frequency,
+  LunchesAndDinersPerWeek,
   MealTypes,
   MealType,
-} from "./types";
-import { daysInYear, weeksInYear } from "@domain/models/constants";
-import { WithAnnualFootprint } from "@domain/models/types";
-import { MilkType } from "../types";
+} from "@domain/models/food/meals/types";
 
 type Props = {
   breakfast?: BreakfastType;
