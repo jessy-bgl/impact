@@ -1,8 +1,8 @@
-import { getAliasesInTsConfig } from "./utils";
-
 const createExpoWebpackConfigAsync = require("@expo/webpack-config");
 const path = require("path");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+
+const { getAliasesInTsConfig } = require("./utils");
 
 module.exports = async function (env, argv) {
   // Set by expo-cli during `expo build:web`
