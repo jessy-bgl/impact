@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Button, useTheme } from "react-native-paper";
 
-import { AppNavigationProp } from "../../../common/AppNavigation";
+import { AppNavigationProp } from "@common/AppNavigation";
 
 export const EmissionsEstimationButton = () => {
   const { t } = useTranslation("emissions");

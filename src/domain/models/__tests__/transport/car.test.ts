@@ -1,4 +1,4 @@
-import { Car } from "../../transport/car/Car";
+import { Car } from "@domain/models/transport/car/Car";
 
 describe("Car", () => {
   it("should give an annual footprint of 2239 kgCO2e with default values", () => {

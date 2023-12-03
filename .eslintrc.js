@@ -4,5 +4,7 @@ module.exports = {
     node: true,
   },
   extends: ["universe/native", "universe/web"],
-  rules: {},
+  rules: {
+    "import/order": ["off", {}],
+  },
 };

@@ -1,8 +1,8 @@
-import { initFakeRepositories } from "../../../../common/UsecasesContext";
-import { Food } from "../../../models/food/Food";
-import { Drinks } from "../../../models/food/drinks/Drinks";
-import { defaultHotDrinksPerWeek } from "../../../models/food/drinks/constants";
-import { createUseUpdateFood } from "../../updateFood";
+import { initFakeRepositories } from "@common/UsecasesContext";
+import { Food } from "@domain/models/food/Food";
+import { Drinks } from "@domain/models/food/drinks/Drinks";
+import { defaultHotDrinksPerWeek } from "@domain/models/food/drinks/constants";
+import { createUseUpdateFood } from "@domain/usecases/updateFood";
 
 describe("updateDrinks", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;

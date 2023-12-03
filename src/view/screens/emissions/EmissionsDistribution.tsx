@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 import { VictoryLabel, VictoryPie } from "victory";
 
-import { Footprints } from "../../view-models/Footprint";
+import { Footprints } from "@view/view-models/Footprint";
 
 const pieWidth = 250;
 const pieHeight = 250;
@@ -41,7 +41,7 @@ export const EmissionsDistribution = ({
         style={{ fontSize: 20, fill: colors.onBackground }}
         x={pieWidth / 2}
         y={pieHeight / 2}
-        text={`${(totalFootprint / 1000).toFixed(2)}\ntCO2/${t("year")}`}
+        text={`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
       />
     </svg>
   );

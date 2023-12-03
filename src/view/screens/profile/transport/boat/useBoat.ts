@@ -1,11 +1,11 @@
 import { useContext, useEffect } from "react";
 import { DefaultValues } from "react-hook-form";
 
-import { UsecasesContext } from "../../../../../common/UsecasesContext";
-import { useAppStore } from "../../../../../data/store/store";
-import { Boat } from "../../../../../domain/models/transport/boat/Boat";
-import { StringifyProperties } from "../../../../../types/utils";
-import { useUpdateForm } from "../../utils/useUpdateForm";
+import { UsecasesContext } from "@common/UsecasesContext";
+import { useAppStore } from "@data/store/store";
+import { Boat } from "@domain/models/transport/boat/Boat";
+import { StringifyProperties } from "@srctypes/utils";
+import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
 export type FormValues = Omit<StringifyProperties<Boat>, "annualFootprint">;
 

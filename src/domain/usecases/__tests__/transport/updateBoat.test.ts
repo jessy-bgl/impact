@@ -1,7 +1,7 @@
-import { initFakeRepositories } from "../../../../common/UsecasesContext";
-import { Transport } from "../../../models/transport/Transport";
-import { Boat } from "../../../models/transport/boat/Boat";
-import { createUseUpdateTransport } from "../../updateTransport";
+import { initFakeRepositories } from "@common/UsecasesContext";
+import { Transport } from "@domain/models/transport/Transport";
+import { Boat } from "@domain/models/transport/boat/Boat";
+import { createUseUpdateTransport } from "@domain/usecases/updateTransport";
 
 describe("updateBoat", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;

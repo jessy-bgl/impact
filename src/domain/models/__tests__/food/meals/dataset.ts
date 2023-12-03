@@ -1,5 +1,9 @@
-import { Diet, Frequency, BreakfastType } from "../../../food/meals/types";
-import { MilkType } from "../../../food/types";
+import {
+  Diet,
+  Frequency,
+  BreakfastType,
+} from "@domain/models/food/meals/types";
+import { MilkType } from "@domain/models/food/types";
 
 export const lunchesAndDinersDataset: {
   diet: Diet;

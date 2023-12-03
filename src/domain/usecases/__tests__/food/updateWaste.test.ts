@@ -1,7 +1,7 @@
-import { initFakeRepositories } from "../../../../common/UsecasesContext";
-import { Food } from "../../../models/food/Food";
-import { Waste } from "../../../models/food/waste/Waste";
-import { createUseUpdateFood } from "../../updateFood";
+import { initFakeRepositories } from "@common/UsecasesContext";
+import { Food } from "@domain/models/food/Food";
+import { Waste } from "@domain/models/food/waste/Waste";
+import { createUseUpdateFood } from "@domain/usecases/updateFood";
 
 describe("updateWaste", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;

@@ -22,7 +22,7 @@ import {
   defaultYears,
   defaultAveragePassengers,
 } from "./constants";
-import { WithAnnualFootprint } from "../../types";
+import { WithAnnualFootprint } from "@domain/models/types";
 
 export type CarSize = "small" | "medium" | "vul" | "sedan" | "suv";
 export const carSizes: CarSize[] = ["small", "medium", "vul", "sedan", "suv"];

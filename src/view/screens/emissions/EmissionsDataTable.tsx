@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { Footprints } from "../../view-models/Footprint";
+import { Footprints } from "@view/view-models/Footprint";
 
 type Props = {
   footprints: Footprints;

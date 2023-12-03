@@ -1,3 +1,6 @@
+import { weeksInYear } from "@domain/models/constants";
+import { MilkType } from "@domain/models/food/types";
+import { WithAnnualFootprint } from "@domain/models/types";
 import {
   alcoholDrinkCoef,
   bottledWaterAnnualFootprint,
@@ -7,9 +10,6 @@ import {
   defaultHotDrinksPerWeek,
   sweetDrinkCoef,
 } from "./constants";
-import { weeksInYear } from "../../constants";
-import { WithAnnualFootprint } from "../../types";
-import { MilkType } from "../types";
 
 export type HotDrink = "coffee" | "tea" | "chocolate";
 export const HotDrinks: HotDrink[] = ["coffee", "tea", "chocolate"];

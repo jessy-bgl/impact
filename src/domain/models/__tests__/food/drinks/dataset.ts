@@ -1,4 +1,4 @@
-import { Drinks } from "../../../food/drinks/Drinks";
+import { Drinks } from "@domain/models/food/drinks/Drinks";
 
 export const drinksDataset: {
   drinks: Drinks;

@@ -8,12 +8,12 @@ import {
   BreakfastTypes,
   Diets,
   Frequencies,
-} from "../../../../../domain/models/food/meals/types";
-import { MilkTypes } from "../../../../../domain/models/food/types";
-import { ColumnContainer } from "../../components/ColumnContainer";
-import { ListContentContainer } from "../../components/ListContentContainer";
-import { ListItemDivider } from "../../components/ListItemDivider";
-import { ListTitle } from "../../components/ListTitle";
+} from "@domain/models/food/meals/types";
+import { MilkTypes } from "@domain/models/food/types";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { ListTitle } from "@view/screens/profile/components/ListTitle";
 
 export const MealsSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);

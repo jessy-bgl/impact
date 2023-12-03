@@ -1,5 +1,5 @@
-import { FootprintCategories } from "../../../domain/models/Categories";
-import { useFootprints } from "../../view-models/useFootprints";
+import { FootprintCategories } from "@domain/models/Categories";
+import { useFootprints } from "@view/view-models/useFootprints";
 
 export const useProfile = () => {
   const { footprints } = useFootprints();

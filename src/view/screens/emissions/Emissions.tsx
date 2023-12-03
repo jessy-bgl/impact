@@ -1,10 +1,10 @@
 import { ScrollView, View } from "react-native";
 
-import { EmissionsDataTable } from "./EmissionsDataTable";
-import { EmissionsDistribution } from "./EmissionsDistribution";
-import { EmissionsEstimationButton } from "./EmissionsEstimationButton";
-import { EmissionsTitle } from "./EmissionsTitle";
-import { useFootprints } from "../../view-models/useFootprints";
+import { EmissionsDataTable } from "@view/screens/emissions/EmissionsDataTable";
+import { EmissionsDistribution } from "@view/screens/emissions/EmissionsDistribution";
+import { EmissionsEstimationButton } from "@view/screens/emissions/EmissionsEstimationButton";
+import { EmissionsTitle } from "@view/screens/emissions/EmissionsTitle";
+import { useFootprints } from "@view/view-models/useFootprints";
 
 export const Emissions = () => {
   const { footprints, totalAnnualFootprint } = useFootprints();

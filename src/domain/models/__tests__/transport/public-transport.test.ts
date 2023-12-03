@@ -1,4 +1,4 @@
-import { PublicTransport } from "../../transport/public-transport/PublicTransport";
+import { PublicTransport } from "@domain/models/transport/public-transport/PublicTransport";
 
 describe("PublicTransport", () => {
   it.each`

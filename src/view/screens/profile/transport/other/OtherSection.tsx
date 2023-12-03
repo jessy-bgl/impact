@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { List, Text } from "react-native-paper";
 
-import { ListContentContainer } from "../../components/ListContentContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 
 export const OtherSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);

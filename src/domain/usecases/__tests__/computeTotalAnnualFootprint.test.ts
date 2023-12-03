@@ -1,8 +1,8 @@
-import { initFakeRepositories } from "../../../common/UsecasesContext";
-import { Food } from "../../models/food/Food";
-import { PublicServices } from "../../models/public-services/PublicServices";
-import { Transport } from "../../models/transport/Transport";
-import { createUseComputeTotalAnnualFootprint } from "../computeTotalAnnualFootprint";
+import { initFakeRepositories } from "@common/UsecasesContext";
+import { Food } from "@domain/models/food/Food";
+import { PublicServices } from "@domain/models/public-services/PublicServices";
+import { Transport } from "@domain/models/transport/Transport";
+import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/computeTotalAnnualFootprint";
 
 describe("computeTotalAnnualFootprint", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;

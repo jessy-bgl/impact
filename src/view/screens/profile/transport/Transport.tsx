@@ -1,12 +1,12 @@
 import { ScrollView } from "react-native";
 import { Divider, List } from "react-native-paper";
 
-import { BoatSection } from "./boat/BoatSection";
-import { CarSection } from "./car/CarSection";
-import { OtherSection } from "./other/OtherSection";
-import { PlaneSection } from "./plane/PlaneSection";
-import { PublicTransportSection } from "./public-transport/PublicTransportSection";
-import { TwoWheelerSection } from "./two-wheeler/TwoWheelerSection";
+import { BoatSection } from "@view/screens/profile/transport/boat/BoatSection";
+import { CarSection } from "@view/screens/profile/transport/car/CarSection";
+import { OtherSection } from "@view/screens/profile/transport/other/OtherSection";
+import { PlaneSection } from "@view/screens/profile/transport/plane/PlaneSection";
+import { PublicTransportSection } from "@view/screens/profile/transport/public-transport/PublicTransportSection";
+import { TwoWheelerSection } from "@view/screens/profile/transport/two-wheeler/TwoWheelerSection";
 
 export const TransportProfile = () => {
   return (

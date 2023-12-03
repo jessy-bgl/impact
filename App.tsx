@@ -12,7 +12,7 @@ import {
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 
 import { AppTheme } from "./AppTheme";
-import { AppNavigation } from "./src/common/AppNavigation";
+import { AppNavigation } from "@common/AppNavigation";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 
 import "./src/view/translations/i18n";

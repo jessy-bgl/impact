@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
 import { DefaultValues } from "react-hook-form";
 
-import { UsecasesContext } from "../../../../../common/UsecasesContext";
-import { useAppStore } from "../../../../../data/store/store";
-import { Meals } from "../../../../../domain/models/food/meals/Meals";
-import { BreakfastType } from "../../../../../domain/models/food/meals/types";
-import { StringifyProperties } from "../../../../../types/utils";
-import { useUpdateForm } from "../../utils/useUpdateForm";
+import { UsecasesContext } from "@common/UsecasesContext";
+import { useAppStore } from "@data/store/store";
+import { Meals } from "@domain/models/food/meals/Meals";
+import { BreakfastType } from "@domain/models/food/meals/types";
+import { StringifyProperties } from "@srctypes/utils";
+import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
 export type FormValues = Omit<StringifyProperties<Meals>, "annualFootprint">;
 

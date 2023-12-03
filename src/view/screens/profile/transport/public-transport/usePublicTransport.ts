@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { DefaultValues } from "react-hook-form";
 
-import { UsecasesContext } from "../../../../../common/UsecasesContext";
-import { useAppStore } from "../../../../../data/store/store";
-import { PublicTransport } from "../../../../../domain/models/transport/public-transport/PublicTransport";
-import { StringifyProperties } from "../../../../../types/utils";
-import { useUpdateForm } from "../../utils/useUpdateForm";
+import { UsecasesContext } from "@common/UsecasesContext";
+import { useAppStore } from "@data/store/store";
+import { PublicTransport } from "@domain/models/transport/public-transport/PublicTransport";
+import { StringifyProperties } from "@srctypes/utils";
+import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
 export type FormValues = Omit<
   StringifyProperties<PublicTransport>,

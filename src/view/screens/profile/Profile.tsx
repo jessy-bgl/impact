@@ -2,9 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { View, StyleSheet, ScrollView } from "react-native";
 
-import { ProfileCategoryCard } from "./ProfileCategoryCard";
+import { AppNavigationProp } from "@common/AppNavigation";
+import { ProfileCategoryCard } from "@view/screens/profile/ProfileCategoryCard";
 import { useProfile } from "./useProfile";
-import { AppNavigationProp } from "../../../common/AppNavigation";
 
 export const Profile = () => {
   const { t } = useTranslation("common");

@@ -1,5 +1,5 @@
-import { initFakeRepositories } from "../../../../common/UsecasesContext";
-import { createUseFetchFood } from "../../fetchFood";
+import { initFakeRepositories } from "@common/UsecasesContext";
+import { createUseFetchFood } from "@domain/usecases/fetchFood";
 
 describe("fetchFood", () => {
   it("should call emissionsRepository.fetchFood", () => {
