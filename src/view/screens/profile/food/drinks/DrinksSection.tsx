@@ -1,6 +1,6 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
+import { List, SegmentedButtons, Text } from "react-native-paper";
 
 import { MilkTypes } from "@domain/models/food/types";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
@@ -9,6 +9,7 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { FormValues, useDrinks } from "./useDrinks";
+import { NumericInput } from "@view/components/forms/NumericInput";
 
 export const DrinksSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);
@@ -39,10 +40,7 @@ export const DrinksSection = () => {
             name="coffeePerWeek"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("coffeePerWeek")}
                 onChangeText={onChange}
@@ -59,10 +57,7 @@ export const DrinksSection = () => {
             name="teaPerWeek"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("teaPerWeek")}
                 onChangeText={onChange}
@@ -79,10 +74,7 @@ export const DrinksSection = () => {
             name="chocolatePerWeek"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("chocolatePerWeek")}
                 onChangeText={onChange}
@@ -148,10 +140,7 @@ export const DrinksSection = () => {
             name="sodaLitersPerWeek"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("sodaLitersPerWeek")}
                 onChangeText={onChange}
@@ -171,10 +160,7 @@ export const DrinksSection = () => {
             name="alcoholLitersPerWeek"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("alcoholLitersPerWeek")}
                 onChangeText={onChange}

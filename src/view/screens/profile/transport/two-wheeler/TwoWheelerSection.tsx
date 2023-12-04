@@ -10,6 +10,7 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { FormValues, useTwhoWheeler } from "./useTwoWheeler";
+import { NumericInput } from "@view/components/forms/NumericInput";
 
 export const TwoWheelerSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -104,10 +105,7 @@ export const TwoWheelerSection = () => {
             name="kmPerYear"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="km" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("kmPerYear")}

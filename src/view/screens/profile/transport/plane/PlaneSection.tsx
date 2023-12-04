@@ -7,6 +7,7 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { FormValues, usePlane } from "./usePlane";
+import { NumericInput } from "@view/components/forms/NumericInput";
 
 export const PlaneSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -55,10 +56,7 @@ export const PlaneSection = () => {
             name="hoursPerYearInShortHaul"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="h" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("hoursPerYearInShortHaul")}
@@ -80,10 +78,7 @@ export const PlaneSection = () => {
             name="hoursPerYearInMediumHaul"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="h" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("hoursPerYearInMediumHaul")}
@@ -105,10 +100,7 @@ export const PlaneSection = () => {
             name="hoursPerYearInLongHaul"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="h" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("hoursPerYearInLongHaul")}

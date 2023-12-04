@@ -7,6 +7,7 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { FormValues, usePublicTransport } from "./usePublicTransport";
+import { NumericInput } from "@view/components/forms/NumericInput";
 
 export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -31,10 +32,7 @@ export const PublicTransportSection = () => {
             name="hoursPerYearInTrain"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="h" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("hoursPerYearInTrain")}
@@ -55,10 +53,7 @@ export const PublicTransportSection = () => {
             name="hoursPerWeekInBus"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="h" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("hoursPerWeekInBus")}
@@ -79,10 +74,7 @@ export const PublicTransportSection = () => {
             name="hoursPerWeekInMetro"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="h" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("hoursPerWeekInMetro")}

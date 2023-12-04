@@ -21,6 +21,7 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { FormValues, useCar } from "./useCar";
+import { NumericInput } from "@view/components/forms/NumericInput";
 
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -45,10 +46,7 @@ export const CarSection = () => {
             name="kmPerYear"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix text="km" />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("kmPerYear")}
@@ -202,11 +200,8 @@ export const CarSection = () => {
             name="averageFuelConsumption"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
+              <NumericInput
                 disabled={!regularUser}
-                mode="outlined"
-                keyboardType="numeric"
                 right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("averageFuelConsumption")}
@@ -227,10 +222,7 @@ export const CarSection = () => {
             name="age"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("age")}
@@ -251,10 +243,7 @@ export const CarSection = () => {
             name="averagePassengers"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <TextInput
-                dense
-                mode="outlined"
-                keyboardType="numeric"
+              <NumericInput
                 right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("averagePassengers")}
