@@ -54,18 +54,19 @@ export class Energy implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
-    return 0;
-  }
-
-  private get heatingAnnualFootprint(): number {
-    if (this.noHeating)
-      return this.heatingAnnualFootprintWithoutHeating / this.inhabitants;
-    // return this.heatingAnnualFootprint / this.inhabitants;
-    return 0; // TODO
+    return (
+      (this.noHeating
+        ? this.heatingAnnualFootprintWithoutHeating
+        : this.heatingAnnualFootprint) / this.inhabitants
+    );
   }
 
   private get noHeating(): boolean {
     return !Object.values(this.heatingEnergies).some((energy) => energy);
+  }
+
+  private get heatingAnnualFootprint(): number {
+    return 0; // TODO
   }
 
   private get heatingAnnualFootprintWithoutHeating(): number {
