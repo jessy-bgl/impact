@@ -35,7 +35,7 @@ export class Leisure implements WithAnnualFootprint {
   }
 
   get annualFootprint(): number {
-    return this.poolAnnualFootprint;
+    return this.poolAnnualFootprint; // TODO : + holidays
   }
 
   private get poolAnnualFootprint(): number {
