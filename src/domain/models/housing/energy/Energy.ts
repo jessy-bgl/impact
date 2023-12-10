@@ -1,6 +1,7 @@
 import {
   defaultNumberOfInhabitants,
   defaultLivingSpace,
+  isAnApartmentDefaultValue,
 } from "@domain/models/housing/constants";
 import {
   bioGasSurface,
@@ -29,6 +30,13 @@ import {
   gasConsumptionPerSquareMeter,
   heatNetworkConsumptionPerSquareMeter,
   woodConsumptionPerSquareMeter,
+  electricityCarbonIntensity,
+  electricityConsumptionWithoutHeatingPerSquareMeter,
+  electricityConsumptionPerSquareMeter,
+  electricitySurfacePart,
+  airConditioningUnitFootprint,
+  apartmentDefaultNumberOfAirConditioners,
+  houseDefaultNumberOfAirConditioners,
 } from "@domain/models/housing/energy/constants";
 import { HeatingEnergies } from "@domain/models/housing/energy/types";
 import { WithAnnualFootprint } from "@domain/models/types";
@@ -38,6 +46,8 @@ type Props = {
   livingSpace?: number;
   annualElectricityConsumption?: number; // kWh
   heatingEnergies?: HeatingEnergies;
+  airConditioners?: number;
+  isAnApartment?: boolean;
 };
 
 export class Energy implements WithAnnualFootprint {
@@ -45,25 +55,78 @@ export class Energy implements WithAnnualFootprint {
   livingSpace: number;
   annualElectricityConsumption: number; // kWh
   heatingEnergies: HeatingEnergies;
+  airConditioners: number;
+  isAnApartment: boolean;
 
   constructor({
     annualElectricityConsumption,
     heatingEnergies,
     inhabitants,
     livingSpace,
+    airConditioners,
+    isAnApartment,
   }: Props) {
     this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
     this.livingSpace = livingSpace ?? defaultLivingSpace;
-    this.annualElectricityConsumption = annualElectricityConsumption ?? 0; // TODO
     this.heatingEnergies = heatingEnergies ?? defaultHeatingEnergies;
+    this.airConditioners = airConditioners ?? 0;
+    this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
+    this.annualElectricityConsumption =
+      annualElectricityConsumption ??
+      this.defaultElectricityAnnualkWhConsumption;
   }
 
   public get annualFootprint(): number {
     return (
-      (this.noHeating
+      ((this.noHeating
         ? this.heatingAnnualFootprintWithoutHeating
-        : this.heatingAnnualFootprint) / this.inhabitants
-    ); // TODO : + electricity + air cooling
+        : this.heatingAnnualFootprint) +
+        this.electricityAnnualFootprint +
+        this.airConditioningAnnualFootprint) /
+      this.inhabitants
+    );
+  }
+
+  private get electricityAnnualFootprint(): number {
+    return this.annualElectricityConsumption * electricityCarbonIntensity;
+  }
+
+  public get defaultElectricityAnnualkWhConsumption(): number {
+    if (this.noHeating)
+      return (
+        this.livingSpace *
+        (electricityConsumptionWithoutHeatingPerSquareMeter +
+          electricitySurfacePart * electricityConsumptionPerSquareMeter)
+      );
+    else if (
+      this.heatingEnergies.electricity ||
+      this.heatingEnergies.heatPump
+    ) {
+      return (
+        this.livingSpace *
+        (electricityConsumptionWithoutHeatingPerSquareMeter +
+          electricityConsumptionPerSquareMeter)
+      );
+    } else {
+      return (
+        this.livingSpace * electricityConsumptionWithoutHeatingPerSquareMeter
+      );
+    }
+  }
+
+  private get airConditioningAnnualFootprint(): number {
+    return this.airConditionersFootprint / this.inhabitants;
+  }
+
+  private get airConditionersFootprint(): number {
+    if (this.airConditioners > 0) {
+      return this.airConditioners * airConditioningUnitFootprint;
+    }
+    return (
+      (this.isAnApartment
+        ? apartmentDefaultNumberOfAirConditioners
+        : houseDefaultNumberOfAirConditioners) * airConditioningUnitFootprint
+    );
   }
 
   private get noHeating(): boolean {
