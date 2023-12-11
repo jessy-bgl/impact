@@ -4,39 +4,16 @@ import {
   isAnApartmentDefaultValue,
 } from "@domain/models/housing/constants";
 import {
-  bioGasSurface,
-  butaneFootprint,
-  carbonBasedBioGasEmissionFactor,
-  carbonBasedGasEmissionFactor,
-  carbonBasedHeatNetworkEmissionFactor,
-  carbonBasedWoodLogsEmissionFactor,
-  carbonBasedWoodPelletsEmissionFactor,
-  cookingGasConsumption,
+  airConditioner,
+  bioGas,
+  electricity,
+  electricityWithoutHeating,
   defaultHeatingEnergies,
-  carbonBasedFuelEmissionFactor,
-  fuelSurface,
-  gasCylinderCapacity,
-  gasCylinderEnergyPerBottle,
-  propaneEnergyPerKg,
-  gasSurface,
-  heatNetworkSurface,
-  propaneFootprint,
-  woodSurface,
-  fuelConsumptionPerLiter,
-  carbonBasedFuelEmissionFactorPerLiter,
-  woodLogEnergyIntensity,
-  bioGasConsumptionPerSquareMeter,
-  fuelConsumptionPerSquareMeter,
-  gasConsumptionPerSquareMeter,
-  heatNetworkConsumptionPerSquareMeter,
-  woodConsumptionPerSquareMeter,
-  electricityCarbonIntensity,
-  electricityConsumptionWithoutHeatingPerSquareMeter,
-  electricityConsumptionPerSquareMeter,
-  electricitySurfacePart,
-  airConditioningUnitFootprint,
-  apartmentDefaultNumberOfAirConditioners,
-  houseDefaultNumberOfAirConditioners,
+  fuel,
+  gas,
+  heatNetwork,
+  surfaces,
+  wood,
 } from "@domain/models/housing/energy/constants";
 import { HeatingEnergies } from "@domain/models/housing/energy/types";
 import { WithAnnualFootprint } from "@domain/models/types";
@@ -88,15 +65,18 @@ export class Energy implements WithAnnualFootprint {
   }
 
   private get electricityAnnualFootprint(): number {
-    return this.annualElectricityConsumption * electricityCarbonIntensity;
+    return (
+      this.annualElectricityConsumption *
+      electricityWithoutHeating.carbonIntensity
+    );
   }
 
   public get defaultElectricityAnnualkWhConsumption(): number {
     if (this.noHeating)
       return (
         this.livingSpace *
-        (electricityConsumptionWithoutHeatingPerSquareMeter +
-          electricitySurfacePart * electricityConsumptionPerSquareMeter)
+        (electricityWithoutHeating.consuptionPerSquareMeter +
+          surfaces.electricityPart * electricity.consumption.perSquareMeter)
       );
     else if (
       this.heatingEnergies.electricity ||
@@ -104,12 +84,12 @@ export class Energy implements WithAnnualFootprint {
     ) {
       return (
         this.livingSpace *
-        (electricityConsumptionWithoutHeatingPerSquareMeter +
-          electricityConsumptionPerSquareMeter)
+        (electricityWithoutHeating.consuptionPerSquareMeter +
+          electricity.consumption.perSquareMeter)
       );
     } else {
       return (
-        this.livingSpace * electricityConsumptionWithoutHeatingPerSquareMeter
+        this.livingSpace * electricityWithoutHeating.consuptionPerSquareMeter
       );
     }
   }
@@ -120,12 +100,12 @@ export class Energy implements WithAnnualFootprint {
 
   private get airConditionersFootprint(): number {
     if (this.airConditioners > 0) {
-      return this.airConditioners * airConditioningUnitFootprint;
+      return this.airConditioners * airConditioner.footprint.all;
     }
     return (
       (this.isAnApartment
-        ? apartmentDefaultNumberOfAirConditioners
-        : houseDefaultNumberOfAirConditioners) * airConditioningUnitFootprint
+        ? airConditioner.defaultNumber.apartment
+        : airConditioner.defaultNumber.house) * airConditioner.footprint.all
     );
   }
 
@@ -147,44 +127,45 @@ export class Energy implements WithAnnualFootprint {
 
   private get gasFootprintPerSquareMeter(): number {
     return (
-      (gasSurface / this.livingSpace) *
-      (gasConsumptionPerSquareMeter * carbonBasedGasEmissionFactor)
+      (surfaces.gas / this.livingSpace) *
+      (gas.consumption.perSquareMeter * gas.carbonBasedEmissionFactor)
     );
   }
 
   private get fuelFootprintPerSquareMeter(): number {
     return (
-      (fuelSurface / this.livingSpace) *
-      (fuelConsumptionPerSquareMeter * carbonBasedFuelEmissionFactor)
+      (surfaces.fuel / this.livingSpace) *
+      (fuel.consumption.perSquareMeter *
+        fuel.carbonBasedEmissionFactor.perKiloWattHeure)
     );
   }
 
   private get woodLogFootprintPerSquareMeter(): number {
     return (
-      (woodSurface / this.livingSpace) *
-      (woodConsumptionPerSquareMeter * carbonBasedWoodLogsEmissionFactor)
+      (surfaces.wood / this.livingSpace) *
+      (wood.consumption.perSquareMeter * wood.carbonBasedEmissionFactor.logs)
     );
   }
 
   private get woodPelletFootprintPerSquareMeter(): number {
     return (
-      (woodSurface / this.livingSpace) *
-      (woodConsumptionPerSquareMeter * carbonBasedWoodPelletsEmissionFactor)
+      (surfaces.wood / this.livingSpace) *
+      (wood.consumption.perSquareMeter * wood.carbonBasedEmissionFactor.pellets)
     );
   }
 
   private get heatNetworkFootprintPerSquareMeter(): number {
     return (
-      (heatNetworkSurface / this.livingSpace) *
-      (heatNetworkConsumptionPerSquareMeter *
-        carbonBasedHeatNetworkEmissionFactor)
+      (surfaces.heatNetwork / this.livingSpace) *
+      (heatNetwork.consumption.perSquareMeter *
+        heatNetwork.carbonBasedEmissionFactor)
     );
   }
 
   private get bioGasFootprintPerSquareMeter(): number {
     return (
-      (bioGasSurface / this.livingSpace) *
-      (bioGasConsumptionPerSquareMeter * carbonBasedBioGasEmissionFactor)
+      (surfaces.bioGas / this.livingSpace) *
+      (bioGas.consumption.perSquareMeter * bioGas.carbonBasedEmissionFactor)
     );
   }
 
@@ -204,56 +185,55 @@ export class Energy implements WithAnnualFootprint {
     return (
       this.gasAnnualKWhConsumption *
       (this.heatingEnergies.bioGas
-        ? carbonBasedBioGasEmissionFactor
-        : carbonBasedGasEmissionFactor)
+        ? bioGas.carbonBasedEmissionFactor
+        : gas.carbonBasedEmissionFactor)
     );
   }
 
   private get gasAnnualKWhConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
-    return gasConsumptionPerSquareMeter * this.livingSpace;
+    return gas.consumption.perSquareMeter * this.livingSpace;
   }
 
   private get gasCylinderAnnualFootprint(): number {
     if (!this.heatingEnergies.gasCylinder) return 0;
-    return this.gasCylinderFootprint * this.gasCylinderAnnualBottleConsumption;
-  }
-
-  private get gasCylinderFootprint(): number {
-    return ((butaneFootprint + propaneFootprint) / 2) * gasCylinderCapacity;
+    return gas.footprint.cylinder * this.gasCylinderAnnualBottleConsumption;
   }
 
   private get gasCylinderAnnualBottleConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
     return (
-      ((cookingGasConsumption / gasSurface) * this.livingSpace) /
-      gasCylinderEnergyPerBottle
+      ((gas.consumption.cooking / surfaces.gas) * this.livingSpace) /
+      gas.energy.cylinderPerBottle
     );
   }
 
   private get propaneAnnualFootprint(): number {
     if (!this.heatingEnergies.propane) return 0;
-    return propaneFootprint * this.propaneAnnualKgConsumption;
+    return gas.footprint.propane * this.propaneAnnualKgConsumption;
   }
 
   private get propaneAnnualKgConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
     return (
-      (gasConsumptionPerSquareMeter * this.livingSpace) / propaneEnergyPerKg
+      (gas.consumption.perSquareMeter * this.livingSpace) /
+      gas.energy.propanePerKg
     );
   }
 
   private get fuelAnnualFootprint(): number {
     if (!this.heatingEnergies.fuel) return 0;
     return (
-      this.fuelAnnualLitersConsumption * carbonBasedFuelEmissionFactorPerLiter
+      this.fuelAnnualLitersConsumption * fuel.carbonBasedEmissionFactor.perLiter
     );
   }
 
   private get fuelAnnualLitersConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
     return (
-      fuelConsumptionPerSquareMeter * fuelConsumptionPerLiter * this.livingSpace
+      fuel.consumption.perSquareMeter *
+      fuel.consumption.perLiter *
+      this.livingSpace
     );
   }
 
@@ -267,40 +247,41 @@ export class Energy implements WithAnnualFootprint {
   private get woodLogAnnualFootprint(): number {
     return (
       this.woodLogAnnualStereConsumption *
-      woodLogEnergyIntensity *
-      carbonBasedWoodLogsEmissionFactor
+      wood.consumption.perLog *
+      wood.carbonBasedEmissionFactor.logs
     );
   }
 
   private get woodLogAnnualStereConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
     return (
-      (woodConsumptionPerSquareMeter * this.livingSpace) /
-      woodLogEnergyIntensity
+      (wood.consumption.perSquareMeter * this.livingSpace) /
+      wood.consumption.perLog
     );
   }
 
   private get woodPelletAnnualFootprint(): number {
     return (
-      this.woolPelletAnnualkWhConsumption * carbonBasedWoodPelletsEmissionFactor
+      this.woodPelletAnnualkWhConsumption *
+      wood.carbonBasedEmissionFactor.pellets
     );
   }
 
-  private get woolPelletAnnualkWhConsumption(): number {
+  private get woodPelletAnnualkWhConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
-    return woodConsumptionPerSquareMeter * this.livingSpace;
+    return wood.consumption.perSquareMeter * this.livingSpace;
   }
 
   private get heatNetworkAnnualFootprint(): number {
     if (!this.heatingEnergies.heatNetwork) return 0;
     return (
       this.heatNetworkAnnualkWhConsumption *
-      carbonBasedHeatNetworkEmissionFactor
+      heatNetwork.carbonBasedEmissionFactor
     );
   }
 
   private get heatNetworkAnnualkWhConsumption(): number {
     // NB : améliorable en permettant à l'utilisateur de renseigner la valeur de sa consommation réelle
-    return heatNetworkConsumptionPerSquareMeter * this.livingSpace;
+    return heatNetwork.consumption.perSquareMeter * this.livingSpace;
   }
 }
