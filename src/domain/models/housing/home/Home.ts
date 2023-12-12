@@ -40,13 +40,7 @@ export class Home implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
-    return Math.round(
-      this.constructionAnnualFootprint,
-      // this.heatingAnnualFootprint +
-      // this.electricityAnnualFootprint +
-      // this.airConditioningAnnualFootprint +
-      // this.holidaysAnnualFootprint,
-    );
+    return Math.round(this.constructionAnnualFootprint);
   }
 
   private get constructionAnnualFootprint(): number {
