@@ -1,35 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useRef, RefObject, useState } from "react";
+import { View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 export const ComparatorForWeb = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const ademeComparator: RefObject<HTMLDivElement> | null = useRef(null);
+
   useEffect(() => {
-    const scriptContainer = document.createElement("div");
     const script = document.createElement("script");
     script.id = "datagir-impact-co2";
     script.src = "https://impactco2.fr/iframe.js";
     script.dataset.type = "convertisseur";
     script.dataset.search = "?theme=night";
     script.async = true;
-
     script.onload = () => {
-      const uselessDivToRemove = document
-        .getElementById("ademe-comparator")
-        ?.querySelector("div")
-        ?.querySelector("div");
-      uselessDivToRemove?.remove();
+      ademeComparator.current?.querySelector("div")?.remove();
+      setTimeout(() => {
+        setIsLoading(false);
+        ademeComparator.current?.setAttribute("style", "visibility: visible");
+      }, 500);
     };
-
-    scriptContainer.appendChild(script);
-    const targetElement = document.getElementById("ademe-comparator");
-    targetElement?.appendChild(scriptContainer);
-
-    return () => {
-      targetElement?.removeChild(scriptContainer);
-    };
+    ademeComparator.current?.appendChild(script);
   }, []);
 
   return (
-    <div style={{ overflow: "auto" }}>
-      <div id="ademe-comparator" />
-    </div>
+    <>
+      {isLoading && (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      )}
+      <div style={{ overflow: "auto" }}>
+        <div ref={ademeComparator} style={{ visibility: "hidden" }} />
+      </div>
+    </>
   );
 };
