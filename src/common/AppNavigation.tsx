@@ -66,6 +66,7 @@ const TabNavigator = () => {
       screenOptions={{
         tabBarLabelPosition: "below-icon",
         tabBarStyle: { height: 50, paddingBottom: 5 },
+        headerShown: false,
       }}
     >
       <Tab.Screen
