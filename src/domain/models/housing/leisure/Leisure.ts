@@ -3,9 +3,6 @@ import {
   isAnApartmentDefaultValue,
 } from "@domain/models/housing/constants";
 import {
-  poolColdWaterFootprint,
-  poolChemicalTreatmentFootprint,
-  poolConstructionFootprint,
   defaultHolidayAccomodations,
   hotelFootprintPerNight,
   averageHotelNightsPerYear,
@@ -16,6 +13,7 @@ import {
   rentalFootprintPerNight,
   averageRentalNightsPerYear,
   averageExchangeNightsPerYear,
+  poolFootprint,
 } from "@domain/models/housing/leisure/constants";
 import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
 import { WithAnnualFootprint } from "@domain/models/types";
@@ -142,14 +140,6 @@ export class Leisure implements WithAnnualFootprint {
 
   private get poolAnnualFootprint(): number {
     if (!this.hasIngroundPool || this.isAnApartment) return 0;
-    return this.poolFootprint / this.inhabitants;
-  }
-
-  private get poolFootprint(): number {
-    return (
-      poolColdWaterFootprint +
-      poolChemicalTreatmentFootprint +
-      poolConstructionFootprint
-    );
+    return poolFootprint / this.inhabitants;
   }
 }
