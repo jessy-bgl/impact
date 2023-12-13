@@ -20,7 +20,6 @@ import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
   hasIngroundPool?: boolean;
-  poolSize?: number;
   isAnApartment?: boolean;
   inhabitants?: number;
   holidayAccomodations?: HolidayAccomodations;
@@ -33,7 +32,6 @@ type Props = {
 
 export class Leisure implements WithAnnualFootprint {
   hasIngroundPool: boolean;
-  poolSize: number;
   isAnApartment: boolean;
   inhabitants: number;
   holidayAccomodations: HolidayAccomodations;
@@ -45,7 +43,6 @@ export class Leisure implements WithAnnualFootprint {
 
   constructor({
     hasIngroundPool,
-    poolSize,
     isAnApartment,
     inhabitants,
     holidayAccomodations,
@@ -56,7 +53,6 @@ export class Leisure implements WithAnnualFootprint {
     exchangeNightsPerYear,
   }: Props) {
     this.hasIngroundPool = hasIngroundPool ?? false;
-    this.poolSize = poolSize ?? 0;
     this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
     this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
     this.holidayAccomodations =
@@ -73,7 +69,7 @@ export class Leisure implements WithAnnualFootprint {
   }
 
   get annualFootprint(): number {
-    return this.poolAnnualFootprint + this.holidaysAnnualFootprint;
+    return Math.round(this.poolAnnualFootprint + this.holidaysAnnualFootprint);
   }
 
   private get holidaysAnnualFootprint(): number {
@@ -138,8 +134,8 @@ export class Leisure implements WithAnnualFootprint {
     return rentalFootprintPerNight * this.exchangeNightsPerYear;
   }
 
-  private get poolAnnualFootprint(): number {
+  public get poolAnnualFootprint(): number {
     if (!this.hasIngroundPool || this.isAnApartment) return 0;
-    return poolFootprint / this.inhabitants;
+    return Math.round(poolFootprint / this.inhabitants);
   }
 }
