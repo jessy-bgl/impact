@@ -72,10 +72,11 @@ export class Leisure implements WithAnnualFootprint {
     return Math.round(this.poolAnnualFootprint + this.holidaysAnnualFootprint);
   }
 
-  private get holidaysAnnualFootprint(): number {
-    if (this.noHolidayAccomodation)
-      return this.holidaysDefaultFootprint / this.inhabitants;
-    return this.holidaysTotalFootprint / this.inhabitants;
+  public get holidaysAnnualFootprint(): number {
+    return Math.round(
+      (this.noHolidayAccomodation ? 0 : this.holidaysTotalFootprint) /
+        this.inhabitants,
+    );
   }
 
   private get noHolidayAccomodation(): boolean {
@@ -84,7 +85,10 @@ export class Leisure implements WithAnnualFootprint {
     );
   }
 
-  private get holidaysDefaultFootprint(): number {
+  // TODO : selon les calculs sur Github, ceci devrait être utilisé
+  // lorsque this.noHolidayAccomodation == true. Cependant, sur le simulateur
+  // nosgestesclimat, il ne semble pas être utitlisé. A vérifier.
+  /*private get holidaysDefaultFootprint(): number {
     return (
       averageHotelNightsPerYear * hotelFootprintPerNight +
       averageCampingNightsPerYear * campingFootprintPerNight +
@@ -94,7 +98,7 @@ export class Leisure implements WithAnnualFootprint {
         youthHostelFootprintPerNight *
         this.inhabitants
     );
-  }
+  }*/
 
   private get holidaysTotalFootprint(): number {
     return (
