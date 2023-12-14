@@ -54,20 +54,18 @@ export class Energy implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
-    return (
-      ((this.noHeating
-        ? this.heatingAnnualFootprintWithoutHeating
-        : this.heatingAnnualFootprint) +
+    return Math.round(
+      this.heatingAnnualFootprint +
         this.electricityAnnualFootprint +
-        this.airConditioningAnnualFootprint) /
-      this.inhabitants
+        this.airConditioningAnnualFootprint,
     );
   }
 
-  private get electricityAnnualFootprint(): number {
-    return (
-      this.annualElectricityConsumption *
-      electricityWithoutHeating.carbonIntensity
+  public get electricityAnnualFootprint(): number {
+    return Math.round(
+      (this.annualElectricityConsumption *
+        electricityWithoutHeating.carbonIntensity) /
+        this.inhabitants,
     );
   }
 
@@ -94,8 +92,8 @@ export class Energy implements WithAnnualFootprint {
     }
   }
 
-  private get airConditioningAnnualFootprint(): number {
-    return this.airConditionersFootprint / this.inhabitants;
+  public get airConditioningAnnualFootprint(): number {
+    return Math.round(this.airConditionersFootprint / this.inhabitants);
   }
 
   private get airConditionersFootprint(): number {
@@ -113,7 +111,20 @@ export class Energy implements WithAnnualFootprint {
     return !Object.values(this.heatingEnergies).some((energy) => energy);
   }
 
-  private get heatingAnnualFootprintWithoutHeating(): number {
+  public get heatingAnnualFootprint(): number {
+    return Math.round(
+      (this.noHeating
+        ? this.defaultHeatingAnnualFootprint
+        : this.gasAnnualFootprint +
+          this.gasCylinderAnnualFootprint +
+          this.propaneAnnualFootprint +
+          this.fuelAnnualFootprint +
+          this.woodAnnualFootprint +
+          this.heatNetworkAnnualFootprint) / this.inhabitants,
+    );
+  }
+
+  private get defaultHeatingAnnualFootprint(): number {
     const averageFootprintPerSquareMeterWithoutElectricity =
       this.gasFootprintPerSquareMeter +
       this.fuelFootprintPerSquareMeter +
@@ -166,17 +177,6 @@ export class Energy implements WithAnnualFootprint {
     return (
       (surfaces.bioGas / this.livingSpace) *
       (bioGas.consumption.perSquareMeter * bioGas.carbonBasedEmissionFactor)
-    );
-  }
-
-  private get heatingAnnualFootprint(): number {
-    return (
-      this.gasAnnualFootprint +
-      this.gasCylinderAnnualFootprint +
-      this.propaneAnnualFootprint +
-      this.fuelAnnualFootprint +
-      this.woodAnnualFootprint +
-      this.heatNetworkAnnualFootprint
     );
   }
 
