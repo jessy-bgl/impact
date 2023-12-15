@@ -1,4 +1,4 @@
-import { electricityDataset } from "@domain/models/__tests__/housing/energy/dataset";
+import { electricityDataset, heatingDataset } from "./dataset";
 import { Energy } from "@domain/models/housing/energy/Energy";
 
 describe("Energy", () => {
@@ -15,6 +15,22 @@ describe("Energy", () => {
       (expectedElectricityAnnualFootprint, energy) => {
         expect(new Energy(energy).electricityAnnualFootprint).toEqual(
           expectedElectricityAnnualFootprint,
+        );
+      },
+    );
+  });
+
+  describe("heatingAnnualFootprint", () => {
+    it.each<[number, Energy]>(
+      heatingDataset.map(({ energy, expectedHeatingAnnualFootprint }) => [
+        expectedHeatingAnnualFootprint,
+        energy,
+      ]),
+    )(
+      "should give an annual footprint equal to %i kgCO2e",
+      (expectedHeatingAnnualFootprint, energy) => {
+        expect(new Energy(energy).heatingAnnualFootprint).toEqual(
+          expectedHeatingAnnualFootprint,
         );
       },
     );
