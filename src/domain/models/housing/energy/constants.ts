@@ -9,11 +9,13 @@ export const defaultHeatingEnergies: HeatingEnergies = {
   bioGas: false,
   fuel: false,
   wood: false,
-  woodType: "logs",
   heatNetwork: false,
 };
 
 export const surfaces = {
+  /*
+   * Living surfaces
+   */
   houses: 1874000000, //m2
   appartements: 817000000, //m2
   get living() {
@@ -21,7 +23,7 @@ export const surfaces = {
   },
 
   /*
-   * Surfaces
+   * Energies surfaces
    * https://www.statistiques.developpement-durable.gouv.fr/consommation-denergie-par-usage-du-residentiel
    */
   electricity: 962771183, //m2
@@ -30,7 +32,11 @@ export const surfaces = {
   wood: 146747327, //m2
   heatNetwork: 82129765, //m2
   bioGas: 45230016, //m2
-  get energy() {
+
+  /*
+   * Energies surface part
+   */
+  get energies() {
     return (
       this.electricity +
       this.gas +
@@ -41,19 +47,22 @@ export const surfaces = {
     );
   },
   get electricityPart() {
-    return this.electricity / this.energy;
+    return this.electricity / this.energies;
   },
-};
-
-/*
- * Electricity (without heating)
- */
-// https://prod-basecarbonesolo.ademe-dri.fr/documentation/UPLOAD_DOC_FR/
-export const electricityWithoutHeating = {
-  carbonIntensity: 0.052, // kgCO2e/kwh
-  consumption: 79384041653, // kWh
-  get consuptionPerSquareMeter() {
-    return this.consumption / surfaces.living;
+  get gasPart() {
+    return this.gas / this.energies;
+  },
+  get fuelPart() {
+    return this.fuel / this.energies;
+  },
+  get woodPart() {
+    return this.wood / this.energies;
+  },
+  get heatNetworkPart() {
+    return this.heatNetwork / this.energies;
+  },
+  get bioGasPart() {
+    return this.bioGas / this.energies;
   },
 };
 
@@ -80,6 +89,39 @@ export const gas = {
     cylinderPerBottle: 179, // kWh/bottle
     propanePerKg: 13.88, // kWh/kg
   },
+  get footprintPerSquareMeter() {
+    return (
+      surfaces.gasPart *
+      (gas.consumption.perSquareMeter * gas.carbonBasedEmissionFactor)
+    );
+  },
+};
+
+/*
+ * Bio gas
+ */
+export const bioGas = {
+  consumption: {
+    heating: 2665257467, // kWh
+    hotWater: 750729503, // kWh
+    get perSquareMeter() {
+      return (this.heating + this.hotWater) / surfaces.heatNetwork;
+    },
+  },
+  part: 0.2,
+  carbonBasedEmissionFactor: 0.0395, // kgCO2e/kWh
+  get emissionFactor() {
+    return (
+      bioGas.part * bioGas.carbonBasedEmissionFactor +
+      gas.carbonBasedEmissionFactor * (1 - bioGas.part)
+    );
+  },
+  get footprintPerSquareMeter(): number {
+    return (
+      surfaces.bioGasPart *
+      (bioGas.consumption.perSquareMeter * bioGas.carbonBasedEmissionFactor)
+    );
+  },
 };
 
 /*
@@ -98,6 +140,13 @@ export const fuel = {
   carbonBasedEmissionFactor: {
     perKiloWattHeure: 0.324, // kgCO2e/kWh
     perLiter: 3.25, // kgCO2e/L
+  },
+  get footprintPerSquareMeter(): number {
+    return (
+      surfaces.fuelPart *
+      (fuel.consumption.perSquareMeter *
+        fuel.carbonBasedEmissionFactor.perKiloWattHeure)
+    );
   },
 };
 
@@ -118,6 +167,18 @@ export const wood = {
     logs: 0.046, // kgCO2e/kWh
     pellets: 0.0113, // kgCO2e/kWh
   },
+  get logFootprintPerSquareMeter(): number {
+    return (
+      surfaces.woodPart *
+      (wood.consumption.perSquareMeter * wood.carbonBasedEmissionFactor.logs)
+    );
+  },
+  get pelletFootprintPerSquareMeter(): number {
+    return (
+      surfaces.woodPart *
+      (wood.consumption.perSquareMeter * wood.carbonBasedEmissionFactor.pellets)
+    );
+  },
 };
 
 /*
@@ -132,20 +193,25 @@ export const heatNetwork = {
     },
   },
   carbonBasedEmissionFactor: 0.125,
+  get footprintPerSquareMeter(): number {
+    return (
+      surfaces.heatNetworkPart *
+      (heatNetwork.consumption.perSquareMeter *
+        heatNetwork.carbonBasedEmissionFactor)
+    );
+  },
 };
 
 /*
- * Bio gas
+ * Electricity (without heating)
  */
-export const bioGas = {
-  consumption: {
-    heating: 2665257467, // kWh
-    hotWater: 750729503, // kWh
-    get perSquareMeter() {
-      return (this.heating + this.hotWater) / surfaces.heatNetwork;
-    },
+// https://prod-basecarbonesolo.ademe-dri.fr/documentation/UPLOAD_DOC_FR/
+export const electricityWithoutHeating = {
+  carbonIntensity: 0.052, // kgCO2e/kwh
+  consumption: 79384041653, // kWh
+  get consuptionPerSquareMeter() {
+    return this.consumption / surfaces.living;
   },
-  carbonBasedEmissionFactor: 0.272, // kgCO2e/kWh
 };
 
 /*

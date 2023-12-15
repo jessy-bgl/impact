@@ -7,6 +7,7 @@ export type HeatingEnergies = {
   bioGas: boolean;
   fuel: boolean;
   wood: boolean;
-  woodType: "logs" | "pellets";
   heatNetwork: boolean;
 };
+
+export type WoodType = "logs" | "pellets";

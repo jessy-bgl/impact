@@ -15,7 +15,7 @@ import {
   surfaces,
   wood,
 } from "@domain/models/housing/energy/constants";
-import { HeatingEnergies } from "@domain/models/housing/energy/types";
+import { HeatingEnergies, WoodType } from "@domain/models/housing/energy/types";
 import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
@@ -25,6 +25,7 @@ type Props = {
   heatingEnergies?: HeatingEnergies;
   airConditioners?: number;
   isAnApartment?: boolean;
+  woodType?: WoodType;
 };
 
 export class Energy implements WithAnnualFootprint {
@@ -34,6 +35,7 @@ export class Energy implements WithAnnualFootprint {
   heatingEnergies: HeatingEnergies;
   airConditioners: number;
   isAnApartment: boolean;
+  woodType: WoodType;
 
   constructor({
     annualElectricityConsumption,
@@ -42,10 +44,12 @@ export class Energy implements WithAnnualFootprint {
     livingSpace,
     airConditioners,
     isAnApartment,
+    woodType,
   }: Props) {
     this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
     this.livingSpace = livingSpace ?? defaultLivingSpace;
     this.heatingEnergies = heatingEnergies ?? defaultHeatingEnergies;
+    this.woodType = woodType ?? "logs";
     this.airConditioners = airConditioners ?? 0;
     this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
     this.annualElectricityConsumption =
@@ -114,7 +118,7 @@ export class Energy implements WithAnnualFootprint {
   public get heatingAnnualFootprint(): number {
     return Math.round(
       (this.noHeating
-        ? this.defaultHeatingAnnualFootprint
+        ? 0
         : this.gasAnnualFootprint +
           this.gasCylinderAnnualFootprint +
           this.propaneAnnualFootprint +
@@ -124,68 +128,26 @@ export class Energy implements WithAnnualFootprint {
     );
   }
 
-  private get defaultHeatingAnnualFootprint(): number {
+  // TODO : selon les calculs sur Github, ceci devrait être utilisé
+  // lorsque this.noHeating == true. Cependant, sur le simulateur
+  // nosgestesclimat, il ne semble pas être utitlisé. A vérifier.
+  /*private get defaultHeatingAnnualFootprint(): number {
     const averageFootprintPerSquareMeterWithoutElectricity =
-      this.gasFootprintPerSquareMeter +
-      this.fuelFootprintPerSquareMeter +
-      this.woodLogFootprintPerSquareMeter / 2 +
-      this.woodPelletFootprintPerSquareMeter / 2 +
-      this.heatNetworkFootprintPerSquareMeter +
-      this.bioGasFootprintPerSquareMeter;
-
+      gas.footprintPerSquareMeter +
+      fuel.footprintPerSquareMeter +
+      wood.logFootprintPerSquareMeter / 2 +
+      wood.pelletFootprintPerSquareMeter / 2 +
+      heatNetwork.footprintPerSquareMeter +
+      bioGas.footprintPerSquareMeter;
     return averageFootprintPerSquareMeterWithoutElectricity * this.livingSpace;
-  }
-
-  private get gasFootprintPerSquareMeter(): number {
-    return (
-      (surfaces.gas / this.livingSpace) *
-      (gas.consumption.perSquareMeter * gas.carbonBasedEmissionFactor)
-    );
-  }
-
-  private get fuelFootprintPerSquareMeter(): number {
-    return (
-      (surfaces.fuel / this.livingSpace) *
-      (fuel.consumption.perSquareMeter *
-        fuel.carbonBasedEmissionFactor.perKiloWattHeure)
-    );
-  }
-
-  private get woodLogFootprintPerSquareMeter(): number {
-    return (
-      (surfaces.wood / this.livingSpace) *
-      (wood.consumption.perSquareMeter * wood.carbonBasedEmissionFactor.logs)
-    );
-  }
-
-  private get woodPelletFootprintPerSquareMeter(): number {
-    return (
-      (surfaces.wood / this.livingSpace) *
-      (wood.consumption.perSquareMeter * wood.carbonBasedEmissionFactor.pellets)
-    );
-  }
-
-  private get heatNetworkFootprintPerSquareMeter(): number {
-    return (
-      (surfaces.heatNetwork / this.livingSpace) *
-      (heatNetwork.consumption.perSquareMeter *
-        heatNetwork.carbonBasedEmissionFactor)
-    );
-  }
-
-  private get bioGasFootprintPerSquareMeter(): number {
-    return (
-      (surfaces.bioGas / this.livingSpace) *
-      (bioGas.consumption.perSquareMeter * bioGas.carbonBasedEmissionFactor)
-    );
-  }
+  }*/
 
   private get gasAnnualFootprint(): number {
     if (!this.heatingEnergies.gas) return 0;
     return (
       this.gasAnnualKWhConsumption *
       (this.heatingEnergies.bioGas
-        ? bioGas.carbonBasedEmissionFactor
+        ? bioGas.emissionFactor
         : gas.carbonBasedEmissionFactor)
     );
   }
@@ -239,8 +201,7 @@ export class Energy implements WithAnnualFootprint {
 
   private get woodAnnualFootprint(): number {
     if (!this.heatingEnergies.wood) return 0;
-    if (this.heatingEnergies.woodType === "logs")
-      return this.woodLogAnnualFootprint;
+    if (this.woodType === "logs") return this.woodLogAnnualFootprint;
     else return this.woodPelletAnnualFootprint;
   }
 
