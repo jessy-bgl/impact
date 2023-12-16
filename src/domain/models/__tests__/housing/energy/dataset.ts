@@ -57,7 +57,6 @@ export const heatingDataset: {
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
         gas: true,
-        bioGas: false,
       },
     }),
     expectedHeatingAnnualFootprint: 1105,
@@ -73,5 +72,73 @@ export const heatingDataset: {
       },
     }),
     expectedHeatingAnnualFootprint: 924,
+  },
+  {
+    energy: new Energy({
+      inhabitants: 2,
+      livingSpace: 100,
+      heatingEnergies: {
+        ...initHeatingEnergiesWithFalsyValues(),
+        gasCylinder: true,
+      },
+    }),
+    expectedHeatingAnnualFootprint: 107,
+  },
+  {
+    energy: new Energy({
+      inhabitants: 2,
+      livingSpace: 100,
+      heatingEnergies: {
+        ...initHeatingEnergiesWithFalsyValues(),
+        propane: true,
+      },
+    }),
+    expectedHeatingAnnualFootprint: 1222,
+  },
+  {
+    energy: new Energy({
+      inhabitants: 2,
+      livingSpace: 100,
+      heatingEnergies: {
+        ...initHeatingEnergiesWithFalsyValues(),
+        fuel: true,
+      },
+    }),
+    expectedHeatingAnnualFootprint: 1761,
+  },
+  {
+    energy: new Energy({
+      inhabitants: 2,
+      livingSpace: 100,
+      heatingEnergies: {
+        ...initHeatingEnergiesWithFalsyValues(),
+        wood: true,
+      },
+      woodType: "logs",
+    }),
+    expectedHeatingAnnualFootprint: 1049,
+  },
+  {
+    energy: new Energy({
+      inhabitants: 2,
+      livingSpace: 100,
+      heatingEnergies: {
+        ...initHeatingEnergiesWithFalsyValues(),
+        wood: true,
+      },
+      woodType: "pellets",
+    }),
+    expectedHeatingAnnualFootprint: 258,
+  },
+  {
+    energy: new Energy({
+      inhabitants: 2,
+      livingSpace: 100,
+      heatingEnergies: {
+        ...initHeatingEnergiesWithFalsyValues(),
+        heatNetwork: true,
+      },
+    }),
+    expectedHeatingAnnualFootprint: 1050,
   },
 ];
