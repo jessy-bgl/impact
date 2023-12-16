@@ -12,20 +12,6 @@ const initHeatingEnergiesWithFalsyValues = () => ({
   gasCylinder: false,
 });
 
-export const electricityDataset: {
-  energy: Energy;
-  expectedElectricityAnnualFootprint: number;
-}[] = [
-  {
-    energy: new Energy({ annualElectricityConsumption: 0 }),
-    expectedElectricityAnnualFootprint: 0,
-  },
-  {
-    energy: new Energy({ inhabitants: 2, annualElectricityConsumption: 3000 }),
-    expectedElectricityAnnualFootprint: 78,
-  },
-];
-
 export const heatingDataset: {
   energy: Energy;
   expectedHeatingAnnualFootprint: number;
@@ -140,5 +126,33 @@ export const heatingDataset: {
       },
     }),
     expectedHeatingAnnualFootprint: 1050,
+  },
+];
+
+export const electricityDataset: {
+  energy: Energy;
+  expectedElectricityAnnualFootprint: number;
+}[] = [
+  {
+    energy: new Energy({ annualElectricityConsumption: 0 }),
+    expectedElectricityAnnualFootprint: 0,
+  },
+  {
+    energy: new Energy({ inhabitants: 2, annualElectricityConsumption: 3000 }),
+    expectedElectricityAnnualFootprint: 78,
+  },
+];
+
+export const airConditioningDataset: {
+  energy: Energy;
+  expectedAirConditioningAnnualFootprint: number;
+}[] = [
+  {
+    energy: new Energy({ airConditioners: 0 }),
+    expectedAirConditioningAnnualFootprint: 0,
+  },
+  {
+    energy: new Energy({ inhabitants: 2, airConditioners: 2 }),
+    expectedAirConditioningAnnualFootprint: 545,
   },
 ];
