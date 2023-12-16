@@ -101,15 +101,20 @@ export class Energy implements WithAnnualFootprint {
   }
 
   private get airConditionersFootprint(): number {
-    if (this.airConditioners > 0) {
-      return this.airConditioners * airConditioner.footprint.all;
-    }
+    if (this.airConditioners === 0) return 0;
+    return this.airConditioners * airConditioner.footprint.total;
+  }
+
+  // TODO : selon les calculs sur Github, ceci devrait être utilisé
+  // lorsque this.airConditioners == 0. Cependant, sur le simulateur
+  // nosgestesclimat, il ne semble pas être utitlisé. A vérifier.
+  /*private get defaultAirConditioningAnnualFootprint(): number {
     return (
       (this.isAnApartment
         ? airConditioner.defaultNumber.apartment
         : airConditioner.defaultNumber.house) * airConditioner.footprint.all
     );
-  }
+  }*/
 
   private get noHeating(): boolean {
     return !Object.values(this.heatingEnergies).some((energy) => energy);

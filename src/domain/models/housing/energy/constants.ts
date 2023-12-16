@@ -234,7 +234,7 @@ export const electricity = {
 /*
  * Air conditioning
  */
-const airConditioninglifetimeInYear = 6;
+const airConditionerLifetimeInYear = 6;
 const refrigeratorFluid = 1924; // kgCO2e/kg
 
 export const airConditioner = {
@@ -244,19 +244,19 @@ export const airConditioner = {
   },
   footprint: {
     get annualLeak() {
-      return 1.72 * 0.0042 * refrigeratorFluid;
+      return 1.72 * 0.042 * refrigeratorFluid; // kg/conditioner
     },
     get endOfLifeLeak() {
-      return 1.72 * 0.664 * refrigeratorFluid;
+      return 1.72 * 0.664 * refrigeratorFluid; // kg/conditioner
     },
     get endOfLifeLeakAmortized() {
-      return this.endOfLifeLeak / airConditioninglifetimeInYear;
+      return this.endOfLifeLeak / airConditionerLifetimeInYear;
     },
     construction: 239, // kgCO2e/airConditioner
     get constructionAmortized() {
-      return this.construction / airConditioninglifetimeInYear;
+      return this.construction / airConditionerLifetimeInYear;
     },
-    get all() {
+    get total() {
       return (
         this.annualLeak +
         this.endOfLifeLeakAmortized +
