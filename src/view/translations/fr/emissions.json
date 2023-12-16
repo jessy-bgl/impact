@@ -10,7 +10,7 @@
     "transport": "Transports",
     "housing": "Logement",
     "food": "Alimentation",
-    "goods": "Biens",
+    "everydayThings": "Divers",
     "publicServices": "Services publics"
   },
   "transport": {

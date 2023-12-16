@@ -15,7 +15,7 @@ export const Profile = () => {
     transportFootprint,
     housingFootprint,
     foodFootprint,
-    goodsFootprint,
+    everydayThingsFootprint,
     publicServicesFootprint,
   } = useProfile();
 
@@ -41,9 +41,9 @@ export const Profile = () => {
           onClick={() => navigate("FoodProfile")}
         />
         <ProfileCategoryCard
-          title={t("goods")}
-          icon={goodsFootprint.materialIcon}
-          footprintCategory={goodsFootprint}
+          title={t("everydayThings")}
+          icon={everydayThingsFootprint.materialIcon}
+          footprintCategory={everydayThingsFootprint}
           onClick={() => navigate("Profile")}
         />
         <ProfileCategoryCard

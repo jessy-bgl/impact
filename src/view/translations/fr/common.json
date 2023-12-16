@@ -5,7 +5,7 @@
   "transport": "Transports",
   "housing": "Logement",
   "food": "Alimentation",
-  "goods": "Biens",
+  "everydayThings": "Divers",
   "publicServices": "Services publics",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
@@ -15,7 +15,7 @@
     "Transport": "Transports",
     "Housing": "Logement",
     "Food": "Alimentation",
-    "Goods": "Biens",
+    "EverydayThings": "Divers",
     "Actions": "Actions",
     "Comparator": "Comparateur",
     "Objectives": "Objectifs"

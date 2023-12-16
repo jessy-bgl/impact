@@ -1,7 +1,7 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
 import foodImage from "@assets/images/food.svg";
-import goodsImage from "@assets/images/goods.svg";
+import everydayThingsImage from "@assets/images/goods.svg";
 import housingImage from "@assets/images/house.svg";
 import publicServicesImage from "@assets/images/public_services.svg";
 import transportImage from "@assets/images/transport.svg";
@@ -43,11 +43,11 @@ export class FootprintByCategory {
     return new FootprintCategoryHousing(footprint, totalFootprint);
   }
 
-  static forGoods(
+  static forEverydayThings(
     footprint: number,
     totalFootprint: number,
   ): FootprintByCategory {
-    return new FootprintCategoryGoods(footprint, totalFootprint);
+    return new FootprintCategoryEverydayThings(footprint, totalFootprint);
   }
 
   static forPublicServices(
@@ -93,13 +93,13 @@ class FootprintCategoryHousing extends FootprintByCategory {
   }
 }
 
-class FootprintCategoryGoods extends FootprintByCategory {
+class FootprintCategoryEverydayThings extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.GOODS, footprint, totalFootprint);
+    super(FootprintCategories.EVERYDAY_THINGS, footprint, totalFootprint);
     this.color = "khaki";
     this.icon = "🛍️";
     this.materialIcon = "package";
-    this.image = goodsImage;
+    this.image = everydayThingsImage;
   }
 }
 

@@ -8,7 +8,7 @@ export const useProfile = () => {
     transportFootprint: footprints[FootprintCategories.TRANSPORT],
     housingFootprint: footprints[FootprintCategories.HOUSING],
     foodFootprint: footprints[FootprintCategories.FOOD],
-    goodsFootprint: footprints[FootprintCategories.GOODS],
+    everydayThingsFootprint: footprints[FootprintCategories.EVERYDAY_THINGS],
     publicServicesFootprint: footprints[FootprintCategories.PUBLIC_SERVICES],
   };
 };

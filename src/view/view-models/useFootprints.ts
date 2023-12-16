@@ -36,7 +36,7 @@ export const useFootprints = () => {
       food.annualFootprint,
       totalAnnualFootprint,
     ),
-    goods: FootprintByCategory.forGoods(
+    everydayThings: FootprintByCategory.forEverydayThings(
       transport.annualFootprint,
       totalAnnualFootprint,
     ),
