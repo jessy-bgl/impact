@@ -4,7 +4,7 @@ import { cat, dog } from "./constants";
 
 type Props = {
   inhabitants?: number;
-  littleDogs?: number;
+  smallDogs?: number;
   mediumDogs?: number;
   bigDogs?: number;
   cats?: number;
@@ -12,14 +12,14 @@ type Props = {
 
 export class Pets implements WithAnnualFootprint {
   inhabitants: number;
-  littleDogs: number;
+  smallDogs: number;
   mediumDogs: number;
   bigDogs: number;
   cats: number;
 
-  constructor({ inhabitants, littleDogs, mediumDogs, bigDogs, cats }: Props) {
+  constructor({ inhabitants, smallDogs, mediumDogs, bigDogs, cats }: Props) {
     this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
-    this.littleDogs = littleDogs ?? 0;
+    this.smallDogs = smallDogs ?? 0;
     this.mediumDogs = mediumDogs ?? 0;
     this.bigDogs = bigDogs ?? 0;
     this.cats = cats ?? 0;
@@ -37,14 +37,14 @@ export class Pets implements WithAnnualFootprint {
 
   private get dogsAnnualFootprint(): number {
     return (
-      this.littleDogsAnnualFootprint +
+      this.smallDogsAnnualFootprint +
       this.mediumDogsAnnualFootprint +
       this.bigDogsAnnualFootprint
     );
   }
 
-  private get littleDogsAnnualFootprint(): number {
-    return this.littleDogs * dog.annualFootprint("little");
+  private get smallDogsAnnualFootprint(): number {
+    return this.smallDogs * dog.annualFootprint("small");
   }
 
   private get mediumDogsAnnualFootprint(): number {

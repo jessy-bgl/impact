@@ -1,6 +1,6 @@
 import { daysInYear } from "@domain/models/constants";
 
-export type PetSize = "little" | "medium" | "big";
+export type PetSize = "small" | "medium" | "big";
 
 // https://reader.elsevier.com/reader/sd/pii/S0959378020307366?token=375964333F28DED330C9C2CACCD5553CAAE486B7BD641A4F39738E9EC323613DCDABF4A0263131197CB5B47E1D304B99&originRegion=eu-west-1&originCreation=20230330100228
 const petFoodEnergyIntake = 4610; // kcal/kg
@@ -35,7 +35,7 @@ export const cat = {
 // https://europeanpetfood.org/wp-content/uploads/2022/03/Updated-Nutritional-Guidelines.pdf
 const dogDailyFoodRequirements = (petSize: PetSize) => {
   switch (petSize) {
-    case "little":
+    case "small":
       return (3.34 * 110) / petFoodEnergyIntake; // kg/day
     case "medium":
       return (9.46 * 110) / petFoodEnergyIntake; // kg/day

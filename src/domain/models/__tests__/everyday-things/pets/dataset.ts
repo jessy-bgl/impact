@@ -13,7 +13,7 @@ export const petsDataset: {
     expectedAnnualFootprint: 56,
   },
   {
-    pets: new Pets({ inhabitants: 2, littleDogs: 2 }),
+    pets: new Pets({ inhabitants: 2, smallDogs: 2 }),
     expectedAnnualFootprint: 129,
   },
   {
@@ -28,7 +28,7 @@ export const petsDataset: {
     pets: new Pets({
       inhabitants: 2,
       cats: 2,
-      littleDogs: 1,
+      smallDogs: 1,
       mediumDogs: 1,
       bigDogs: 1,
     }),
