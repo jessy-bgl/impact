@@ -87,7 +87,7 @@ export const gas = {
   },
   energy: {
     cylinderPerBottle: 179, // kWh/bottle
-    propanePerKg: 13.88, // kWh/kg
+    propanePerKg: 14.196, // kWh/kg
   },
   get footprintPerSquareMeter() {
     return (
