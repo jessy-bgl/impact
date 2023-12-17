@@ -105,9 +105,9 @@ export class Energy implements WithAnnualFootprint {
     return this.airConditioners * airConditioner.footprint.total;
   }
 
-  // TODO : selon les calculs sur Github, ceci devrait être utilisé
-  // lorsque this.airConditioners == 0. Cependant, sur le simulateur
-  // nosgestesclimat, il ne semble pas être utitlisé. A vérifier.
+  // NB : valeur utilisée par défaut sur le simulateur nosgestesclimat
+  // lorsqu'aucune valeur n'a été renseignée par l'utilisateur.
+  // Non utilisé ici car nous utilisons des valeurs par défaut.
   /*private get defaultAirConditioningAnnualFootprint(): number {
     return (
       (this.isAnApartment
@@ -133,9 +133,9 @@ export class Energy implements WithAnnualFootprint {
     );
   }
 
-  // TODO : selon les calculs sur Github, ceci devrait être utilisé
-  // lorsque this.noHeating == true. Cependant, sur le simulateur
-  // nosgestesclimat, il ne semble pas être utitlisé. A vérifier.
+  // NB : valeur utilisée par défaut sur le simulateur nosgestesclimat
+  // lorsqu'aucune valeur n'a été renseignée par l'utilisateur.
+  // Non utilisé ici car nous utilisons des valeurs par défaut.
   /*private get defaultHeatingAnnualFootprint(): number {
     const averageFootprintPerSquareMeterWithoutElectricity =
       gas.footprintPerSquareMeter +

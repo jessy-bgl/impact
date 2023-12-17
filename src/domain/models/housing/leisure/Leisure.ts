@@ -85,9 +85,9 @@ export class Leisure implements WithAnnualFootprint {
     );
   }
 
-  // TODO : selon les calculs sur Github, ceci devrait être utilisé
-  // lorsque this.noHolidayAccomodation == true. Cependant, sur le simulateur
-  // nosgestesclimat, il ne semble pas être utitlisé. A vérifier.
+  // NB : valeur utilisée par défaut sur le simulateur nosgestesclimat
+  // lorsqu'aucune valeur n'a été renseignée par l'utilisateur.
+  // Non utilisé ici car nous utilisons des valeurs par défaut.
   /*private get holidaysDefaultFootprint(): number {
     return (
       averageHotelNightsPerYear * hotelFootprintPerNight +
