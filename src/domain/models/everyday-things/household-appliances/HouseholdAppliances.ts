@@ -98,22 +98,22 @@ export class HouseholdAppliances implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
-    return (
+    return Math.round(
       this.fridgesAnnualFootprint +
-      this.miniFridgesAnnualFootprint +
-      this.freezersAnnualFootprint +
-      this.washingMachinesAnnualFootprint +
-      this.dryersAnnualFootprint +
-      this.dishWashersAnnualFootprint +
-      this.hoodsAnnualFootprint +
-      this.ovensAnnualFootprint +
-      this.microwavesAnnualFootprint +
-      this.hotPlatesAnnualFootprint +
-      this.kettlesAnnualFootprint +
-      this.coffeeMachinesAnnualFootprint +
-      this.vacuumCleanersAnnualFootprint +
-      this.kitchenRobotsAnnualFootprint +
-      this.electricLawnMowersAnnualFootprint
+        this.miniFridgesAnnualFootprint +
+        this.freezersAnnualFootprint +
+        this.washingMachinesAnnualFootprint +
+        this.dryersAnnualFootprint +
+        this.dishWashersAnnualFootprint +
+        this.hoodsAnnualFootprint +
+        this.ovensAnnualFootprint +
+        this.microwavesAnnualFootprint +
+        this.hotPlatesAnnualFootprint +
+        this.kettlesAnnualFootprint +
+        this.coffeeMachinesAnnualFootprint +
+        this.vacuumCleanersAnnualFootprint +
+        this.kitchenRobotsAnnualFootprint +
+        this.electricLawnMowersAnnualFootprint,
     );
   }
 

@@ -75,17 +75,20 @@ export const electricLawnMower = {
   lifetimeInYears: 8,
 };
 
+// TODO : vérifier ces valeurs. Elles ne correspondent pas à celles
+// sur Github, mais permettent d'obtenir des résultats cohérents avec
+// nosgestesclimat.fr
 export const preservationCoefficient = (
   preservation: HouseholdAppliancesPreservation,
 ) => {
   switch (preservation) {
     case "none":
-      return 1 / 2;
-    case "low":
-      return 2 / 3;
-    case "medium":
       return 1;
+    case "low":
+      return 1.5;
+    case "medium":
+      return 2;
     case "high":
-      return 4 / 3;
+      return 2.5;
   }
 };
