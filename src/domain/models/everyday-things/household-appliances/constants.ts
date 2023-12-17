@@ -1,4 +1,4 @@
-import { HouseholdAppliancesPreservation } from "@domain/models/everyday-things/household-appliances/HouseholdAppliances";
+import { Preservation } from "@domain/models/everyday-things/types";
 
 export const fridge = {
   footprint: 257,
@@ -78,9 +78,7 @@ export const electricLawnMower = {
 // TODO : vérifier ces valeurs. Elles ne correspondent pas à celles
 // sur Github, mais permettent d'obtenir des résultats cohérents avec
 // nosgestesclimat.fr
-export const preservationCoefficient = (
-  preservation: HouseholdAppliancesPreservation,
-) => {
+export const preservationCoefficient = (preservation: Preservation) => {
   switch (preservation) {
     case "none":
       return 1;
