@@ -25,19 +25,35 @@ export const furnitureDataset: {
     expectedAnnualFootprint: 0,
   },
   {
-    furniture: new Furniture({ ...fakeFurnitures, preservation: "none" }),
+    furniture: new Furniture({
+      ...fakeFurnitures,
+      inhabitants: 2,
+      preservation: "none",
+    }),
     expectedAnnualFootprint: 190,
   },
   {
-    furniture: new Furniture({ ...fakeFurnitures, preservation: "low" }),
+    furniture: new Furniture({
+      ...fakeFurnitures,
+      inhabitants: 2,
+      preservation: "low",
+    }),
     expectedAnnualFootprint: 142,
   },
   {
-    furniture: new Furniture({ ...fakeFurnitures, preservation: "medium" }),
+    furniture: new Furniture({
+      ...fakeFurnitures,
+      inhabitants: 2,
+      preservation: "medium",
+    }),
     expectedAnnualFootprint: 95,
   },
   {
-    furniture: new Furniture({ ...fakeFurnitures, preservation: "high" }),
+    furniture: new Furniture({
+      ...fakeFurnitures,
+      inhabitants: 2,
+      preservation: "high",
+    }),
     expectedAnnualFootprint: 71,
   },
 ];
