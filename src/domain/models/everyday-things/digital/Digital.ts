@@ -116,8 +116,12 @@ export class Digital implements WithAnnualFootprint {
     );
   }
 
-  private get internetAnnualFootprint(): number {
-    return internetHourlyFootprint * this.internetDailyHours * daysInYear;
+  public get internetAnnualFootprint(): number {
+    return Number(
+      (internetHourlyFootprint * this.internetDailyHours * daysInYear).toFixed(
+        2,
+      ),
+    );
   }
 
   private get mobilePhonesAnnualFootprint(): number {
