@@ -1,5 +1,6 @@
 import { WithAnnualFootprint } from "@domain/models/types";
 import { Preservation } from "@domain/models/everyday-things/types";
+import { defaultNumberOfInhabitants } from "@domain/models/housing/constants";
 import {
   coffeeMachine,
   dishWasher,
@@ -20,6 +21,8 @@ import {
 } from "./constants";
 
 type Props = {
+  inhabitants?: number;
+  preservation?: Preservation;
   fridges?: number;
   miniFridges?: number;
   freezers?: number;
@@ -35,7 +38,6 @@ type Props = {
   vacuumCleaners?: number;
   kitchenRobots?: number;
   electricLawnMowers?: number;
-  preservation?: Preservation;
 };
 
 export class HouseholdAppliances implements WithAnnualFootprint {
@@ -55,6 +57,7 @@ export class HouseholdAppliances implements WithAnnualFootprint {
   kitchenRobots: number;
   electricLawnMowers: number;
   preservation: Preservation;
+  inhabitants: number;
 
   constructor({
     fridges,
@@ -73,6 +76,7 @@ export class HouseholdAppliances implements WithAnnualFootprint {
     kitchenRobots,
     electricLawnMowers,
     preservation,
+    inhabitants,
   }: Props) {
     this.fridges = fridges ?? 0;
     this.miniFridges = miniFridges ?? 0;
@@ -90,11 +94,12 @@ export class HouseholdAppliances implements WithAnnualFootprint {
     this.kitchenRobots = kitchenRobots ?? 0;
     this.electricLawnMowers = electricLawnMowers ?? 0;
     this.preservation = preservation ?? "medium";
+    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
   }
 
   public get annualFootprint(): number {
     return Math.round(
-      this.fridgesAnnualFootprint +
+      (this.fridgesAnnualFootprint +
         this.miniFridgesAnnualFootprint +
         this.freezersAnnualFootprint +
         this.washingMachinesAnnualFootprint +
@@ -108,7 +113,8 @@ export class HouseholdAppliances implements WithAnnualFootprint {
         this.coffeeMachinesAnnualFootprint +
         this.vacuumCleanersAnnualFootprint +
         this.kitchenRobotsAnnualFootprint +
-        this.electricLawnMowersAnnualFootprint,
+        this.electricLawnMowersAnnualFootprint) /
+        this.inhabitants,
     );
   }
 
