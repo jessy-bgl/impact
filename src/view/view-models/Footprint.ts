@@ -106,7 +106,7 @@ class FootprintCategoryEverydayThings extends FootprintByCategory {
 class FootprintCategoryPublicServices extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
     super(FootprintCategories.PUBLIC_SERVICES, footprint, totalFootprint);
-    this.color = "mediumslateblue";
+    this.color = "steelblue";
     this.icon = "🏛";
     this.materialIcon = "bank";
     this.image = publicServicesImage;
