@@ -84,7 +84,7 @@ export class Hobbies implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
-    return this.sportAnnualFootprint + this.cultureAnnualFootprint;
+    return Math.round(this.sportAnnualFootprint + this.cultureAnnualFootprint);
   }
 
   // NB : sur le simulateur nosgestesclimat, un calcul par défaut
@@ -92,11 +92,13 @@ export class Hobbies implements WithAnnualFootprint {
   // Nous ne l'utilisons pas ici car chaque variable a une valeur par défaut.
 
   public get cultureAnnualFootprint(): number {
-    return (
-      this.concertsAndShowsAnnualFootprint +
-      this.museumsAndMonumentsAnnualFootprint +
-      this.editionsAnnualFootprint +
-      this.musicAnnualFootprint
+    return Number(
+      (
+        this.concertsAndShowsAnnualFootprint +
+        this.museumsAndMonumentsAnnualFootprint +
+        this.editionsAnnualFootprint +
+        this.musicAnnualFootprint
+      ).toFixed(2),
     );
   }
 
@@ -120,12 +122,14 @@ export class Hobbies implements WithAnnualFootprint {
     return musicAnnualFootprint;
   }
 
-  private get sportAnnualFootprint(): number {
-    return (
-      this.distributedSportAnnualFootprint +
-      this.sportClubAnnualFootprint +
-      this.fitnessAnnualFootprint +
-      this.mountainAnnualFootprint
+  public get sportAnnualFootprint(): number {
+    return Number(
+      (
+        this.distributedSportAnnualFootprint +
+        this.sportClubAnnualFootprint +
+        this.fitnessAnnualFootprint +
+        this.mountainAnnualFootprint
+      ).toFixed(2),
     );
   }
 
@@ -144,7 +148,7 @@ export class Hobbies implements WithAnnualFootprint {
       this.outdoorIndividualSport ||
       this.gym
     )
-      return distributedSportAnnualFootprint;
+      return Number(distributedSportAnnualFootprint.toFixed(2));
     return 0;
   }
 
@@ -161,18 +165,18 @@ export class Hobbies implements WithAnnualFootprint {
       this.waterSport ||
       this.motorSport
     ) {
-      return sportClubAnnualFootprint;
+      return Number(sportClubAnnualFootprint.toFixed(2));
     }
     return 0;
   }
 
   private get fitnessAnnualFootprint(): number {
     if (!this.gym) return 0;
-    return fitnessAnnualFootprint;
+    return Number(fitnessAnnualFootprint.toFixed(2));
   }
 
   private get mountainAnnualFootprint(): number {
     if (!this.winterSport) return 0;
-    return mountainAnnualFootprint;
+    return Number(mountainAnnualFootprint.toFixed(2));
   }
 }
