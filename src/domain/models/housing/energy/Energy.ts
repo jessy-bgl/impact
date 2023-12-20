@@ -105,7 +105,7 @@ export class Energy implements WithAnnualFootprint {
     return this.airConditioners * airConditioner.footprint.total;
   }
 
-  // NB : valeur utilisée par défaut sur le simulateur nosgestesclimat
+  // NB : calcul utilisé par défaut sur le simulateur nosgestesclimat
   // lorsqu'aucune valeur n'a été renseignée par l'utilisateur.
   // Non utilisé ici car nous utilisons des valeurs par défaut.
   /*private get defaultAirConditioningAnnualFootprint(): number {
@@ -133,7 +133,7 @@ export class Energy implements WithAnnualFootprint {
     );
   }
 
-  // NB : valeur utilisée par défaut sur le simulateur nosgestesclimat
+  // NB : calcul utilisé par défaut sur le simulateur nosgestesclimat
   // lorsqu'aucune valeur n'a été renseignée par l'utilisateur.
   // Non utilisé ici car nous utilisons des valeurs par défaut.
   /*private get defaultHeatingAnnualFootprint(): number {

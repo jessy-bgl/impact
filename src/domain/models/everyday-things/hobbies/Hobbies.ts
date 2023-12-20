@@ -87,6 +87,10 @@ export class Hobbies implements WithAnnualFootprint {
     return this.sportAnnualFootprint + this.cultureAnnualFootprint;
   }
 
+  // NB : sur le simulateur nosgestesclimat, un calcul par défaut
+  // est utilisé lorsqu'aucune valeur n'a été renseignée par l'utilisateur.
+  // Nous ne l'utilisons pas ici car chaque variable a une valeur par défaut.
+
   public get cultureAnnualFootprint(): number {
     return (
       this.concertsAndShowsAnnualFootprint +
