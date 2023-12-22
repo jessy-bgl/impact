@@ -41,6 +41,7 @@ type Props = {
 };
 
 export class HouseholdAppliances implements WithAnnualFootprint {
+  inhabitants: number;
   fridges: number;
   miniFridges: number;
   freezers: number;
@@ -57,9 +58,9 @@ export class HouseholdAppliances implements WithAnnualFootprint {
   kitchenRobots: number;
   electricLawnMowers: number;
   preservation: Preservation;
-  inhabitants: number;
 
   constructor({
+    inhabitants,
     fridges,
     miniFridges,
     freezers,
@@ -76,8 +77,8 @@ export class HouseholdAppliances implements WithAnnualFootprint {
     kitchenRobots,
     electricLawnMowers,
     preservation,
-    inhabitants,
   }: Props) {
+    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
     this.fridges = fridges ?? 0;
     this.miniFridges = miniFridges ?? 0;
     this.freezers = freezers ?? 0;
@@ -94,7 +95,6 @@ export class HouseholdAppliances implements WithAnnualFootprint {
     this.kitchenRobots = kitchenRobots ?? 0;
     this.electricLawnMowers = electricLawnMowers ?? 0;
     this.preservation = preservation ?? "medium";
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
   }
 
   public get annualFootprint(): number {

@@ -12,8 +12,10 @@ describe("fetchHousing", () => {
     const { fetchHousing } = createUseFetchHousing(
       repositories.emissionsRepository,
     )();
+
     // Act
     fetchHousing();
+
     // Assert
     expect(fetchHousingSpy).toHaveBeenCalledTimes(1);
   });
