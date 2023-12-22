@@ -1,4 +1,5 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
+import { EverydayThings } from "@domain/models/everyday-things/EverydayThings";
 import { Housing } from "@domain/models/housing/Housing";
 import { Home } from "@domain/models/housing/home/Home";
 import { createUseUpdateHousing } from "@domain/usecases/updateHousing";
@@ -40,8 +41,13 @@ describe("updateHome", () => {
 
   it("should update housing with given home data", () => {
     // Arrange
+    const updateEverydayThingsSpy = jest.spyOn(
+      repositories.emissionsRepository,
+      "updateEverydayThings",
+    );
+
     const fakeHousing = new Housing({});
-    repositories.emissionsRepository.injectFakeHousing(fakeHousing);
+    const fakeEverydayThings = new EverydayThings({});
 
     const fakeHome = new Home({
       livingSpace: 100,
@@ -71,6 +77,26 @@ describe("updateHome", () => {
         ...fakeHousing.leisure,
         inhabitants: fakeHome.inhabitants,
         isAnApartment: fakeHome.isAnApartment,
+      },
+    });
+
+    expect(updateEverydayThingsSpy).toHaveBeenCalledWith({
+      ...fakeEverydayThings,
+      pets: {
+        ...fakeEverydayThings.pets,
+        inhabitants: fakeHome.inhabitants,
+      },
+      digital: {
+        ...fakeEverydayThings.digital,
+        inhabitants: fakeHome.inhabitants,
+      },
+      furniture: {
+        ...fakeEverydayThings.furniture,
+        inhabitants: fakeHome.inhabitants,
+      },
+      householdAppliances: {
+        ...fakeEverydayThings.householdAppliances,
+        inhabitants: fakeHome.inhabitants,
       },
     });
   });

@@ -18,7 +18,14 @@ export const createUseUpdateHousing = (
       newHousing.leisure.inhabitants = newHome.inhabitants;
       newHousing.leisure.isAnApartment = newHome.isAnApartment;
 
+      const newEverydayThings = emissionsRepository.fetchEverydayThings();
+      newEverydayThings.pets.inhabitants = newHome.inhabitants;
+      newEverydayThings.digital.inhabitants = newHome.inhabitants;
+      newEverydayThings.furniture.inhabitants = newHome.inhabitants;
+      newEverydayThings.householdAppliances.inhabitants = newHome.inhabitants;
+
       emissionsRepository.updateHousing(newHousing);
+      emissionsRepository.updateEverydayThings(newEverydayThings);
     };
 
     const updateEnergy = (values: Energy) => {
