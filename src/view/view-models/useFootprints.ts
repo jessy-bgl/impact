@@ -10,6 +10,8 @@ export const useFootprints = () => {
   const {
     useFetchTransport,
     useFetchFood,
+    useFetchHousing,
+    useFetchEverydayThings,
     useFetchPublicServices,
     useComputeTotalAnnualFootprint,
   } = useContext(UsecasesContext);
@@ -17,10 +19,14 @@ export const useFootprints = () => {
   const { computeTotalAnnualFootprint } = useComputeTotalAnnualFootprint();
   const { fetchTransport } = useFetchTransport();
   const { fetchFood } = useFetchFood();
+  const { fetchHousing } = useFetchHousing();
+  const { fetchEverydayThings } = useFetchEverydayThings();
   const { fetchPublicServices } = useFetchPublicServices();
 
   const transport = useMemo(() => fetchTransport(), [appStore]);
   const food = useMemo(() => fetchFood(), [appStore]);
+  const housing = useMemo(() => fetchHousing(), [appStore]);
+  const everydayThings = useMemo(() => fetchEverydayThings(), [appStore]);
   const publicServices = useMemo(() => fetchPublicServices(), [appStore]);
   const totalAnnualFootprint = useMemo(
     () => computeTotalAnnualFootprint(),
@@ -36,12 +42,12 @@ export const useFootprints = () => {
       food.annualFootprint,
       totalAnnualFootprint,
     ),
-    everydayThings: FootprintByCategory.forEverydayThings(
-      transport.annualFootprint,
+    housing: FootprintByCategory.forHousing(
+      housing.annualFootprint,
       totalAnnualFootprint,
     ),
-    housing: FootprintByCategory.forHousing(
-      transport.annualFootprint,
+    everydayThings: FootprintByCategory.forEverydayThings(
+      everydayThings.annualFootprint,
       totalAnnualFootprint,
     ),
     publicServices: FootprintByCategory.forPublicServices(
