@@ -20,7 +20,6 @@ describe("TwoWheeler", () => {
   `(
     `should give an annual footprint of $expectedAnnualFootprint kgCO2e if we drive $kmPerYear km / year with a $type`,
     ({ type, kmPerYear, expectedAnnualFootprint }) => {
-      console.log(kmPerYear);
       const twoWheeler = new TwoWheeler({ usage: true, type, kmPerYear });
       expect(twoWheeler.annualFootprint).toBe(expectedAnnualFootprint);
     },
