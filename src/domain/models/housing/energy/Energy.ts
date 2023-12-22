@@ -21,10 +21,10 @@ import { WithAnnualFootprint } from "@domain/models/types";
 type Props = {
   inhabitants?: number;
   livingSpace?: number;
+  isAnApartment?: boolean;
   annualElectricityConsumption?: number; // kWh
   heatingEnergies?: HeatingEnergies;
   airConditioners?: number;
-  isAnApartment?: boolean;
   woodType?: WoodType;
 };
 

@@ -19,9 +19,9 @@ import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
 import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
-  hasIngroundPool?: boolean;
-  isAnApartment?: boolean;
   inhabitants?: number;
+  isAnApartment?: boolean;
+  hasIngroundPool?: boolean;
   holidayAccomodations?: HolidayAccomodations;
   hotelNightsPerYear?: number;
   campingNightsPerYear?: number;
@@ -31,9 +31,9 @@ type Props = {
 };
 
 export class Leisure implements WithAnnualFootprint {
-  hasIngroundPool: boolean;
-  isAnApartment: boolean;
   inhabitants: number;
+  isAnApartment: boolean;
+  hasIngroundPool: boolean;
   holidayAccomodations: HolidayAccomodations;
   hotelNightsPerYear: number;
   campingNightsPerYear: number;
@@ -42,9 +42,9 @@ export class Leisure implements WithAnnualFootprint {
   exchangeNightsPerYear: number;
 
   constructor({
-    hasIngroundPool,
-    isAnApartment,
     inhabitants,
+    isAnApartment,
+    hasIngroundPool,
     holidayAccomodations,
     hotelNightsPerYear,
     campingNightsPerYear,
@@ -52,9 +52,9 @@ export class Leisure implements WithAnnualFootprint {
     rentalNightsPerYear,
     exchangeNightsPerYear,
   }: Props) {
-    this.hasIngroundPool = hasIngroundPool ?? false;
-    this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
     this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
+    this.hasIngroundPool = isAnApartment ? false : hasIngroundPool ?? false;
     this.holidayAccomodations =
       holidayAccomodations ?? defaultHolidayAccomodations;
     this.hotelNightsPerYear = hotelNightsPerYear ?? averageHotelNightsPerYear;
