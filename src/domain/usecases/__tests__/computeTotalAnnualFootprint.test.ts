@@ -1,5 +1,7 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
+import { EverydayThings } from "@domain/models/everyday-things/EverydayThings";
 import { Food } from "@domain/models/food/Food";
+import { Housing } from "@domain/models/housing/Housing";
 import { PublicServices } from "@domain/models/public-services/PublicServices";
 import { Transport } from "@domain/models/transport/Transport";
 import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/computeTotalAnnualFootprint";
@@ -8,6 +10,9 @@ describe("computeTotalAnnualFootprint", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
   let fetchTransportSpy: jest.SpyInstance;
   let fetchFoodSpy: jest.SpyInstance;
+  let fetchHousingSpy: jest.SpyInstance;
+  let fetchEverydayThingsSpy: jest.SpyInstance;
+  let fetchPublicServicesSpy: jest.SpyInstance;
 
   beforeEach(() => {
     repositories = initFakeRepositories();
@@ -16,6 +21,18 @@ describe("computeTotalAnnualFootprint", () => {
       "fetchTransport",
     );
     fetchFoodSpy = jest.spyOn(repositories.emissionsRepository, "fetchFood");
+    fetchHousingSpy = jest.spyOn(
+      repositories.emissionsRepository,
+      "fetchHousing",
+    );
+    fetchEverydayThingsSpy = jest.spyOn(
+      repositories.emissionsRepository,
+      "fetchEverydayThings",
+    );
+    fetchPublicServicesSpy = jest.spyOn(
+      repositories.emissionsRepository,
+      "fetchPublicServices",
+    );
   });
 
   afterEach(() => {
@@ -26,7 +43,8 @@ describe("computeTotalAnnualFootprint", () => {
     // Arrange
     const fakeTransport = new Transport({});
     const fakeFood = new Food({});
-    // TODO : ajouter les autres categories
+    const fakeHousing = new Housing({});
+    const fakeEverydayThings = new EverydayThings({});
     const fakePublicServices = new PublicServices();
 
     const { computeTotalAnnualFootprint } =
@@ -38,10 +56,15 @@ describe("computeTotalAnnualFootprint", () => {
     // Assert
     expect(fetchTransportSpy).toHaveBeenCalledTimes(1);
     expect(fetchFoodSpy).toHaveBeenCalledTimes(1);
+    expect(fetchHousingSpy).toHaveBeenCalledTimes(1);
+    expect(fetchEverydayThingsSpy).toHaveBeenCalledTimes(1);
+    expect(fetchPublicServicesSpy).toHaveBeenCalledTimes(1);
 
     const expectedAnnualFootprint =
       fakeTransport.annualFootprint +
       fakeFood.annualFootprint +
+      fakeHousing.annualFootprint +
+      fakeEverydayThings.annualFootprint +
       fakePublicServices.annualFootprint;
 
     expect(annualFootprint).toEqual(expectedAnnualFootprint);
