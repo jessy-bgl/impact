@@ -9,6 +9,10 @@ import { createUseFetchPublicServices } from "@domain/usecases/fetchPublicServic
 import { createUseFetchTransport } from "@domain/usecases/fetchTransport";
 import { createUseUpdateFood } from "@domain/usecases/updateFood";
 import { createUseUpdateTransport } from "@domain/usecases/updateTransport";
+import { createUseFetchHousing } from "@domain/usecases/fetchHousing";
+import { createUseUpdateHousing } from "@domain/usecases/updateHousing";
+import { createUseFetchEverydayThings } from "@domain/usecases/fetchEverydayThings";
+import { createUseUpdateEverydayThings } from "@domain/usecases/updateEverydayThings";
 
 const isTestMode = process.env.NODE_ENV === "test";
 
@@ -36,9 +40,13 @@ const initUsecases = (repositories: Repositories) => {
     useUpdateTransport: createUseUpdateTransport(emissionsRepository),
     useFetchFood: createUseFetchFood(emissionsRepository),
     useUpdateFood: createUseUpdateFood(emissionsRepository),
+    useFetchHousing: createUseFetchHousing(emissionsRepository),
+    useUpdateHousing: createUseUpdateHousing(emissionsRepository),
+    useFetchEverydayThings: createUseFetchEverydayThings(emissionsRepository),
+    useUpdateEverydayThings: createUseUpdateEverydayThings(emissionsRepository),
+    useFetchPublicServices: createUseFetchPublicServices(emissionsRepository),
     useComputeTotalAnnualFootprint:
       createUseComputeTotalAnnualFootprint(emissionsRepository),
-    useFetchPublicServices: createUseFetchPublicServices(emissionsRepository),
   };
 };
 
