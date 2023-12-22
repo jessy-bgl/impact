@@ -9,24 +9,24 @@ export const petsDataset: {
     expectedAnnualFootprint: 0,
   },
   {
-    pets: new Pets({ inhabitants: 2, cats: 2 }),
+    pets: new Pets({ occupants: 2, cats: 2 }),
     expectedAnnualFootprint: 56,
   },
   {
-    pets: new Pets({ inhabitants: 2, smallDogs: 2 }),
+    pets: new Pets({ occupants: 2, smallDogs: 2 }),
     expectedAnnualFootprint: 129,
   },
   {
-    pets: new Pets({ inhabitants: 2, mediumDogs: 1 }),
+    pets: new Pets({ occupants: 2, mediumDogs: 1 }),
     expectedAnnualFootprint: 179,
   },
   {
-    pets: new Pets({ inhabitants: 2, bigDogs: 1 }),
+    pets: new Pets({ occupants: 2, bigDogs: 1 }),
     expectedAnnualFootprint: 300,
   },
   {
     pets: new Pets({
-      inhabitants: 2,
+      occupants: 2,
       cats: 2,
       smallDogs: 1,
       mediumDogs: 1,

@@ -2,7 +2,7 @@ import { Furniture } from "@domain/models/everyday-things/furniture/Furniture";
 
 const fakeFurnitures: Omit<
   Furniture,
-  "annualFootprint" | "inhabitants" | "preservation"
+  "annualFootprint" | "occupants" | "preservation"
 > = {
   beds: 1,
   bigFurnitures: 1,
@@ -27,7 +27,7 @@ export const furnitureDataset: {
   {
     furniture: new Furniture({
       ...fakeFurnitures,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "none",
     }),
     expectedAnnualFootprint: 190,
@@ -35,7 +35,7 @@ export const furnitureDataset: {
   {
     furniture: new Furniture({
       ...fakeFurnitures,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "low",
     }),
     expectedAnnualFootprint: 142,
@@ -43,7 +43,7 @@ export const furnitureDataset: {
   {
     furniture: new Furniture({
       ...fakeFurnitures,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "medium",
     }),
     expectedAnnualFootprint: 95,
@@ -51,7 +51,7 @@ export const furnitureDataset: {
   {
     furniture: new Furniture({
       ...fakeFurnitures,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "high",
     }),
     expectedAnnualFootprint: 71,

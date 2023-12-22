@@ -1,5 +1,5 @@
 import {
-  defaultNumberOfInhabitants,
+  defaultNumberOfOccupants,
   isAnApartmentDefaultValue,
 } from "@domain/models/housing/constants";
 import {
@@ -19,7 +19,7 @@ import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
 import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   isAnApartment?: boolean;
   hasIngroundPool?: boolean;
   holidayAccomodations?: HolidayAccomodations;
@@ -31,7 +31,7 @@ type Props = {
 };
 
 export class Leisure implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   isAnApartment: boolean;
   hasIngroundPool: boolean;
   holidayAccomodations: HolidayAccomodations;
@@ -42,7 +42,7 @@ export class Leisure implements WithAnnualFootprint {
   exchangeNightsPerYear: number;
 
   constructor({
-    inhabitants,
+    occupants,
     isAnApartment,
     hasIngroundPool,
     holidayAccomodations,
@@ -52,7 +52,7 @@ export class Leisure implements WithAnnualFootprint {
     rentalNightsPerYear,
     exchangeNightsPerYear,
   }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
     this.hasIngroundPool = isAnApartment ? false : hasIngroundPool ?? false;
     this.holidayAccomodations =
@@ -75,7 +75,7 @@ export class Leisure implements WithAnnualFootprint {
   public get holidaysAnnualFootprint(): number {
     return Math.round(
       (this.noHolidayAccomodation ? 0 : this.holidaysTotalFootprint) /
-        this.inhabitants,
+        this.occupants,
     );
   }
 
@@ -96,7 +96,7 @@ export class Leisure implements WithAnnualFootprint {
       averageExchangeNightsPerYear * rentalFootprintPerNight +
       averageYouthHostelNightsPerYear *
         youthHostelFootprintPerNight *
-        this.inhabitants
+        this.occupants
     );
   }*/
 
@@ -113,8 +113,8 @@ export class Leisure implements WithAnnualFootprint {
   private get hotelFootprint(): number {
     if (!this.holidayAccomodations.hotel) return 0;
     const footprint = this.hotelNightsPerYear * hotelFootprintPerNight;
-    if (this.inhabitants > 8) return footprint * 3;
-    else if (this.inhabitants > 4) return footprint * 2;
+    if (this.occupants > 8) return footprint * 3;
+    else if (this.occupants > 4) return footprint * 2;
     else return footprint;
   }
 
@@ -140,6 +140,6 @@ export class Leisure implements WithAnnualFootprint {
 
   public get poolAnnualFootprint(): number {
     if (!this.hasIngroundPool || this.isAnApartment) return 0;
-    return Math.round(poolFootprint / this.inhabitants);
+    return Math.round(poolFootprint / this.occupants);
   }
 }

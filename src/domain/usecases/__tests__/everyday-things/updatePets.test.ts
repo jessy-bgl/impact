@@ -43,7 +43,7 @@ describe("updatePets", () => {
     const fakeEverydayThings = new EverydayThings({});
 
     const fakePets = new Pets({
-      inhabitants: 3,
+      occupants: 3,
       cats: 2,
       smallDogs: 1,
       mediumDogs: 0,

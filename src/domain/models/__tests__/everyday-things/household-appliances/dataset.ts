@@ -2,7 +2,7 @@ import { HouseholdAppliances } from "@domain/models/everyday-things/household-ap
 
 const fakeHouseholdAppliances: Omit<
   HouseholdAppliances,
-  "preservation" | "inhabitants" | "annualFootprint"
+  "preservation" | "occupants" | "annualFootprint"
 > = {
   fridges: 1,
   miniFridges: 1,
@@ -32,7 +32,7 @@ export const HouseholdAppliancesDataset: {
   {
     householdAppliances: new HouseholdAppliances({
       ...fakeHouseholdAppliances,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "none",
     }),
     expectedAnnualFootprint: 230,
@@ -40,7 +40,7 @@ export const HouseholdAppliancesDataset: {
   {
     householdAppliances: new HouseholdAppliances({
       ...fakeHouseholdAppliances,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "low",
     }),
     expectedAnnualFootprint: 173,
@@ -48,7 +48,7 @@ export const HouseholdAppliancesDataset: {
   {
     householdAppliances: new HouseholdAppliances({
       ...fakeHouseholdAppliances,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "medium",
     }),
     expectedAnnualFootprint: 115,
@@ -56,7 +56,7 @@ export const HouseholdAppliancesDataset: {
   {
     householdAppliances: new HouseholdAppliances({
       ...fakeHouseholdAppliances,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "high",
     }),
     expectedAnnualFootprint: 86,

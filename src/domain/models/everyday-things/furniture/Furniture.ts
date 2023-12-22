@@ -1,5 +1,5 @@
 import { Preservation } from "@domain/models/everyday-things/types";
-import { defaultNumberOfInhabitants } from "@domain/models/housing/constants";
+import { defaultNumberOfOccupants } from "@domain/models/housing/constants";
 import { WithAnnualFootprint } from "@domain/models/types";
 import {
   bed,
@@ -16,7 +16,7 @@ import {
 } from "./constants";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   preservation?: Preservation;
   wardrobes?: number;
   couches?: number;
@@ -31,7 +31,7 @@ type Props = {
 };
 
 export class Furniture implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   preservation: Preservation;
   wardrobes: number;
   couches: number;
@@ -45,7 +45,7 @@ export class Furniture implements WithAnnualFootprint {
   resinOrMetalGardenFurnitures: number;
 
   constructor({
-    inhabitants,
+    occupants,
     preservation,
     wardrobes,
     couches,
@@ -58,7 +58,7 @@ export class Furniture implements WithAnnualFootprint {
     woodenGardenFurnitures,
     resinOrMetalGardenFurnitures,
   }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.preservation = preservation ?? "medium";
     this.wardrobes = wardrobes ?? 0;
     this.couches = couches ?? 0;
@@ -84,7 +84,7 @@ export class Furniture implements WithAnnualFootprint {
         this.bigFurnituresAnnualFootprint +
         this.woodenGardenFurnituresAnnualFootprint +
         this.resinOrMetalGardenFurnituresAnnualFootprint) /
-        this.inhabitants,
+        this.occupants,
     );
   }
 

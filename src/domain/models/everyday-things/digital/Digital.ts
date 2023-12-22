@@ -1,6 +1,6 @@
 import { Preservation } from "@domain/models/everyday-things/types";
 import { WithAnnualFootprint } from "@domain/models/types";
-import { defaultNumberOfInhabitants } from "@domain/models/housing/constants";
+import { defaultNumberOfOccupants } from "@domain/models/housing/constants";
 import { daysInYear } from "@domain/models/constants";
 import {
   bluetoothSpeaker,
@@ -25,7 +25,7 @@ import {
 } from "./constants";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   preservation?: Preservation;
   internetDailyHours?: number;
   mobilePhones?: number;
@@ -44,7 +44,7 @@ type Props = {
 };
 
 export class Digital implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   preservation: Preservation;
   internetDailyHours: number;
   mobilePhones: number;
@@ -62,7 +62,7 @@ export class Digital implements WithAnnualFootprint {
   portableConsoles: number;
 
   constructor({
-    inhabitants,
+    occupants,
     preservation,
     internetDailyHours,
     mobilePhones,
@@ -79,7 +79,7 @@ export class Digital implements WithAnnualFootprint {
     gamingConsoles,
     portableConsoles,
   }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.preservation = preservation ?? "medium";
     this.internetDailyHours = internetDailyHours ?? defaultInternetDailyHours;
     this.mobilePhones = mobilePhones ?? defaultMobilePhones;
@@ -139,7 +139,7 @@ export class Digital implements WithAnnualFootprint {
         (television.footprint /
           (television.lifetimeInYears *
             preservationCoefficient(this.preservation)))) /
-      this.inhabitants
+      this.occupants
     );
   }
 
@@ -157,7 +157,7 @@ export class Digital implements WithAnnualFootprint {
         (desktopComputer.footprint /
           (desktopComputer.lifetimeInYears *
             preservationCoefficient(this.preservation)))) /
-      this.inhabitants
+      this.occupants
     );
   }
 
@@ -175,7 +175,7 @@ export class Digital implements WithAnnualFootprint {
         (videoProjector.footprint /
           (videoProjector.lifetimeInYears *
             preservationCoefficient(this.preservation)))) /
-      this.inhabitants
+      this.occupants
     );
   }
 
@@ -193,7 +193,7 @@ export class Digital implements WithAnnualFootprint {
         (homeCinema.footprint /
           (homeCinema.lifetimeInYears *
             preservationCoefficient(this.preservation)))) /
-      this.inhabitants
+      this.occupants
     );
   }
 
@@ -212,7 +212,7 @@ export class Digital implements WithAnnualFootprint {
         (vocalSpeaker.footprint /
           (vocalSpeaker.lifetimeInYears *
             preservationCoefficient(this.preservation)))) /
-      this.inhabitants
+      this.occupants
     );
   }
 
@@ -231,7 +231,7 @@ export class Digital implements WithAnnualFootprint {
         (gamingConsole.footprint /
           (gamingConsole.lifetimeInYears *
             preservationCoefficient(this.preservation)))) /
-      this.inhabitants
+      this.occupants
     );
   }
 

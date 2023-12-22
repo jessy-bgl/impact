@@ -1,6 +1,6 @@
 import {
   defaultLivingSpace,
-  defaultNumberOfInhabitants,
+  defaultNumberOfOccupants,
   isAnApartmentDefaultValue,
 } from "@domain/models/housing/constants";
 import {
@@ -11,7 +11,7 @@ import {
 import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   livingSpace?: number;
   isAnApartment?: boolean;
   ageInYears?: number;
@@ -19,20 +19,20 @@ type Props = {
 };
 
 export class Home implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   livingSpace: number;
   isAnApartment: boolean;
   ageInYears: number;
   isEcoBuilt: boolean;
 
   constructor({
-    inhabitants,
+    occupants,
     livingSpace,
     isAnApartment,
     ageInYears,
     isEcoBuilt,
   }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.livingSpace = livingSpace ?? defaultLivingSpace;
     this.isAnApartment = isAnApartment ?? isAnApartmentDefaultValue;
     this.ageInYears = ageInYears ?? defaultAgeInYears;
@@ -47,7 +47,7 @@ export class Home implements WithAnnualFootprint {
     if (this.ageInYears >= depreciationPeriodInYears) return 0;
     return (
       (this.livingSpace * this.constructionAnnualFootprintPerSquareMeter) /
-      this.inhabitants
+      this.occupants
     );
   }
 

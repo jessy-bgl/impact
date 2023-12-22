@@ -1,5 +1,5 @@
 import {
-  defaultNumberOfInhabitants,
+  defaultNumberOfOccupants,
   defaultLivingSpace,
   isAnApartmentDefaultValue,
 } from "@domain/models/housing/constants";
@@ -19,7 +19,7 @@ import { HeatingEnergies, WoodType } from "@domain/models/housing/energy/types";
 import { WithAnnualFootprint } from "@domain/models/types";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   livingSpace?: number;
   isAnApartment?: boolean;
   annualElectricityConsumption?: number; // kWh
@@ -29,7 +29,7 @@ type Props = {
 };
 
 export class Energy implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   livingSpace: number;
   annualElectricityConsumption: number; // kWh
   heatingEnergies: HeatingEnergies;
@@ -40,13 +40,13 @@ export class Energy implements WithAnnualFootprint {
   constructor({
     annualElectricityConsumption,
     heatingEnergies,
-    inhabitants,
+    occupants,
     livingSpace,
     airConditioners,
     isAnApartment,
     woodType,
   }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.livingSpace = livingSpace ?? defaultLivingSpace;
     this.heatingEnergies = heatingEnergies ?? defaultHeatingEnergies;
     this.woodType = woodType ?? "logs";
@@ -69,7 +69,7 @@ export class Energy implements WithAnnualFootprint {
     return Math.round(
       (this.annualElectricityConsumption *
         electricityWithoutHeating.carbonIntensity) /
-        this.inhabitants,
+        this.occupants,
     );
   }
 
@@ -97,7 +97,7 @@ export class Energy implements WithAnnualFootprint {
   }
 
   public get airConditioningAnnualFootprint(): number {
-    return Math.round(this.airConditionersFootprint / this.inhabitants);
+    return Math.round(this.airConditionersFootprint / this.occupants);
   }
 
   private get airConditionersFootprint(): number {
@@ -129,7 +129,7 @@ export class Energy implements WithAnnualFootprint {
           this.propaneAnnualFootprint +
           this.fuelAnnualFootprint +
           this.woodAnnualFootprint +
-          this.heatNetworkAnnualFootprint) / this.inhabitants,
+          this.heatNetworkAnnualFootprint) / this.occupants,
     );
   }
 

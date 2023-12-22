@@ -10,7 +10,7 @@ export const homeDataset: {
   },
   {
     home: new Home({
-      inhabitants: 2,
+      occupants: 2,
       isAnApartment: false,
       isEcoBuilt: false,
       livingSpace: 120,
@@ -20,7 +20,7 @@ export const homeDataset: {
   },
   {
     home: new Home({
-      inhabitants: 2,
+      occupants: 2,
       isAnApartment: true,
       isEcoBuilt: false,
       livingSpace: 120,
@@ -30,7 +30,7 @@ export const homeDataset: {
   },
   {
     home: new Home({
-      inhabitants: 2,
+      occupants: 2,
       isAnApartment: true,
       isEcoBuilt: true,
       livingSpace: 120,

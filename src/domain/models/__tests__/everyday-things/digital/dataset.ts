@@ -2,7 +2,7 @@ import { Digital } from "@domain/models/everyday-things/digital/Digital";
 
 const fakeDigitals: Omit<
   Digital,
-  "annualFootprint" | "inhabitants" | "preservation" | "internetAnnualFootprint"
+  "annualFootprint" | "occupants" | "preservation" | "internetAnnualFootprint"
 > = {
   televisions: 1,
   laptops: 1,
@@ -31,7 +31,7 @@ export const digitalDataset: {
   {
     digital: new Digital({
       ...fakeDigitals,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "none",
     }),
     expectedAnnualFootprint: 413,
@@ -39,7 +39,7 @@ export const digitalDataset: {
   {
     digital: new Digital({
       ...fakeDigitals,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "low",
     }),
     expectedAnnualFootprint: 310,
@@ -47,7 +47,7 @@ export const digitalDataset: {
   {
     digital: new Digital({
       ...fakeDigitals,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "medium",
     }),
     expectedAnnualFootprint: 207,
@@ -55,7 +55,7 @@ export const digitalDataset: {
   {
     digital: new Digital({
       ...fakeDigitals,
-      inhabitants: 2,
+      occupants: 2,
       preservation: "high",
     }),
     expectedAnnualFootprint: 156,

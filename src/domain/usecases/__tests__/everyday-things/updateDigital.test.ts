@@ -48,7 +48,7 @@ describe("updateDigital", () => {
       desktopComputers: 1,
       gamingConsoles: 1,
       homeCinemas: 1,
-      inhabitants: 3,
+      occupants: 3,
       internetDailyHours: 1,
       laptops: 1,
       mobilePhones: 2,

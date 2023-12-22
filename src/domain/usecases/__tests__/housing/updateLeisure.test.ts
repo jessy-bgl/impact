@@ -46,7 +46,7 @@ describe("updateLeisure", () => {
     const fakeLeisure = new Leisure({
       isAnApartment: false,
       hasIngroundPool: true,
-      inhabitants: 3,
+      occupants: 3,
       campingNightsPerYear: 5,
       exchangeNightsPerYear: 5,
       holidayAccomodations: {

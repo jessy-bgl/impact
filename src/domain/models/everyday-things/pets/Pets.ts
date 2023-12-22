@@ -1,9 +1,9 @@
-import { defaultNumberOfInhabitants } from "@domain/models/housing/constants";
+import { defaultNumberOfOccupants } from "@domain/models/housing/constants";
 import { WithAnnualFootprint } from "@domain/models/types";
 import { cat, dog } from "./constants";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   smallDogs?: number;
   mediumDogs?: number;
   bigDogs?: number;
@@ -11,14 +11,14 @@ type Props = {
 };
 
 export class Pets implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   smallDogs: number;
   mediumDogs: number;
   bigDogs: number;
   cats: number;
 
-  constructor({ inhabitants, smallDogs, mediumDogs, bigDogs, cats }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+  constructor({ occupants, smallDogs, mediumDogs, bigDogs, cats }: Props) {
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.smallDogs = smallDogs ?? 0;
     this.mediumDogs = mediumDogs ?? 0;
     this.bigDogs = bigDogs ?? 0;
@@ -27,7 +27,7 @@ export class Pets implements WithAnnualFootprint {
 
   public get annualFootprint(): number {
     return Math.round(
-      (this.catsAnnualFootprint + this.dogsAnnualFootprint) / this.inhabitants,
+      (this.catsAnnualFootprint + this.dogsAnnualFootprint) / this.occupants,
     );
   }
 

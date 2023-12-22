@@ -18,7 +18,7 @@ export const heatingDataset: {
 }[] = [
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: initHeatingEnergiesWithFalsyValues(),
     }),
@@ -26,7 +26,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -38,7 +38,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -49,7 +49,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -61,7 +61,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -72,7 +72,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -83,7 +83,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -94,7 +94,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -106,7 +106,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -118,7 +118,7 @@ export const heatingDataset: {
   },
   {
     energy: new Energy({
-      inhabitants: 2,
+      occupants: 2,
       livingSpace: 100,
       heatingEnergies: {
         ...initHeatingEnergiesWithFalsyValues(),
@@ -138,7 +138,7 @@ export const electricityDataset: {
     expectedElectricityAnnualFootprint: 0,
   },
   {
-    energy: new Energy({ inhabitants: 2, annualElectricityConsumption: 3000 }),
+    energy: new Energy({ occupants: 2, annualElectricityConsumption: 3000 }),
     expectedElectricityAnnualFootprint: 78,
   },
 ];
@@ -152,7 +152,7 @@ export const airConditioningDataset: {
     expectedAirConditioningAnnualFootprint: 0,
   },
   {
-    energy: new Energy({ inhabitants: 2, airConditioners: 2 }),
+    energy: new Energy({ occupants: 2, airConditioners: 2 }),
     expectedAirConditioningAnnualFootprint: 545,
   },
 ];

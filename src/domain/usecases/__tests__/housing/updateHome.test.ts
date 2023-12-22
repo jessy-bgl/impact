@@ -51,7 +51,7 @@ describe("updateHome", () => {
 
     const fakeHome = new Home({
       livingSpace: 100,
-      inhabitants: 3,
+      occupants: 3,
       ageInYears: 35,
       isAnApartment: true,
       isEcoBuilt: false,
@@ -69,13 +69,13 @@ describe("updateHome", () => {
       home: fakeHome,
       energy: {
         ...fakeHousing.energy,
-        inhabitants: fakeHome.inhabitants,
+        occupants: fakeHome.occupants,
         livingSpace: fakeHome.livingSpace,
         isAnApartment: fakeHome.isAnApartment,
       },
       leisure: {
         ...fakeHousing.leisure,
-        inhabitants: fakeHome.inhabitants,
+        occupants: fakeHome.occupants,
         isAnApartment: fakeHome.isAnApartment,
       },
     });
@@ -84,19 +84,19 @@ describe("updateHome", () => {
       ...fakeEverydayThings,
       pets: {
         ...fakeEverydayThings.pets,
-        inhabitants: fakeHome.inhabitants,
+        occupants: fakeHome.occupants,
       },
       digital: {
         ...fakeEverydayThings.digital,
-        inhabitants: fakeHome.inhabitants,
+        occupants: fakeHome.occupants,
       },
       furniture: {
         ...fakeEverydayThings.furniture,
-        inhabitants: fakeHome.inhabitants,
+        occupants: fakeHome.occupants,
       },
       householdAppliances: {
         ...fakeEverydayThings.householdAppliances,
-        inhabitants: fakeHome.inhabitants,
+        occupants: fakeHome.occupants,
       },
     });
   });

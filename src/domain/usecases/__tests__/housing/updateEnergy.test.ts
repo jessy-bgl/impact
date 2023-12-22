@@ -43,7 +43,7 @@ describe("updateEnergy", () => {
     const fakeHousing = new Housing({});
 
     const fakeEnergy = new Energy({
-      inhabitants: 3,
+      occupants: 3,
       livingSpace: 100,
       isAnApartment: true,
       airConditioners: 1,

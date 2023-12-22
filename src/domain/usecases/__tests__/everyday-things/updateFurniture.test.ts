@@ -49,7 +49,7 @@ describe("updateFurniture", () => {
       tables: 2,
       wardrobes: 2,
       couches: 2,
-      inhabitants: 3,
+      occupants: 3,
       mattresses: 1,
       preservation: "low",
       resinOrMetalGardenFurnitures: 2,

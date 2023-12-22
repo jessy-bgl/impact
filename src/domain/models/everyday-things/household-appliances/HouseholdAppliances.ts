@@ -1,6 +1,6 @@
 import { WithAnnualFootprint } from "@domain/models/types";
 import { Preservation } from "@domain/models/everyday-things/types";
-import { defaultNumberOfInhabitants } from "@domain/models/housing/constants";
+import { defaultNumberOfOccupants } from "@domain/models/housing/constants";
 import {
   coffeeMachine,
   dishWasher,
@@ -21,7 +21,7 @@ import {
 } from "./constants";
 
 type Props = {
-  inhabitants?: number;
+  occupants?: number;
   preservation?: Preservation;
   fridges?: number;
   miniFridges?: number;
@@ -41,7 +41,7 @@ type Props = {
 };
 
 export class HouseholdAppliances implements WithAnnualFootprint {
-  inhabitants: number;
+  occupants: number;
   fridges: number;
   miniFridges: number;
   freezers: number;
@@ -60,7 +60,7 @@ export class HouseholdAppliances implements WithAnnualFootprint {
   preservation: Preservation;
 
   constructor({
-    inhabitants,
+    occupants,
     fridges,
     miniFridges,
     freezers,
@@ -78,7 +78,7 @@ export class HouseholdAppliances implements WithAnnualFootprint {
     electricLawnMowers,
     preservation,
   }: Props) {
-    this.inhabitants = inhabitants ?? defaultNumberOfInhabitants;
+    this.occupants = occupants ?? defaultNumberOfOccupants;
     this.fridges = fridges ?? 0;
     this.miniFridges = miniFridges ?? 0;
     this.freezers = freezers ?? 0;
@@ -114,7 +114,7 @@ export class HouseholdAppliances implements WithAnnualFootprint {
         this.vacuumCleanersAnnualFootprint +
         this.kitchenRobotsAnnualFootprint +
         this.electricLawnMowersAnnualFootprint) /
-        this.inhabitants,
+        this.occupants,
     );
   }
 

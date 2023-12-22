@@ -16,7 +16,7 @@ export const poolDataset: {
     leisure: new Leisure({
       isAnApartment: false,
       hasIngroundPool: true,
-      inhabitants: 3,
+      occupants: 3,
     }),
     expectedPoolAnnualFootprint: 69,
   },
@@ -27,12 +27,12 @@ export const holidaysDataset: {
   expectedHolidaysAnnualFootprint: number;
 }[] = [
   {
-    leisure: new Leisure({ inhabitants: 2 }),
+    leisure: new Leisure({ occupants: 2 }),
     expectedHolidaysAnnualFootprint: 0,
   },
   {
     leisure: new Leisure({
-      inhabitants: 2,
+      occupants: 2,
       holidayAccomodations: {
         hotel: true,
         camping: true,
@@ -50,7 +50,7 @@ export const holidaysDataset: {
   },
   {
     leisure: new Leisure({
-      inhabitants: 2,
+      occupants: 2,
       holidayAccomodations: {
         hotel: true,
         camping: true,

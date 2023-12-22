@@ -12,17 +12,17 @@ export const createUseUpdateHousing = (
 
       const newHousing = emissionsRepository.fetchHousing();
       newHousing.home = newHome;
-      newHousing.energy.inhabitants = newHome.inhabitants;
+      newHousing.energy.occupants = newHome.occupants;
       newHousing.energy.livingSpace = newHome.livingSpace;
       newHousing.energy.isAnApartment = newHome.isAnApartment;
-      newHousing.leisure.inhabitants = newHome.inhabitants;
+      newHousing.leisure.occupants = newHome.occupants;
       newHousing.leisure.isAnApartment = newHome.isAnApartment;
 
       const newEverydayThings = emissionsRepository.fetchEverydayThings();
-      newEverydayThings.pets.inhabitants = newHome.inhabitants;
-      newEverydayThings.digital.inhabitants = newHome.inhabitants;
-      newEverydayThings.furniture.inhabitants = newHome.inhabitants;
-      newEverydayThings.householdAppliances.inhabitants = newHome.inhabitants;
+      newEverydayThings.pets.occupants = newHome.occupants;
+      newEverydayThings.digital.occupants = newHome.occupants;
+      newEverydayThings.furniture.occupants = newHome.occupants;
+      newEverydayThings.householdAppliances.occupants = newHome.occupants;
 
       emissionsRepository.updateHousing(newHousing);
       emissionsRepository.updateEverydayThings(newEverydayThings);

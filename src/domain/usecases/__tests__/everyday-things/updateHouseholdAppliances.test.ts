@@ -43,7 +43,7 @@ describe("updateHouseholdAppliances", () => {
     const fakeEverydayThings = new EverydayThings({});
 
     const fakeHouseholdAppliances = new HouseholdAppliances({
-      inhabitants: 3,
+      occupants: 3,
       coffeeMachines: 2,
       dishWashers: 1,
       dryers: 1,
