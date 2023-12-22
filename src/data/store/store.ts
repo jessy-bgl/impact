@@ -5,15 +5,21 @@ import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 import { Food } from "@domain/models/food/Food";
 import { Transport } from "@domain/models/transport/Transport";
+import { Housing } from "@domain/models/housing/Housing";
+import { EverydayThings } from "@domain/models/everyday-things/EverydayThings";
 
 export type AppState = {
   transport: Transport;
   food: Food;
+  housing: Housing;
+  everydayThings: EverydayThings;
 };
 
 const appStore = (): AppState => ({
   transport: new Transport({}),
   food: new Food({}),
+  housing: new Housing({}),
+  everydayThings: new EverydayThings({}),
 });
 
 const middlewares = (f: any) =>
