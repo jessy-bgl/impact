@@ -58,12 +58,8 @@ export class TwoWheeler implements WithAnnualFootprint {
   }
 
   private get weightedMaintenanceFootprint(): number {
-    const maintenanceFootprint = this.maintenanceFootprint;
+    const maintenanceFootprint = thermalMaintenanceFootprint;
     if (this.type === "electricScooter") return maintenanceFootprint * 0.75;
     return maintenanceFootprint;
-  }
-
-  private get maintenanceFootprint(): number {
-    return thermalMaintenanceFootprint;
   }
 }

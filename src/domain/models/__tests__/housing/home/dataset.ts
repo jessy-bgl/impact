@@ -14,7 +14,6 @@ export const homeDataset: {
       isAnApartment: false,
       isEcoBuilt: false,
       livingSpace: 120,
-      ageInYears: 30,
     }),
     // TODO : check this value, it should be equal to 550
     expectedAnnualFootprint: 510,
@@ -25,7 +24,6 @@ export const homeDataset: {
       isAnApartment: true,
       isEcoBuilt: false,
       livingSpace: 120,
-      ageInYears: 30,
     }),
     // TODO : check this value, it should be equal to 650
     expectedAnnualFootprint: 630,
@@ -36,7 +34,6 @@ export const homeDataset: {
       isAnApartment: true,
       isEcoBuilt: true,
       livingSpace: 120,
-      ageInYears: 30,
     }),
     // TODO : check this value, it should be equal to 180
     expectedAnnualFootprint: 173,

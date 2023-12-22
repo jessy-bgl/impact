@@ -1,3 +1,13 @@
+import { MilkType } from "@domain/models/food/types";
+import { WithAnnualFootprint } from "@domain/models/types";
+import { daysInYear, weeksInYear } from "@domain/models/constants";
+import {
+  BreakfastType,
+  Diet,
+  Frequency,
+  LunchesAndDinersPerWeek,
+  MealTypes,
+} from "@domain/models/food/meals/types";
 import {
   lunchesAndDinersPerWeekByDiet,
   veganMealFootprint,
@@ -15,17 +25,6 @@ import {
   seasonalProductsRatio,
   seasonalPercentage,
 } from "./constants";
-import { MilkType } from "@domain/models/food/types";
-import { WithAnnualFootprint } from "@domain/models/types";
-import { daysInYear, weeksInYear } from "@domain/models/constants";
-import {
-  BreakfastType,
-  Diet,
-  Frequency,
-  LunchesAndDinersPerWeek,
-  MealTypes,
-  MealType,
-} from "@domain/models/food/meals/types";
 
 type Props = {
   breakfast?: BreakfastType;
@@ -77,48 +76,42 @@ export class Meals implements WithAnnualFootprint {
       let mealFootprintReduction = 0;
       if (mealType === "vegan") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[mealType as MealType] *
-          veganMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType] * veganMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.12 *
           localProductsFootprintReductionRate(this.localProducts);
       } else if (mealType === "vegetarian") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[mealType as MealType] *
-          vegetarianMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType] * vegetarianMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.08 *
           localProductsFootprintReductionRate(this.localProducts);
       } else if (mealType === "whiteMeat") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[mealType as MealType] *
-          whiteMeatMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType] * whiteMeatMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.03 *
           localProductsFootprintReductionRate(this.localProducts);
       } else if (mealType === "redMeat") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[mealType as MealType] *
-          redMeatMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType] * redMeatMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.01 *
           localProductsFootprintReductionRate(this.localProducts);
       } else if (mealType === "fattyFish") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[mealType as MealType] *
-          fishMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType] * fishMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.05 *
           localProductsFootprintReductionRate(this.localProducts);
       } else if (mealType === "whiteFish") {
         mealFootprint =
-          this.lunchesAndDinersPerWeek[mealType as MealType] *
-          whiteFishMealFootprint;
+          this.lunchesAndDinersPerWeek[mealType] * whiteFishMealFootprint;
         mealFootprintReduction =
           mealFootprint *
           0.06 *
@@ -133,6 +126,7 @@ export class Meals implements WithAnnualFootprint {
     return this.breakfastFootprint * daysInYear;
   }
 
+  // eslint-disable-next-line getter-return
   public get breakfastFootprint(): number {
     switch (this.breakfast) {
       case "continental": {
@@ -142,15 +136,12 @@ export class Meals implements WithAnnualFootprint {
         return britishBreakfastFootprint;
       }
       case "milk & cereals": {
-        return milkAndCerealsBreakfastFootprint(this.milkType ?? "cow");
+        return milkAndCerealsBreakfastFootprint(this.milkType);
       }
       case "vegan": {
         return veganBreakfastFootprint;
       }
       case "none": {
-        return 0;
-      }
-      default: {
         return 0;
       }
     }

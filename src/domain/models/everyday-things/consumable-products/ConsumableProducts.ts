@@ -18,6 +18,7 @@ export class ConsumableProducts implements WithAnnualFootprint {
     return Math.round(this.monthlyFootprint * 12);
   }
 
+  // eslint-disable-next-line getter-return
   private get monthlyFootprint(): number {
     switch (this.consumption) {
       case "low":
@@ -26,8 +27,6 @@ export class ConsumableProducts implements WithAnnualFootprint {
         return consumableProductsFootprint * 2;
       case "high":
         return consumableProductsFootprint * 5;
-      default:
-        return 0;
     }
   }
 }
