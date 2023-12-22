@@ -24,6 +24,15 @@ export const cultureDataset: {
     hobbies: new Hobbies({ editions: true }),
     expectedCultureAnnualFootprint: 47.9,
   },
+  {
+    hobbies: new Hobbies({
+      concertsAndShows: true,
+      editions: true,
+      music: true,
+      museumsAndMonuments: true,
+    }),
+    expectedCultureAnnualFootprint: 79.4,
+  },
 ];
 
 export const sportDataset: {
@@ -69,5 +78,36 @@ export const sportDataset: {
       winterSport: true,
     }),
     expectedSportAnnualFootprint: 201.39,
+  },
+];
+
+export const hobbiesDataset: {
+  hobbies: Hobbies;
+  expectedAnnualFootprint: number;
+}[] = [
+  {
+    hobbies: new Hobbies({}),
+    expectedAnnualFootprint: 0,
+  },
+  {
+    hobbies: new Hobbies({
+      concertsAndShows: true,
+      museumsAndMonuments: true,
+      editions: true,
+      music: true,
+      outdoorIndividualSport: true,
+      ballSport: true,
+      waterSport: true,
+      swimming: true,
+      martialSport: true,
+      athletics: true,
+      gym: true,
+      riding: true,
+      golf: true,
+      winterSport: true,
+      motorSport: true,
+      otherSport: true,
+    }),
+    expectedAnnualFootprint: 281,
   },
 ];
