@@ -36,7 +36,6 @@ describe("updateDrinks", () => {
   it("should update food with given drinks data", () => {
     // Arrange
     const fakeFood = new Food({});
-    repositories.emissionsRepository.injectFakeFood(fakeFood);
 
     const fakeDrinks = new Drinks({
       alcoholLitersPerWeek: 2,

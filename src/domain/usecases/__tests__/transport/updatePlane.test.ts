@@ -41,7 +41,6 @@ describe("updatePlane", () => {
   it("should update transport with given plane data for a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakePlaneWithUsage = new Plane({
       usage: true,
       hoursPerYearInLongHaul: 2,
@@ -65,7 +64,6 @@ describe("updatePlane", () => {
   it("should update transport with default plane data for a non-user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakePlaneWithoutUsage = new Plane({
       usage: false,
       hoursPerYearInLongHaul: 2,

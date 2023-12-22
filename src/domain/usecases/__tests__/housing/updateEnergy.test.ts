@@ -41,7 +41,6 @@ describe("updateEnergy", () => {
   it("should update housing with given energy data", () => {
     // Arrange
     const fakeHousing = new Housing({});
-    repositories.emissionsRepository.injectFakeHousing(fakeHousing);
 
     const fakeEnergy = new Energy({
       inhabitants: 3,

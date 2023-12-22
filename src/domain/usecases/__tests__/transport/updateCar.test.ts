@@ -41,7 +41,6 @@ describe("updateCar", () => {
   it("should update transport with given car data for a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakeCarWithRegularUser = new Car({ regularUser: true });
     const { updateCar } = createUseUpdateTransport(
       repositories.emissionsRepository,
@@ -60,7 +59,6 @@ describe("updateCar", () => {
   it("should update transport with default car data for a non-regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const updateTransportSpy = jest.spyOn(
       repositories.emissionsRepository,
       "updateTransport",

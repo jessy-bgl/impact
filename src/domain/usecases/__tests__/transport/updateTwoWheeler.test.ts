@@ -41,7 +41,6 @@ describe("updateTwoWheeler", () => {
   it("should update transport with given two-wheeler data for a regular user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakeTwoWheelerWithUsage = new TwoWheeler({
       usage: true,
       kmPerYear: 1000,
@@ -64,7 +63,6 @@ describe("updateTwoWheeler", () => {
   it("should update transport with default two-wheeler data for a non-user", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakeTwoWheelerWithoutUsage = new TwoWheeler({
       usage: false,
       kmPerYear: 1000,

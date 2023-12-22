@@ -29,9 +29,6 @@ describe("computeTotalAnnualFootprint", () => {
     // TODO : ajouter les autres categories
     const fakePublicServices = new PublicServices();
 
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
-    repositories.emissionsRepository.injectFakeFood(fakeFood);
-
     const { computeTotalAnnualFootprint } =
       createUseComputeTotalAnnualFootprint(repositories.emissionsRepository)();
 

@@ -35,7 +35,6 @@ describe("updateMeals", () => {
   it("should update food with given meals data", () => {
     // Arrange
     const fakeFood = new Food({});
-    repositories.emissionsRepository.injectFakeFood(fakeFood);
 
     const fakeMeals = new Meals({
       seasonalProducts: "always",

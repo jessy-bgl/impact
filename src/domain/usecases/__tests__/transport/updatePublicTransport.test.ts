@@ -41,7 +41,6 @@ describe("updatePublicTransport", () => {
   it("should update transport with given public-transport data", () => {
     // Arrange
     const fakeTransport = new Transport({});
-    repositories.emissionsRepository.injectFakeTransport(fakeTransport);
     const fakePublicTransport = new PublicTransport({
       hoursPerWeekInBus: 5,
       hoursPerWeekInMetro: 10,

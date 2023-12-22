@@ -35,7 +35,6 @@ describe("updateWaste", () => {
   it("should update food with given waste data", () => {
     // Arrange
     const fakeFood = new Food({});
-    repositories.emissionsRepository.injectFakeFood(fakeFood);
 
     const fakeWaste = new Waste({
       quantity: "base",
