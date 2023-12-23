@@ -1,0 +1,9 @@
+{
+  "home": {
+    "occupants": "Combien de personnes vivent chez vous ?",
+    "livingSpace": "Quelle est la surface de votre logement ?",
+    "ageInYears": "Quel est l'âge de votre logement ?",
+    "isAnApartment": "Votre logement est-il un appartement ?",
+    "isEcoBuilt": "Votre logement est-il éco-construit?"
+  }
+}

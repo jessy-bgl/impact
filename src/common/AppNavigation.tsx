@@ -13,6 +13,7 @@ import { Objectives } from "@view/screens/objectives/Objectives";
 import { Profile } from "@view/screens/profile/Profile";
 import { FoodProfile } from "@view/screens/profile/food/Food";
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
+import { HousingProfile } from "@view/screens/profile/housing/Housing";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,6 +23,9 @@ type RootStackParamList = {
   Profile: undefined;
   TransportProfile: undefined;
   FoodProfile: undefined;
+  HousingProfile: undefined;
+  EverydayThingsProfile: undefined;
+  PublicServicesProfile: undefined;
 };
 
 export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -53,6 +57,21 @@ export const AppNavigation = () => {
         component={FoodProfile}
         options={{ title: t("screens.Food") }}
       />
+      <Stack.Screen
+        name="HousingProfile"
+        component={HousingProfile}
+        options={{ title: t("screens.Housing") }}
+      />
+      {/* <Stack.Screen
+        name="EverydayThingsProfile"
+        component={EverydayThingsProfile}
+        options={{ title: t("screens.EveydayThings") }}
+      />
+      <Stack.Screen
+        name="PublicServicesProfile"
+        component={PublicServicesProfile}
+        options={{ title: t("screens.PublicServices") }}
+      /> */}
     </Stack.Navigator>
   );
 };

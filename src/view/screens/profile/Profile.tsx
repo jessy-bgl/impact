@@ -32,7 +32,7 @@ export const Profile = () => {
           title={t("housing")}
           icon={housingFootprint.materialIcon}
           footprintCategory={housingFootprint}
-          onClick={() => navigate("Profile")}
+          onClick={() => navigate("HousingProfile")}
         />
         <ProfileCategoryCard
           title={t("food")}

@@ -25,5 +25,10 @@
     "meals": "Repas",
     "drinks": "Boissons",
     "waste": "Déchets"
+  },
+  "housing": {
+    "home": "Caractéristiques",
+    "energy": "Energie",
+    "leisure": "Loisirs"
   }
 }
