@@ -8,19 +8,16 @@ import {
 import { Controller } from "react-hook-form";
 
 import {
-  FormValues,
-  useEnergy,
-} from "@view/screens/profile/housing/energy/useEnergy";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
-import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
-import {
   HeatingEnergiesLabels,
   WoodTypes,
 } from "@domain/models/housing/energy/Energy";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, useEnergy } from "./useEnergy";
 
 export const EnergySection = () => {
   const { t } = useTranslation(["housing", "emissions", "common"]);

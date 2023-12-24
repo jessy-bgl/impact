@@ -2,10 +2,10 @@ import { useContext, useEffect } from "react";
 import { DefaultValues } from "react-hook-form";
 
 import { useAppStore } from "@data/store/store";
-import { Leisure } from "@domain/models/housing/leisure/Leisure";
 import { StringifyProperties, convertStringToType } from "@srctypes/utils";
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
+import { Leisure } from "@domain/models/housing/leisure/Leisure";
 import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
 
 export type FormValues = Omit<

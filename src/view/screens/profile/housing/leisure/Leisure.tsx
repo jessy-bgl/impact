@@ -2,10 +2,6 @@ import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 import { Checkbox, SegmentedButtons, Text } from "react-native-paper";
 
-import {
-  FormValues,
-  useLeisure,
-} from "@view/screens/profile/housing/leisure/useLeisure";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
@@ -13,6 +9,7 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { HolidayAccomodationLabels } from "@domain/models/housing/leisure/Leisure";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, useLeisure } from "./useLeisure";
 
 export const LeisureSection = () => {
   const { t } = useTranslation(["housing", "emissions", "common"]);
