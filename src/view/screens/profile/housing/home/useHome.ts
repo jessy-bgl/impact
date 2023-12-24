@@ -1,10 +1,11 @@
+import { useContext } from "react";
+import { DefaultValues } from "react-hook-form";
+
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
 import { Home } from "@domain/models/housing/home/Home";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 export type FormValues = Omit<StringifyProperties<Home>, "annualFootprint">;
 

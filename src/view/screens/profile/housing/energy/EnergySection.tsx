@@ -48,6 +48,7 @@ export const EnergySection = () => {
           {HeatingEnergiesLabels.filter((energy) => energy !== "bioGas").map(
             (label) => (
               <Controller<FormValues>
+                key={label}
                 name={label}
                 control={control}
                 render={({ field: { value } }) => (
