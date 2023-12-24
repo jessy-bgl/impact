@@ -13,15 +13,15 @@
     "airConditioners": "Combien de climatiseurs possédez-vous ?",
     "bioGas": "Avez-vous souscrit à un contrat gaz incluant du biogaz (ou biométhane) ?",
     "energies": {
-      "electricity": "Électricité",
-      "heatPump": "Pompe à chaleur",
-      "gas": "Réseau de gaz",
-      "gasCylinder": "Bouteille de gaz",
-      "propane": "Gaz propane en citerne",
+      "electricity": "Électricité ⚡️",
+      "heatPump": "Pompe à chaleur 🌡️",
+      "gas": "Réseau de gaz 🔥",
+      "gasCylinder": "Bouteille de gaz 🛢️🔥",
+      "propane": "Gaz propane en citerne 🛢️🔥",
       "bioGas": "Biogaz",
-      "fuel": "Fioul domestique",
-      "wood": "Bois ou granulés",
-      "heatNetwork": "Réseau de chaleur"
+      "fuel": "Fioul domestique 🛢",
+      "wood": "Bois ou granulés 🪵",
+      "heatNetwork": "Réseau de chaleur 🏭"
     },
     "woodTypes": {
       "logs": "Bûches",
