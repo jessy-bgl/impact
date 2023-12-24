@@ -1,3 +1,5 @@
+import { HeatingEnergies, WoodType } from "@domain/models/housing/energy/types";
+import { WithAnnualFootprint } from "@domain/models/types";
 import {
   defaultNumberOfOccupants,
   defaultLivingSpace,
@@ -14,9 +16,21 @@ import {
   heatNetwork,
   surfaces,
   wood,
-} from "@domain/models/housing/energy/constants";
-import { HeatingEnergies, WoodType } from "@domain/models/housing/energy/types";
-import { WithAnnualFootprint } from "@domain/models/types";
+} from "./constants";
+
+export const HeatingEnergiesLabels: (keyof HeatingEnergies)[] = [
+  "electricity",
+  "heatPump",
+  "gas",
+  "gasCylinder",
+  "propane",
+  "bioGas",
+  "fuel",
+  "wood",
+  "heatNetwork",
+];
+
+export const WoodTypes: WoodType[] = ["logs", "pellets"];
 
 type Props = {
   occupants?: number;
@@ -73,25 +87,25 @@ export class Energy implements WithAnnualFootprint {
     );
   }
 
-  public get defaultElectricityAnnualkWhConsumption(): number {
+  private get defaultElectricityAnnualkWhConsumption(): number {
     if (this.noHeating)
-      return (
+      return Math.round(
         this.livingSpace *
-        (electricityWithoutHeating.consuptionPerSquareMeter +
-          surfaces.electricityPart * electricity.consumption.perSquareMeter)
+          (electricityWithoutHeating.consuptionPerSquareMeter +
+            surfaces.electricityPart * electricity.consumption.perSquareMeter),
       );
     else if (
       this.heatingEnergies.electricity ||
       this.heatingEnergies.heatPump
     ) {
-      return (
+      return Math.round(
         this.livingSpace *
-        (electricityWithoutHeating.consuptionPerSquareMeter +
-          electricity.consumption.perSquareMeter)
+          (electricityWithoutHeating.consuptionPerSquareMeter +
+            electricity.consumption.perSquareMeter),
       );
     } else {
-      return (
-        this.livingSpace * electricityWithoutHeating.consuptionPerSquareMeter
+      return Math.round(
+        this.livingSpace * electricityWithoutHeating.consuptionPerSquareMeter,
       );
     }
   }

@@ -17,8 +17,8 @@ export const HomeSection = () => {
   return (
     <ListAccordion
       title={t("emissions:housing.home")}
-      icon="home"
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="home"
     >
       <ListContentContainer>
         <RowContainer>
@@ -34,6 +34,7 @@ export const HomeSection = () => {
                 onBlur={() => handleUpdate("occupants")}
                 onChangeText={onChange}
                 value={value}
+                min={1}
               />
             )}
           />
@@ -54,6 +55,7 @@ export const HomeSection = () => {
                 onBlur={() => handleUpdate("livingSpace")}
                 onChangeText={onChange}
                 value={value}
+                min={10}
               />
             )}
           />

@@ -5,5 +5,27 @@
     "ageInYears": "Quel est l'âge de votre logement ?",
     "isAnApartment": "Votre logement est-il un appartement ?",
     "isEcoBuilt": "Votre logement est-il éco-construit?"
+  },
+  "energy": {
+    "heatingEnergies": "Quel type d'énergie utilisez-vous pour le chauffage de votre logement, eau chaude, cuisson, etc. ?",
+    "woodType": "Quel type de bois utilisez-vous ?",
+    "annualElectricityConsumption": "Quelle est votre consommation annuelle d'électricité ?",
+    "airConditioners": "Combien de climatiseurs possédez-vous ?",
+    "bioGas": "Avez-vous souscrit à un contrat gaz incluant du biogaz (ou biométhane) ?",
+    "energies": {
+      "electricity": "Électricité",
+      "heatPump": "Pompe à chaleur",
+      "gas": "Réseau de gaz",
+      "gasCylinder": "Bouteille de gaz",
+      "propane": "Gaz propane en citerne",
+      "bioGas": "Biogaz",
+      "fuel": "Fioul domestique",
+      "wood": "Bois ou granulés",
+      "heatNetwork": "Réseau de chaleur"
+    },
+    "woodTypes": {
+      "logs": "Bûches",
+      "pellets": "Granulés"
+    }
   }
 }
