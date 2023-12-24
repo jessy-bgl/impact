@@ -27,5 +27,21 @@
       "logs": "Bûches",
       "pellets": "Granulés"
     }
+  },
+  "leisure": {
+    "hasIngroundPool": "Votre logement dispose-t-il d'une piscine privée (enterrée/creusée) ?",
+    "holidayAccomodations": "Comment êtes-vous hébergé pour vos vacances et week-ends ?",
+    "hotelNightsPerYear": "Combien de nuits passez-vous à l'hôtel ou chambre d'hôtes sur l'année ?",
+    "campingNightsPerYear": "Combien de nuits passez-vous en camping sur l'année ?",
+    "youthHostelNightsPerYear": "Combien de nuits passez-vous en auberge de jeunesse sur l'année ?",
+    "rentalNightsPerYear": "Combien de nuits passez-vous en locations meublées sur l'année ?",
+    "exchangeNightsPerYear": "Combien de nuits passez-vous en échange de maison sur l'année ?",
+    "accomodations": {
+      "hotel": "Hotêl ou chambres d'hôtes 🏨",
+      "camping": "Emplacement en camping ⛺️",
+      "youthHostel": "Auberge de jeunesse 🛏️",
+      "rentals": "Locations meublées 🛏️🏠",
+      "exchange": "Échange de maison 🔄🏠"
+    }
   }
 }
