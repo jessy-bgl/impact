@@ -78,15 +78,15 @@ export const useEnergy = () => {
     bioGas,
   ]);
 
-  const disableBioGas = gas === "false";
-  const disableWoodType = wood === "false";
+  const showBioGas = gas === "true";
+  const showWoodType = wood === "true";
 
   return {
     annualFootprint,
     handleUpdate,
     control,
     setValue,
-    disableBioGas,
-    disableWoodType,
+    showBioGas,
+    showWoodType,
   };
 };

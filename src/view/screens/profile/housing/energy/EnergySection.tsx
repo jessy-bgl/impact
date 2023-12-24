@@ -30,8 +30,8 @@ export const EnergySection = () => {
     control,
     handleUpdate,
     setValue,
-    disableBioGas,
-    disableWoodType,
+    showBioGas,
+    showWoodType,
   } = useEnergy();
 
   return (
@@ -68,61 +68,56 @@ export const EnergySection = () => {
           )}
         </ColumnContainer>
 
-        <RowContainer style={{ marginTop: 10 }}>
-          <Text variant="labelLarge">{t("energy.bioGas")}</Text>
-          <Controller<FormValues>
-            name="bioGas"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <SegmentedButtons
-                density="small"
-                value={value}
-                onValueChange={(e) => {
-                  onChange(e);
-                  handleUpdate("bioGas");
-                }}
-                buttons={[
-                  {
-                    value: "true",
-                    label: t("common:yes"),
-                    disabled: disableBioGas,
-                  },
-                  {
-                    value: "false",
-                    label: t("common:no"),
-                    disabled: disableBioGas,
-                  },
-                ]}
-              />
-            )}
-          />
-        </RowContainer>
+        {showBioGas && (
+          <RowContainer style={{ marginTop: 10 }}>
+            <Text variant="labelLarge">{t("energy.bioGas")}</Text>
+            <Controller<FormValues>
+              name="bioGas"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("bioGas");
+                  }}
+                  buttons={[
+                    { value: "true", label: t("common:yes") },
+                    { value: "false", label: t("common:no") },
+                  ]}
+                />
+              )}
+            />
+          </RowContainer>
+        )}
 
-        <RowContainer style={{ marginTop: 10 }}>
-          <Text variant="labelLarge" style={{ flex: 1.5 }}>
-            {t("energy.woodType")}
-          </Text>
-          <Controller<FormValues>
-            name="woodType"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <SegmentedButtons
-                style={{ flex: 2 }}
-                density="small"
-                value={value}
-                onValueChange={(e) => {
-                  onChange(e);
-                  handleUpdate("woodType");
-                }}
-                buttons={WoodTypes.map((woodType) => ({
-                  value: woodType,
-                  label: t(`energy.woodTypes.${woodType}`),
-                  disabled: disableWoodType,
-                }))}
-              />
-            )}
-          />
-        </RowContainer>
+        {showWoodType && (
+          <RowContainer style={{ marginTop: 10 }}>
+            <Text variant="labelLarge" style={{ flex: 1.5 }}>
+              {t("energy.woodType")}
+            </Text>
+            <Controller<FormValues>
+              name="woodType"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <SegmentedButtons
+                  style={{ flex: 2 }}
+                  density="small"
+                  value={value}
+                  onValueChange={(e) => {
+                    onChange(e);
+                    handleUpdate("woodType");
+                  }}
+                  buttons={WoodTypes.map((woodType) => ({
+                    value: woodType,
+                    label: t(`energy.woodTypes.${woodType}`),
+                  }))}
+                />
+              )}
+            />
+          </RowContainer>
+        )}
 
         <ListItemDivider />
 
