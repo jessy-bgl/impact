@@ -6,8 +6,8 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, usePlane } from "./usePlane";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, usePlane } from "./usePlane";
 
 export const PlaneSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -49,7 +49,7 @@ export const PlaneSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 2.5 }}>
             {t("plane.hoursPerYearInShortHaul")}
           </Text>
           <Controller<FormValues>
@@ -71,7 +71,7 @@ export const PlaneSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 2.5 }}>
             {t("plane.hoursPerYearInMediumHaul")}
           </Text>
           <Controller<FormValues>
@@ -93,7 +93,7 @@ export const PlaneSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 2.5 }}>
             {t("plane.hoursPerYearInLongHaul")}
           </Text>
           <Controller<FormValues>

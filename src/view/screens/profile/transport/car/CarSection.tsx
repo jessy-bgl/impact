@@ -20,8 +20,8 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, useCar } from "./useCar";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, useCar } from "./useCar";
 
 export const CarSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -193,7 +193,7 @@ export const CarSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("car.averageFuelConsumption")}
           </Text>
           <Controller<FormValues>
@@ -202,7 +202,6 @@ export const CarSection = () => {
             render={({ field: { onChange, value } }) => (
               <NumericInput
                 disabled={!regularUser}
-                right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("averageFuelConsumption")}
                 onChangeText={onChange}
@@ -215,7 +214,7 @@ export const CarSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("car.age")}
           </Text>
           <Controller<FormValues>
@@ -223,7 +222,6 @@ export const CarSection = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <NumericInput
-                right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("age")}
                 onChangeText={onChange}
@@ -236,7 +234,7 @@ export const CarSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("car.averagePassengers")}
           </Text>
           <Controller<FormValues>
@@ -244,7 +242,6 @@ export const CarSection = () => {
             control={control}
             render={({ field: { onChange, value } }) => (
               <NumericInput
-                right={<TextInput.Affix />}
                 style={{ flex: 1 }}
                 onBlur={() => handleUpdate("averagePassengers")}
                 onChangeText={onChange}

@@ -6,8 +6,8 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, useBoat } from "./useBoat";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, useBoat } from "./useBoat";
 
 export const BoatSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
@@ -49,7 +49,7 @@ export const BoatSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2 }}>
+          <Text variant="labelLarge" style={{ flex: 2.5 }}>
             {t("boat.hoursPerYear")}
           </Text>
           <Controller<FormValues>

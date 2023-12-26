@@ -8,8 +8,8 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, useDrinks } from "./useDrinks";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, useDrinks } from "./useDrinks";
 
 export const DrinksSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);
@@ -33,7 +33,7 @@ export const DrinksSection = () => {
           </Text>
         </RowContainer>
         <RowContainer style={{ marginTop: 10 }}>
-          <Text variant="labelLarge" style={{ flex: 2.5 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("drinks.coffeePerWeek")}
           </Text>
           <Controller<FormValues>
@@ -50,7 +50,7 @@ export const DrinksSection = () => {
           />
         </RowContainer>
         <RowContainer style={{ marginTop: 10 }}>
-          <Text variant="labelLarge" style={{ flex: 2.5 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("drinks.teaPerWeek")}
           </Text>
           <Controller<FormValues>
@@ -67,7 +67,7 @@ export const DrinksSection = () => {
           />
         </RowContainer>
         <RowContainer style={{ marginTop: 10 }}>
-          <Text variant="labelLarge" style={{ flex: 2.5 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("drinks.chocolatePerWeek")}
           </Text>
           <Controller<FormValues>
@@ -133,7 +133,7 @@ export const DrinksSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2.5 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("drinks.sodaLitersPerWeek")}
           </Text>
           <Controller<FormValues>
@@ -153,7 +153,7 @@ export const DrinksSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 2.5 }}>
+          <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("drinks.alcoholLitersPerWeek")}
           </Text>
           <Controller<FormValues>
