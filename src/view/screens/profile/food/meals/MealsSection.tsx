@@ -1,9 +1,8 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { List, SegmentedButtons, Text } from "react-native-paper";
+import { SegmentedButtons, Text } from "react-native-paper";
 
-import { FormValues, useMeals } from "./useMeals";
 import {
   BreakfastTypes,
   Diets,
@@ -13,7 +12,8 @@ import { MilkTypes } from "@domain/models/food/types";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
+import { FormValues, useMeals } from "./useMeals";
 
 export const MealsSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);
@@ -21,14 +21,10 @@ export const MealsSection = () => {
     useMeals();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:food.meals")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="food" />}
+    <ListAccordion
+      title={t("emissions:food.meals")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="food"
     >
       <ListContentContainer>
         <ColumnContainer>
@@ -225,6 +221,6 @@ export const MealsSection = () => {
           </View>
         </ColumnContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

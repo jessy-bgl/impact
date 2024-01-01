@@ -1,13 +1,13 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { List, SegmentedButtons, Text } from "react-native-paper";
+import { SegmentedButtons, Text } from "react-native-paper";
 
 import { MilkTypes } from "@domain/models/food/types";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { FormValues, useDrinks } from "./useDrinks";
 
@@ -17,14 +17,10 @@ export const DrinksSection = () => {
     useDrinks();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:food.drinks")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="water" />}
+    <ListAccordion
+      title={t("emissions:food.drinks")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="water"
     >
       <ListContentContainer>
         <RowContainer>
@@ -170,6 +166,6 @@ export const DrinksSection = () => {
           />
         </RowContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

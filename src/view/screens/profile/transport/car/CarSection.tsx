@@ -2,7 +2,6 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import {
-  List,
   TextInput,
   Text,
   SegmentedButtons,
@@ -18,8 +17,8 @@ import {
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { FormValues, useCar } from "./useCar";
 
@@ -28,14 +27,10 @@ export const CarSection = () => {
   const { control, handleUpdate, regularUser, annualFootprint } = useCar();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:transport.car")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="car" />}
+    <ListAccordion
+      title={t("emissions:transport.car")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="car"
     >
       <ListContentContainer>
         <RowContainer>
@@ -251,6 +246,6 @@ export const CarSection = () => {
           />
         </RowContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

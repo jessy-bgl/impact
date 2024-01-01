@@ -1,12 +1,12 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
+import { SegmentedButtons, Text, TextInput } from "react-native-paper";
 
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { FormValues, useBoat } from "./useBoat";
 
 export const BoatSection = () => {
@@ -14,14 +14,10 @@ export const BoatSection = () => {
   const { control, handleUpdate, usage, annualFootprint } = useBoat();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:transport.boat")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="ferry" />}
+    <ListAccordion
+      title={t("emissions:transport.boat")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="ferry"
     >
       <ListContentContainer>
         <RowContainer>
@@ -68,6 +64,6 @@ export const BoatSection = () => {
           />
         </RowContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

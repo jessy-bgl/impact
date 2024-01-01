@@ -1,13 +1,13 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Checkbox, List, RadioButton, Text } from "react-native-paper";
+import { Checkbox, RadioButton, Text } from "react-native-paper";
 
 import { WasteQuantity } from "@domain/models/food/waste/Waste";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { FormValues, useWaste } from "./useWaste";
 
 export const WasteSection = () => {
@@ -21,14 +21,10 @@ export const WasteSection = () => {
   } = useWaste();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:food.waste")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="recycle" />}
+    <ListAccordion
+      title={t("emissions:food.waste")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="recycle"
     >
       <ListContentContainer>
         <ColumnContainer>
@@ -132,6 +128,6 @@ export const WasteSection = () => {
           />
         </ColumnContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

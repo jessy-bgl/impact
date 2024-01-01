@@ -1,30 +1,26 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
+import { SegmentedButtons, Text, TextInput } from "react-native-paper";
 
 import { TwoWheelerTypes } from "@domain/models/transport/two-wheeler/TwoWheeler";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, useTwhoWheeler } from "./useTwoWheeler";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { FormValues, useTwhoWheeler } from "./useTwoWheeler";
 
 export const TwoWheelerSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
   const { control, handleUpdate, usage, annualFootprint } = useTwhoWheeler();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:transport.twoWheeler")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="motorbike" />}
+    <ListAccordion
+      title={t("emissions:transport.twoWheeler")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="motorbike"
     >
       <ListContentContainer>
         <RowContainer>
@@ -117,6 +113,6 @@ export const TwoWheelerSection = () => {
           />
         </RowContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

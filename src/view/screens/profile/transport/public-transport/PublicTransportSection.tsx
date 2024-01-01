@@ -1,27 +1,23 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { List, Text, TextInput } from "react-native-paper";
+import { Text, TextInput } from "react-native-paper";
 
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, usePublicTransport } from "./usePublicTransport";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
+import { FormValues, usePublicTransport } from "./usePublicTransport";
 
 export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
   const { control, handleUpdate, annualFootprint } = usePublicTransport();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:transport.public")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="train" />}
+    <ListAccordion
+      title={t("emissions:transport.public")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="train"
     >
       <ListContentContainer>
         <RowContainer>
@@ -85,6 +81,6 @@ export const PublicTransportSection = () => {
           />
         </RowContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };

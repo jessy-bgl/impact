@@ -1,12 +1,12 @@
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { List, SegmentedButtons, Text, TextInput } from "react-native-paper";
+import { SegmentedButtons, Text, TextInput } from "react-native-paper";
 
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListTitle } from "@view/screens/profile/components/ListTitle";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { FormValues, usePlane } from "./usePlane";
 
 export const PlaneSection = () => {
@@ -14,14 +14,10 @@ export const PlaneSection = () => {
   const { control, handleUpdate, usage, annualFootprint } = usePlane();
 
   return (
-    <List.Accordion
-      title={
-        <ListTitle
-          title={t("emissions:transport.plane")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      left={(props) => <List.Icon {...props} icon="airplane" />}
+    <ListAccordion
+      title={t("emissions:transport.plane")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="airplane"
     >
       <ListContentContainer>
         <RowContainer>
@@ -112,6 +108,6 @@ export const PlaneSection = () => {
           />
         </RowContainer>
       </ListContentContainer>
-    </List.Accordion>
+    </ListAccordion>
   );
 };
