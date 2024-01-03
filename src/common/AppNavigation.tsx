@@ -85,7 +85,7 @@ const TabNavigator = () => {
       initialRouteName="Emissions"
       screenOptions={{
         tabBarLabelPosition: "below-icon",
-        tabBarStyle: { height: 50, paddingBottom: 5 },
+        tabBarStyle: { height: 55, paddingBottom: 10 },
         headerShown: false,
       }}
     >
