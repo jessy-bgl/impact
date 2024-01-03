@@ -1,0 +1,15 @@
+{
+  "clothes": {
+    "tshirts": "T-shirts 👕",
+    "shirts": "Chemises 👔",
+    "sweatshirts": "Sweats (en coton) 🧵",
+    "sweaters": "Pulls (laine ou acrylique) 🧶",
+    "shorts": "Shorts 🩳",
+    "coats": "Manteaux 🧥",
+    "dresses": "Robes 👗",
+    "pants": "Pantalons 👖",
+    "shoes": "Paires de chaussures 👟",
+    "smallItems": "Autres petits articles 🔹",
+    "bigItems": "Autres gros articles 🔷"
+  }
+}

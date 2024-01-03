@@ -44,7 +44,7 @@ export const Profile = () => {
           title={t("everydayThings")}
           icon={everydayThingsFootprint.materialIcon}
           footprintCategory={everydayThingsFootprint}
-          onClick={() => navigate("Profile")}
+          onClick={() => navigate("EverydayThingsProfile")}
         />
         <ProfileCategoryCard
           title={t("publicServices")}

@@ -30,5 +30,16 @@
     "home": "Caractéristiques",
     "energy": "Energie",
     "leisure": "Loisirs"
+  },
+  "everydayThings": {
+    "pets": "Animaux domestiques",
+    "clothes": "Vêtements",
+    "householdAppliances": "Electroménager",
+    "furniture": "Mobilier",
+    "digital": "Numérique",
+    "hobbies": "Loisirs",
+    "tobacco": "Tabac",
+    "consumableProducts": "Produits consommables",
+    "otherProducts": "Autres produits"
   }
 }

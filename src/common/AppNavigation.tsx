@@ -14,6 +14,7 @@ import { Profile } from "@view/screens/profile/Profile";
 import { FoodProfile } from "@view/screens/profile/food/Food";
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
+import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,12 +63,12 @@ export const AppNavigation = () => {
         component={HousingProfile}
         options={{ title: t("screens.Housing") }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="EverydayThingsProfile"
         component={EverydayThingsProfile}
-        options={{ title: t("screens.EveydayThings") }}
+        options={{ title: t("screens.EverydayThings") }}
       />
-      <Stack.Screen
+      {/*<Stack.Screen
         name="PublicServicesProfile"
         component={PublicServicesProfile}
         options={{ title: t("screens.PublicServices") }}
