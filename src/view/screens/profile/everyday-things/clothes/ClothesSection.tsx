@@ -20,6 +20,12 @@ export const ClothesSection = () => {
       icon="tshirt-crew"
     >
       <ListContentContainer>
+        <RowContainer style={{ marginBottom: 10 }}>
+          <Text variant="labelLarge" style={{ textAlign: "center" }}>
+            {t("clothes.title")}
+          </Text>
+        </RowContainer>
+
         <RowContainer>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.tshirts")}
