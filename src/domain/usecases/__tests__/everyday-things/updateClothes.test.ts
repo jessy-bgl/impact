@@ -44,7 +44,7 @@ describe("updateClothes", () => {
 
     const fakeClothes = new Clothes({
       bigItems: 3,
-      coat: 2,
+      coats: 2,
       dresses: 1,
       pants: 2,
       shirts: 2,

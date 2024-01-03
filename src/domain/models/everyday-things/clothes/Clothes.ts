@@ -19,7 +19,7 @@ type Props = {
   sweatshirts?: number;
   sweaters?: number;
   shorts?: number;
-  coat?: number;
+  coats?: number;
   dresses?: number;
   pants?: number;
   shoes?: number;
@@ -33,7 +33,7 @@ export class Clothes implements WithAnnualFootprint {
   sweatshirts: number;
   sweaters: number;
   shorts: number;
-  coat: number;
+  coats: number;
   dresses: number;
   pants: number;
   shoes: number;
@@ -46,7 +46,7 @@ export class Clothes implements WithAnnualFootprint {
     sweatshirts,
     sweaters,
     shorts,
-    coat,
+    coats,
     dresses,
     pants,
     shoes,
@@ -58,7 +58,7 @@ export class Clothes implements WithAnnualFootprint {
     this.sweatshirts = sweatshirts ?? 0;
     this.sweaters = sweaters ?? 0;
     this.shorts = shorts ?? 0;
-    this.coat = coat ?? 0;
+    this.coats = coats ?? 0;
     this.dresses = dresses ?? 0;
     this.pants = pants ?? 0;
     this.shoes = shoes ?? 0;
@@ -73,7 +73,7 @@ export class Clothes implements WithAnnualFootprint {
         this.sweatshirtsAnnualFootprint +
         this.sweatersAnnualFootprint +
         this.shortsAnnualFootprint +
-        this.coatAnnualFootprint +
+        this.coatsAnnualFootprint +
         this.dressesAnnualFootprint +
         this.pantsAnnualFootprint +
         this.shoesAnnualFootprint +
@@ -102,8 +102,8 @@ export class Clothes implements WithAnnualFootprint {
     return this.shorts * shortFootprint;
   }
 
-  private get coatAnnualFootprint(): number {
-    return this.coat * coatFootprint;
+  private get coatsAnnualFootprint(): number {
+    return this.coats * coatFootprint;
   }
 
   private get dressesAnnualFootprint(): number {

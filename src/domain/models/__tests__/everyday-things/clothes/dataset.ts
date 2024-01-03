@@ -15,7 +15,7 @@ export const clothesDataset: {
       sweaters: 1,
       sweatshirts: 1,
       shorts: 1,
-      coat: 1,
+      coats: 1,
       dresses: 1,
       pants: 1,
       shoes: 1,
