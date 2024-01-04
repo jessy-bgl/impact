@@ -12,5 +12,12 @@
     "shoes": "Paires de chaussures 👟",
     "smallItems": "Autres petits articles 🔹",
     "bigItems": "Autres gros articles 🔷"
+  },
+  "pets": {
+    "title": "Combien d'animaux vivent avec vous, au sein de votre foyer ?",
+    "smallDogs": "Petits chiens 🐶",
+    "mediumDogs": "Chiens de taille moyenne 🐶",
+    "bigDogs": "Gros chiens 🐶",
+    "cats": "Chats 🐱"
   }
 }

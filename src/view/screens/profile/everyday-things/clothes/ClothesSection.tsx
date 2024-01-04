@@ -5,9 +5,9 @@ import { Controller } from "react-hook-form";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { FormValues, useClothes } from "./useClothes";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { FormValues, useClothes } from "./useClothes";
 
 export const ClothesSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);
