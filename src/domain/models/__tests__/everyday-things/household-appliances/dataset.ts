@@ -27,7 +27,7 @@ export const HouseholdAppliancesDataset: {
 }[] = [
   {
     householdAppliances: new HouseholdAppliances({}),
-    expectedAnnualFootprint: 0,
+    expectedAnnualFootprint: 53,
   },
   {
     householdAppliances: new HouseholdAppliances({
