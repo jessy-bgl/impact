@@ -6,7 +6,6 @@ import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { NumericInput } from "@view/components/forms/NumericInput";
-import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { FormValues, usePets } from "./usePets";
 
 export const PetsSection = () => {
@@ -44,9 +43,7 @@ export const PetsSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("pets.mediumDogs")}
           </Text>
@@ -64,9 +61,7 @@ export const PetsSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("pets.bigDogs")}
           </Text>
@@ -84,9 +79,7 @@ export const PetsSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("pets.cats")}
           </Text>
