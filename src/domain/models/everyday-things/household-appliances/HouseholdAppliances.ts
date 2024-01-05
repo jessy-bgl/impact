@@ -79,19 +79,19 @@ export class HouseholdAppliances implements WithAnnualFootprint {
     preservation,
   }: Props) {
     this.occupants = occupants ?? defaultNumberOfOccupants;
-    this.fridges = fridges ?? 0;
+    this.fridges = fridges ?? 1;
     this.miniFridges = miniFridges ?? 0;
     this.freezers = freezers ?? 0;
-    this.washingMachines = washingMachines ?? 0;
+    this.washingMachines = washingMachines ?? 1;
     this.dryers = dryers ?? 0;
     this.dishWashers = dishWashers ?? 0;
-    this.hoods = hoods ?? 0;
-    this.ovens = ovens ?? 0;
-    this.microwaves = microwaves ?? 0;
-    this.hotPlates = hotPlates ?? 0;
+    this.hoods = hoods ?? 1;
+    this.ovens = ovens ?? 1;
+    this.microwaves = microwaves ?? 1;
+    this.hotPlates = hotPlates ?? 1;
     this.kettles = kettles ?? 0;
     this.coffeeMachines = coffeeMachines ?? 0;
-    this.vacuumCleaners = vacuumCleaners ?? 0;
+    this.vacuumCleaners = vacuumCleaners ?? 1;
     this.kitchenRobots = kitchenRobots ?? 0;
     this.electricLawnMowers = electricLawnMowers ?? 0;
     this.preservation = preservation ?? "medium";
