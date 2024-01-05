@@ -6,7 +6,6 @@ import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { NumericInput } from "@view/components/forms/NumericInput";
-import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { FormValues, useClothes } from "./useClothes";
 
 export const ClothesSection = () => {
@@ -44,9 +43,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.shirts")}
           </Text>
@@ -64,9 +61,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.sweatshirts")}
           </Text>
@@ -84,9 +79,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.sweaters")}
           </Text>
@@ -104,9 +97,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.shorts")}
           </Text>
@@ -124,9 +115,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.coats")}
           </Text>
@@ -144,9 +133,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.dresses")}
           </Text>
@@ -164,9 +151,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.pants")}
           </Text>
@@ -184,9 +169,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.shoes")}
           </Text>
@@ -204,9 +187,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.smallItems")}
           </Text>
@@ -224,9 +205,7 @@ export const ClothesSection = () => {
           />
         </RowContainer>
 
-        <ListItemDivider />
-
-        <RowContainer>
+        <RowContainer style={{ marginTop: 10 }}>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("clothes.bigItems")}
           </Text>
