@@ -19,5 +19,30 @@
     "mediumDogs": "Chiens de taille moyenne 🐶",
     "bigDogs": "Gros chiens 🐶",
     "cats": "Chats 🐱"
+  },
+  "householdAppliances": {
+    "title": "Quels appareils électroménagers de moins de 10 ans possédez-vous ?",
+    "preservation": "Quel effort faites-vous pour garder vos appareils électroménagers le plus longtemps possible ?",
+    "preservationChoices": {
+      "none": "Aucun",
+      "low": "Peu d'effort",
+      "medium": "Effort moyen",
+      "high": "Effort maximal"
+    },
+    "coffeeMachines": "Cafetière ☕",
+    "dishWashers": "Lave-vaisselle 🍽",
+    "dryers": "Sèche-linge 🧺",
+    "electricLawnMowers": "Tondeuse électrique 🛺",
+    "freezers": "Congélateur seul ❄️",
+    "fridges": "Réfrigérateur combiné 🍅",
+    "hoods": "Hotte 💨",
+    "hotPlates": "Plaques ⚫",
+    "kettles": "Bouilloire ♨️💧",
+    "kitchenRobots": "Robot de cuisine 🤖🥣",
+    "microwaves": "Micro-onde 〰️🥧",
+    "miniFridges": "Mini réfrigérateur 🥒",
+    "ovens": "Four ♨️🍕",
+    "vacuumCleaners": "Aspirateur 💨",
+    "washingMachines": "Lave-linge 💧👕"
   }
 }
