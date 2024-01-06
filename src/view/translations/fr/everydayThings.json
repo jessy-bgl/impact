@@ -129,5 +129,13 @@
       "onePackPerWeek": "1 paquet par semaine",
       "onePackPerDay": "1 paquet par jour"
     }
+  },
+  "otherProducts": {
+    "title": "Le test ne capte encore toutes vos consommations, comment estimeriez-vous votre niveau de dépenses en produits neufs (décoration d'intérieur, bricolage, jeux, loisirs créatifs, outils, etc.) ?",
+    "spendingLevels": {
+      "low": "Moins de 50€ / mois",
+      "medium": "Environ 80€ / mois",
+      "high": "Plus de 120€ / mois"
+    }
   }
 }
