@@ -88,5 +88,29 @@
     "smartWatches": "Montre connectée ⌚️",
     "gamingConsoles": "Console de salon 🕹",
     "portableConsoles": "Console portable 🎮"
+  },
+  "hobbies": {
+    "cultural": {
+      "title": "Quelles sont vos pratiques culturelles ?",
+      "concertsAndShows": "Concerts et spectacles 🎟",
+      "museumsAndMonuments": "Musées et monuments 🖼️",
+      "editions": "Lectures (livres, journaux et revues) 📚",
+      "music": "Pratique de la musique 🎺"
+    },
+    "sport": {
+      "title": "Quels sont les sports que vous pratiquez régulièrement ?",
+      "outdoorIndividualSport": "Sports individuels en extérieur 🛹👟",
+      "ballSport": "Sports de balle ou ballon 🎾⚽️",
+      "swimming": "Sports en piscine 🏊",
+      "martialSport": "Arts martiaux, combat 🥋",
+      "athletics": "Athlétisme 🏃",
+      "gym": "Salle de sport ou musculation 🎽",
+      "riding": "Équitation 🏇",
+      "golf": "Golf ⛳️",
+      "waterSport": "Sports nautiques 🚣",
+      "winterSport": "Sports d'hiver 🎿",
+      "motorSport": "Sports motorisés ou nécessitant un engin à moteur 🚤",
+      "otherSport": "Autres (tir, escalade...) 🏹"
+    }
   }
 }
