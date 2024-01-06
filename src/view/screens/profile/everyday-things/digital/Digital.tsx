@@ -89,7 +89,7 @@ export const DigitalSection = () => {
 
         <ListItemDivider />
 
-        <RowContainer style={{ marginTop: 10 }}>
+        <RowContainer>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("digital.internetDailyHours")}
           </Text>
