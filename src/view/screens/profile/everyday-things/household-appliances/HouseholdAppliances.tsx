@@ -15,7 +15,7 @@ import { preservationOptions } from "@domain/models/everyday-things/types";
 export const HouseholdAppliancesSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);
   const { control, handleUpdate, annualFootprint } = useHouseholdAppliances();
-  console.log(preservationOptions);
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.householdAppliances")}
