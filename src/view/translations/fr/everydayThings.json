@@ -112,5 +112,13 @@
       "motorSport": "Sports motorisés ou nécessitant un engin à moteur 🚤",
       "otherSport": "Autres (tir, escalade...) 🏹"
     }
+  },
+  "consumableProducts": {
+    "title": "Comment estimeriez-vous votre consommation par mois de produits d'hygiène (savon, maquillage...) et d'entretien (lessive, produits ménagers...) ?",
+    "consumptionFrequencies": {
+      "low": "Faible (1 ou 2 produits)",
+      "medium": "Normale (environ 5 produits)",
+      "high": "Elevée (environ 10 produits)"
+    }
   }
 }

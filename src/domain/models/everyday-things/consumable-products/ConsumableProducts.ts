@@ -1,14 +1,14 @@
 import { WithAnnualFootprint } from "@domain/models/types";
 import { consumableProductsFootprint } from "./constants";
 
-type Consumption = "low" | "medium" | "high";
+export type ConsumptionFrequency = "low" | "medium" | "high";
 
 type Props = {
-  consumption?: Consumption;
+  consumption?: ConsumptionFrequency;
 };
 
 export class ConsumableProducts implements WithAnnualFootprint {
-  consumption: Consumption;
+  consumption: ConsumptionFrequency;
 
   constructor({ consumption }: Props) {
     this.consumption = consumption ?? "medium";

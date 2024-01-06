@@ -7,6 +7,7 @@ import { HouseholdAppliancesSection } from "@view/screens/profile/everyday-thing
 import { FurnitureSection } from "@view/screens/profile/everyday-things/furniture/Furniture";
 import { DigitalSection } from "@view/screens/profile/everyday-things/digital/Digital";
 import { HobbiesSection } from "@view/screens/profile/everyday-things/hobbies/Hobbies";
+import { ConsumableProductsSection } from "@view/screens/profile/everyday-things/consumable-products/ConsumableProducts";
 
 export const EverydayThingsProfile = () => {
   return (
@@ -23,6 +24,8 @@ export const EverydayThingsProfile = () => {
         <DigitalSection />
         <Divider />
         <HobbiesSection />
+        <Divider />
+        <ConsumableProductsSection />
         <Divider />
       </List.Section>
     </ScrollView>
