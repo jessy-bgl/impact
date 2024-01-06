@@ -44,5 +44,25 @@
     "ovens": "Four ♨️🍕",
     "vacuumCleaners": "Aspirateur 💨",
     "washingMachines": "Lave-linge 💧👕"
+  },
+  "furniture": {
+    "title": "Quels meubles de moins de 10 ans possédez-vous ?",
+    "preservation": "Quel effort faites-vous pour garder vos meubles le plus longtemps possible ?",
+    "preservationChoices": {
+      "none": "Aucun",
+      "low": "Peu d'effort",
+      "medium": "Effort moyen",
+      "high": "Effort maximal"
+    },
+    "wardrobes": "Armoire, dressing 🗄️",
+    "couches": "Canapé 🛋️",
+    "mattresses": "Matelas 🛏️",
+    "beds": "Lit (sommier, cadre) 🛏️",
+    "tables": "Table, bureau 🍽️✏️",
+    "chairs": "Chaise, tabouret 🪑",
+    "smallFurnitures": "Petit meuble 🪑",
+    "bigFurnitures": "Grand meuble 🛏️",
+    "woodenGardenFurnitures": "Salon de jardin bois 🏡🪵",
+    "resinOrMetalGardenFurnitures": "Salon de jardin résine ou métal 🏡🪨"
   }
 }
