@@ -120,5 +120,14 @@
       "medium": "Normale (environ 5 produits)",
       "high": "Elevée (environ 10 produits)"
     }
+  },
+  "tobacco": {
+    "title": "Quelle est votre consommation par semaine de tabac ?",
+    "consumptionFrequencies": {
+      "none": "Je ne fume jamais",
+      "onePackPerMonth": "1 paquet par mois",
+      "onePackPerWeek": "1 paquet par semaine",
+      "onePackPerDay": "1 paquet par jour"
+    }
   }
 }
