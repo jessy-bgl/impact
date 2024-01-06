@@ -64,5 +64,29 @@
     "bigFurnitures": "Grand meuble 🛏️",
     "woodenGardenFurnitures": "Salon de jardin bois 🏡🪵",
     "resinOrMetalGardenFurnitures": "Salon de jardin résine ou métal 🏡🪨"
+  },
+  "digital": {
+    "title": "Quels appareils numériques de moins de 10 ans possédez-vous ?",
+    "preservation": "Quel effort faites-vous pour garder vos appareils numériques le plus longtemps possible ?",
+    "preservationChoices": {
+      "none": "Aucun",
+      "low": "Peu d'effort",
+      "medium": "Effort moyen",
+      "high": "Effort maximal"
+    },
+    "internetDailyHours": "Combien d'heures passez-vous par jour sur internet hors bureau (envoi de mails, surf Web, streaming vidéo, etc.) ?",
+    "mobilePhones": "Téléphone 📱",
+    "televisions": "TV 📺",
+    "laptops": "Ordinateur portable 💻",
+    "desktopComputers": "Ordinateur fixe 🖥",
+    "tablets": "Tablette ⬛",
+    "videoProjectors": "Vidéoprojecteur 📽️",
+    "cameras": "Appareil photo 📷",
+    "homeCinemas": "Home cinéma 🔊🎬",
+    "bluetoothSpeakers": "Enceinte bluetooth 🎵",
+    "vocalSpeakers": "Enceinte vocale 🔊",
+    "smartWatches": "Montre connectée ⌚️",
+    "gamingConsoles": "Console de salon 🕹",
+    "portableConsoles": "Console portable 🎮"
   }
 }
