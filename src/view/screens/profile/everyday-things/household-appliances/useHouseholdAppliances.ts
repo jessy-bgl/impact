@@ -12,6 +12,24 @@ export type FormValues = Omit<
   "annualFootprint"
 >;
 
+export const HouseholdAppliancesLabels: (keyof FormValues)[] = [
+  "fridges",
+  "miniFridges",
+  "freezers",
+  "washingMachines",
+  "dryers",
+  "dishWashers",
+  "hoods",
+  "ovens",
+  "microwaves",
+  "hotPlates",
+  "kettles",
+  "coffeeMachines",
+  "vacuumCleaners",
+  "kitchenRobots",
+  "electricLawnMowers",
+];
+
 export const useHouseholdAppliances = () => {
   const storedHouseholdAppliances = useAppStore(
     (store) => store.everydayThings.householdAppliances,

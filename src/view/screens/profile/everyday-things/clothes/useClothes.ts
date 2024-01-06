@@ -9,6 +9,20 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
 export type FormValues = Omit<StringifyProperties<Clothes>, "annualFootprint">;
 
+export const ClothesLabels: (keyof FormValues)[] = [
+  "tshirts",
+  "shirts",
+  "sweatshirts",
+  "sweaters",
+  "shorts",
+  "coats",
+  "dresses",
+  "pants",
+  "shoes",
+  "smallItems",
+  "bigItems",
+];
+
 export const useClothes = () => {
   const storedClothes = useAppStore((store) => store.everydayThings.clothes);
   const annualFootprint = new Clothes(storedClothes).annualFootprint;

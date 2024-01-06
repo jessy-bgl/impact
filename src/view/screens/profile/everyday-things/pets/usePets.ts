@@ -9,6 +9,13 @@ import { Pets } from "@domain/models/everyday-things/pets/Pets";
 
 export type FormValues = Omit<StringifyProperties<Pets>, "annualFootprint">;
 
+export const PetsLabels: (keyof FormValues)[] = [
+  "smallDogs",
+  "mediumDogs",
+  "bigDogs",
+  "cats",
+];
+
 export const usePets = () => {
   const storedPets = useAppStore((store) => store.everydayThings.pets);
   const annualFootprint = new Pets(storedPets).annualFootprint;

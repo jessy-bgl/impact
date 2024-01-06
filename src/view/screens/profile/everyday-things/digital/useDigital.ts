@@ -9,6 +9,22 @@ import { Digital } from "@domain/models/everyday-things/digital/Digital";
 
 export type FormValues = Omit<StringifyProperties<Digital>, "annualFootprint">;
 
+export const DigitalLabels: (keyof FormValues)[] = [
+  "mobilePhones",
+  "televisions",
+  "laptops",
+  "desktopComputers",
+  "tablets",
+  "videoProjectors",
+  "cameras",
+  "homeCinemas",
+  "bluetoothSpeakers",
+  "vocalSpeakers",
+  "smartWatches",
+  "gamingConsoles",
+  "portableConsoles",
+];
+
 export const useDigital = () => {
   const storedDigital = useAppStore((store) => store.everydayThings.digital);
   const annualFootprint = new Digital(storedDigital).annualFootprint;

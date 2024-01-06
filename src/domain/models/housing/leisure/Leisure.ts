@@ -18,14 +18,6 @@ import {
 import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
 import { WithAnnualFootprint } from "@domain/models/types";
 
-export const HolidayAccomodationLabels: (keyof HolidayAccomodations)[] = [
-  "hotel",
-  "rentals",
-  "youthHostel",
-  "camping",
-  "exchange",
-];
-
 type Props = {
   occupants?: number;
   isAnApartment?: boolean;

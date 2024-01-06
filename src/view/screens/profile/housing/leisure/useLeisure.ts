@@ -8,6 +8,14 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 import { Leisure } from "@domain/models/housing/leisure/Leisure";
 import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
 
+export const HolidayAccomodationLabels: (keyof HolidayAccomodations)[] = [
+  "hotel",
+  "rentals",
+  "youthHostel",
+  "camping",
+  "exchange",
+];
+
 export type FormValues = Omit<
   StringifyProperties<Leisure & HolidayAccomodations>,
   "annualFootprint"

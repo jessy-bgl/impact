@@ -12,6 +12,19 @@ export type FormValues = Omit<
   "annualFootprint"
 >;
 
+export const FurnitureLabels: (keyof FormValues)[] = [
+  "wardrobes",
+  "couches",
+  "mattresses",
+  "beds",
+  "tables",
+  "chairs",
+  "smallFurnitures",
+  "bigFurnitures",
+  "woodenGardenFurnitures",
+  "resinOrMetalGardenFurnitures",
+];
+
 export const useFurniture = () => {
   const storedFurniture = useAppStore(
     (store) => store.everydayThings.furniture,

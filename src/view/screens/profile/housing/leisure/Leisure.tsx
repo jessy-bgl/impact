@@ -7,9 +7,12 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
-import { HolidayAccomodationLabels } from "@domain/models/housing/leisure/Leisure";
 import { NumericInput } from "@view/components/forms/NumericInput";
-import { FormValues, useLeisure } from "./useLeisure";
+import {
+  FormValues,
+  useLeisure,
+  HolidayAccomodationLabels,
+} from "./useLeisure";
 
 export const LeisureSection = () => {
   const { t } = useTranslation(["housing", "emissions", "common"]);
