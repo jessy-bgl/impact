@@ -16,6 +16,7 @@ import { AppNavigation } from "@common/AppNavigation";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 
 import "./src/view/translations/i18n";
+import "./plausible";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 
