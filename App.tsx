@@ -13,10 +13,9 @@ import { ActivityIndicator, PaperProvider } from "react-native-paper";
 
 import { AppTheme } from "./AppTheme";
 import { AppNavigation } from "@common/AppNavigation";
+import { plausible } from "./plausible";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
-
 import "./src/view/translations/i18n";
-import "./plausible";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 
@@ -51,9 +50,22 @@ const App = () => {
       <NavigationContainer
         theme={AppTheme}
         initialState={initialState}
-        onStateChange={(state) =>
-          AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
-        }
+        onStateChange={(state) => {
+          AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+
+          const route = state?.routes[state.index];
+          if (route === undefined) return;
+
+          if (route.state && route.state.index !== undefined) {
+            const subroute = route.state.routes[route.state.index];
+            plausible.trackEvent("Navigation", {
+              props: { page: subroute.name },
+            });
+          } else
+            plausible.trackEvent("Navigation", {
+              props: { page: route.name },
+            });
+        }}
       >
         <SafeAreaView style={styles.container}>
           <View style={styles.content}>
