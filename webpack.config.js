@@ -11,6 +11,8 @@ module.exports = async function (env, argv) {
   // Create the default config
   const config = await createExpoWebpackConfigAsync(env, argv);
 
+  config.stats = "errors-only";
+
   config.resolve.alias = {
     // resolve victory-native as victory for the Web app
     "victory-native": "victory",

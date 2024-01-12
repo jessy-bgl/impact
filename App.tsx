@@ -11,13 +11,13 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { ActivityIndicator, PaperProvider } from "react-native-paper";
 
 import { AppTheme } from "./AppTheme";
 import { AppNavigation } from "@common/AppNavigation";
 import { plausible } from "./plausible";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 import "./src/view/translations/i18n";
+import "./logger.config";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 
