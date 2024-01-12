@@ -9,16 +9,5 @@
   "publicServices": "Services publics",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
-  "screens": {
-    "Emissions": "Emissions",
-    "Profile": "Profil",
-    "Transport": "Transports",
-    "Housing": "Logement",
-    "Food": "Alimentation",
-    "EverydayThings": "Divers",
-    "Actions": "Actions",
-    "Comparator": "Comparateur",
-    "Objectives": "Objectifs"
-  },
   "comingSoon": "Bientôt disponible"
 }

@@ -5,9 +5,10 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import { Actions } from "@view/screens/actions/Actions";
-import { Comparator } from "@view/screens/comparator/Comparator";
+import { Comparator } from "@view/screens/magnitude/Comparator";
 import { Emissions } from "@view/screens/emissions/Emissions";
 import { Objectives } from "@view/screens/objectives/Objectives";
 import { Profile } from "@view/screens/profile/Profile";
@@ -16,8 +17,11 @@ import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 
+import { AppTheme } from "../../AppTheme";
+
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const ProfileTab = createBottomTabNavigator();
+const ComparatorDrawer = createDrawerNavigator();
 
 type RootStackParamList = {
   Home: undefined;
@@ -34,7 +38,7 @@ export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 const iconSize = 24;
 
 export const AppNavigation = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("pages");
 
   return (
     <Stack.Navigator initialRouteName="Home">
@@ -46,42 +50,42 @@ export const AppNavigation = () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{ title: t("screens.Profile") }}
+        options={{ title: t("Profile") }}
       />
       <Stack.Screen
         name="TransportProfile"
         component={TransportProfile}
-        options={{ title: t("screens.Transport") }}
+        options={{ title: t("Transport") }}
       />
       <Stack.Screen
         name="FoodProfile"
         component={FoodProfile}
-        options={{ title: t("screens.Food") }}
+        options={{ title: t("Food") }}
       />
       <Stack.Screen
         name="HousingProfile"
         component={HousingProfile}
-        options={{ title: t("screens.Housing") }}
+        options={{ title: t("Housing") }}
       />
       <Stack.Screen
         name="EverydayThingsProfile"
         component={EverydayThingsProfile}
-        options={{ title: t("screens.EverydayThings") }}
+        options={{ title: t("EverydayThings") }}
       />
       {/*<Stack.Screen
         name="PublicServicesProfile"
         component={PublicServicesProfile}
-        options={{ title: t("screens.PublicServices") }}
+        options={{ title: t("PublicServices") }}
       /> */}
     </Stack.Navigator>
   );
 };
 
 const TabNavigator = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("pages");
 
   return (
-    <Tab.Navigator
+    <ProfileTab.Navigator
       initialRouteName="Emissions"
       screenOptions={{
         tabBarLabelPosition: "below-icon",
@@ -89,11 +93,11 @@ const TabNavigator = () => {
         headerShown: false,
       }}
     >
-      <Tab.Screen
+      <ProfileTab.Screen
         name="Emissions"
         component={Emissions}
         options={{
-          title: t("screens.Emissions"),
+          title: t("Emissions"),
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
@@ -105,11 +109,11 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
+      <ProfileTab.Screen
         name="Actions"
         component={Actions}
         options={{
-          title: t("screens.Actions"),
+          title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
@@ -121,11 +125,11 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
-        name="Objectifs"
+      <ProfileTab.Screen
+        name="Objectives"
         component={Objectives}
         options={{
-          title: t("screens.Objectives"),
+          title: t("Objectives"),
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
@@ -137,11 +141,11 @@ const TabNavigator = () => {
           },
         }}
       />
-      <Tab.Screen
-        name="Comparateur"
-        component={Comparator}
+      <ProfileTab.Screen
+        name="Magnitude"
+        component={ComparatorNavigator}
         options={{
-          title: t("screens.Comparator"),
+          title: t("Comparator"),
           tabBarIcon: ({ color }) => {
             return (
               <Icons name="compare-horizontal" size={iconSize} color={color} />
@@ -149,6 +153,23 @@ const TabNavigator = () => {
           },
         }}
       />
-    </Tab.Navigator>
+    </ProfileTab.Navigator>
+  );
+};
+
+const ComparatorNavigator = () => {
+  const { t } = useTranslation("pages");
+
+  return (
+    <ComparatorDrawer.Navigator
+      initialRouteName="Comparator"
+      screenOptions={{ headerTintColor: AppTheme.colors.text }}
+    >
+      <ComparatorDrawer.Screen
+        name="Comparator"
+        component={Comparator}
+        options={{ title: t("Comparator") }}
+      />
+    </ComparatorDrawer.Navigator>
   );
 };

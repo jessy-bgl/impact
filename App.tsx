@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
+import { registerRootComponent } from "expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import { registerRootComponent } from "expo";
-import { useEffect, useState } from "react";
+import { ActivityIndicator, PaperProvider } from "react-native-paper";
+import "react-native-gesture-handler";
 import {
   Linking,
   Platform,
