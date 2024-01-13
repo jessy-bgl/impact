@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/impact/static/js/main.6192910c.js",
-    "static/js/479.2f18341a.js": "/impact/static/js/479.2f18341a.js",
+    "main.js": "/impact/static/js/main.20dcbf2a.js",
+    "static/js/607.44a84caf.js": "/impact/static/js/607.44a84caf.js",
     "static/media/MaterialCommunityIcons.ttf": "/impact/static/media/MaterialCommunityIcons.5d42b4e60858731e7b65.ttf",
     "static/media/food.svg": "/impact/static/media/food.deaf73c9ca71d4255590.svg",
     "static/media/house.svg": "/impact/static/media/house.6fa2b0ca671147bddd8b.svg",
@@ -14,11 +14,11 @@
     "favicon-16.png": "/impact/favicon-16.png",
     "manifest.json": "/impact/manifest.json",
     "serve.json": "/impact/serve.json",
-    "main.6192910c.js.map": "/impact/static/js/main.6192910c.js.map",
-    "479.2f18341a.js.map": "/impact/static/js/479.2f18341a.js.map"
+    "main.20dcbf2a.js.map": "/impact/static/js/main.20dcbf2a.js.map",
+    "607.44a84caf.js.map": "/impact/static/js/607.44a84caf.js.map"
   },
   "entrypoints": [
-    "static/js/479.2f18341a.js",
-    "static/js/main.6192910c.js"
+    "static/js/607.44a84caf.js",
+    "static/js/main.20dcbf2a.js"
   ]
 }
