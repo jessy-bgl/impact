@@ -6,6 +6,16 @@
   "Food": "Alimentation",
   "EverydayThings": "Divers",
   "Actions": "Actions",
+  "Objectives": "Objectifs",
   "Comparator": "Comparateur",
-  "Objectives": "Objectifs"
+  "DigitalComparator": "Numérique",
+  "DigitalUsageComparator": "Usage numérique",
+  "DrinkComparator": "Boissons",
+  "HeatComparator": "Chauffage",
+  "HouseholdApplianceComparator": "Électroménager",
+  "FruitsAndVegetablesComparator": "Fruits et légumes",
+  "ClothingComparator": "Habillement",
+  "ShippingComparator": "Livraison",
+  "MealComparator": "Repas",
+  "TransportComparator": "Transports"
 }
