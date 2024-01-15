@@ -1,12 +1,6 @@
 {
   "yes": "oui",
   "no": "non",
-  "emissions": "Emissions",
-  "transport": "Transports",
-  "housing": "Logement",
-  "food": "Alimentation",
-  "everydayThings": "Divers",
-  "publicServices": "Services publics",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
   "comingSoon": "Bientôt disponible"
