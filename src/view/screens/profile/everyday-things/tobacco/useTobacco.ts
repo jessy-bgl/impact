@@ -8,7 +8,7 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 import {
   CigarettesWeeklyConsumption,
   Tobacco,
-} from "@domain/models/everyday-things/tobacco/Tobacco";
+} from "@domain/entities/everyday-things/tobacco/Tobacco";
 
 export type FormValues = Omit<StringifyProperties<Tobacco>, "annualFootprint">;
 

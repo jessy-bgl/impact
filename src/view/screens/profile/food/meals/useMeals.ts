@@ -3,8 +3,8 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Meals } from "@domain/models/food/meals/Meals";
-import { BreakfastType } from "@domain/models/food/meals/types";
+import { Meals } from "@domain/entities/food/meals/Meals";
+import { BreakfastType } from "@domain/entities/food/meals/types";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

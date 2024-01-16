@@ -13,7 +13,7 @@ import {
   carEngines,
   carSizes,
   fuelTypes,
-} from "@domain/models/transport/car/Car";
+} from "@domain/entities/transport/car/Car";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";

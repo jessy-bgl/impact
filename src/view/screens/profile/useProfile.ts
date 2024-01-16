@@ -1,4 +1,4 @@
-import { FootprintCategories } from "@domain/models/Categories";
+import { FootprintCategories } from "@domain/entities/Categories";
 import { useFootprints } from "@view/view-models/useFootprints";
 
 export const useProfile = () => {

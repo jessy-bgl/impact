@@ -1,8 +1,8 @@
-import { Boat } from "@domain/models/transport/boat/Boat";
-import { Car } from "@domain/models/transport/car/Car";
-import { Plane } from "@domain/models/transport/plane/Plane";
-import { PublicTransport } from "@domain/models/transport/public-transport/PublicTransport";
-import { TwoWheeler } from "@domain/models/transport/two-wheeler/TwoWheeler";
+import { Boat } from "@domain/entities/transport/boat/Boat";
+import { Car } from "@domain/entities/transport/car/Car";
+import { Plane } from "@domain/entities/transport/plane/Plane";
+import { PublicTransport } from "@domain/entities/transport/public-transport/PublicTransport";
+import { TwoWheeler } from "@domain/entities/transport/two-wheeler/TwoWheeler";
 import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
 
 export const createUseUpdateTransport = (

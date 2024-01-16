@@ -3,7 +3,7 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Waste } from "@domain/models/food/waste/Waste";
+import { Waste } from "@domain/entities/food/waste/Waste";
 import { StringifyProperties, convertStringToType } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

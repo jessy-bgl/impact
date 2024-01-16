@@ -3,10 +3,10 @@ import deepMerge from "deepmerge";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-import { Food } from "@domain/models/food/Food";
-import { Transport } from "@domain/models/transport/Transport";
-import { Housing } from "@domain/models/housing/Housing";
-import { EverydayThings } from "@domain/models/everyday-things/EverydayThings";
+import { Food } from "@domain/entities/food/Food";
+import { Transport } from "@domain/entities/transport/Transport";
+import { Housing } from "@domain/entities/housing/Housing";
+import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
 
 export type AppState = {
   transport: Transport;

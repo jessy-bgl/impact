@@ -5,8 +5,8 @@ import { useAppStore } from "@data/store/store";
 import { StringifyProperties, convertStringToType } from "@srctypes/utils";
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-import { Leisure } from "@domain/models/housing/leisure/Leisure";
-import { HolidayAccomodations } from "@domain/models/housing/leisure/types";
+import { Leisure } from "@domain/entities/housing/leisure/Leisure";
+import { HolidayAccomodations } from "@domain/entities/housing/leisure/types";
 
 export const HolidayAccomodationLabels: (keyof HolidayAccomodations)[] = [
   "hotel",

@@ -5,7 +5,7 @@ import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-import { Hobbies } from "@domain/models/everyday-things/hobbies/Hobbies";
+import { Hobbies } from "@domain/entities/everyday-things/hobbies/Hobbies";
 
 export type FormValues = Omit<StringifyProperties<Hobbies>, "annualFootprint">;
 

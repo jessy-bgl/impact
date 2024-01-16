@@ -8,7 +8,7 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 import {
   OtherProducts,
   SpendingLevel,
-} from "@domain/models/everyday-things/other-products/OtherProducts";
+} from "@domain/entities/everyday-things/other-products/OtherProducts";
 
 export type FormValues = Omit<
   StringifyProperties<OtherProducts>,

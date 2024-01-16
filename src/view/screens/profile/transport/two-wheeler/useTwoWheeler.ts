@@ -3,7 +3,7 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { TwoWheeler } from "@domain/models/transport/two-wheeler/TwoWheeler";
+import { TwoWheeler } from "@domain/entities/transport/two-wheeler/TwoWheeler";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

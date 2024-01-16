@@ -1,4 +1,4 @@
-import { Transport } from "@domain/models/transport/Transport";
+import { Transport } from "@domain/entities/transport/Transport";
 import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
 
 export const createUseFetchTransport = (

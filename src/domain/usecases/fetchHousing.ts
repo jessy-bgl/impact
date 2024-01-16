@@ -1,4 +1,4 @@
-import { Housing } from "@domain/models/housing/Housing";
+import { Housing } from "@domain/entities/housing/Housing";
 import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
 
 export const createUseFetchHousing = (

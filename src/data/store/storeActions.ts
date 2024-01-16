@@ -1,8 +1,8 @@
 import { useAppStore } from "@data/store/store";
-import { EverydayThings } from "@domain/models/everyday-things/EverydayThings";
-import { Food } from "@domain/models/food/Food";
-import { Housing } from "@domain/models/housing/Housing";
-import { Transport } from "@domain/models/transport/Transport";
+import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
+import { Food } from "@domain/entities/food/Food";
+import { Housing } from "@domain/entities/housing/Housing";
+import { Transport } from "@domain/entities/transport/Transport";
 
 export const appStoreActions = {
   getTransport: () => useAppStore.getState().transport,

@@ -14,7 +14,7 @@ import {
   useHouseholdAppliances,
 } from "./useHouseholdAppliances";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
-import { preservationOptions } from "@domain/models/everyday-things/types";
+import { preservationOptions } from "@domain/entities/everyday-things/types";
 
 export const HouseholdAppliancesSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);

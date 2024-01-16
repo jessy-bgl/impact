@@ -5,7 +5,7 @@ import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-import { HouseholdAppliances } from "@domain/models/everyday-things/household-appliances/HouseholdAppliances";
+import { HouseholdAppliances } from "@domain/entities/everyday-things/household-appliances/HouseholdAppliances";
 
 export type FormValues = Omit<
   StringifyProperties<HouseholdAppliances>,

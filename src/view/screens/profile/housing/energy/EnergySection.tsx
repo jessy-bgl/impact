@@ -10,7 +10,7 @@ import { Controller } from "react-hook-form";
 import {
   HeatingEnergiesLabels,
   WoodTypes,
-} from "@domain/models/housing/energy/Energy";
+} from "@domain/entities/housing/energy/Energy";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";

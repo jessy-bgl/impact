@@ -1,7 +1,7 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { Food } from "@domain/models/food/Food";
-import { Drinks } from "@domain/models/food/drinks/Drinks";
-import { defaultHotDrinksPerWeek } from "@domain/models/food/drinks/constants";
+import { Food } from "@domain/entities/food/Food";
+import { Drinks } from "@domain/entities/food/drinks/Drinks";
+import { defaultHotDrinksPerWeek } from "@domain/entities/food/drinks/constants";
 import { createUseUpdateFood } from "@domain/usecases/updateFood";
 
 describe("updateDrinks", () => {

@@ -1,6 +1,6 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { Housing } from "@domain/models/housing/Housing";
-import { Leisure } from "@domain/models/housing/leisure/Leisure";
+import { Housing } from "@domain/entities/housing/Housing";
+import { Leisure } from "@domain/entities/housing/leisure/Leisure";
 import { createUseUpdateHousing } from "@domain/usecases/updateHousing";
 
 describe("updateLeisure", () => {

@@ -9,7 +9,7 @@ import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
-import { preservationOptions } from "@domain/models/everyday-things/types";
+import { preservationOptions } from "@domain/entities/everyday-things/types";
 import { FormValues, FurnitureLabels, useFurniture } from "./useFurniture";
 
 export const FurnitureSection = () => {

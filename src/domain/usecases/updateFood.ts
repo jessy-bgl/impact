@@ -1,6 +1,6 @@
-import { Drinks } from "@domain/models/food/drinks/Drinks";
-import { Meals } from "@domain/models/food/meals/Meals";
-import { Waste } from "@domain/models/food/waste/Waste";
+import { Drinks } from "@domain/entities/food/drinks/Drinks";
+import { Meals } from "@domain/entities/food/meals/Meals";
+import { Waste } from "@domain/entities/food/waste/Waste";
 import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
 
 export const createUseUpdateFood = (emissionsRepository: EmissionsRepository) =>
