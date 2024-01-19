@@ -19,6 +19,7 @@ import { FoodProfile } from "@view/screens/profile/food/Food";
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
+import { PublicServicesProfile } from "@view/screens/profile/public-services/PublicServices";
 
 import { AppTheme } from "../../AppTheme";
 
@@ -75,11 +76,11 @@ export const AppNavigation = () => {
         component={EverydayThingsProfile}
         options={{ title: t("EverydayThings") }}
       />
-      {/*<Stack.Screen
+      <Stack.Screen
         name="PublicServicesProfile"
         component={PublicServicesProfile}
         options={{ title: t("PublicServices") }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };

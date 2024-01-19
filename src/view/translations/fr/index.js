@@ -5,5 +5,15 @@ import food from "./food.json";
 import transport from "./transport.json";
 import housing from "./housing.json";
 import everydayThings from "./everydayThings.json";
+import publicServices from "./publicServices.json";
 
-export { common, pages, emissions, transport, food, housing, everydayThings };
+export {
+  common,
+  pages,
+  emissions,
+  transport,
+  food,
+  housing,
+  everydayThings,
+  publicServices,
+};
