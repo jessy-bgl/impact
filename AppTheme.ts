@@ -9,6 +9,9 @@ const MaterialTheme = {
     primary: "#59B158",
     onPrimary: "#111",
     inversePrimary: "#fff",
+    secondary: "#5F9EA0",
+    onSecondary: "#111",
+    // background: "#282731",
   },
 };
 
