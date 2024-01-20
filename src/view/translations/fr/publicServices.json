@@ -1,6 +1,8 @@
 {
   "info": "Cette catégorie ne dépend pas de vos réponses. L'empreinte associée est calculée via une approche macro-économique à l'échelle nationale.",
-  "description1": "Ce poste inclus l'empreinte des services publics français, et des services marchands que l'on peut considérer comme étant essentiels à la vie de chacun, divisées par la population du pays.",
-  "description2": "La première catégorie \"services publics\" comprend par exemple l'empreinte des hôpitaux français, ou de la justice. Nous considérons que cette empreinte doit être également répartie pour tous les citoyens, car ce sont des postes \"républicains\" que seule la démocratie peut faire évoluer, pas directement par les choix de consommation individuels.",
-  "description3": "La deuxième catégorie \"services marchands\" comprend notamment le réseau de télécommunications (fibre, téléphone, etc.), mais aussi les assurances ou encore la poste. Ce sont des services relativement universels pour lesquels nous n'avons pas encore le détail qui nous permettrait de répartir l'empreinte en fonction des choix de consommation des citoyens."
+  "description": "Ce poste inclus l'empreinte des services publics français, et des services marchands que l'on peut considérer comme étant essentiels à la vie de chacun, divisées par la population du pays.",
+  "publicServicesDescription": "{{icon}} La première catégorie \"services publics\" représente {{footprint}} kgCO2/an par habitant. Elle comprend par exemple l'empreinte des hôpitaux français, ou de la justice. Nous considérons que cette empreinte doit être également répartie pour tous les citoyens, car ce sont des postes \"républicains\" que seule la démocratie peut faire évoluer, pas directement par les choix de consommation individuels.",
+  "merchantDescription": "{{icon}} La deuxième catégorie \"services marchands\" représente {{footprint}} kgCO2/an par habitant. Elle comprend notamment le réseau de télécommunications (fibre, téléphone, etc.), mais aussi les assurances ou encore la poste. Ce sont des services relativement universels pour lesquels nous n'avons pas encore le détail qui nous permettrait de répartir l'empreinte en fonction des choix de consommation des citoyens.",
+  "publicServices": "Services\npublics",
+  "merchantServices": "Services\nmarchands"
 }

@@ -57,6 +57,13 @@ export class FootprintByCategory {
     return new FootprintCategoryPublicServices(footprint, totalFootprint);
   }
 
+  static forMerchantServices(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintByCategory {
+    return new FootprintCategoryMerchantServices(footprint, totalFootprint);
+  }
+
   private computePart = (totalFootprint: number) =>
     totalFootprint === 0
       ? 0
@@ -107,9 +114,18 @@ class FootprintCategoryPublicServices extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
     super(FootprintCategories.PUBLIC_SERVICES, footprint, totalFootprint);
     this.color = "steelblue";
-    this.icon = "🏛";
+    this.icon = "🏛️";
     this.materialIcon = "bank";
     this.image = publicServicesImage;
+  }
+}
+
+class FootprintCategoryMerchantServices extends FootprintByCategory {
+  constructor(footprint: number, totalFootprint: number) {
+    super(FootprintCategories.PUBLIC_SERVICES, footprint, totalFootprint);
+    this.color = "cadetblue";
+    this.icon = "✉️";
+    this.materialIcon = "post";
   }
 }
 
