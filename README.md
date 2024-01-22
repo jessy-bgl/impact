@@ -17,7 +17,7 @@ alt="App icon">
 ## Screenshots
 
 [<img width=200 alt="Emissions"
-src="documentation/screenshots/emissions.png?raw=true">](documentation/screenshots/emissions.png?raw=true)  
+src="documentation/screenshots/emissions.png?raw=true">](documentation/screenshots/emissions.png?raw=true)
 [<img width=200 alt="Profile"
 src="documentation/screenshots/profile.png?raw=true">](documentation/screenshots/profile.png?raw=true)
 
