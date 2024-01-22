@@ -2,11 +2,11 @@
 
 # Impact
 
-**Impact** est une application Web (PWA) et Mobile basée sur les travaux de [Nos gestes climats (ADEME)](https://nosgestesclimat.fr/) qui permet d'estimer, comprendre et diminuer son impact carbone personnel.
+**Impact** est une application Web (PWA) et Mobile basée sur les travaux de l'[ADEME](https://www.ademe.fr/) qui permet d'estimer, comprendre et diminuer son impact carbone personnel.
 
 ## Fonctionnalités
 
-- Estimer son impact carbone en fonction de son mode de vie
+- Estimer son impact carbone en fonction de son mode de vie (simulateur inspiré de [Nos gestes climat](https://nosgestesclimat.fr/))
 - Visualiser ses émissions carbone par catégories
 - Comparer l'impact des éléments du quotidien (grâce à l'outil [Impact CO2 (ADEME)](https://impactco2.fr/))
 - [A VENIR] Sélectionner des actions concrètes pour réduire ses émissions
