@@ -20,6 +20,7 @@ alt="App icon">
 src="documentation/screenshots/emissions.png?raw=true">](documentation/screenshots/emissions.png?raw=true)&nbsp;&nbsp;
 [<img width=250 alt="Profile"
 src="documentation/screenshots/profile.png?raw=true">](documentation/screenshots/profile.png?raw=true)&nbsp;&nbsp;
+
 [<img width=250 alt="Comparateur_Repas"
 src="documentation/screenshots/comparator_meal.png?raw=true">](documentation/screenshots/comparator_meal.png?raw=true)&nbsp;&nbsp;
 [<img width=250 alt="Comparateur_Chauffage"
