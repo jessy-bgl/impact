@@ -14,7 +14,7 @@ alt="App icon">
 - [A VENIR] Définir des objectifs personnels
 - [A VENIR] Suivre l'évolution de son impact sur la durée
 
-## Screenshots
+## Captures d'écran
 
 [<img width=250 alt="Emissions"
 src="documentation/screenshots/emissions.png?raw=true">](documentation/screenshots/emissions.png?raw=true)&nbsp;&nbsp;
