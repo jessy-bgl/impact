@@ -16,11 +16,11 @@ alt="App icon">
 
 ## Screenshots
 
-[<img width=200 alt="Emissions"
+[<img width=250 alt="Emissions"
 src="documentation/screenshots/emissions.png?raw=true">](documentation/screenshots/emissions.png?raw=true)&nbsp;&nbsp;
-[<img width=200 alt="Profile"
+[<img width=250 alt="Profile"
 src="documentation/screenshots/profile.png?raw=true">](documentation/screenshots/profile.png?raw=true)&nbsp;&nbsp;
-[<img width=200 alt="Comparateur_Repas"
+[<img width=250 alt="Comparateur_Repas"
 src="documentation/screenshots/comparator_meal.png?raw=true">](documentation/screenshots/comparator_meal.png?raw=true)&nbsp;&nbsp;
-[<img width=200 alt="Comparateur_Chauffage"
+[<img width=250 alt="Comparateur_Chauffage"
 src="documentation/screenshots/comparator_heating.png?raw=true">](documentation/screenshots/comparator_heating.png?raw=true)
