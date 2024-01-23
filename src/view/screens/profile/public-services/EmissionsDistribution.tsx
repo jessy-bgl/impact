@@ -1,7 +1,7 @@
 import { VictoryPie } from "victory";
+import { useTheme } from "react-native-paper";
 
 import { FootprintByCategory } from "@view/view-models/Footprint";
-import { AppTheme } from "../../../../../AppTheme";
 
 const pieWidth = 250;
 const pieHeight = 100;
@@ -15,6 +15,8 @@ export const PublicServicesEmissionsDistribution = ({
   publicServices,
   merchantServices,
 }: Props) => {
+  const appTheme = useTheme();
+
   return (
     <svg viewBox={`0 110 ${pieWidth} ${pieHeight}`}>
       <VictoryPie
@@ -27,7 +29,7 @@ export const PublicServicesEmissionsDistribution = ({
           if (index === 0) return 30;
           return 60;
         }}
-        style={{ labels: { fontSize: 10, fill: AppTheme.colors.onBackground } }}
+        style={{ labels: { fontSize: 10, fill: appTheme.colors.onBackground } }}
         data={[
           { x: publicServices.icon, y: publicServices.footprint },
           { x: merchantServices.icon, y: merchantServices.footprint },

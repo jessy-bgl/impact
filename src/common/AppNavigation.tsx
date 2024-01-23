@@ -6,6 +6,7 @@ import {
 } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useTheme } from "react-native-paper";
 
 import { Actions } from "@view/screens/actions/Actions";
 import {
@@ -20,8 +21,6 @@ import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { PublicServicesProfile } from "@view/screens/profile/public-services/PublicServices";
-
-import { AppTheme } from "../../AppTheme";
 
 const Stack = createNativeStackNavigator();
 const ProfileTab = createBottomTabNavigator();
@@ -167,12 +166,13 @@ type ComparatorParams = {
 
 const ComparatorNavigator = () => {
   const { t } = useTranslation("pages");
+  const appTheme = useTheme();
 
   return (
     <ComparatorDrawer.Navigator
       initialRouteName="Comparator"
       screenOptions={{
-        headerTintColor: AppTheme.colors.text,
+        headerTintColor: appTheme.colors.onPrimaryContainer,
         unmountOnBlur: true, // NB : this is a workaround to avoid scroll issues
       }}
     >
