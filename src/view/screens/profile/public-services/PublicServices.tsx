@@ -1,6 +1,6 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View, ViewStyle } from "react-native";
 import { useTranslation } from "react-i18next";
-import { Text, Card, Icon } from "react-native-paper";
+import { Text, Card, Icon, useTheme } from "react-native-paper";
 
 import { FootprintByCategory } from "@view/view-models/Footprint";
 import { PublicServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
@@ -10,10 +10,14 @@ import {
   merchantServicesFootprint,
 } from "@domain/entities/public-services/PublicServices";
 
-import { AppTheme } from "../../../../../AppTheme";
-
 export const PublicServicesProfile = () => {
   const { t } = useTranslation("publicServices");
+  const appTheme = useTheme();
+
+  const infoCardStyle: ViewStyle = {
+    borderColor: appTheme.colors.secondary,
+    borderRadius: 5,
+  };
 
   const publicServices = FootprintByCategory.forPublicServices(
     publicServicesFootprint,
@@ -26,8 +30,8 @@ export const PublicServicesProfile = () => {
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <Card mode="outlined" style={styles.infoCard}>
+    <ScrollView style={{ padding: 10 }}>
+      <Card mode="outlined" style={infoCardStyle}>
         <View style={{ padding: 8, flexDirection: "row" }}>
           <View style={{ marginRight: 10, justifyContent: "center" }}>
             <Icon size={20} source="information-outline" />
@@ -55,11 +59,3 @@ export const PublicServicesProfile = () => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { padding: 10 },
-  infoCard: {
-    borderColor: AppTheme.colors.secondary,
-    borderRadius: 5,
-  },
-});
