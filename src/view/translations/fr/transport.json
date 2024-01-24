@@ -1,12 +1,12 @@
 {
   "car": {
-    "kmPerYear": "Distance parcourue à l'année",
+    "kmPerYear": "Quelle distance parcourez-vous à l'année en voiture ?",
     "regularUser": "Utilisez-vous généralement la même voiture pour vous déplacer ?",
     "nonRegularUserHelperText": "Dans ce cas nous prendrons les valeurs par défaut d'une voiture moyenne.",
     "size": "Gabarit de la voiture",
     "engine": "Type de moteur",
     "fuelType": "Type de carburant",
-    "age": "Âge de la voiture (en années)",
+    "age": "Âge du véhicule (en années)",
     "averagePassengers": "Nombre moyen de passagers",
     "averageFuelConsumption": "Consommation moyenne de carburant (en L/100km)",
     "sizes": {

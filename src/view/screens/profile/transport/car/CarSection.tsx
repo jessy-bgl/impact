@@ -20,6 +20,9 @@ import { ListItemDivider } from "@view/screens/profile/components/ListItemDivide
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { NumericInput } from "@view/components/forms/NumericInput";
+import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { InfoDistance } from "@view/screens/profile/transport/car/info/InfoDistance";
+import { InfoSameCar } from "@view/screens/profile/transport/car/info/InfoSameCar";
 import { FormValues, useCar } from "./useCar";
 
 export const CarSection = () => {
@@ -36,6 +39,7 @@ export const CarSection = () => {
         <RowContainer>
           <Text variant="labelLarge" style={{ flex: 1.5 }}>
             {t("car.kmPerYear")}
+            <ModalInfoButton modalContent={<InfoDistance />} />
           </Text>
           <Controller<FormValues>
             name="kmPerYear"
@@ -56,7 +60,10 @@ export const CarSection = () => {
 
         <ColumnContainer>
           <RowContainer>
-            <Text variant="labelLarge">{t("car.regularUser")}</Text>
+            <Text variant="labelLarge">
+              {t("car.regularUser")}
+              <ModalInfoButton modalContent={<InfoSameCar />} />
+            </Text>
             <Controller<FormValues>
               name="regularUser"
               control={control}
@@ -92,7 +99,10 @@ export const CarSection = () => {
         <ListItemDivider />
 
         <ColumnContainer>
-          <Text variant="labelLarge">{t("car.size")}</Text>
+          <Text variant="labelLarge">
+            {t("car.size")}
+            <ModalInfoButton modalContent={<InfoDistance />} />
+          </Text>
           <View>
             <Controller<FormValues>
               name="size"
