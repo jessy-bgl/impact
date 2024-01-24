@@ -1,6 +1,6 @@
 {
   "car": {
-    "kmPerYear": "Quelle distance parcourez-vous à l'année en voiture ?",
+    "kmPerYear": "Combien de km faites-vous à l'année en voiture ?",
     "regularUser": "Utilisez-vous généralement la même voiture pour vous déplacer ?",
     "nonRegularUserHelperText": "Dans ce cas nous prendrons les valeurs par défaut d'une voiture moyenne.",
     "size": "Gabarit de la voiture",
@@ -30,7 +30,7 @@
   "twoWheeler": {
     "usage": "Utilisez-vous un deux-roues motorisé ?",
     "type": "Type de deux-roues",
-    "kmPerYear": "Distance parcourue à l'année",
+    "kmPerYear": "Combien de km faites-vous à l'année avec votre scooter ou moto ?",
     "types": {
       "thermalScooter": "Scooter thermique",
       "electricScooter": "Scooter électrique",
@@ -45,8 +45,8 @@
     "hoursPerYearInLongHaul": "Sur une année, combien d'heures voyagez-vous sur des vols de plus de 6h (long-courrier) ?"
   },
   "boat": {
-    "usage": "Prenez-vous le ferry?",
-    "hoursPerYear": "Sur une année, combien d'heures voyagez-vous en ferry ou croisière ?"
+    "usage": "Prenez-vous le ferry ?",
+    "hoursPerYear": "Combien d'heures par an voyagez-vous en ferry ou croisière ?"
   },
   "public": {
     "hoursPerYearInTrain": "Sur une année, combien d'heures voyagez-vous en train ?",

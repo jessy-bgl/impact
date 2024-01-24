@@ -95,7 +95,7 @@ export const TwoWheelerSection = () => {
 
         <RowContainer>
           <Text variant="labelLarge" style={{ flex: 1.5 }}>
-            {t("car.kmPerYear")}
+            {t("twoWheeler.kmPerYear")}
           </Text>
           <Controller<FormValues>
             name="kmPerYear"
