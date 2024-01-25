@@ -106,6 +106,10 @@ export const HomeSection = () => {
           />
         </RowContainer>
 
+        {/* 
+        NB : the "ecoBuilt" CO2e impact formula is not precise enough to be included
+        in the app for now (cf. https://github.com/incubateur-ademe/nosgestesclimat)
+        
         <ListItemDivider />
 
         <RowContainer>
@@ -128,7 +132,8 @@ export const HomeSection = () => {
               />
             )}
           />
-        </RowContainer>
+        </RowContainer> 
+        */}
       </ListContentContainer>
     </ListAccordion>
   );
