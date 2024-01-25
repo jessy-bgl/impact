@@ -13,6 +13,8 @@ import { ColumnContainer } from "@view/screens/profile/components/ColumnContaine
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
+import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { InfoDiet } from "@view/screens/profile/food/meals/info/InfoDiet";
 import { FormValues, useMeals } from "./useMeals";
 
 export const MealsSection = () => {
@@ -28,42 +30,38 @@ export const MealsSection = () => {
     >
       <ListContentContainer>
         <ColumnContainer>
-          <Text variant="labelLarge">{t("breakfast.type")}</Text>
+          <Text variant="labelLarge">{t("breakfast.type")} </Text>
           <View>
             <Controller<FormValues>
               name="breakfast"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("breakfast");
-                  }}
-                  buttons={BreakfastTypes.slice(0, 3).map((type) => ({
-                    value: type,
-                    label: t(`breakfast.types.${type}`),
-                  }))}
-                />
-              )}
-            />
-            <Controller<FormValues>
-              name="breakfast"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("breakfast");
-                  }}
-                  buttons={BreakfastTypes.slice(3, 5).map((type) => ({
-                    value: type,
-                    label: t(`breakfast.types.${type}`),
-                  }))}
-                />
+                <>
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("breakfast");
+                    }}
+                    buttons={BreakfastTypes.slice(0, 3).map((type) => ({
+                      value: type,
+                      label: t(`breakfast.types.${type}`),
+                    }))}
+                  />
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("breakfast");
+                    }}
+                    buttons={BreakfastTypes.slice(3, 5).map((type) => ({
+                      value: type,
+                      label: t(`breakfast.types.${type}`),
+                    }))}
+                  />
+                </>
               )}
             />
           </View>
@@ -92,42 +90,41 @@ export const MealsSection = () => {
         <ListItemDivider />
 
         <ColumnContainer>
-          <Text variant="labelLarge">{t("diet.type")}</Text>
+          <Text variant="labelLarge">
+            {t("diet.type")}
+            <ModalInfoButton modalContent={<InfoDiet />} />
+          </Text>
           <View>
             <Controller<FormValues>
               name="diet"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("diet");
-                  }}
-                  buttons={Diets.slice(0, 3).map((type) => ({
-                    value: type,
-                    label: t(`diet.types.${type}`),
-                  }))}
-                />
-              )}
-            />
-            <Controller<FormValues>
-              name="diet"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("diet");
-                  }}
-                  buttons={Diets.slice(3, 5).map((type) => ({
-                    value: type,
-                    label: t(`diet.types.${type}`),
-                  }))}
-                />
+                <>
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("diet");
+                    }}
+                    buttons={Diets.slice(0, 3).map((type) => ({
+                      value: type,
+                      label: t(`diet.types.${type}`),
+                    }))}
+                  />
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("diet");
+                    }}
+                    buttons={Diets.slice(3, 5).map((type) => ({
+                      value: type,
+                      label: t(`diet.types.${type}`),
+                    }))}
+                  />
+                </>
               )}
             />
           </View>
@@ -142,36 +139,32 @@ export const MealsSection = () => {
               name="localProducts"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("localProducts");
-                  }}
-                  buttons={Frequencies.slice(0, 2).map((frequency) => ({
-                    value: frequency,
-                    label: t(`frequencies.${frequency}`),
-                  }))}
-                />
-              )}
-            />
-            <Controller<FormValues>
-              name="localProducts"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("localProducts");
-                  }}
-                  buttons={Frequencies.slice(2, 4).map((frequency) => ({
-                    value: frequency,
-                    label: t(`frequencies.${frequency}`),
-                  }))}
-                />
+                <>
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("localProducts");
+                    }}
+                    buttons={Frequencies.slice(0, 2).map((frequency) => ({
+                      value: frequency,
+                      label: t(`frequencies.${frequency}`),
+                    }))}
+                  />
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("localProducts");
+                    }}
+                    buttons={Frequencies.slice(2, 4).map((frequency) => ({
+                      value: frequency,
+                      label: t(`frequencies.${frequency}`),
+                    }))}
+                  />
+                </>
               )}
             />
           </View>
@@ -186,36 +179,32 @@ export const MealsSection = () => {
               name="seasonalProducts"
               control={control}
               render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("seasonalProducts");
-                  }}
-                  buttons={Frequencies.slice(0, 2).map((frequency) => ({
-                    value: frequency,
-                    label: t(`frequencies.${frequency}`),
-                  }))}
-                />
-              )}
-            />
-            <Controller<FormValues>
-              name="seasonalProducts"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <SegmentedButtons
-                  density="small"
-                  value={value}
-                  onValueChange={(e) => {
-                    onChange(e);
-                    handleUpdate("seasonalProducts");
-                  }}
-                  buttons={Frequencies.slice(2, 4).map((frequency) => ({
-                    value: frequency,
-                    label: t(`frequencies.${frequency}`),
-                  }))}
-                />
+                <>
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("seasonalProducts");
+                    }}
+                    buttons={Frequencies.slice(0, 2).map((frequency) => ({
+                      value: frequency,
+                      label: t(`frequencies.${frequency}`),
+                    }))}
+                  />
+                  <SegmentedButtons
+                    density="small"
+                    value={value}
+                    onValueChange={(e) => {
+                      onChange(e);
+                      handleUpdate("seasonalProducts");
+                    }}
+                    buttons={Frequencies.slice(2, 4).map((frequency) => ({
+                      value: frequency,
+                      label: t(`frequencies.${frequency}`),
+                    }))}
+                  />
+                </>
               )}
             />
           </View>

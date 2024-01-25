@@ -1,0 +1,9 @@
+{
+  "meals": {
+    "vegan": "Vegan : uniquement des repas sans produits d'origine animale.",
+    "vegetarian": "Végétarien : uniquement des repas sans viande.",
+    "littleMeatConsumer": "Peu de viande : quelques repas à base de viande blanche ou de poisson.",
+    "regularMeatConsumer": "Viande régulièrement : environ 10 repas à base de viande ou de poisson par semaine.",
+    "heavyMeatConsumer": "Beaucoup de viande : viande ou poisson à chaque repas."
+  }
+}

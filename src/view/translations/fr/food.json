@@ -12,9 +12,9 @@
   "milk": {
     "type": "Type de lait",
     "types": {
-      "cow": "🐄",
-      "soy": "🌱",
-      "oat": "🌾"
+      "cow": "Vache 🐄",
+      "soy": "Soja 🌱",
+      "oat": "Avoine 🌾"
     }
   },
   "diet": {
