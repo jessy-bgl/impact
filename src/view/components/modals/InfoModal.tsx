@@ -19,6 +19,8 @@ export const InfoModal = ({ content, hide }: Props) => {
     borderRadius: 5,
     backgroundColor: appTheme.colors.background,
     padding: 10,
+    maxWidth: 500,
+    alignSelf: "center",
   };
 
   return (
