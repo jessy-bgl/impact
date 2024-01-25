@@ -1,0 +1,8 @@
+{
+  "home": {
+    "occupants": {
+      "p1": "Il s'agit de savoir combien de personnes partagent votre logement et toutes les consommations qu'il entraîne (construction, chauffage, etc).",
+      "p2": "- Si vous vivez seul, répondez 1.\n- Si vous vivez avec votre conjoint et un enfant, répondez 3.\n- Si vous êtes séparé avec un enfant qui alterne entre votre logement et un autre, vous pouvez saisir 1,5."
+    }
+  }
+}

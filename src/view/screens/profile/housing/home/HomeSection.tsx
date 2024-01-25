@@ -6,6 +6,8 @@ import { ListContentContainer } from "@view/screens/profile/components/ListConte
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
+import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { InfoOccupants } from "@view/screens/profile/housing/home/info/InfoOccupants";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { FormValues, useHome } from "./useHome";
 
@@ -24,6 +26,7 @@ export const HomeSection = () => {
         <RowContainer>
           <Text variant="labelLarge" style={{ flex: 3 }}>
             {t("housing:home.occupants")}
+            <ModalInfoButton modalContent={<InfoOccupants />} />
           </Text>
           <Controller<FormValues>
             name="occupants"
@@ -43,7 +46,7 @@ export const HomeSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge" style={{ flex: 3 }}>
+          <Text variant="labelLarge" style={{ flex: 2.5 }}>
             {t("housing:home.livingSpace")}
           </Text>
           <Controller<FormValues>
@@ -56,6 +59,7 @@ export const HomeSection = () => {
                 onChangeText={onChange}
                 value={value}
                 min={10}
+                right={<TextInput.Affix text="m²" />}
               />
             )}
           />

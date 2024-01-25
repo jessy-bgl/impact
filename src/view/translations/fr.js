@@ -8,6 +8,7 @@ import everydayThings from "./fr/everydayThings.json";
 import publicServices from "./fr/publicServices.json";
 import infoTransport from "./fr/info/infoTransport.json";
 import infoFood from "./fr/info/infoFood.json";
+import infoHousing from "./fr/info/infoHousing.json";
 
 export {
   common,
@@ -20,4 +21,5 @@ export {
   publicServices,
   infoTransport,
   infoFood,
+  infoHousing,
 };

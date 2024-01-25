@@ -4,7 +4,7 @@
     "livingSpace": "Quelle est la surface de votre logement ?",
     "ageInYears": "Quel est l'âge de votre logement ?",
     "isAnApartment": "Votre logement est-il un appartement ?",
-    "isEcoBuilt": "Votre logement est-il éco-construit?"
+    "isEcoBuilt": "Votre logement est-il éco-construit ?"
   },
   "energy": {
     "heatingEnergies": "Quel type d'énergie utilisez-vous pour le chauffage de votre logement, eau chaude, cuisson, etc. ?",
