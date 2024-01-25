@@ -1,0 +1,27 @@
+{
+  "householdAppliances": {
+    "preservation": {
+      "p1": "Pour éviter de vous demander de renseigner l'âge précis de la dizaine d'appareils électroménagers que vous possédez, nous utilisons une grille d'âge moyen constaté pour chaque appareil.",
+      "p2": "Par exemple, un frigo est remplacé en moyenne au bout de 10 ans, un four 12 ans et une bouilloire 6 ans.",
+      "p3": "A vous de vous placer par rapport à la moyenne."
+    }
+  },
+  "furniture": {
+    "preservation": {
+      "p1": "Pour éviter de vous demander de renseigner l'âge précis de tous les biens d'ameublement que vous possédez, nous avons défini un âge moyen pour chacun des biens (généralement 10 ans).",
+      "p2": "Nous cherchons ici à évaluer non pas l'âge des meubles avant que ces derniers deviennent inutilisables, mais l'âge quand leurs propriétaires décident de les remplacer par du neuf.",
+      "p3": "A vous de vous placer par rapport à la moyenne."
+    }
+  },
+  "digital": {
+    "preservation": {
+      "p1": "Pour éviter de vous demander de renseigner l'âge précis de tous les appareils électroniques que vous possédez, nous utilisons une grille d'âge moyen constaté pour chaque appareil que l'on fait évoluer en fonction de vos efforts à les préserver ou non.",
+      "p2": "A vous donc de juger vos efforts pour les faire durer le plus longtemps possible."
+    }
+  },
+  "otherProducts": {
+    "p1": "Pour garder l'interface simple, nous proposons une estimation, via vos dépenses, de l'empreinte des biens de consommation que vous possédez et que vous ne pensez pas avoir inclus dans les questions précédentes.",
+    "p2": "Elle concerne : les jeux, la décoration, le matériel de cuisine, le linge de maison, les matériaux pour les loisirs créatifs ou bricolage, les plantes, etc.",
+    "p3": "💡 Les ordres de grandeur en € proposés ici sont basés sur les statistiques INSEE des dépenses des ménages. Un Français moyen dépense 80€/mois pour ces postes de dépenses."
+  }
+}

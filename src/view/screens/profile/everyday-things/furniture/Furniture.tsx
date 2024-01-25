@@ -6,11 +6,13 @@ import { Controller } from "react-hook-form";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { NumericInput } from "@view/components/forms/NumericInput";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { NumericInput } from "@view/components/forms/NumericInput";
 import { preservationOptions } from "@domain/entities/everyday-things/types";
 import { FormValues, FurnitureLabels, useFurniture } from "./useFurniture";
+import { InfoPreservation } from "./info/InfoPreservation";
 
 export const FurnitureSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);
@@ -24,7 +26,10 @@ export const FurnitureSection = () => {
     >
       <ListContentContainer>
         <ColumnContainer>
-          <Text variant="labelLarge">{t("furniture.preservation")}</Text>
+          <Text variant="labelLarge">
+            {t("furniture.preservation")}
+            <ModalInfoButton modalContent={<InfoPreservation />} />
+          </Text>
           <Controller<FormValues>
             name="preservation"
             control={control}

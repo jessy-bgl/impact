@@ -9,6 +9,7 @@ import publicServices from "./fr/publicServices.json";
 import infoTransport from "./fr/info/infoTransport.json";
 import infoFood from "./fr/info/infoFood.json";
 import infoHousing from "./fr/info/infoHousing.json";
+import infoEverydayThings from "./fr/info/infoEverydayThings.json";
 
 export {
   common,
@@ -22,4 +23,5 @@ export {
   infoTransport,
   infoFood,
   infoHousing,
+  infoEverydayThings,
 };

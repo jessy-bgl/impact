@@ -5,12 +5,14 @@ import { Controller } from "react-hook-form";
 
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { Info } from "./info/Info";
 import {
   FormValues,
   spendingLevels,
   useOtherProducts,
 } from "./useOtherProducts";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 
 export const OtherProductsSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);
@@ -25,7 +27,10 @@ export const OtherProductsSection = () => {
     >
       <ListContentContainer>
         <ColumnContainer>
-          <Text variant="labelLarge">{t("otherProducts.title")}</Text>
+          <Text variant="labelLarge">
+            {t("otherProducts.title")}
+            <ModalInfoButton modalContent={<Info />} />
+          </Text>
           <Controller<FormValues>
             name="spendingLevel"
             control={control}
