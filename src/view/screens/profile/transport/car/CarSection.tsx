@@ -21,8 +21,9 @@ import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
-import { InfoDistance } from "@view/screens/profile/transport/car/info/InfoDistance";
-import { InfoSameCar } from "@view/screens/profile/transport/car/info/InfoSameCar";
+import { InfoDistance } from "./info/InfoDistance";
+import { InfoSameCar } from "./info/InfoSameCar";
+import { InfoSize } from "./info/InfoSize";
 import { FormValues, useCar } from "./useCar";
 
 export const CarSection = () => {
@@ -101,7 +102,7 @@ export const CarSection = () => {
         <ColumnContainer>
           <Text variant="labelLarge">
             {t("car.size")}
-            <ModalInfoButton modalContent={<InfoDistance />} />
+            <ModalInfoButton modalContent={<InfoSize />} />
           </Text>
           <View>
             <Controller<FormValues>
