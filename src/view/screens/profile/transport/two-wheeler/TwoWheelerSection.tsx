@@ -4,12 +4,12 @@ import { View } from "react-native";
 import { SegmentedButtons, Text, TextInput } from "react-native-paper";
 
 import { TwoWheelerTypes } from "@domain/entities/transport/two-wheeler/TwoWheeler";
+import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
-import { NumericInput } from "@view/components/forms/NumericInput";
 import { FormValues, useTwhoWheeler } from "./useTwoWheeler";
 
 export const TwoWheelerSection = () => {

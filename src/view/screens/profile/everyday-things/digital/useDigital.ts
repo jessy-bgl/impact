@@ -3,9 +3,9 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
+import { Digital } from "@domain/entities/everyday-things/digital/Digital";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-import { Digital } from "@domain/entities/everyday-things/digital/Digital";
 
 export type FormValues = Omit<StringifyProperties<Digital>, "annualFootprint">;
 

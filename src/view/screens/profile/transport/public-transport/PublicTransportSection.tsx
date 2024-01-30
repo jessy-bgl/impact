@@ -2,11 +2,11 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Text, TextInput } from "react-native-paper";
 
+import { NumericInput } from "@view/components/forms/NumericInput";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { NumericInput } from "@view/components/forms/NumericInput";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { FormValues, usePublicTransport } from "./usePublicTransport";
 
 export const PublicTransportSection = () => {

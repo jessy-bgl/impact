@@ -10,9 +10,9 @@ import {
 } from "@domain/entities/food/meals/types";
 import { MilkTypes } from "@domain/entities/food/types";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
 import { InfoDiet } from "@view/screens/profile/food/meals/info/InfoDiet";
 import { FormValues, useMeals } from "./useMeals";

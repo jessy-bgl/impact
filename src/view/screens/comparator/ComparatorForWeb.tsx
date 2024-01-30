@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
-import { useWebComparator } from "@view/screens/comparator/useWebComparator";
 import { AdemeComparatorType } from "@view/screens/comparator/Comparator";
+import { useWebComparator } from "@view/screens/comparator/useWebComparator";
 
 type Props = {
   type: AdemeComparatorType;

@@ -1,14 +1,14 @@
-import { ScrollView, View, ViewStyle } from "react-native";
 import { useTranslation } from "react-i18next";
-import { Text, Card, Icon, useTheme } from "react-native-paper";
+import { ScrollView, View, ViewStyle } from "react-native";
+import { Card, Icon, Text, useTheme } from "react-native-paper";
 
-import { FootprintByCategory } from "@view/view-models/Footprint";
-import { PublicServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
 import {
-  societalServicesFootprint,
-  publicServicesFootprint,
   merchantServicesFootprint,
+  publicServicesFootprint,
+  societalServicesFootprint,
 } from "@domain/entities/public-services/PublicServices";
+import { PublicServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
+import { FootprintByCategory } from "@view/view-models/Footprint";
 
 export const PublicServicesProfile = () => {
   const { t } = useTranslation("publicServices");

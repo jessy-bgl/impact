@@ -2,11 +2,11 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import {
-  TextInput,
-  Text,
-  SegmentedButtons,
   HelperText,
   Icon,
+  SegmentedButtons,
+  Text,
+  TextInput,
 } from "react-native-paper";
 
 import {
@@ -14,13 +14,13 @@ import {
   carSizes,
   fuelTypes,
 } from "@domain/entities/transport/car/Car";
+import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
-import { NumericInput } from "@view/components/forms/NumericInput";
 import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { InfoDistance } from "./info/InfoDistance";
 import { InfoSameCar } from "./info/InfoSameCar";
 import { InfoSize } from "./info/InfoSize";

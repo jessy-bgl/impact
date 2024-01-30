@@ -1,4 +1,4 @@
-import { useEffect, useRef, RefObject, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 import { AdemeComparatorType } from "@view/screens/comparator/Comparator";
 

@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import { SegmentedButtons, Text } from "react-native-paper";
 
 import { MilkTypes } from "@domain/entities/food/types";
+import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
-import { NumericInput } from "@view/components/forms/NumericInput";
 import { FormValues, useDrinks } from "./useDrinks";
 
 export const DrinksSection = () => {

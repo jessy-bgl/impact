@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { List } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
+
 import { ListTitle } from "@view/screens/profile/components/ListTitle";
 
 type Props = {

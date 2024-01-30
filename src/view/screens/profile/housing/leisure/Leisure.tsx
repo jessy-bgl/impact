@@ -1,17 +1,17 @@
-import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Checkbox, SegmentedButtons, Text } from "react-native-paper";
 
+import { NumericInput } from "@view/components/forms/NumericInput";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
-import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
-import { NumericInput } from "@view/components/forms/NumericInput";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import {
   FormValues,
-  useLeisure,
   HolidayAccomodationLabels,
+  useLeisure,
 } from "./useLeisure";
 
 export const LeisureSection = () => {

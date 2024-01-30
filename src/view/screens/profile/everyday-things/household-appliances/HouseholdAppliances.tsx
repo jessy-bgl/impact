@@ -1,16 +1,16 @@
-import { View } from "react-native";
-import { useTranslation } from "react-i18next";
-import { SegmentedButtons, Text } from "react-native-paper";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { View } from "react-native";
+import { SegmentedButtons, Text } from "react-native-paper";
 
+import { preservationOptions } from "@domain/entities/everyday-things/types";
+import { NumericInput } from "@view/components/forms/NumericInput";
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
-import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
-import { NumericInput } from "@view/components/forms/NumericInput";
-import { preservationOptions } from "@domain/entities/everyday-things/types";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { InfoPreservation } from "./info/InfoPreservation";
 import {
   FormValues,

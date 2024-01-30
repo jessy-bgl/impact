@@ -5,9 +5,9 @@ import { Checkbox, RadioButton, Text } from "react-native-paper";
 
 import { WasteQuantity } from "@domain/entities/food/waste/Waste";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
+import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { FormValues, useWaste } from "./useWaste";
 
 export const WasteSection = () => {

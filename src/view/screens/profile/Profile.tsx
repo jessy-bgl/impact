@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 import { AppNavigationProp } from "@common/AppNavigation";
 import { ProfileCategoryCard } from "@view/screens/profile/ProfileCategoryCard";

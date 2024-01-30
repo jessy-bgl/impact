@@ -3,12 +3,12 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 import {
   CigarettesWeeklyConsumption,
   Tobacco,
 } from "@domain/entities/everyday-things/tobacco/Tobacco";
+import { StringifyProperties } from "@srctypes/utils";
+import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
 export type FormValues = Omit<StringifyProperties<Tobacco>, "annualFootprint">;
 

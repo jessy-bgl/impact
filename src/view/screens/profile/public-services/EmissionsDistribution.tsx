@@ -1,5 +1,5 @@
-import { VictoryPie } from "victory";
 import { useTheme } from "react-native-paper";
+import { VictoryPie } from "victory";
 
 import { FootprintByCategory } from "@view/view-models/Footprint";
 

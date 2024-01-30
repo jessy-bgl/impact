@@ -1,8 +1,9 @@
-import { View } from "react-native";
-import { useTranslation } from "react-i18next";
-import { RadioButton, Text } from "react-native-paper";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { View } from "react-native";
+import { RadioButton, Text } from "react-native-paper";
 
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import {
@@ -10,7 +11,6 @@ import {
   cigarettesConsumptionOptions,
   useTobacco,
 } from "./useTobacco";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 
 export const TobaccoSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);

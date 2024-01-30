@@ -1,11 +1,11 @@
-import { View } from "react-native";
-import { useTranslation } from "react-i18next";
-import { RadioButton, Text } from "react-native-paper";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { View } from "react-native";
+import { RadioButton, Text } from "react-native-paper";
 
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
 import { Info } from "./info/Info";
 import {

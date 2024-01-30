@@ -1,14 +1,14 @@
+import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Checkbox, Text } from "react-native-paper";
-import { Controller } from "react-hook-form";
 
+import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
-import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import {
-  FormValues,
   CulturalLabels,
+  FormValues,
   SportLabels,
   useHobbies,
 } from "./useHobbies";

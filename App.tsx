@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-import { registerRootComponent } from "expo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import { ActivityIndicator, PaperProvider } from "react-native-paper";
-import "react-native-gesture-handler";
+import { registerRootComponent } from "expo";
+import { useEffect, useState } from "react";
 import {
   Linking,
   Platform,
@@ -11,13 +9,15 @@ import {
   StyleSheet,
   View,
 } from "react-native";
+import "react-native-gesture-handler";
+import { ActivityIndicator, PaperProvider } from "react-native-paper";
 
-import { AppTheme } from "./AppTheme";
 import { AppNavigation } from "@common/AppNavigation";
+import { AppTheme } from "./AppTheme";
+import "./logger.config";
 import { plausible } from "./plausible";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 import "./src/view/translations/i18n";
-import "./logger.config";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 

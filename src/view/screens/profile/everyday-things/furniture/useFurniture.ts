@@ -3,9 +3,9 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
+import { Furniture } from "@domain/entities/everyday-things/furniture/Furniture";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-import { Furniture } from "@domain/entities/everyday-things/furniture/Furniture";
 
 export type FormValues = Omit<
   StringifyProperties<Furniture>,

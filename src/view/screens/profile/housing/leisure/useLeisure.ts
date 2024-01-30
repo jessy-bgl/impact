@@ -1,12 +1,12 @@
 import { useContext, useEffect } from "react";
 import { DefaultValues } from "react-hook-form";
 
-import { useAppStore } from "@data/store/store";
-import { StringifyProperties, convertStringToType } from "@srctypes/utils";
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
+import { useAppStore } from "@data/store/store";
 import { Leisure } from "@domain/entities/housing/leisure/Leisure";
 import { HolidayAccomodations } from "@domain/entities/housing/leisure/types";
+import { StringifyProperties, convertStringToType } from "@srctypes/utils";
+import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
 export const HolidayAccomodationLabels: (keyof HolidayAccomodations)[] = [
   "hotel",

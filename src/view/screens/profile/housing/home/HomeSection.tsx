@@ -1,14 +1,14 @@
+import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SegmentedButtons, Text, TextInput } from "react-native-paper";
-import { Controller } from "react-hook-form";
 
-import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
+import { NumericInput } from "@view/components/forms/NumericInput";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
-import { RowContainer } from "@view/screens/profile/components/RowContainer";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListItemDivider } from "@view/screens/profile/components/ListItemDivider";
 import { ModalInfoButton } from "@view/screens/profile/components/ModalInfoButton";
+import { RowContainer } from "@view/screens/profile/components/RowContainer";
 import { InfoOccupants } from "@view/screens/profile/housing/home/info/InfoOccupants";
-import { NumericInput } from "@view/components/forms/NumericInput";
 import { FormValues, useHome } from "./useHome";
 
 export const HomeSection = () => {

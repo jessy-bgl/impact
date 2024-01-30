@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 import { Text } from "react-native-paper";
 
-import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
+import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
 
 export const OtherSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
