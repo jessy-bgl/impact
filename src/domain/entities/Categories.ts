@@ -1,3 +1,10 @@
+export type Category =
+  | "transport"
+  | "housing"
+  | "food"
+  | "everydayThings"
+  | "publicServices";
+
 export enum FootprintCategories {
   TRANSPORT = "transport",
   HOUSING = "housing",
