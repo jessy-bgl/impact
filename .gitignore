@@ -36,3 +36,9 @@ yarn-error.*
 
 # tests
 coverage/
+
+# Android
+.gradle/
+*.keystore
+android/app-release-*
+android/app/build/
