@@ -1,11 +1,11 @@
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   NativeStackNavigationProp,
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useTheme } from "react-native-paper";
 
 import { Actions } from "@view/screens/actions/Actions";
@@ -16,11 +16,11 @@ import {
 import { Emissions } from "@view/screens/emissions/Emissions";
 import { Objectives } from "@view/screens/objectives/Objectives";
 import { Profile } from "@view/screens/profile/Profile";
-import { FoodProfile } from "@view/screens/profile/food/Food";
-import { TransportProfile } from "@view/screens/profile/transport/Transport";
-import { HousingProfile } from "@view/screens/profile/housing/Housing";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
+import { FoodProfile } from "@view/screens/profile/food/Food";
+import { HousingProfile } from "@view/screens/profile/housing/Housing";
 import { PublicServicesProfile } from "@view/screens/profile/public-services/PublicServices";
+import { TransportProfile } from "@view/screens/profile/transport/Transport";
 
 const Stack = createNativeStackNavigator();
 const ProfileTab = createBottomTabNavigator();

@@ -63,10 +63,11 @@ const App = () => {
             plausible.trackEvent("Navigation", {
               props: { page: subroute.name },
             });
-          } else
+          } else {
             plausible.trackEvent("Navigation", {
               props: { page: route.name },
             });
+          }
         }}
       >
         <SafeAreaView style={styles.container}>
