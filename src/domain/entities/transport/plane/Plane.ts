@@ -1,5 +1,5 @@
-import { defaultAverageFootprintPerKm, defaultAverageSpeed } from "./constants";
 import { WithAnnualFootprint } from "@domain/entities/types";
+import { averagePlaneSpeed, defaultAverageFootprintPerKm } from "./constants";
 
 export type haulFlight = "short" | "medium" | "long";
 
@@ -40,17 +40,17 @@ export class Plane implements WithAnnualFootprint {
 
     const shortHaulFootprint =
       this.hoursPerYearInShortHaul *
-      defaultAverageSpeed["short"] *
+      averagePlaneSpeed["short"] *
       defaultAverageFootprintPerKm["short"];
 
     const mediumHaulFootprint =
       this.hoursPerYearInMediumHaul *
-      defaultAverageSpeed["medium"] *
+      averagePlaneSpeed["medium"] *
       defaultAverageFootprintPerKm["medium"];
 
     const longHaulFootprint =
       this.hoursPerYearInLongHaul *
-      defaultAverageSpeed["long"] *
+      averagePlaneSpeed["long"] *
       defaultAverageFootprintPerKm["long"];
 
     return Math.round(

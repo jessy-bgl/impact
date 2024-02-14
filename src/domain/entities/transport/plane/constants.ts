@@ -1,6 +1,6 @@
 import { haulFlight } from "@domain/entities/transport/plane/Plane";
 
-export const defaultAverageSpeed: Record<haulFlight, number> = {
+export const averagePlaneSpeed: Record<haulFlight, number> = {
   // we take Paris-Toulouse as a reference flight, in km/h
   short: 600 / 1.3,
   // we take Paris-Alger as a reference flight, in km/h

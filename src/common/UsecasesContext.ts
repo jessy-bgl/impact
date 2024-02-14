@@ -3,16 +3,16 @@ import { createContext } from "react";
 import { EmissionsInMemoryRepository } from "@data/repositories/EmissionsInMemoryRepository";
 import { EmissionsStoreRepository } from "@data/repositories/EmissionsStoreRepository";
 import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
-import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/computeTotalAnnualFootprint";
-import { createUseFetchFood } from "@domain/usecases/fetchFood";
-import { createUseFetchPublicServices } from "@domain/usecases/fetchPublicServices";
-import { createUseFetchTransport } from "@domain/usecases/fetchTransport";
-import { createUseUpdateFood } from "@domain/usecases/updateFood";
-import { createUseUpdateTransport } from "@domain/usecases/updateTransport";
-import { createUseFetchHousing } from "@domain/usecases/fetchHousing";
-import { createUseUpdateHousing } from "@domain/usecases/updateHousing";
-import { createUseFetchEverydayThings } from "@domain/usecases/fetchEverydayThings";
-import { createUseUpdateEverydayThings } from "@domain/usecases/updateEverydayThings";
+import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/profil/computeTotalAnnualFootprint";
+import { createUseFetchEverydayThings } from "@domain/usecases/profil/fetchEverydayThings";
+import { createUseFetchFood } from "@domain/usecases/profil/fetchFood";
+import { createUseFetchHousing } from "@domain/usecases/profil/fetchHousing";
+import { createUseFetchPublicServices } from "@domain/usecases/profil/fetchPublicServices";
+import { createUseFetchTransport } from "@domain/usecases/profil/fetchTransport";
+import { createUseUpdateEverydayThings } from "@domain/usecases/profil/updateEverydayThings";
+import { createUseUpdateFood } from "@domain/usecases/profil/updateFood";
+import { createUseUpdateHousing } from "@domain/usecases/profil/updateHousing";
+import { createUseUpdateTransport } from "@domain/usecases/profil/updateTransport";
 
 const isTestMode = process.env.NODE_ENV === "test";
 
@@ -54,5 +54,5 @@ const usecases = initUsecases(repositories);
 
 const UsecasesContext = createContext(usecases);
 
-export type { Repositories };
 export { UsecasesContext };
+export type { Repositories };
