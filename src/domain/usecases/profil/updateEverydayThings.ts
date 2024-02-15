@@ -7,7 +7,7 @@ import { HouseholdAppliances } from "@domain/entities/everyday-things/household-
 import { OtherProducts } from "@domain/entities/everyday-things/other-products/OtherProducts";
 import { Pets } from "@domain/entities/everyday-things/pets/Pets";
 import { Tobacco } from "@domain/entities/everyday-things/tobacco/Tobacco";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseUpdateEverydayThings = (
   emissionsRepository: EmissionsRepository,

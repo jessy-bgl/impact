@@ -3,7 +3,7 @@ import { Food } from "@domain/entities/food/Food";
 import { Housing } from "@domain/entities/housing/Housing";
 import { PublicServices } from "@domain/entities/public-services/PublicServices";
 import { Transport } from "@domain/entities/transport/Transport";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export class EmissionsInMemoryRepository implements EmissionsRepository {
   private transport: Transport = new Transport({});

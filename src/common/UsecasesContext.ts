@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
-import { EmissionsInMemoryRepository } from "@data/repositories/EmissionsInMemoryRepository";
-import { EmissionsStoreRepository } from "@data/repositories/EmissionsStoreRepository";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsInMemoryRepository } from "@data/repositories/emissions.memory.repository";
+import { EmissionsStoreRepository } from "@data/repositories/emissions.store.repository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/profil/computeTotalAnnualFootprint";
 import { createUseFetchEverydayThings } from "@domain/usecases/profil/fetchEverydayThings";
 import { createUseFetchFood } from "@domain/usecases/profil/fetchFood";

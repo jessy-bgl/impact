@@ -1,5 +1,5 @@
 import { Food } from "@domain/entities/food/Food";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseFetchFood = (emissionsRepository: EmissionsRepository) =>
   function useFetchFood() {

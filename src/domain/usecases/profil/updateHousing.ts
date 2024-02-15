@@ -1,7 +1,7 @@
 import { Energy } from "@domain/entities/housing/energy/Energy";
 import { Home } from "@domain/entities/housing/home/Home";
 import { Leisure } from "@domain/entities/housing/leisure/Leisure";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseUpdateHousing = (
   emissionsRepository: EmissionsRepository,

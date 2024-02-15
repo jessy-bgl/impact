@@ -1,10 +1,10 @@
+import { appStoreActions } from "@data/store/storeActions";
+import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
 import { Food } from "@domain/entities/food/Food";
+import { Housing } from "@domain/entities/housing/Housing";
 import { PublicServices } from "@domain/entities/public-services/PublicServices";
 import { Transport } from "@domain/entities/transport/Transport";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
-import { appStoreActions } from "@data/store/storeActions";
-import { Housing } from "@domain/entities/housing/Housing";
-import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export class EmissionsStoreRepository implements EmissionsRepository {
   fetchTransport(): Transport {

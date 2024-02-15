@@ -3,7 +3,7 @@ import { Car } from "@domain/entities/transport/car/Car";
 import { Plane } from "@domain/entities/transport/plane/Plane";
 import { PublicTransport } from "@domain/entities/transport/public-transport/PublicTransport";
 import { TwoWheeler } from "@domain/entities/transport/two-wheeler/TwoWheeler";
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseUpdateTransport = (
   emissionsRepository: EmissionsRepository,

@@ -1,4 +1,4 @@
-import { EmissionsRepository } from "@domain/repositories/EmissionsRepository";
+import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseComputeTotalAnnualFootprint = (
   emissionsRepository: EmissionsRepository,
