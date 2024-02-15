@@ -5,7 +5,7 @@ import everydayThingsImage from "@assets/images/goods.svg";
 import housingImage from "@assets/images/house.svg";
 import publicServicesImage from "@assets/images/public_services.svg";
 import transportImage from "@assets/images/transport.svg";
-import { FootprintCategories } from "@domain/entities/Categories";
+import { FootprintCategory } from "@domain/entities/Categories";
 
 export class FootprintByCategory {
   public color: string = "";
@@ -15,7 +15,7 @@ export class FootprintByCategory {
   public materialIcon: IconSource = "";
 
   protected constructor(
-    public category: FootprintCategories,
+    public category: FootprintCategory,
     public footprint: number,
     totalFootprint: number,
   ) {
@@ -72,7 +72,7 @@ export class FootprintByCategory {
 
 class FootprintCategoryTransport extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.TRANSPORT, footprint, totalFootprint);
+    super("transport", footprint, totalFootprint);
     this.color = "sandybrown";
     this.icon = "🚗";
     this.materialIcon = "car";
@@ -82,7 +82,7 @@ class FootprintCategoryTransport extends FootprintByCategory {
 
 class FootprintCategoryFood extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.FOOD, footprint, totalFootprint);
+    super("food", footprint, totalFootprint);
     this.color = "plum";
     this.icon = "🍲";
     this.materialIcon = "food";
@@ -92,7 +92,7 @@ class FootprintCategoryFood extends FootprintByCategory {
 
 class FootprintCategoryHousing extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.HOUSING, footprint, totalFootprint);
+    super("housing", footprint, totalFootprint);
     this.color = "cadetblue";
     this.icon = "🏠";
     this.materialIcon = "home";
@@ -102,7 +102,7 @@ class FootprintCategoryHousing extends FootprintByCategory {
 
 class FootprintCategoryEverydayThings extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.EVERYDAY_THINGS, footprint, totalFootprint);
+    super("everydayThings", footprint, totalFootprint);
     this.color = "khaki";
     this.icon = "🛍️";
     this.materialIcon = "package";
@@ -112,7 +112,7 @@ class FootprintCategoryEverydayThings extends FootprintByCategory {
 
 class FootprintCategoryPublicServices extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.PUBLIC_SERVICES, footprint, totalFootprint);
+    super("publicServices", footprint, totalFootprint);
     this.color = "steelblue";
     this.icon = "🏛️";
     this.materialIcon = "bank";
@@ -122,11 +122,11 @@ class FootprintCategoryPublicServices extends FootprintByCategory {
 
 class FootprintCategoryMerchantServices extends FootprintByCategory {
   constructor(footprint: number, totalFootprint: number) {
-    super(FootprintCategories.PUBLIC_SERVICES, footprint, totalFootprint);
+    super("publicServices", footprint, totalFootprint);
     this.color = "cadetblue";
     this.icon = "✉️";
     this.materialIcon = "post";
   }
 }
 
-export type Footprints = Record<FootprintCategories, FootprintByCategory>;
+export type Footprints = Record<FootprintCategory, FootprintByCategory>;
