@@ -1,4 +1,5 @@
 import { useAppStore } from "@data/store/store";
+import { Action } from "@domain/entities/actions/Action";
 import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
 import { Food } from "@domain/entities/categories/food/Food";
 import { Housing } from "@domain/entities/categories/housing/Housing";
@@ -24,4 +25,9 @@ export const appStoreActions = {
 
   setEverydayThings: (everydayThings: EverydayThings) =>
     useAppStore.setState((state) => ({ ...state, everydayThings })),
+
+  getActions: () => useAppStore.getState().actions,
+
+  setActions: (actions: Action[]) =>
+    useAppStore.setState((state) => ({ ...state, actions })),
 };

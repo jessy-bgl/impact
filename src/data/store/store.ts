@@ -3,10 +3,7 @@ import deepMerge from "deepmerge";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-import { Food } from "@domain/entities/food/Food";
-import { Transport } from "@domain/entities/transport/Transport";
-import { Housing } from "@domain/entities/housing/Housing";
-import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
+import { Action } from "@domain/entities/actions/Action";
 import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
 import { Food } from "@domain/entities/categories/food/Food";
 import { Housing } from "@domain/entities/categories/housing/Housing";
@@ -17,6 +14,7 @@ export type AppState = {
   food: Food;
   housing: Housing;
   everydayThings: EverydayThings;
+  actions: Action[];
 };
 
 const appStore = (): AppState => ({
@@ -24,6 +22,7 @@ const appStore = (): AppState => ({
   food: new Food({}),
   housing: new Housing({}),
   everydayThings: new EverydayThings({}),
+  actions: [],
 });
 
 const middlewares = (f: any) =>
