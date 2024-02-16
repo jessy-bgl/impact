@@ -6,7 +6,7 @@ import {
   merchantServicesFootprint,
   publicServicesFootprint,
   societalServicesFootprint,
-} from "@domain/entities/public-services/PublicServices";
+} from "@domain/entities/categories/public-services/PublicServices";
 import { PublicServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
 import { FootprintByCategory } from "@view/view-models/Footprint";
 

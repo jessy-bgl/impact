@@ -3,7 +3,7 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { PublicTransport } from "@domain/entities/transport/public-transport/PublicTransport";
+import { PublicTransport } from "@domain/entities/categories/transport/public-transport/PublicTransport";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

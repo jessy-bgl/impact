@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { SegmentedButtons, Text } from "react-native-paper";
 
-import { preservationOptions } from "@domain/entities/everyday-things/types";
+import { preservationOptions } from "@domain/entities/categories/everyday-things/types";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";

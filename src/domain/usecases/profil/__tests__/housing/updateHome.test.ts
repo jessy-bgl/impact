@@ -1,7 +1,7 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
-import { Housing } from "@domain/entities/housing/Housing";
-import { Home } from "@domain/entities/housing/home/Home";
+import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
+import { Housing } from "@domain/entities/categories/housing/Housing";
+import { Home } from "@domain/entities/categories/housing/home/Home";
 import { createUseUpdateHousing } from "@domain/usecases/profil/updateHousing";
 
 describe("updateHome", () => {

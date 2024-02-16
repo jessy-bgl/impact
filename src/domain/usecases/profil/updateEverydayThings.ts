@@ -1,12 +1,12 @@
-import { Clothes } from "@domain/entities/everyday-things/clothes/Clothes";
-import { ConsumableProducts } from "@domain/entities/everyday-things/consumable-products/ConsumableProducts";
-import { Digital } from "@domain/entities/everyday-things/digital/Digital";
-import { Furniture } from "@domain/entities/everyday-things/furniture/Furniture";
-import { Hobbies } from "@domain/entities/everyday-things/hobbies/Hobbies";
-import { HouseholdAppliances } from "@domain/entities/everyday-things/household-appliances/HouseholdAppliances";
-import { OtherProducts } from "@domain/entities/everyday-things/other-products/OtherProducts";
-import { Pets } from "@domain/entities/everyday-things/pets/Pets";
-import { Tobacco } from "@domain/entities/everyday-things/tobacco/Tobacco";
+import { Clothes } from "@domain/entities/categories/everyday-things/clothes/Clothes";
+import { ConsumableProducts } from "@domain/entities/categories/everyday-things/consumable-products/ConsumableProducts";
+import { Digital } from "@domain/entities/categories/everyday-things/digital/Digital";
+import { Furniture } from "@domain/entities/categories/everyday-things/furniture/Furniture";
+import { Hobbies } from "@domain/entities/categories/everyday-things/hobbies/Hobbies";
+import { HouseholdAppliances } from "@domain/entities/categories/everyday-things/household-appliances/HouseholdAppliances";
+import { OtherProducts } from "@domain/entities/categories/everyday-things/other-products/OtherProducts";
+import { Pets } from "@domain/entities/categories/everyday-things/pets/Pets";
+import { Tobacco } from "@domain/entities/categories/everyday-things/tobacco/Tobacco";
 import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseUpdateEverydayThings = (

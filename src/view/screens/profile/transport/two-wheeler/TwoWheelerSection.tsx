@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { SegmentedButtons, Text, TextInput } from "react-native-paper";
 
-import { TwoWheelerTypes } from "@domain/entities/transport/two-wheeler/TwoWheeler";
+import { TwoWheelerTypes } from "@domain/entities/categories/transport/two-wheeler/TwoWheeler";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";

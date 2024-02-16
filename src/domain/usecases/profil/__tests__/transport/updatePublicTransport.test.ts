@@ -1,6 +1,6 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { Transport } from "@domain/entities/transport/Transport";
-import { PublicTransport } from "@domain/entities/transport/public-transport/PublicTransport";
+import { Transport } from "@domain/entities/categories/transport/Transport";
+import { PublicTransport } from "@domain/entities/categories/transport/public-transport/PublicTransport";
 import { createUseUpdateTransport } from "@domain/usecases/profil/updateTransport";
 
 describe("updatePublicTransport", () => {

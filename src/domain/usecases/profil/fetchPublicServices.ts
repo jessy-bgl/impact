@@ -1,4 +1,4 @@
-import { PublicServices } from "@domain/entities/public-services/PublicServices";
+import { PublicServices } from "@domain/entities/categories/public-services/PublicServices";
 import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
 export const createUseFetchPublicServices = (

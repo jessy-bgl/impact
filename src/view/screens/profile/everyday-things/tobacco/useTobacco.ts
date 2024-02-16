@@ -6,7 +6,7 @@ import { useAppStore } from "@data/store/store";
 import {
   CigarettesWeeklyConsumption,
   Tobacco,
-} from "@domain/entities/everyday-things/tobacco/Tobacco";
+} from "@domain/entities/categories/everyday-things/tobacco/Tobacco";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

@@ -1,6 +1,6 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { Food } from "@domain/entities/food/Food";
-import { Meals } from "@domain/entities/food/meals/Meals";
+import { Food } from "@domain/entities/categories/food/Food";
+import { Meals } from "@domain/entities/categories/food/meals/Meals";
 import { createUseUpdateFood } from "@domain/usecases/profil/updateFood";
 
 describe("updateMeals", () => {

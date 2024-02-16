@@ -6,7 +6,7 @@ import { useAppStore } from "@data/store/store";
 import {
   OtherProducts,
   SpendingLevel,
-} from "@domain/entities/everyday-things/other-products/OtherProducts";
+} from "@domain/entities/categories/everyday-things/other-products/OtherProducts";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

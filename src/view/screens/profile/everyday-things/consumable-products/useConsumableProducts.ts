@@ -6,7 +6,7 @@ import { useAppStore } from "@data/store/store";
 import {
   ConsumableProducts,
   ConsumptionFrequency,
-} from "@domain/entities/everyday-things/consumable-products/ConsumableProducts";
+} from "@domain/entities/categories/everyday-things/consumable-products/ConsumableProducts";
 import { StringifyProperties } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

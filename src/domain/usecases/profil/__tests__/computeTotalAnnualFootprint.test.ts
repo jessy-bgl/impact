@@ -1,9 +1,9 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
-import { Food } from "@domain/entities/food/Food";
-import { Housing } from "@domain/entities/housing/Housing";
-import { PublicServices } from "@domain/entities/public-services/PublicServices";
-import { Transport } from "@domain/entities/transport/Transport";
+import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
+import { Food } from "@domain/entities/categories/food/Food";
+import { Housing } from "@domain/entities/categories/housing/Housing";
+import { PublicServices } from "@domain/entities/categories/public-services/PublicServices";
+import { Transport } from "@domain/entities/categories/transport/Transport";
 import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/profil/computeTotalAnnualFootprint";
 
 describe("computeTotalAnnualFootprint", () => {

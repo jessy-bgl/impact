@@ -5,7 +5,7 @@ import everydayThingsImage from "@assets/images/goods.svg";
 import housingImage from "@assets/images/house.svg";
 import publicServicesImage from "@assets/images/public_services.svg";
 import transportImage from "@assets/images/transport.svg";
-import { FootprintCategory } from "@domain/entities/Categories";
+import { FootprintCategory } from "@domain/entities/categories/Categories";
 
 export class FootprintByCategory {
   public color: string = "";

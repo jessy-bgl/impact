@@ -7,6 +7,10 @@ import { Food } from "@domain/entities/food/Food";
 import { Transport } from "@domain/entities/transport/Transport";
 import { Housing } from "@domain/entities/housing/Housing";
 import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
+import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
+import { Food } from "@domain/entities/categories/food/Food";
+import { Housing } from "@domain/entities/categories/housing/Housing";
+import { Transport } from "@domain/entities/categories/transport/Transport";
 
 export type AppState = {
   transport: Transport;

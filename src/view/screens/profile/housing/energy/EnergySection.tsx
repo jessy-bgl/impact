@@ -10,7 +10,7 @@ import {
 import {
   HeatingEnergiesLabels,
   WoodTypes,
-} from "@domain/entities/housing/energy/Energy";
+} from "@domain/entities/categories/housing/energy/Energy";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";

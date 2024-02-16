@@ -7,8 +7,8 @@ import {
   BreakfastTypes,
   Diets,
   Frequencies,
-} from "@domain/entities/food/meals/types";
-import { MilkTypes } from "@domain/entities/food/types";
+} from "@domain/entities/categories/food/meals/types";
+import { MilkTypes } from "@domain/entities/categories/food/types";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";

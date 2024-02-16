@@ -3,8 +3,8 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Energy } from "@domain/entities/housing/energy/Energy";
-import { HeatingEnergies } from "@domain/entities/housing/energy/types";
+import { Energy } from "@domain/entities/categories/housing/energy/Energy";
+import { HeatingEnergies } from "@domain/entities/categories/housing/energy/types";
 import { StringifyProperties, convertStringToType } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 

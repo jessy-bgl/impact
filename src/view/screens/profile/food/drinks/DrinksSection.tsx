@@ -2,7 +2,7 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { SegmentedButtons, Text } from "react-native-paper";
 
-import { MilkTypes } from "@domain/entities/food/types";
+import { MilkTypes } from "@domain/entities/categories/food/types";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Checkbox, RadioButton, Text } from "react-native-paper";
 
-import { WasteQuantity } from "@domain/entities/food/waste/Waste";
+import { WasteQuantity } from "@domain/entities/categories/food/waste/Waste";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
 import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";

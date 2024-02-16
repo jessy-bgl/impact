@@ -1,6 +1,6 @@
 import { DefaultValues, FieldValues, useForm } from "react-hook-form";
 
-import { WithAnnualFootprint } from "@domain/entities/types";
+import { WithAnnualFootprint } from "@domain/entities/categories/types";
 import { convertStringToType } from "@srctypes/utils";
 
 export const useUpdateForm = <

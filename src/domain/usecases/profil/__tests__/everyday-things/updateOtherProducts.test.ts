@@ -1,6 +1,6 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { EverydayThings } from "@domain/entities/everyday-things/EverydayThings";
-import { OtherProducts } from "@domain/entities/everyday-things/other-products/OtherProducts";
+import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
+import { OtherProducts } from "@domain/entities/categories/everyday-things/other-products/OtherProducts";
 import { createUseUpdateEverydayThings } from "@domain/usecases/profil/updateEverydayThings";
 
 describe("updateOtherProducts", () => {

@@ -13,7 +13,7 @@ import {
   carEngines,
   carSizes,
   fuelTypes,
-} from "@domain/entities/transport/car/Car";
+} from "@domain/entities/categories/transport/car/Car";
 import { NumericInput } from "@view/components/forms/NumericInput";
 import { ColumnContainer } from "@view/screens/profile/components/ColumnContainer";
 import { ListAccordion } from "@view/screens/profile/components/ListAccordion";

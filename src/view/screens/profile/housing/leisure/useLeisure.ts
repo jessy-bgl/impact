@@ -3,8 +3,8 @@ import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Leisure } from "@domain/entities/housing/leisure/Leisure";
-import { HolidayAccomodations } from "@domain/entities/housing/leisure/types";
+import { Leisure } from "@domain/entities/categories/housing/leisure/Leisure";
+import { HolidayAccomodations } from "@domain/entities/categories/housing/leisure/types";
 import { StringifyProperties, convertStringToType } from "@srctypes/utils";
 import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 
