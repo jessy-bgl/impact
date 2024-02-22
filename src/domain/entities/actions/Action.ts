@@ -46,7 +46,15 @@ export abstract class Action {
     this.savedFootprint = savedFootprint;
   }
 
-  protected abstract isCompleted(category: unknown): boolean;
+  updateState(): void {
+    if (this.isCompleted && this.state !== "completed") {
+      this.state = "completed";
+    } else if (this.savedFootprint > 0 && this.state === "completed") {
+      this.state = "notStarted";
+    }
+  }
 
-  abstract computeSavedFootprint(category: unknown): void;
+  abstract get isCompleted(): boolean;
+
+  abstract computeSavedFootprint(): void;
 }
