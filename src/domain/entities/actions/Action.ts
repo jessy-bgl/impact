@@ -2,6 +2,13 @@ import { FootprintCategory } from "@domain/entities/categories/Categories";
 
 export type ActionState = "notStarted" | "completed" | "inProgress" | "skipped";
 
+export const actionStates: ActionState[] = [
+  "notStarted",
+  "completed",
+  "inProgress",
+  "skipped",
+];
+
 export type ActionCategory = FootprintCategory;
 
 export abstract class Action {
