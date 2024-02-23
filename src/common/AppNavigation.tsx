@@ -23,7 +23,7 @@ import { PublicServicesProfile } from "@view/screens/profile/public-services/Pub
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
 
 const Stack = createNativeStackNavigator();
-const ProfileTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator();
 const ComparatorDrawer = createDrawerNavigator();
 
 type RootStackParamList = {
@@ -47,7 +47,7 @@ export const AppNavigation = () => {
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
-        component={TabNavigator}
+        component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -84,22 +84,22 @@ export const AppNavigation = () => {
   );
 };
 
-const TabNavigator = () => {
+const BottomTabNavigator = () => {
   const { t } = useTranslation("pages");
 
   return (
-    <ProfileTab.Navigator
+    <BottomTab.Navigator
       initialRouteName="Emissions"
       screenOptions={{
         tabBarLabelPosition: "below-icon",
         tabBarStyle: { height: 55, paddingBottom: 8 },
-        headerShown: false,
       }}
     >
-      <ProfileTab.Screen
+      <BottomTab.Screen
         name="Emissions"
         component={Emissions}
         options={{
+          headerShown: false,
           title: t("Emissions"),
           tabBarIcon: ({ focused, color }) => {
             return (
@@ -112,7 +112,7 @@ const TabNavigator = () => {
           },
         }}
       />
-      <ProfileTab.Screen
+      <BottomTab.Screen
         name="Actions"
         component={Actions}
         options={{
@@ -128,7 +128,7 @@ const TabNavigator = () => {
           },
         }}
       />
-      <ProfileTab.Screen
+      <BottomTab.Screen
         name="Objectives"
         component={Objectives}
         options={{
@@ -144,10 +144,11 @@ const TabNavigator = () => {
           },
         }}
       />
-      <ProfileTab.Screen
+      <BottomTab.Screen
         name="Comparator"
         component={ComparatorNavigator}
         options={{
+          headerShown: false,
           title: t("Comparator"),
           tabBarIcon: ({ color }) => {
             return (
@@ -156,7 +157,7 @@ const TabNavigator = () => {
           },
         }}
       />
-    </ProfileTab.Navigator>
+    </BottomTab.Navigator>
   );
 };
 
