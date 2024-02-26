@@ -4,15 +4,6 @@ import { Plane } from "@domain/entities/categories/transport/plane/Plane";
 describe("Plane actions", () => {
   describe("StopShortHaulFlights action", () => {
     describe("isCompleted", () => {
-      it("should be completed if the plane is not used", () => {
-        // Arrange
-        const plane = new Plane({ usage: false });
-        // Act
-        const action = new StopShortHaulFlightsAction(plane);
-        // Assert
-        expect(action.isCompleted).toBe(true);
-      });
-
       it("should be completed if the annual short haul distance is equal to 0", () => {
         // Arrange
         const plane = new Plane({ usage: true, hoursPerYearInShortHaul: 0 });

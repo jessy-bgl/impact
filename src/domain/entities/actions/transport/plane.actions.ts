@@ -15,7 +15,7 @@ export class StopShortHaulFlightsAction extends Action {
   }
 
   get isCompleted(): boolean {
-    return !this.plane.usage || this.plane.hoursPerYearInShortHaul === 0;
+    return this.plane.hoursPerYearInShortHaul === 0;
   }
 
   computeSavedFootprint(): void {
