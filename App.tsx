@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { registerRootComponent } from "expo";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Linking,
   Platform,
@@ -13,6 +13,7 @@ import "react-native-gesture-handler";
 import { ActivityIndicator, PaperProvider } from "react-native-paper";
 
 import { AppNavigation } from "@common/AppNavigation";
+import { UsecasesContext } from "@common/UsecasesContext";
 import { AppTheme } from "./AppTheme";
 import "./logger.config";
 import { plausible } from "./plausible";
@@ -24,6 +25,8 @@ const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 const App = () => {
   const [isReady, setIsReady] = useState(!__DEV__);
   const [initialState, setInitialState] = useState();
+  const { useUpdateActions } = useContext(UsecasesContext);
+  const { updateActions } = useUpdateActions();
 
   useEffect(() => {
     const restoreState = async () => {
@@ -42,7 +45,10 @@ const App = () => {
       }
     };
 
-    if (!isReady) restoreState();
+    if (!isReady) {
+      restoreState();
+      updateActions();
+    }
   }, [isReady]);
 
   if (!isReady) return <ActivityIndicator />;
