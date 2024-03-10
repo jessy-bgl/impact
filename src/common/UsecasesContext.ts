@@ -6,6 +6,7 @@ import { EmissionsInMemoryRepository } from "@data/repositories/emissions.memory
 import { EmissionsStoreRepository } from "@data/repositories/emissions.store.repository";
 import { ActionsRepository } from "@domain/repositories/actions.repository";
 import { EmissionsRepository } from "@domain/repositories/emissions.repository";
+import { createUseUpdateActionState } from "@domain/usecases/actions/updateActionState";
 import { createUseUpdateActions } from "@domain/usecases/actions/updateActions";
 import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/profil/computeTotalAnnualFootprint";
 import { createUseFetchEverydayThings } from "@domain/usecases/profil/fetchEverydayThings";
@@ -60,6 +61,7 @@ const initUsecases = (repositories: Repositories) => {
     useComputeTotalAnnualFootprint:
       createUseComputeTotalAnnualFootprint(emissionsRepository),
 
+    useUpdateActionState: createUseUpdateActionState(actionsRepository),
     useUpdateActions: createUseUpdateActions(
       actionsRepository,
       emissionsRepository,
