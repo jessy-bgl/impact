@@ -5,6 +5,7 @@ import { TabScreen, Tabs, TabsProvider } from "react-native-paper-tabs";
 import { ActionState } from "@domain/entities/actions/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
 import { useActions } from "@view/screens/actions/useActions";
+import { useTranslation } from "react-i18next";
 
 export const Actions = () => {
   const {
@@ -15,6 +16,8 @@ export const Actions = () => {
   } = useActions();
 
   const { colors } = useTheme();
+
+  const { t } = useTranslation("actions");
 
   const actionsView = (
     <View style={styles.gridContainer}>
@@ -41,28 +44,28 @@ export const Actions = () => {
           showLeadingSpace={false}
         >
           <TabScreen
-            label="Toutes"
+            label={t("list")}
             icon="apps"
-            onPress={() => setActionStateToDisplay(undefined)}
+            onPress={() => setActionStateToDisplay("notStarted")}
           >
             {actionsView}
           </TabScreen>
           <TabScreen
-            label="En cours"
+            label={t("inProgress")}
             icon="sync"
             onPress={() => setActionStateToDisplay("inProgress")}
           >
             {actionsView}
           </TabScreen>
           <TabScreen
-            label="Complétées"
+            label={t("completed")}
             icon="check-circle-outline"
             onPress={() => setActionStateToDisplay("completed")}
           >
             {actionsView}
           </TabScreen>
           <TabScreen
-            label="Ecartées"
+            label={t("skipped")}
             icon="close-circle-outline"
             onPress={() => setActionStateToDisplay("skipped")}
           >
@@ -78,6 +81,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     marginTop: 10,
     padding: 10,
+    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",

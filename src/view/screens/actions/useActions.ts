@@ -20,7 +20,7 @@ export const useActions = () => {
   }, []);
 
   const [actionStateToDisplay, setActionStateToDisplay] =
-    useState<ActionState>();
+    useState<ActionState>("notStarted");
 
   const actionsToDisplay = !actionStateToDisplay
     ? storedActions
