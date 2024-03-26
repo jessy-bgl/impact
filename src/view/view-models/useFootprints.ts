@@ -2,7 +2,10 @@ import { useContext, useMemo } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { FootprintByCategory, Footprints } from "@view/view-models/Footprint";
+import {
+  FootprintCategoryViewModel,
+  Footprints,
+} from "@view/view-models/Footprint";
 
 export const useFootprints = () => {
   const appStore = useAppStore((store) => store);
@@ -34,23 +37,23 @@ export const useFootprints = () => {
   );
 
   const footprints: Footprints = {
-    transport: FootprintByCategory.forTransport(
+    transport: FootprintCategoryViewModel.forTransport(
       transport.annualFootprint,
       totalAnnualFootprint,
     ),
-    food: FootprintByCategory.forFood(
+    food: FootprintCategoryViewModel.forFood(
       food.annualFootprint,
       totalAnnualFootprint,
     ),
-    housing: FootprintByCategory.forHousing(
+    housing: FootprintCategoryViewModel.forHousing(
       housing.annualFootprint,
       totalAnnualFootprint,
     ),
-    everydayThings: FootprintByCategory.forEverydayThings(
+    everydayThings: FootprintCategoryViewModel.forEverydayThings(
       everydayThings.annualFootprint,
       totalAnnualFootprint,
     ),
-    publicServices: FootprintByCategory.forPublicServices(
+    publicServices: FootprintCategoryViewModel.forPublicServices(
       publicServices.annualFootprint,
       totalAnnualFootprint,
     ),
