@@ -8,8 +8,8 @@ export class StopShortHaulFlightsAction extends Action {
   constructor(private plane: Plane) {
     super({
       id: "stop-short-haul-flights",
-      label: i18n.t("actions.transport.stopShortHaulFlights.label"),
-      description: i18n.t("actions.transport.stopShortHaulFlights.description"),
+      label: i18n.t("transportActions:stopShortHaulFlights.label"),
+      description: i18n.t("transportActions:stopShortHaulFlights.description"),
       category: "transport",
     });
   }

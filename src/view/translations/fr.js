@@ -1,3 +1,4 @@
+import transportActions from "./fr/actions/transportActions.json";
 import common from "./fr/common.json";
 import emissions from "./fr/emissions.json";
 import everydayThings from "./fr/everydayThings.json";
@@ -24,4 +25,5 @@ export {
   pages,
   publicServices,
   transport,
+  transportActions,
 };
