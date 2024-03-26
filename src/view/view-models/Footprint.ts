@@ -5,9 +5,12 @@ import everydayThingsImage from "@assets/images/goods.svg";
 import housingImage from "@assets/images/house.svg";
 import publicServicesImage from "@assets/images/public_services.svg";
 import transportImage from "@assets/images/transport.svg";
+
 import { FootprintCategory } from "@domain/entities/categories/Categories";
 
-export class FootprintByCategory {
+export type Footprints = Record<FootprintCategory, FootprintCategoryViewModel>;
+
+export class FootprintCategoryViewModel {
   public color: string = "";
   public icon: string = "";
   public part: number;
@@ -17,60 +20,60 @@ export class FootprintByCategory {
   protected constructor(
     public category: FootprintCategory,
     public footprint: number,
-    totalFootprint: number,
+    public totalFootprint: number,
   ) {
     this.part = this.computePart(totalFootprint);
-  }
-
-  static forTransport(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintByCategory {
-    return new FootprintCategoryTransport(footprint, totalFootprint);
-  }
-
-  static forFood(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintByCategory {
-    return new FootprintCategoryFood(footprint, totalFootprint);
-  }
-
-  static forHousing(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintByCategory {
-    return new FootprintCategoryHousing(footprint, totalFootprint);
-  }
-
-  static forEverydayThings(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintByCategory {
-    return new FootprintCategoryEverydayThings(footprint, totalFootprint);
-  }
-
-  static forPublicServices(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintByCategory {
-    return new FootprintCategoryPublicServices(footprint, totalFootprint);
-  }
-
-  static forMerchantServices(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintByCategory {
-    return new FootprintCategoryMerchantServices(footprint, totalFootprint);
   }
 
   private computePart = (totalFootprint: number) =>
     totalFootprint === 0
       ? 0
       : Math.floor((this.footprint / totalFootprint) * 100);
+
+  static forTransport(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryTransport(footprint, totalFootprint);
+  }
+
+  static forFood(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryFood(footprint, totalFootprint);
+  }
+
+  static forHousing(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryHousing(footprint, totalFootprint);
+  }
+
+  static forEverydayThings(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryEverydayThings(footprint, totalFootprint);
+  }
+
+  static forPublicServices(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryPublicServices(footprint, totalFootprint);
+  }
+
+  static forMerchantServices(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryMerchantServices(footprint, totalFootprint);
+  }
 }
 
-class FootprintCategoryTransport extends FootprintByCategory {
+class FootprintCategoryTransport extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("transport", footprint, totalFootprint);
     this.color = "sandybrown";
@@ -80,7 +83,7 @@ class FootprintCategoryTransport extends FootprintByCategory {
   }
 }
 
-class FootprintCategoryFood extends FootprintByCategory {
+class FootprintCategoryFood extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("food", footprint, totalFootprint);
     this.color = "plum";
@@ -90,7 +93,7 @@ class FootprintCategoryFood extends FootprintByCategory {
   }
 }
 
-class FootprintCategoryHousing extends FootprintByCategory {
+class FootprintCategoryHousing extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("housing", footprint, totalFootprint);
     this.color = "cadetblue";
@@ -100,7 +103,7 @@ class FootprintCategoryHousing extends FootprintByCategory {
   }
 }
 
-class FootprintCategoryEverydayThings extends FootprintByCategory {
+class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("everydayThings", footprint, totalFootprint);
     this.color = "khaki";
@@ -110,7 +113,7 @@ class FootprintCategoryEverydayThings extends FootprintByCategory {
   }
 }
 
-class FootprintCategoryPublicServices extends FootprintByCategory {
+class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("publicServices", footprint, totalFootprint);
     this.color = "steelblue";
@@ -120,7 +123,7 @@ class FootprintCategoryPublicServices extends FootprintByCategory {
   }
 }
 
-class FootprintCategoryMerchantServices extends FootprintByCategory {
+class FootprintCategoryMerchantServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("publicServices", footprint, totalFootprint);
     this.color = "cadetblue";
@@ -128,5 +131,3 @@ class FootprintCategoryMerchantServices extends FootprintByCategory {
     this.materialIcon = "post";
   }
 }
-
-export type Footprints = Record<FootprintCategory, FootprintByCategory>;

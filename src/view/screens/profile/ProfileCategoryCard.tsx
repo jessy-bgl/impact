@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { FootprintByCategory } from "@view/view-models/Footprint";
+import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 type Props = {
   title: string;
-  footprintCategory: FootprintByCategory;
+  footprintCategory: FootprintCategoryViewModel;
   icon: IconSource;
   onClick: () => void;
 };

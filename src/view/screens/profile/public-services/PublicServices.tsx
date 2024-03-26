@@ -8,7 +8,7 @@ import {
   societalServicesFootprint,
 } from "@domain/entities/categories/public-services/PublicServices";
 import { PublicServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
-import { FootprintByCategory } from "@view/view-models/Footprint";
+import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 export const PublicServicesProfile = () => {
   const { t } = useTranslation("publicServices");
@@ -19,12 +19,12 @@ export const PublicServicesProfile = () => {
     borderRadius: 5,
   };
 
-  const publicServices = FootprintByCategory.forPublicServices(
+  const publicServices = FootprintCategoryViewModel.forPublicServices(
     publicServicesFootprint,
     societalServicesFootprint,
   );
 
-  const merchantServices = FootprintByCategory.forMerchantServices(
+  const merchantServices = FootprintCategoryViewModel.forMerchantServices(
     merchantServicesFootprint,
     societalServicesFootprint,
   );

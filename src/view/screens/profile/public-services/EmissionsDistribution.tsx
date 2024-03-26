@@ -1,14 +1,14 @@
 import { useTheme } from "react-native-paper";
 import { VictoryPie } from "victory";
 
-import { FootprintByCategory } from "@view/view-models/Footprint";
+import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 const pieWidth = 250;
 const pieHeight = 100;
 
 type Props = {
-  publicServices: FootprintByCategory;
-  merchantServices: FootprintByCategory;
+  publicServices: FootprintCategoryViewModel;
+  merchantServices: FootprintCategoryViewModel;
 };
 
 export const PublicServicesEmissionsDistribution = ({
