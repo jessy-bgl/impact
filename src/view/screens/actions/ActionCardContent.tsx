@@ -13,7 +13,7 @@ type Props = {
 export const ActionCardContent = ({ action, savedFootprintPart }: Props) => {
   const styles = useActionStyles();
   const { colors } = useTheme();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["common", "actions"]);
 
   const { state, savedFootprint } = action;
 
@@ -34,7 +34,7 @@ export const ActionCardContent = ({ action, savedFootprintPart }: Props) => {
           </>
         ) : (
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Text>Completed</Text>
+            <Text>{t("actions:completed")}</Text>
           </View>
         )}
       </View>

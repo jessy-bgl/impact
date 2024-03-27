@@ -1,6 +1,7 @@
 {
-  "list": "Liste",
-  "inProgress": "En cours",
-  "completed": "Complétées",
-  "skipped": "Ecartées"
+  "actionsList": "Liste",
+  "actionsInProgress": "En cours",
+  "actionsCompleted": "Complétées",
+  "actionsSkipped": "Ecartées",
+  "completed": "Accompli"
 }

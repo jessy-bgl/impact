@@ -44,28 +44,28 @@ export const Actions = () => {
           showLeadingSpace={false}
         >
           <TabScreen
-            label={t("list")}
+            label={t("actionsList")}
             icon="apps"
             onPress={() => setActionStateToDisplay("notStarted")}
           >
             {actionsView}
           </TabScreen>
           <TabScreen
-            label={t("inProgress")}
+            label={t("actionsInProgress")}
             icon="sync"
             onPress={() => setActionStateToDisplay("inProgress")}
           >
             {actionsView}
           </TabScreen>
           <TabScreen
-            label={t("completed")}
+            label={t("actionsCompleted")}
             icon="check-circle-outline"
             onPress={() => setActionStateToDisplay("completed")}
           >
             {actionsView}
           </TabScreen>
           <TabScreen
-            label={t("skipped")}
+            label={t("actionsSkipped")}
             icon="close-circle-outline"
             onPress={() => setActionStateToDisplay("skipped")}
           >
