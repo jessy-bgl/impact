@@ -18,6 +18,11 @@ module.exports = async function (env, argv) {
     "victory-native": "victory",
   };
 
+  config.resolve.fallback = {
+    ...config.resolve.fallback,
+    crypto: require.resolve("expo-crypto"),
+  };
+
   const aliases = getAliasesInTsConfig();
   for (const alias in aliases) {
     const key = alias.substring(0, alias.length - 2);
