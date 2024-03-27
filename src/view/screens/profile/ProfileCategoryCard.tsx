@@ -22,6 +22,8 @@ export const ProfileCategoryCard = ({
 
   const { image, footprint, color, part } = footprintCategory;
 
+  const Image = image as any;
+
   return (
     <Card style={styles.card} onPress={onClick}>
       <Card.Title
@@ -50,11 +52,9 @@ export const ProfileCategoryCard = ({
         )}
         style={{ paddingRight: 16 }}
       />
-      <Card.Cover
-        resizeMode="contain"
-        source={{ uri: image }}
-        style={styles.image}
-      />
+      <Card.Content>
+        <Image style={styles.image} />
+      </Card.Content>
     </Card>
   );
 };
@@ -64,6 +64,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   image: {
-    height: 150,
+    height: 125,
   },
 });

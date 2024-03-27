@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import foodImage from "@assets/images/food.svg";
-import everydayThingsImage from "@assets/images/goods.svg";
-import housingImage from "@assets/images/house.svg";
-import publicServicesImage from "@assets/images/public_services.svg";
-import transportImage from "@assets/images/transport.svg";
+import FoodImage from "@assets/images/food.svg";
+import EverydayThingsImage from "@assets/images/goods.svg";
+import HousingImage from "@assets/images/house.svg";
+import PublicServicesImage from "@assets/images/public_services.svg";
+import TransportImage from "@assets/images/transport.svg";
 
 import { FootprintCategory } from "@domain/entities/categories/Categories";
 
@@ -14,7 +15,7 @@ export class FootprintCategoryViewModel {
   public color: string = "";
   public icon: string = "";
   public part: number;
-  public image: string = "";
+  public image: ReactNode;
   public materialIcon: IconSource = "";
 
   protected constructor(
@@ -79,7 +80,7 @@ class FootprintCategoryTransport extends FootprintCategoryViewModel {
     this.color = "sandybrown";
     this.icon = "🚗";
     this.materialIcon = "car";
-    this.image = transportImage;
+    this.image = TransportImage;
   }
 }
 
@@ -89,7 +90,7 @@ class FootprintCategoryFood extends FootprintCategoryViewModel {
     this.color = "plum";
     this.icon = "🍲";
     this.materialIcon = "food";
-    this.image = foodImage;
+    this.image = FoodImage;
   }
 }
 
@@ -99,7 +100,7 @@ class FootprintCategoryHousing extends FootprintCategoryViewModel {
     this.color = "cadetblue";
     this.icon = "🏠";
     this.materialIcon = "home";
-    this.image = housingImage;
+    this.image = HousingImage;
   }
 }
 
@@ -109,7 +110,7 @@ class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
     this.color = "khaki";
     this.icon = "🛍️";
     this.materialIcon = "package";
-    this.image = everydayThingsImage;
+    this.image = EverydayThingsImage;
   }
 }
 
@@ -119,7 +120,7 @@ class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
     this.color = "steelblue";
     this.icon = "🏛️";
     this.materialIcon = "bank";
-    this.image = publicServicesImage;
+    this.image = PublicServicesImage;
   }
 }
 
