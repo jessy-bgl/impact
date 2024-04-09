@@ -22,9 +22,9 @@ export const useActions = () => {
   const [actionStateToDisplay, setActionStateToDisplay] =
     useState<ActionState>("notStarted");
 
-  const actionsToDisplay = !actionStateToDisplay
-    ? storedActions
-    : storedActions.filter((action) => action.state === actionStateToDisplay);
+  const actionsToDisplay = storedActions.filter(
+    (action) => action.state === actionStateToDisplay,
+  );
 
   return {
     actionsToDisplay,
