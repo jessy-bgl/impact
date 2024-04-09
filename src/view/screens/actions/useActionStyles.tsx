@@ -5,7 +5,7 @@ export const useActionStyles = () => {
   const { colors } = useTheme();
 
   const commonStyles = StyleSheet.create({
-    card: { borderRadius: 5, width: 200 },
+    card: { borderRadius: 5, borderColor: "transparent", width: 200 },
     content: {
       flex: 1,
       justifyContent: "center",
@@ -31,7 +31,6 @@ export const useActionStyles = () => {
     completed: StyleSheet.create({
       card: {
         ...commonStyles.card,
-        borderColor: colors.primary,
         borderWidth: 1,
       },
       content: {
