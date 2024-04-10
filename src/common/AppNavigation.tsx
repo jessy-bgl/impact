@@ -117,6 +117,7 @@ const BottomTabNavigator = () => {
         component={Actions}
         options={{
           title: t("Actions"),
+          unmountOnBlur: true, // NB: mandatory to refresh the actions list
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
