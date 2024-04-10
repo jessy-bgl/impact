@@ -1,5 +1,8 @@
 import { Action } from "@domain/entities/actions/Action";
-import { StopShortHaulFlightsAction } from "@domain/entities/actions/transport/plane.actions";
+import {
+  StopFlightAction,
+  StopShortHaulFlightsAction,
+} from "@domain/entities/actions/transport/plane.actions";
 import { ActionsRepository } from "@domain/repositories/actions.repository";
 import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
@@ -21,6 +24,7 @@ export const createUseUpdateActions = (
       const transport = emissionsRepository.fetchTransport();
 
       const actions: Action[] = [
+        new StopFlightAction(transport.plane),
         new StopShortHaulFlightsAction(transport.plane),
       ];
 

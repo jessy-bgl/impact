@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import { TabScreen, Tabs, TabsProvider } from "react-native-paper-tabs";
@@ -5,7 +6,6 @@ import { TabScreen, Tabs, TabsProvider } from "react-native-paper-tabs";
 import { ActionState } from "@domain/entities/actions/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
 import { useActions } from "@view/screens/actions/useActions";
-import { useTranslation } from "react-i18next";
 
 export const Actions = () => {
   const {

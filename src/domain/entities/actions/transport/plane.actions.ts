@@ -44,3 +44,29 @@ export class StopShortHaulFlightsAction extends Action {
     );
   }
 }
+
+export class StopFlightAction extends Action {
+  constructor(private plane: Plane) {
+    super({
+      id: "stop-flight",
+      label: i18n.t("transportActions:stopFlight.label"),
+      description: i18n.t("transportActions:stopFlight.description"),
+      category: "transport",
+    });
+  }
+
+  get isCompleted(): boolean {
+    return this.plane.usage === false;
+  }
+
+  computeSavedFootprint(): void {
+    if (this.isCompleted) {
+      this.savedFootprint = 0;
+      return;
+    }
+    const footprint = new Plane(this.plane).annualFootprint;
+    this.savedFootprint = Math.floor(footprint);
+  }
+}
+
+export class TakeFlightHalfAsMuchAction {}
