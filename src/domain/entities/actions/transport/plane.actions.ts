@@ -69,4 +69,26 @@ export class StopFlightAction extends Action {
   }
 }
 
-export class TakeFlightHalfAsMuchAction {}
+export class TakeFlightHalfAsMuchAction extends Action {
+  constructor(private plane: Plane) {
+    super({
+      id: "take-flight-half-as-much",
+      label: i18n.t("transportActions:takeFlightHalfAsMuch.label"),
+      description: i18n.t("transportActions:takeFlightHalfAsMuch.description"),
+      category: "transport",
+    });
+  }
+
+  get isCompleted(): boolean {
+    return this.plane.usage === false;
+  }
+
+  computeSavedFootprint(): void {
+    if (this.isCompleted) {
+      this.savedFootprint = 0;
+      return;
+    }
+    const footprint = new Plane(this.plane).annualFootprint;
+    this.savedFootprint = Math.floor(footprint / 2);
+  }
+}

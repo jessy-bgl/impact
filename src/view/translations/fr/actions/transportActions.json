@@ -6,5 +6,9 @@
   "stopFlight": {
     "label": "Arrêter de prendre l'avion",
     "description": ""
+  },
+  "takeFlightHalfAsMuch": {
+    "label": "Prendre deux fois moins l'avion",
+    "description": ""
   }
 }
