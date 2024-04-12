@@ -16,10 +16,10 @@
     "prepare": "husky install .husky",
     "test": "cross-env NODE_ENV=test jest",
     "test:cov": "cross-env NODE_ENV=test jest --coverage",
-    "deploy": "gh-pages -d web-build",
-    "predeploy": "expo export:web && cp ./assets/icon.png ./web-build/icon.png",
-    "deploy:metro": "gh-pages -d dist",
-    "predeploy:metro": "expo export && cp ./assets/icon.png ./dist/icon.png"
+    "deploy:webpack": "gh-pages -d web-build",
+    "predeploy:webpack": "expo export:web && cp ./assets/icon.png ./web-build/icon.png",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "expo export && cp ./assets/icon.png ./dist/icon.png"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
@@ -35,7 +35,8 @@
     "expo": "~50.0.15",
     "expo-crypto": "^12.8.1",
     "expo-status-bar": "~1.11.1",
-    "i18next": "^23.10.1",
+    "i18next": "^23.11.1",
+    "intl-pluralrules": "^2.0.1",
     "jest": "^29.7.0",
     "jest-expo": "^50.0.4",
     "plausible-tracker": "^0.3.8",
