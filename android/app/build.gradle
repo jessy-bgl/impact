@@ -21,7 +21,7 @@ plugins {
 }
 
 def twaManifest = [
-    applicationId: 'app.impactech.impact',
+    applicationId: 'io.github.jessy_bgl.twa',
     hostName: 'jessy-bgl.github.io', // The domain being opened in the TWA.
     launchUrl: '/impact/', // The start path for the TWA. Must be relative to the domain.
     name: 'Impact', // The application name.
@@ -53,7 +53,7 @@ def twaManifest = [
 android {
     compileSdkVersion 33
     defaultConfig {
-        applicationId "app.impactech.impact"
+        applicationId "io.github.jessy_bgl.twa"
         minSdkVersion 19
         targetSdkVersion 33
         versionCode 1

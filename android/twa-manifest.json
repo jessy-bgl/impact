@@ -1,5 +1,5 @@
 {
-  "packageId": "app.impactech.impact",
+  "packageId": "io.github.jessy_bgl.twa",
   "host": "jessy-bgl.github.io",
   "name": "Impact",
   "launcherName": "Impact",
@@ -18,7 +18,7 @@
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "/home/jessy/Dev/Perso/impact/android/android.keystore",
-    "alias": "impact_keystore"
+    "alias": "android"
   },
   "appVersionName": "1",
   "appVersionCode": 1,
