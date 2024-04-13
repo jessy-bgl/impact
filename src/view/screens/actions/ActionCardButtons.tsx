@@ -13,10 +13,15 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
   if (actionState === "notStarted")
     return (
       <Card.Actions>
-        <IconButton icon="cancel" onPress={() => updateState("skipped")} />
+        <IconButton
+          icon="cancel"
+          onPress={() => updateState("skipped")}
+          style={{ flex: 1 }}
+        />
         <IconButton
           icon="check-outline"
           onPress={() => updateState("inProgress")}
+          style={{ flex: 1 }}
         />
       </Card.Actions>
     );
@@ -24,14 +29,22 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
   if (actionState === "inProgress")
     return (
       <Card.Actions>
-        <IconButton icon="close" onPress={() => updateState("notStarted")} />
+        <IconButton
+          icon="close"
+          onPress={() => updateState("notStarted")}
+          style={{ flex: 1 }}
+        />
       </Card.Actions>
     );
 
   if (actionState === "skipped")
     return (
       <Card.Actions>
-        <IconButton icon="restore" onPress={() => updateState("notStarted")} />
+        <IconButton
+          icon="restore"
+          onPress={() => updateState("notStarted")}
+          style={{ flex: 1 }}
+        />
       </Card.Actions>
     );
 };

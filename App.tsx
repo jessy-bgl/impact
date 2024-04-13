@@ -1,9 +1,10 @@
 import "@expo/metro-runtime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import { registerRootComponent } from "expo";
+import "intl-pluralrules";
 import { useContext, useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Linking,
   Platform,
   SafeAreaView,
@@ -11,13 +12,15 @@ import {
   View,
 } from "react-native";
 import "react-native-gesture-handler";
-import { ActivityIndicator, PaperProvider } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
 
 import { AppNavigation } from "@common/AppNavigation";
 import { UsecasesContext } from "@common/UsecasesContext";
 import { AppTheme } from "./AppTheme";
 import "./logger.config";
-import { plausible } from "./plausible";
+// NB : plausible removed because of Android build error:
+// ReferenceError: Property 'history' doesn't exist, js engine: hermes
+// import { plausible } from "./plausible";
 import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 import "./src/view/translations/i18n";
 
@@ -65,16 +68,17 @@ const App = () => {
           const route = state?.routes[state.index];
           if (route === undefined) return;
 
-          if (route.state && route.state.index !== undefined) {
-            const subroute = route.state.routes[route.state.index];
-            plausible.trackEvent("Navigation", {
-              props: { page: subroute.name },
-            });
-          } else {
-            plausible.trackEvent("Navigation", {
-              props: { page: route.name },
-            });
-          }
+          // NB : plausible removed because of Android build error (cf. top of file)
+          // if (route.state && route.state.index !== undefined) {
+          //   const subroute = route.state.routes[route.state.index];
+          //   plausible.trackEvent("Navigation", {
+          //     props: { page: subroute.name },
+          //   });
+          // } else {
+          //   plausible.trackEvent("Navigation", {
+          //     props: { page: route.name },
+          //   });
+          // }
         }}
       >
         <SafeAreaView style={styles.container}>
@@ -99,6 +103,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default registerRootComponent(App);
-
 serviceWorkerRegistration.register();
+
+export default App;

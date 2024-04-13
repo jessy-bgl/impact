@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { ScrollView, View, ViewStyle } from "react-native";
+import { Platform, ScrollView, View, ViewStyle } from "react-native";
 import { Card, Icon, Text, useTheme } from "react-native-paper";
 
 import {
@@ -7,7 +7,8 @@ import {
   publicServicesFootprint,
   societalServicesFootprint,
 } from "@domain/entities/categories/public-services/PublicServices";
-import { PublicServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
+import { PublicServicesEmissionsDistributionForMobile } from "@view/screens/profile/public-services/EmissionsDistribution.mobile";
+import { PublicServicesEmissionsDistributionForWeb } from "@view/screens/profile/public-services/EmissionsDistribution.web";
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 export const PublicServicesProfile = () => {
@@ -39,17 +40,28 @@ export const PublicServicesProfile = () => {
           <Text>{t("info")}</Text>
         </View>
       </Card>
+
       <Text style={{ marginTop: 10 }}>{t("description")}</Text>
-      <PublicServicesEmissionsDistribution
-        merchantServices={merchantServices}
-        publicServices={publicServices}
-      />
+
+      {Platform.OS === "web" ? (
+        <PublicServicesEmissionsDistributionForWeb
+          merchantServices={merchantServices}
+          publicServices={publicServices}
+        />
+      ) : (
+        <PublicServicesEmissionsDistributionForMobile
+          publicServices={publicServices}
+          merchantServices={merchantServices}
+        />
+      )}
+
       <Text style={{ marginTop: 10 }}>
         {t("publicServicesDescription", {
           icon: publicServices.icon,
           footprint: publicServices.footprint,
         })}
       </Text>
+
       <Text style={{ marginTop: 10 }}>
         {t("merchantDescription", {
           icon: merchantServices.icon,

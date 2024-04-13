@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { ActionState } from "@domain/entities/actions/Action";
 import { useFootprints } from "@view/view-models/useFootprints";
 
 export const useActions = () => {
@@ -19,17 +18,28 @@ export const useActions = () => {
     updateActions();
   }, []);
 
-  const [actionStateToDisplay, setActionStateToDisplay] =
-    useState<ActionState>("notStarted");
+  const notStartedActions = storedActions.filter(
+    (action) => action.state === "notStarted",
+  );
 
-  const actionsToDisplay = storedActions.filter(
-    (action) => action.state === actionStateToDisplay,
+  const inProgressActions = storedActions.filter(
+    (action) => action.state === "inProgress",
+  );
+
+  const completedActions = storedActions.filter(
+    (action) => action.state === "completed",
+  );
+
+  const skippedActions = storedActions.filter(
+    (action) => action.state === "skipped",
   );
 
   return {
-    actionsToDisplay,
+    notStartedActions,
+    inProgressActions,
+    completedActions,
+    skippedActions,
     updateActionState,
     footprints,
-    setActionStateToDisplay,
   };
 };

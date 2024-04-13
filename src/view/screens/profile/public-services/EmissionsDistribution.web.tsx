@@ -11,7 +11,7 @@ type Props = {
   merchantServices: FootprintCategoryViewModel;
 };
 
-export const PublicServicesEmissionsDistribution = ({
+export const PublicServicesEmissionsDistributionForWeb = ({
   publicServices,
   merchantServices,
 }: Props) => {

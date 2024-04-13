@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 
 import { Action, ActionState } from "@domain/entities/actions/Action";
@@ -6,6 +5,7 @@ import { ActionCardButtons } from "@view/screens/actions/ActionCardButtons";
 import { ActionCardContent } from "@view/screens/actions/ActionCardContent";
 import { useActionStyles } from "@view/screens/actions/useActionStyles";
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
+import { View } from "react-native";
 
 type Props = {
   action: Action;
@@ -28,7 +28,7 @@ export const ActionCard = ({
 
   return (
     <Card style={styles[state].card}>
-      <View style={{ height: state === "completed" ? 150 : 200 }}>
+      <View style={{ height: styles[state].card.height }}>
         <Card.Title
           title={label}
           titleNumberOfLines={2}

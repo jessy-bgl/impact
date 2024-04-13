@@ -18,26 +18,22 @@ export const ActionCardContent = ({ action, savedFootprintPart }: Props) => {
   const { state, savedFootprint } = action;
 
   return (
-    <Card.Content
-      style={{ flex: 1, marginBottom: state === "completed" ? 10 : 0 }}
-    >
-      <View style={styles[state].content}>
-        {state !== "completed" ? (
-          <>
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <Icon source="arrow-down" color={colors.primary} size={20} />
-            </View>
-            <View style={{ justifyContent: "center", gap: 5 }}>
-              <Text>{savedFootprintPart}%</Text>
-              <Text>{`${savedFootprint} ${t("footprintKg")}`}</Text>
-            </View>
-          </>
-        ) : (
+    <Card.Content style={styles[state].content}>
+      {state !== "completed" ? (
+        <>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Text>{t("actions:completed")}</Text>
+            <Icon source="arrow-down" color={colors.primary} size={20} />
           </View>
-        )}
-      </View>
+          <View style={{ justifyContent: "center", gap: 5 }}>
+            <Text>{savedFootprintPart}%</Text>
+            <Text>{`${savedFootprint} ${t("footprintKg")}`}</Text>
+          </View>
+        </>
+      ) : (
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <Text>{t("actions:completed")}</Text>
+        </View>
+      )}
     </Card.Content>
   );
 };

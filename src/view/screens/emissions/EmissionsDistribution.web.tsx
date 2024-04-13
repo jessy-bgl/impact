@@ -4,15 +4,14 @@ import { VictoryLabel, VictoryPie } from "victory";
 
 import { Footprints } from "@view/view-models/Footprint";
 
-const pieWidth = 250;
-const pieHeight = 250;
+const pieWidthAndHeight = 250;
 
 type Props = {
   footprints: Footprints;
   totalFootprint: number;
 };
 
-export const EmissionsDistribution = ({
+export const EmissionsDistributionForWeb = ({
   footprints,
   totalFootprint,
 }: Props) => {
@@ -21,12 +20,12 @@ export const EmissionsDistribution = ({
   const footprintByCategories = Object.values(footprints);
 
   return (
-    <svg viewBox={`0 0 ${pieWidth} ${pieHeight}`}>
+    <svg viewBox={`0 0 ${pieWidthAndHeight} ${pieWidthAndHeight}`}>
       <VictoryPie
         colorScale={footprintByCategories.map(({ color }) => color)}
         standalone={false}
-        width={pieWidth}
-        height={pieHeight}
+        width={pieWidthAndHeight}
+        height={pieWidthAndHeight}
         radius={110}
         innerRadius={60}
         labelRadius={75}
@@ -39,8 +38,8 @@ export const EmissionsDistribution = ({
       <VictoryLabel
         textAnchor="middle"
         style={{ fontSize: 20, fill: colors.onBackground }}
-        x={pieWidth / 2}
-        y={pieHeight / 2}
+        x={pieWidthAndHeight / 2}
+        y={pieWidthAndHeight / 2}
         text={`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
       />
     </svg>

@@ -1,79 +1,57 @@
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useTheme } from "react-native-paper";
 import { TabScreen, Tabs, TabsProvider } from "react-native-paper-tabs";
 
-import { ActionState } from "@domain/entities/actions/Action";
+import { Action, ActionState } from "@domain/entities/actions/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
 import { useActions } from "@view/screens/actions/useActions";
 
 export const Actions = () => {
   const {
-    actionsToDisplay,
     updateActionState,
     footprints,
-    setActionStateToDisplay,
+    notStartedActions,
+    inProgressActions,
+    completedActions,
+    skippedActions,
   } = useActions();
-
-  const { colors } = useTheme();
 
   const { t } = useTranslation("actions");
 
-  const actionsView = (
-    <View style={styles.gridContainer}>
-      {actionsToDisplay.map((action) => (
-        <ActionCard
-          key={action.id}
-          action={action}
-          footprintViewModel={footprints[action.category]}
-          updateState={(newState: ActionState) =>
-            updateActionState(action.id, newState)
-          }
-        />
-      ))}
-    </View>
+  const ActionsList = ({ actions }: { actions: Action[] }) => (
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <View style={styles.gridContainer}>
+        {actions.map((action) => (
+          <ActionCard
+            key={action.id}
+            action={action}
+            footprintViewModel={footprints[action.category]}
+            updateState={(newState: ActionState) =>
+              updateActionState(action.id, newState)
+            }
+          />
+        ))}
+      </View>
+    </ScrollView>
   );
 
   return (
-    <ScrollView>
-      <TabsProvider defaultIndex={0}>
-        <Tabs
-          iconPosition="top"
-          style={{ backgroundColor: colors.backdrop }}
-          mode="scrollable"
-          showLeadingSpace={false}
-        >
-          <TabScreen
-            label={t("actionsList")}
-            icon="apps"
-            onPress={() => setActionStateToDisplay("notStarted")}
-          >
-            {actionsView}
-          </TabScreen>
-          <TabScreen
-            label={t("actionsInProgress")}
-            icon="sync"
-            onPress={() => setActionStateToDisplay("inProgress")}
-          >
-            {actionsView}
-          </TabScreen>
-          <TabScreen
-            label={t("actionsCompleted")}
-            icon="check-circle-outline"
-            onPress={() => setActionStateToDisplay("completed")}
-          >
-            {actionsView}
-          </TabScreen>
-          <TabScreen
-            label={t("actionsSkipped")}
-            icon="close-circle-outline"
-            onPress={() => setActionStateToDisplay("skipped")}
-          >
-            {actionsView}
-          </TabScreen>
-        </Tabs>
-      </TabsProvider>
-    </ScrollView>
+    <TabsProvider>
+      <Tabs iconPosition="top" showLeadingSpace={false} showTextLabel={false}>
+        <TabScreen label={t("actionsList")} icon="apps">
+          <ActionsList actions={notStartedActions} />
+        </TabScreen>
+        <TabScreen label={t("actionsInProgress")} icon="sync">
+          <ActionsList actions={inProgressActions} />
+        </TabScreen>
+        <TabScreen label={t("actionsCompleted")} icon="check-circle-outline">
+          <ActionsList actions={completedActions} />
+        </TabScreen>
+        <TabScreen label={t("actionsSkipped")} icon="close-circle-outline">
+          <ActionsList actions={skippedActions} />
+        </TabScreen>
+      </Tabs>
+    </TabsProvider>
   );
 };
 
@@ -81,7 +59,6 @@ const styles = StyleSheet.create({
   gridContainer: {
     marginTop: 10,
     padding: 10,
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",

@@ -1,7 +1,8 @@
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 
 import { EmissionsDataTable } from "@view/screens/emissions/EmissionsDataTable";
-import { EmissionsDistribution } from "@view/screens/emissions/EmissionsDistribution";
+import { EmissionsDistributionForMobile } from "@view/screens/emissions/EmissionsDistribution.mobile";
+import { EmissionsDistributionForWeb } from "@view/screens/emissions/EmissionsDistribution.web";
 import { EmissionsEstimationButton } from "@view/screens/emissions/EmissionsEstimationButton";
 import { EmissionsTitle } from "@view/screens/emissions/EmissionsTitle";
 import { useFootprints } from "@view/view-models/useFootprints";
@@ -18,15 +19,18 @@ export const Emissions = () => {
       </View>
 
       <View style={{ width: 300 }}>
-        <EmissionsDistribution
-          footprints={footprints}
-          totalFootprint={totalAnnualFootprint}
-        />
+        {Platform.OS === "web" ? (
+          <EmissionsDistributionForWeb
+            footprints={footprints}
+            totalFootprint={totalAnnualFootprint}
+          />
+        ) : (
+          <EmissionsDistributionForMobile
+            footprints={footprints}
+            totalFootprint={totalAnnualFootprint}
+          />
+        )}
       </View>
-
-      {/* <View style={{ width: "90%" }}>
-        <EmissionsGoal />
-      </View> */}
 
       <View style={{ width: "90%" }}>
         <EmissionsDataTable footprints={footprints} />

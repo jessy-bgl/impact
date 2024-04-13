@@ -5,15 +5,23 @@ export const useActionStyles = () => {
   const { colors } = useTheme();
 
   const commonStyles = StyleSheet.create({
-    card: { borderRadius: 5, borderColor: "transparent", width: 200 },
+    card: {
+      borderRadius: 5,
+      borderColor: "transparent",
+      width: 225,
+      height: 200,
+    },
     content: {
       flex: 1,
       justifyContent: "center",
       flexDirection: "row",
+      alignSelf: "center",
       borderWidth: 1,
       borderRadius: 4,
-      gap: 10,
       borderColor: colors.primary,
+      gap: 10,
+      width: 150,
+      padding: 10,
     },
   });
 
@@ -21,8 +29,6 @@ export const useActionStyles = () => {
     inProgress: StyleSheet.create({
       card: {
         ...commonStyles.card,
-        borderColor: colors.primary,
-        borderWidth: 1,
       },
       content: {
         ...commonStyles.content,
@@ -31,10 +37,11 @@ export const useActionStyles = () => {
     completed: StyleSheet.create({
       card: {
         ...commonStyles.card,
-        borderWidth: 1,
+        height: 150,
       },
       content: {
         ...commonStyles.content,
+        marginBottom: 15,
       },
     }),
     skipped: StyleSheet.create({

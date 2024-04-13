@@ -1,8 +1,8 @@
 import { Platform } from "react-native";
 
 import { useRoute } from "@react-navigation/native";
-import { ComparatorForMobile } from "@view/screens/comparator/ComparatorForMobile";
-import { ComparatorForWeb } from "@view/screens/comparator/ComparatorForWeb";
+import { ComparatorForMobile } from "@view/screens/comparator/Comparator.mobile";
+import { ComparatorForWeb } from "@view/screens/comparator/Comparator.web";
 
 export type AdemeComparatorType =
   | "convertisseur"
