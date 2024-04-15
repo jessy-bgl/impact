@@ -1,8 +1,8 @@
 import { Platform } from "react-native";
 
 import { useRoute } from "@react-navigation/native";
-import { ComparatorForMobile } from "@view/screens/comparator/Comparator.mobile";
-import { ComparatorForWeb } from "@view/screens/comparator/Comparator.web";
+import { ComparatorForMobile } from "@view/screens/comparator/ComparatorMobile";
+import { ComparatorForWeb } from "@view/screens/comparator/ComparatorWeb";
 
 export type AdemeComparatorType =
   | "convertisseur"
@@ -21,7 +21,7 @@ export type AdemeComparatorType =
 export const Comparator = () => {
   const { params } = useRoute();
 
-  if (!params || !(params as any).type) return null;
+  if (!params || !(params as any).type) return <></>;
 
   const type: AdemeComparatorType = (params as any).type;
 
