@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   Linking,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View,
 } from "react-native";
@@ -81,11 +80,11 @@ const App = () => {
           // }
         }}
       >
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
           <View style={styles.content}>
             <AppNavigation />
           </View>
-        </SafeAreaView>
+        </View>
       </NavigationContainer>
     </PaperProvider>
   );
