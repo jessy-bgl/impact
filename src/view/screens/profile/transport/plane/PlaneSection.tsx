@@ -21,7 +21,9 @@ export const PlaneSection = () => {
     >
       <ListContentContainer>
         <RowContainer>
-          <Text variant="labelLarge">{t("plane.usage")}</Text>
+          <Text variant="labelLarge" style={{ flex: 1 }}>
+            {t("plane.usage")}
+          </Text>
           <Controller<FormValues>
             name="usage"
             control={control}
@@ -37,6 +39,7 @@ export const PlaneSection = () => {
                   { value: "true", label: t("common:yes") },
                   { value: "false", label: t("common:no") },
                 ]}
+                style={{ flex: 1 }}
               />
             )}
           />

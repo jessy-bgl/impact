@@ -37,7 +37,7 @@ export const LeisureSection = () => {
       icon="beach"
     >
       <ListContentContainer>
-        <RowContainer>
+        <ColumnContainer>
           <Text variant="labelLarge">{t("leisure.hasIngroundPool")}</Text>
           <Controller<FormValues>
             name="hasIngroundPool"
@@ -64,7 +64,7 @@ export const LeisureSection = () => {
               />
             )}
           />
-        </RowContainer>
+        </ColumnContainer>
 
         <ListItemDivider />
 

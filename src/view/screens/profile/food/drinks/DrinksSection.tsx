@@ -105,7 +105,9 @@ export const DrinksSection = () => {
         <ListItemDivider />
 
         <RowContainer>
-          <Text variant="labelLarge">{t("drinks.bottledWater")}</Text>
+          <Text variant="labelLarge" style={{ flex: 1 }}>
+            {t("drinks.bottledWater")}
+          </Text>
           <Controller<FormValues>
             name="bottledWater"
             control={control}
@@ -121,6 +123,7 @@ export const DrinksSection = () => {
                   { value: "true", label: t("common:yes") },
                   { value: "false", label: t("common:no") },
                 ]}
+                style={{ flex: 1 }}
               />
             )}
           />

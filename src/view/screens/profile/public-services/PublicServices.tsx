@@ -33,11 +33,11 @@ export const PublicServicesProfile = () => {
   return (
     <ScrollView style={{ padding: 10 }}>
       <Card mode="outlined" style={infoCardStyle}>
-        <View style={{ padding: 8, flexDirection: "row" }}>
-          <View style={{ marginRight: 10, justifyContent: "center" }}>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ marginLeft: 10, justifyContent: "center" }}>
             <Icon size={20} source="information-outline" />
           </View>
-          <Text>{t("info")}</Text>
+          <Text style={{ flex: 1, padding: 10 }}>{t("info")}</Text>
         </View>
       </Card>
 

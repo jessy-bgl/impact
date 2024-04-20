@@ -21,7 +21,9 @@ export const BoatSection = () => {
     >
       <ListContentContainer>
         <RowContainer>
-          <Text variant="labelLarge">{t("boat.usage")}</Text>
+          <Text variant="labelLarge" style={{ flex: 1 }}>
+            {t("boat.usage")}
+          </Text>
           <Controller<FormValues>
             name="usage"
             control={control}
@@ -37,6 +39,7 @@ export const BoatSection = () => {
                   { value: "true", label: t("common:yes") },
                   { value: "false", label: t("common:no") },
                 ]}
+                style={{ flex: 1 }}
               />
             )}
           />

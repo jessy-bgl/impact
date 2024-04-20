@@ -3,7 +3,7 @@ import { View, ViewStyle } from "react-native";
 import { Button, Modal, Portal, useTheme } from "react-native-paper";
 
 type Props = {
-  content: JSX.Element;
+  content?: JSX.Element;
   hide: () => void;
 };
 
