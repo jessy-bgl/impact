@@ -9,8 +9,7 @@
 - Estimer son impact carbone en fonction de son mode de vie (simulateur inspiré de [Nos gestes climat](https://nosgestesclimat.fr/))
 - Visualiser ses émissions carbone par catégories
 - Comparer l'impact des éléments du quotidien (grâce à l'outil [Impact CO2](https://impactco2.fr/))
-- [A VENIR] Sélectionner des actions concrètes pour réduire ses émissions
-- [A VENIR] Définir des objectifs personnels
+- Sélectionner des actions concrètes pour réduire ses émissions
 - [A VENIR] Suivre l'évolution de son impact sur la durée
 
 ## Captures d'écran
