@@ -23,7 +23,7 @@ export const Emissions = () => {
           <EmissionsTitle />
         </View>
 
-        <View style={{ width: 300 }}>
+        <View>
           {Platform.OS === "web" ? (
             <EmissionsDistributionForWeb
               footprints={footprints}
