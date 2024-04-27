@@ -17,6 +17,7 @@ export const useWebComparator = (type: AdemeComparatorType) => {
     script.dataset.search = "?theme=night";
     script.async = true;
     script.onload = () => {
+      // Remove the div that contains a link to the Impact CO2 website
       ademeComparator.current?.querySelector("div")?.remove();
       setTimeout(() => {
         setIsLoading(false);

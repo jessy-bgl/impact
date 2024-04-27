@@ -1,5 +1,6 @@
-import { View } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
+import { useTheme } from "react-native-paper";
 
 import { AdemeComparatorType } from "@view/screens/comparator/Comparator";
 import { useWebComparator } from "@view/screens/comparator/useWebComparator";
@@ -9,23 +10,25 @@ type Props = {
 };
 
 export const ComparatorForWeb = ({ type }: Props) => {
+  const { colors } = useTheme();
   const { ademeComparator, isLoading, showComparator } = useWebComparator(type);
 
   return (
     <>
       {isLoading && (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        <MotiView
+          animate={{ backgroundColor: colors.surface }}
+          style={{ padding: 20 }}
         >
-          <ActivityIndicator size="large" />
-        </View>
+          <Skeleton height={window.innerHeight} width={"100%"} />
+        </MotiView>
       )}
 
       <div
         ref={ademeComparator}
         style={{
           overflow: "auto",
-          visibility: showComparator ? "visible" : "hidden",
+          display: showComparator ? "block" : "none",
         }}
       />
     </>

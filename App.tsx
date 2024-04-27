@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
+import "react-native-reanimated";
 
 import { AppNavigation } from "@common/AppNavigation";
 import { UsecasesContext } from "@common/UsecasesContext";
