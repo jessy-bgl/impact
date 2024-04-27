@@ -21,7 +21,6 @@ export const EmissionsDistributionForMobile = ({
   const footprintByCategories = Object.values(footprints);
 
   // NB: as of april 2024, victory-native Pie.Chart does not support labels
-  // TODO
   return (
     <View style={{ height: 300, paddingTop: 20, paddingBottom: 10 }}>
       <PolarChart
@@ -36,6 +35,17 @@ export const EmissionsDistributionForMobile = ({
       >
         <Pie.Chart innerRadius={80} />
       </PolarChart>
+      <Text
+        variant="titleLarge"
+        style={{
+          position: "absolute",
+          top: "46%",
+          textAlign: "center",
+          alignSelf: "center",
+        }}
+      >
+        {`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
+      </Text>
     </View>
   );
 };
