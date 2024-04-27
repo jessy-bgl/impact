@@ -14,13 +14,13 @@ import {
   Comparator,
 } from "@view/screens/comparator/Comparator";
 import { Emissions } from "@view/screens/emissions/Emissions";
-import { Objectives } from "@view/screens/objectives/Objectives";
 import { Profile } from "@view/screens/profile/Profile";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { FoodProfile } from "@view/screens/profile/food/Food";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
 import { PublicServicesProfile } from "@view/screens/profile/public-services/PublicServices";
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
+import { Tracking } from "@view/screens/tracking/Tracking";
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -113,6 +113,23 @@ const BottomTabNavigator = () => {
         }}
       />
       <BottomTab.Screen
+        name="Tracking"
+        component={Tracking}
+        options={{
+          title: t("Tracking"),
+          headerTitle: t("TrackingEmissions"),
+          tabBarIcon: ({ color }) => {
+            return (
+              <Icons
+                name={"chart-timeline-variant"}
+                size={iconSize}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+      <BottomTab.Screen
         name="Actions"
         component={Actions}
         options={{
@@ -122,22 +139,6 @@ const BottomTabNavigator = () => {
             return (
               <Icons
                 name={focused ? "check-circle" : "check-circle-outline"}
-                size={iconSize}
-                color={color}
-              />
-            );
-          },
-        }}
-      />
-      <BottomTab.Screen
-        name="Objectives"
-        component={Objectives}
-        options={{
-          title: t("Objectives"),
-          tabBarIcon: ({ focused, color }) => {
-            return (
-              <Icons
-                name={focused ? "medal" : "medal-outline"}
                 size={iconSize}
                 color={color}
               />
