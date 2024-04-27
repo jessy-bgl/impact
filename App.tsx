@@ -1,6 +1,7 @@
 import "@expo/metro-runtime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import "intl-pluralrules";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -58,36 +59,39 @@ const App = () => {
   if (!isReady) return <ActivityIndicator />;
 
   return (
-    <PaperProvider theme={AppTheme}>
-      <NavigationContainer
-        theme={AppTheme}
-        initialState={initialState}
-        onStateChange={(state) => {
-          AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+    <>
+      <PaperProvider theme={AppTheme}>
+        <NavigationContainer
+          theme={AppTheme}
+          initialState={initialState}
+          onStateChange={(state) => {
+            AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
 
-          const route = state?.routes[state.index];
-          if (route === undefined) return;
+            const route = state?.routes[state.index];
+            if (route === undefined) return;
 
-          // NB : plausible removed because of Android build error (cf. top of file)
-          // if (route.state && route.state.index !== undefined) {
-          //   const subroute = route.state.routes[route.state.index];
-          //   plausible.trackEvent("Navigation", {
-          //     props: { page: subroute.name },
-          //   });
-          // } else {
-          //   plausible.trackEvent("Navigation", {
-          //     props: { page: route.name },
-          //   });
-          // }
-        }}
-      >
-        <View style={styles.container}>
-          <View style={styles.content}>
-            <AppNavigation />
+            // NB : plausible removed because of Android build error (cf. top of file)
+            // if (route.state && route.state.index !== undefined) {
+            //   const subroute = route.state.routes[route.state.index];
+            //   plausible.trackEvent("Navigation", {
+            //     props: { page: subroute.name },
+            //   });
+            // } else {
+            //   plausible.trackEvent("Navigation", {
+            //     props: { page: route.name },
+            //   });
+            // }
+          }}
+        >
+          <View style={styles.container}>
+            <View style={styles.content}>
+              <AppNavigation />
+            </View>
           </View>
-        </View>
-      </NavigationContainer>
-    </PaperProvider>
+        </NavigationContainer>
+      </PaperProvider>
+      <StatusBar style="light" />
+    </>
   );
 };
 
