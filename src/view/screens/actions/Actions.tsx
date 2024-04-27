@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View } from "react-native";
+import { Text } from "react-native-paper";
 import { TabScreen, Tabs, TabsProvider } from "react-native-paper-tabs";
 
+import EmptyBox from "@assets/images/empty_box.svg";
 import { Action, ActionState } from "@domain/entities/actions/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
 import { useActions } from "@view/screens/actions/useActions";
@@ -19,19 +21,31 @@ export const Actions = () => {
   const { t } = useTranslation("actions");
 
   const ActionsList = ({ actions }: { actions: Action[] }) => (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.gridContainer}>
-        {actions.map((action) => (
-          <ActionCard
-            key={action.id}
-            action={action}
-            footprintViewModel={footprints[action.category]}
-            updateState={(newState: ActionState) =>
-              updateActionState(action.id, newState)
-            }
-          />
-        ))}
-      </View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
+      {actions.length === 0 ? (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <EmptyBox height={60} width={60} />
+          <Text>{t("noAction")}</Text>
+        </View>
+      ) : (
+        <View style={styles.gridContainer}>
+          {actions.map((action) => (
+            <ActionCard
+              key={action.id}
+              action={action}
+              footprintViewModel={footprints[action.category]}
+              updateState={(newState: ActionState) =>
+                updateActionState(action.id, newState)
+              }
+            />
+          ))}
+        </View>
+      )}
     </ScrollView>
   );
 

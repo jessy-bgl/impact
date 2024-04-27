@@ -3,5 +3,6 @@
   "actionsInProgress": "En cours",
   "actionsCompleted": "Complétées",
   "actionsSkipped": "Ecartées",
-  "completed": "Accompli"
+  "completed": "Accompli",
+  "noAction": "Aucune action"
 }
