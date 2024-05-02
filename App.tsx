@@ -14,6 +14,7 @@ import {
 import "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppNavigation } from "@common/AppNavigation";
 import { UsecasesContext } from "@common/UsecasesContext";
@@ -22,7 +23,6 @@ import "./logger.config";
 // NB : plausible removed because of Android build error:
 // ReferenceError: Property 'history' doesn't exist, js engine: hermes
 // import { plausible } from "./plausible";
-import * as serviceWorkerRegistration from "./src/serviceWorkerRegistration";
 import "./src/view/translations/i18n";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
@@ -59,7 +59,8 @@ const App = () => {
   if (!isReady) return <ActivityIndicator />;
 
   return (
-    <>
+    <SafeAreaProvider>
+      <StatusBar style="light" />
       <PaperProvider theme={AppTheme}>
         <NavigationContainer
           theme={AppTheme}
@@ -90,8 +91,7 @@ const App = () => {
           </View>
         </NavigationContainer>
       </PaperProvider>
-      <StatusBar style="light" />
-    </>
+    </SafeAreaProvider>
   );
 };
 
@@ -106,7 +106,5 @@ const styles = StyleSheet.create({
     maxWidth: 550,
   },
 });
-
-serviceWorkerRegistration.register();
 
 export default App;

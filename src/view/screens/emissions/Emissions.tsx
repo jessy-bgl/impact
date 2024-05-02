@@ -1,4 +1,5 @@
 import { Platform, ScrollView, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { EmissionsDataTable } from "@view/screens/emissions/EmissionsDataTable";
 import { EmissionsDistributionForMobile } from "@view/screens/emissions/EmissionsDistribution.mobile";
@@ -6,13 +7,12 @@ import { EmissionsDistributionForWeb } from "@view/screens/emissions/EmissionsDi
 import { EmissionsEstimationButton } from "@view/screens/emissions/EmissionsEstimationButton";
 import { EmissionsTitle } from "@view/screens/emissions/EmissionsTitle";
 import { useFootprints } from "@view/view-models/useFootprints";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Emissions = () => {
   const { footprints, totalAnnualFootprint } = useFootprints();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{
           justifyContent: "center",

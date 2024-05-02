@@ -1,10 +1,10 @@
 {
   "background_color": "#ffffff",
   "display": "standalone",
-  "lang": "en",
+  "lang": "fr",
   "name": "Impact",
   "short_name": "Impact",
-  "start_url": "/impact/",
+  "start_url": ".",
   "orientation": "portrait",
   "theme_color": "#000",
   "icons": [
