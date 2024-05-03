@@ -2,9 +2,9 @@ import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
-  NativeStackNavigationProp,
-  createNativeStackNavigator,
-} from "@react-navigation/native-stack";
+  StackNavigationProp,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 
@@ -22,7 +22,7 @@ import { PublicServicesProfile } from "@view/screens/profile/public-services/Pub
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { Tracking } from "@view/screens/tracking/Tracking";
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const ComparatorDrawer = createDrawerNavigator();
 
@@ -36,7 +36,7 @@ type RootStackParamList = {
   PublicServicesProfile: undefined;
 };
 
-export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+export type AppNavigationProp = StackNavigationProp<RootStackParamList>;
 
 const iconSize = 24;
 
