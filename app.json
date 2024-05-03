@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -20,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.impactech.impact"
     },
     "web": {
       "bundler": "metro",
@@ -29,6 +32,11 @@
     "experiments": {
       "tsconfigPaths": true,
       "baseUrl": "/impact"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e2d24387-b1d5-4c95-b5a8-42f48c62af22"
+      }
     }
   }
 }
