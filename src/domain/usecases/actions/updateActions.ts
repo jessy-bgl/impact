@@ -38,9 +38,7 @@ export const createUseUpdateActions = (
         const existingAction = storedActions.find(
           (storedAction) => action.id === storedAction.id,
         );
-        if (existingAction) {
-          action.restore(existingAction);
-        }
+        if (existingAction) action.restore(existingAction);
       });
     };
 
