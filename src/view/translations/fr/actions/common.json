@@ -4,5 +4,10 @@
   "actionsCompleted": "Complétées",
   "actionsSkipped": "Ecartées",
   "completed": "Accompli",
-  "noAction": "Aucune action"
+  "noAction": {
+    "notStarted": "Aucune action",
+    "inProgress": "Aucune action en cours",
+    "completed": "Aucune action complétée",
+    "skipped": "Aucune action écartée"
+  }
 }
