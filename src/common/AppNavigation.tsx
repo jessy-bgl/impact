@@ -169,13 +169,13 @@ type ComparatorParams = {
 
 const ComparatorNavigator = () => {
   const { t } = useTranslation("pages");
-  const appTheme = useTheme();
+  const { colors } = useTheme();
 
   return (
     <ComparatorDrawer.Navigator
       initialRouteName="Comparator"
       screenOptions={{
-        headerTintColor: appTheme.colors.onPrimaryContainer,
+        headerTintColor: colors.onBackground,
         unmountOnBlur: true, // NB : this is a workaround to avoid scroll issues
       }}
     >
