@@ -121,7 +121,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color }) => {
             return (
               <Icons
-                name={"chart-timeline-variant"}
+                name="chart-timeline-variant"
                 size={iconSize}
                 color={color}
               />

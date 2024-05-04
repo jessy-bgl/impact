@@ -22,7 +22,7 @@ export const ComparatorForMobile = ({ type }: Props) => {
           animate={{ backgroundColor: colors.surface }}
           style={{ paddingTop: 25, paddingLeft: 18, paddingRight: 18 }}
         >
-          <Skeleton height={"100%"} width={"100%"} />
+          <Skeleton height="100%" width="100%" />
         </MotiView>
       )}
 

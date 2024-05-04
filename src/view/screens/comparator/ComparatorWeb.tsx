@@ -20,7 +20,7 @@ export const ComparatorForWeb = ({ type }: Props) => {
           animate={{ backgroundColor: colors.surface }}
           style={{ padding: 20 }}
         >
-          <Skeleton height={window.innerHeight} width={"100%"} />
+          <Skeleton height={window.innerHeight} width="100%" />
         </MotiView>
       )}
 

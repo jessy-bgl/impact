@@ -33,9 +33,9 @@ export const EmissionsDistributionForMobile = ({
           value: footprint,
           color,
         }))}
-        labelKey={"label"}
-        valueKey={"value"}
-        colorKey={"color"}
+        labelKey="label"
+        valueKey="value"
+        colorKey="color"
       >
         <Pie.Chart innerRadius={pieWidthAndHeight / 3.1} />
       </PolarChart>
