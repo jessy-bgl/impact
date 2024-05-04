@@ -19,11 +19,11 @@ export const Emissions = () => {
           alignItems: "center",
         }}
       >
-        <View>
+        <View style={{ padding: 10 }}>
           <EmissionsTitle />
         </View>
 
-        <View>
+        <View style={{ padding: 10 }}>
           {Platform.OS === "web" ? (
             <EmissionsDistributionForWeb
               footprints={footprints}

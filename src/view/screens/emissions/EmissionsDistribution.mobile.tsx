@@ -5,7 +5,7 @@ import { Pie, PolarChart } from "victory-native";
 
 import { Footprints } from "@view/view-models/Footprint";
 
-const pieWidthAndHeight = 275;
+const pieWidthAndHeight = 250;
 
 type Props = {
   footprints: Footprints;
@@ -25,8 +25,6 @@ export const EmissionsDistributionForMobile = ({
       style={{
         width: pieWidthAndHeight,
         height: pieWidthAndHeight,
-        paddingTop: 20,
-        paddingBottom: 10,
       }}
     >
       <PolarChart
@@ -39,13 +37,13 @@ export const EmissionsDistributionForMobile = ({
         valueKey={"value"}
         colorKey={"color"}
       >
-        <Pie.Chart innerRadius={75} />
+        <Pie.Chart innerRadius={pieWidthAndHeight / 3.1} />
       </PolarChart>
       <Text
         variant="titleLarge"
         style={{
           position: "absolute",
-          top: "46%",
+          top: "38%",
           textAlign: "center",
           alignSelf: "center",
         }}

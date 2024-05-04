@@ -6,7 +6,7 @@ import { VictoryLabel, VictoryPie } from "victory";
 
 import { Footprints } from "@view/view-models/Footprint";
 
-const pieWidthAndHeight = 275;
+const pieWidthAndHeight = 225;
 
 type Props = {
   footprints: Footprints;
@@ -29,9 +29,9 @@ export const EmissionsDistributionForWeb = ({
           standalone={false}
           width={pieWidthAndHeight}
           height={pieWidthAndHeight}
-          radius={115}
-          innerRadius={68}
-          labelRadius={82}
+          radius={pieWidthAndHeight / 2}
+          innerRadius={pieWidthAndHeight / 3.3}
+          labelRadius={pieWidthAndHeight / 2.8}
           style={{ labels: { fontSize: 17 } }}
           data={footprintByCategories.map(({ icon, footprint }) => ({
             x: icon,

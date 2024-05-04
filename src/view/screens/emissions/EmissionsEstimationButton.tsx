@@ -13,7 +13,7 @@ export const EmissionsEstimationButton = () => {
     <Button
       icon="grass"
       mode="outlined"
-      contentStyle={{ height: 45 }}
+      contentStyle={{ height: 48 }}
       labelStyle={{ color: colors.primary }}
       style={{ borderColor: colors.primary }}
       onPress={() => navigate("Profile")}

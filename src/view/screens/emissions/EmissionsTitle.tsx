@@ -5,7 +5,7 @@ export const EmissionsTitle = () => {
   const { t } = useTranslation("emissions");
 
   return (
-    <Text variant="titleLarge" style={{ paddingTop: 10, textAlign: "center" }}>
+    <Text variant="titleLarge" style={{ textAlign: "center" }}>
       {t("impactDistributionTitle")}
     </Text>
   );
