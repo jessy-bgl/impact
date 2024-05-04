@@ -13,6 +13,8 @@ export const useActions = () => {
     "id",
   );
 
+  const emissions = useAppStore((store) => store.emissions);
+
   const { useUpdateActions, useUpdateActionState } =
     useContext(UsecasesContext);
 
@@ -22,7 +24,7 @@ export const useActions = () => {
 
   useEffect(() => {
     updateActions();
-  }, []);
+  }, [emissions]);
 
   const notStartedActions = storedActions.filter(
     (action) => action.state === "notStarted",
