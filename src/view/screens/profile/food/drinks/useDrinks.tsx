@@ -19,7 +19,7 @@ export type FormValues = Omit<
 >;
 
 export const useDrinks = () => {
-  const storedDrinks = useAppStore((store) => store.food.drinks);
+  const storedDrinks = useAppStore((store) => store.emissions.food.drinks);
   const annualFootprint = new Drinks(storedDrinks).annualFootprint;
 
   const { useUpdateFood } = useContext(UsecasesContext);

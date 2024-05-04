@@ -19,7 +19,7 @@ export type FormValues = Omit<
 >;
 
 export const useWaste = () => {
-  const storedWaste = useAppStore((store) => store.food.waste);
+  const storedWaste = useAppStore((store) => store.emissions.food.waste);
   const annualFootprint = new Waste(storedWaste).annualFootprint;
 
   const { useUpdateFood } = useContext(UsecasesContext);

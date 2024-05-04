@@ -20,7 +20,9 @@ export const cigarettesConsumptionOptions: CigarettesWeeklyConsumption[] = [
 ];
 
 export const useTobacco = () => {
-  const storedTobacco = useAppStore((store) => store.everydayThings.tobacco);
+  const storedTobacco = useAppStore(
+    (store) => store.emissions.everydayThings.tobacco,
+  );
   const annualFootprint = new Tobacco(storedTobacco).annualFootprint;
 
   const { useUpdateEverydayThings } = useContext(UsecasesContext);

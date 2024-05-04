@@ -10,18 +10,22 @@ import { Housing } from "@domain/entities/categories/housing/Housing";
 import { Transport } from "@domain/entities/categories/transport/Transport";
 
 export type AppState = {
-  transport: Transport;
-  food: Food;
-  housing: Housing;
-  everydayThings: EverydayThings;
+  emissions: {
+    transport: Transport;
+    food: Food;
+    housing: Housing;
+    everydayThings: EverydayThings;
+  };
   actions: Action[];
 };
 
 const appStore = (): AppState => ({
-  transport: new Transport({}),
-  food: new Food({}),
-  housing: new Housing({}),
-  everydayThings: new EverydayThings({}),
+  emissions: {
+    transport: new Transport({}),
+    food: new Food({}),
+    housing: new Housing({}),
+    everydayThings: new EverydayThings({}),
+  },
   actions: [],
 });
 

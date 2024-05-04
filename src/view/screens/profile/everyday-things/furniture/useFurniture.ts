@@ -27,7 +27,7 @@ export const FurnitureLabels: (keyof FormValues)[] = [
 
 export const useFurniture = () => {
   const storedFurniture = useAppStore(
-    (store) => store.everydayThings.furniture,
+    (store) => store.emissions.everydayThings.furniture,
   );
   const annualFootprint = new Furniture(storedFurniture).annualFootprint;
 

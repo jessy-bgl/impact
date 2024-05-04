@@ -17,7 +17,9 @@ export const PetsLabels: (keyof FormValues)[] = [
 ];
 
 export const usePets = () => {
-  const storedPets = useAppStore((store) => store.everydayThings.pets);
+  const storedPets = useAppStore(
+    (store) => store.emissions.everydayThings.pets,
+  );
   const annualFootprint = new Pets(storedPets).annualFootprint;
 
   const { useUpdateEverydayThings } = useContext(UsecasesContext);

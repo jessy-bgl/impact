@@ -32,7 +32,9 @@ export const CulturalLabels: (keyof FormValues)[] = [
 ];
 
 export const useHobbies = () => {
-  const storedHobbies = useAppStore((store) => store.everydayThings.hobbies);
+  const storedHobbies = useAppStore(
+    (store) => store.emissions.everydayThings.hobbies,
+  );
   const annualFootprint = new Hobbies(storedHobbies).annualFootprint;
 
   const { useUpdateEverydayThings } = useContext(UsecasesContext);

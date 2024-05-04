@@ -14,7 +14,7 @@ export type FormValues = Omit<
 
 export const usePublicTransport = () => {
   const storedPublicTransport = useAppStore(
-    (store) => store.transport.publicTransport,
+    (store) => store.emissions.transport.publicTransport,
   );
   const annualFootprint = new PublicTransport(storedPublicTransport)
     .annualFootprint;

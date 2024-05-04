@@ -24,7 +24,9 @@ export const ClothesLabels: (keyof FormValues)[] = [
 ];
 
 export const useClothes = () => {
-  const storedClothes = useAppStore((store) => store.everydayThings.clothes);
+  const storedClothes = useAppStore(
+    (store) => store.emissions.everydayThings.clothes,
+  );
   const annualFootprint = new Clothes(storedClothes).annualFootprint;
 
   const { useUpdateEverydayThings } = useContext(UsecasesContext);

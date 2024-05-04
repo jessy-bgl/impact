@@ -11,7 +11,7 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 export type FormValues = Omit<StringifyProperties<Meals>, "annualFootprint">;
 
 export const useMeals = () => {
-  const storedMeals = useAppStore((store) => store.food.meals);
+  const storedMeals = useAppStore((store) => store.emissions.food.meals);
   const storedBreakfast = storedMeals.breakfast;
   const annualFootprint = new Meals(storedMeals).annualFootprint;
 

@@ -14,7 +14,7 @@ export type FormValues = Omit<
 >;
 
 export const useEnergy = () => {
-  const storedEnergy = useAppStore((store) => store.housing.energy);
+  const storedEnergy = useAppStore((store) => store.emissions.housing.energy);
   const annualFootprint = new Energy(storedEnergy).annualFootprint;
 
   const { useUpdateHousing } = useContext(UsecasesContext);

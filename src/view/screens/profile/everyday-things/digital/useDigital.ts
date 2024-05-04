@@ -26,7 +26,9 @@ export const DigitalLabels: (keyof FormValues)[] = [
 ];
 
 export const useDigital = () => {
-  const storedDigital = useAppStore((store) => store.everydayThings.digital);
+  const storedDigital = useAppStore(
+    (store) => store.emissions.everydayThings.digital,
+  );
   const annualFootprint = new Digital(storedDigital).annualFootprint;
 
   const { useUpdateEverydayThings } = useContext(UsecasesContext);

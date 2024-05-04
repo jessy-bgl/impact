@@ -6,25 +6,37 @@ import { Housing } from "@domain/entities/categories/housing/Housing";
 import { Transport } from "@domain/entities/categories/transport/Transport";
 
 export const appStoreActions = {
-  getTransport: () => useAppStore.getState().transport,
+  getTransport: () => useAppStore.getState().emissions.transport,
 
   setTransport: (transport: Transport) =>
-    useAppStore.setState((state) => ({ ...state, transport })),
+    useAppStore.setState((state) => ({
+      ...state,
+      emissions: { ...state.emissions, transport },
+    })),
 
-  getFood: () => useAppStore.getState().food,
+  getFood: () => useAppStore.getState().emissions.food,
 
   setFood: (food: Food) =>
-    useAppStore.setState((state) => ({ ...state, food })),
+    useAppStore.setState((state) => ({
+      ...state,
+      emissions: { ...state.emissions, food },
+    })),
 
-  getHousing: () => useAppStore.getState().housing,
+  getHousing: () => useAppStore.getState().emissions.housing,
 
   setHousing: (housing: Housing) =>
-    useAppStore.setState((state) => ({ ...state, housing })),
+    useAppStore.setState((state) => ({
+      ...state,
+      emissions: { ...state.emissions, housing },
+    })),
 
-  getEverydayThings: () => useAppStore.getState().everydayThings,
+  getEverydayThings: () => useAppStore.getState().emissions.everydayThings,
 
   setEverydayThings: (everydayThings: EverydayThings) =>
-    useAppStore.setState((state) => ({ ...state, everydayThings })),
+    useAppStore.setState((state) => ({
+      ...state,
+      emissions: { ...state.emissions, everydayThings },
+    })),
 
   getActions: () => useAppStore.getState().actions,
 

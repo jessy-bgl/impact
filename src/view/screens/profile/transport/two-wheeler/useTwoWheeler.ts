@@ -13,7 +13,9 @@ export type FormValues = Omit<
 >;
 
 export const useTwhoWheeler = () => {
-  const storedTwoWheeler = useAppStore((store) => store.transport.twoWheeler);
+  const storedTwoWheeler = useAppStore(
+    (store) => store.emissions.transport.twoWheeler,
+  );
   const storedTwoWheelerUsage = storedTwoWheeler.usage;
   const annualFootprint = new TwoWheeler(storedTwoWheeler).annualFootprint;
 

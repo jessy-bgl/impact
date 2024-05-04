@@ -22,9 +22,9 @@ export type FormValues = Omit<
 >;
 
 export const useLeisure = () => {
-  const storedLeisure = useAppStore((store) => store.housing.leisure);
+  const storedLeisure = useAppStore((store) => store.emissions.housing.leisure);
   const isAnApartment = useAppStore(
-    (store) => store.housing.home.isAnApartment,
+    (store) => store.emissions.housing.home.isAnApartment,
   );
   const annualFootprint = new Leisure(storedLeisure).annualFootprint;
 

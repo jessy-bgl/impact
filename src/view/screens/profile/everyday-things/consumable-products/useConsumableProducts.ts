@@ -23,7 +23,7 @@ export const consumptionOptions: ConsumptionFrequency[] = [
 
 export const useConsumableProducts = () => {
   const storedConsumableProducts = useAppStore(
-    (store) => store.everydayThings.consumableProducts,
+    (store) => store.emissions.everydayThings.consumableProducts,
   );
   const annualFootprint = new ConsumableProducts(storedConsumableProducts)
     .annualFootprint;

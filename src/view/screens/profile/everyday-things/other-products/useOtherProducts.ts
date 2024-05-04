@@ -19,7 +19,7 @@ export const spendingLevels: SpendingLevel[] = ["low", "medium", "high"];
 
 export const useOtherProducts = () => {
   const storedOtherProducts = useAppStore(
-    (store) => store.everydayThings.otherProducts,
+    (store) => store.emissions.everydayThings.otherProducts,
   );
   const annualFootprint = new OtherProducts(storedOtherProducts)
     .annualFootprint;

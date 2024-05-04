@@ -10,7 +10,7 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 export type FormValues = Omit<StringifyProperties<Plane>, "annualFootprint">;
 
 export const usePlane = () => {
-  const storedPlane = useAppStore((store) => store.transport.plane);
+  const storedPlane = useAppStore((store) => store.emissions.transport.plane);
   const storedPlaneUsage = storedPlane.usage;
   const annualFootprint = new Plane(storedPlane).annualFootprint;
 

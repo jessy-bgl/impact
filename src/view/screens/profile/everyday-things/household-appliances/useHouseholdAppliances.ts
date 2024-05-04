@@ -32,7 +32,7 @@ export const HouseholdAppliancesLabels: (keyof FormValues)[] = [
 
 export const useHouseholdAppliances = () => {
   const storedHouseholdAppliances = useAppStore(
-    (store) => store.everydayThings.householdAppliances,
+    (store) => store.emissions.everydayThings.householdAppliances,
   );
   const annualFootprint = new HouseholdAppliances(storedHouseholdAppliances)
     .annualFootprint;

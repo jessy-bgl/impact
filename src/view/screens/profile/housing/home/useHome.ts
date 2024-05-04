@@ -10,7 +10,7 @@ import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
 export type FormValues = Omit<StringifyProperties<Home>, "annualFootprint">;
 
 export const useHome = () => {
-  const storedHome = useAppStore((store) => store.housing.home);
+  const storedHome = useAppStore((store) => store.emissions.housing.home);
   const annualFootprint = new Home(storedHome).annualFootprint;
 
   const { useUpdateHousing } = useContext(UsecasesContext);
