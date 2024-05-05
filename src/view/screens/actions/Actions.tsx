@@ -63,7 +63,7 @@ export const Actions = () => {
     <View
       style={{
         marginTop: 5,
-        marginRight: 20,
+        marginRight: 15,
         width: 16,
         height: 16,
         borderRadius: 12,
@@ -81,7 +81,7 @@ export const Actions = () => {
   return (
     <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
       <Tab.Screen
-        name={"notStartedActions"}
+        name="notStartedActions"
         options={{
           title: t("actionsList"),
           tabBarBadge: () => <ActionsBadge text={notStartedActions.length} />,
@@ -93,7 +93,7 @@ export const Actions = () => {
         {() => <ActionsList actions={notStartedActions} state="notStarted" />}
       </Tab.Screen>
       <Tab.Screen
-        name={"inProgressActions"}
+        name="inProgressActions"
         options={{
           title: t("actionsInProgress"),
           tabBarBadge: () => <ActionsBadge text={inProgressActions.length} />,
@@ -105,7 +105,7 @@ export const Actions = () => {
         {() => <ActionsList actions={inProgressActions} state="inProgress" />}
       </Tab.Screen>
       <Tab.Screen
-        name={"completedActions"}
+        name="completedActions"
         options={{
           title: t("actionsCompleted"),
           tabBarBadge: () => <ActionsBadge text={completedActions.length} />,
@@ -121,7 +121,7 @@ export const Actions = () => {
         {() => <ActionsList actions={completedActions} state="completed" />}
       </Tab.Screen>
       <Tab.Screen
-        name={"skippedActions"}
+        name="skippedActions"
         options={{
           title: t("actionsSkipped"),
           tabBarBadge: () => <ActionsBadge text={skippedActions.length} />,

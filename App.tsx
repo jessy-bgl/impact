@@ -68,8 +68,8 @@ const App = () => {
           onStateChange={(state) => {
             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
 
-            const route = state?.routes[state.index];
-            if (route === undefined) return;
+            // const route = state?.routes[state.index];
+            // if (route === undefined) return;
 
             // NB : plausible removed because of Android build error (cf. top of file)
             // if (route.state && route.state.index !== undefined) {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
-    maxWidth: 550,
+    maxWidth: 1024,
   },
 });
 
