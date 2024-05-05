@@ -14,8 +14,8 @@
 
 ## Captures d'écran
 
-[<img width=250 alt="Emissions" src="documentation/screenshots/emissions.png?raw=true">](documentation/screenshots/emissions.png?raw=true)&nbsp;&nbsp;
-[<img width=250 alt="Profile" src="documentation/screenshots/profile.png?raw=true">](documentation/screenshots/profile.png?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Emissions" src="docs/screenshots/web/web_1.png?raw=true">](docs/screenshots/web/web_1.png?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Profile" src="docs/screenshots/web/web_2.png?raw=true">](docs/screenshots/web/web_2.png?raw=true)&nbsp;&nbsp;
 
-[<img width=250 alt="Comparateur_Repas" src="documentation/screenshots/comparator_meal.png?raw=true">](documentation/screenshots/comparator_meal.png?raw=true)&nbsp;&nbsp;
-[<img width=250 alt="Comparateur_Chauffage" src="documentation/screenshots/comparator_heating.png?raw=true">](documentation/screenshots/comparator_heating.png?raw=true)
+[<img width=250 alt="Actions" src="docs/screenshots/web/web_4.png?raw=true">](docs/screenshots/web/web_4.png?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Comparateur_Chauffage" src="docs/screenshots/web/web_6.png?raw=true">](docs/screenshots/web/web_6.png?raw=true)
