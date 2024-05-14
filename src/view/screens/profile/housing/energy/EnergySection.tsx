@@ -66,7 +66,7 @@ export const EnergySection = () => {
         </ColumnContainer>
 
         {showBioGas && (
-          <RowContainer style={{ marginTop: 10 }}>
+          <ColumnContainer style={{ marginTop: 10 }}>
             <Text variant="labelLarge">{t("energy.bioGas")}</Text>
             <Controller<FormValues>
               name="bioGas"
@@ -86,7 +86,7 @@ export const EnergySection = () => {
                 />
               )}
             />
-          </RowContainer>
+          </ColumnContainer>
         )}
 
         {showWoodType && (
