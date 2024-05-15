@@ -10,5 +10,9 @@
   "takeFlightHalfAsMuch": {
     "label": "Prendre deux fois moins l'avion",
     "description": ""
+  },
+  "changeForElectricScooter": {
+    "label": "Opter pour un scooter électrique",
+    "description": ""
   }
 }
