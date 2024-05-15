@@ -7,7 +7,7 @@ import { useFootprints } from "@view/view-models/useFootprints";
 
 export const useActions = () => {
   // NB : the "uniqBy" method is a workaround used to remove
-  // the temporerary duplicates from the array of actions
+  // the temporary duplicates from the array of actions
   const storedActions = _.uniqBy(
     useAppStore((store) => store.actions),
     "id",
