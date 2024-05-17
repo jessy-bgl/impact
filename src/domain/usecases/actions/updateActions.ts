@@ -1,5 +1,9 @@
 import { Action } from "@domain/entities/actions/Action";
 import {
+  StopFerryAction,
+  TakeFerryHalfAsMuchAction,
+} from "@domain/entities/actions/transport/boat.actions";
+import {
   StopFlightAction,
   StopShortHaulFlightsAction,
   TakeFlightHalfAsMuchAction,
@@ -30,6 +34,8 @@ export const createUseUpdateActions = (
         new StopShortHaulFlightsAction(transport.plane),
         new TakeFlightHalfAsMuchAction(transport.plane),
         new ChangeForElectricScooterAction(transport.twoWheeler),
+        new StopFerryAction(transport.boat),
+        new TakeFerryHalfAsMuchAction(transport.boat),
       ];
 
       return actions;

@@ -14,5 +14,13 @@
   "changeForElectricScooter": {
     "label": "Opter pour un scooter électrique",
     "description": ""
+  },
+  "stopFerry": {
+    "label": "Arrêter de prendre le ferry",
+    "description": ""
+  },
+  "takeFerryHalfAsMuch": {
+    "label": "Prendre deux fois moins le ferry",
+    "description": ""
   }
 }
