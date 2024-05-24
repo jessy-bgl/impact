@@ -7,14 +7,10 @@ export const createUseUpdateActionState = (
   function useUpdateActionState() {
     const updateActionState = (actionId: string, state: ActionState) => {
       const storedActions: Action[] = actionsRepository.fetchActions();
-
-      const updatedActions: Action[] = storedActions.map((storedAction) =>
-        storedAction.id === actionId
-          ? { ...storedAction, state }
-          : storedAction,
-      ) as Action[];
-
-      actionsRepository.updateActions(updatedActions);
+      const actionToUpdate = storedActions.find((a) => a.id === actionId);
+      if (!actionToUpdate) return;
+      actionToUpdate.state = state;
+      actionsRepository.updateActions(storedActions);
     };
 
     return { updateActionState };
