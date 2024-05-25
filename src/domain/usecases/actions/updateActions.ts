@@ -3,12 +3,14 @@ import {
   StopFerryAction,
   TakeFerryHalfAsMuchAction,
 } from "@domain/entities/actions/transport/boat.actions";
+import { CarSharing } from "@domain/entities/actions/transport/car.actions";
 import {
   StopFlightAction,
   StopShortHaulFlightsAction,
   TakeFlightHalfAsMuchAction,
 } from "@domain/entities/actions/transport/plane.actions";
 import { ChangeForElectricScooterAction } from "@domain/entities/actions/transport/twoWheeler.actions";
+import { Transport } from "@domain/entities/categories/transport/Transport";
 import { ActionsRepository } from "@domain/repositories/actions.repository";
 import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
@@ -28,18 +30,19 @@ export const createUseUpdateActions = (
 
     const initActions = (): Action[] => {
       const transport = emissionsRepository.fetchTransport();
-
-      const actions: Action[] = [
-        new StopFlightAction(transport.plane),
-        new StopShortHaulFlightsAction(transport.plane),
-        new TakeFlightHalfAsMuchAction(transport.plane),
-        new ChangeForElectricScooterAction(transport.twoWheeler),
-        new StopFerryAction(transport.boat),
-        new TakeFerryHalfAsMuchAction(transport.boat),
-      ];
-
-      return actions;
+      const transportActions = initTransportActions(transport);
+      return [...transportActions];
     };
+
+    const initTransportActions = (transport: Transport) => [
+      new StopFlightAction(transport.plane),
+      new StopShortHaulFlightsAction(transport.plane),
+      new TakeFlightHalfAsMuchAction(transport.plane),
+      new ChangeForElectricScooterAction(transport.twoWheeler),
+      new StopFerryAction(transport.boat),
+      new TakeFerryHalfAsMuchAction(transport.boat),
+      new CarSharing(transport.car),
+    ];
 
     const restoreActions = (actions: Action[], storedActions: Action[]) => {
       actions.forEach((action) => {

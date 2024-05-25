@@ -13,8 +13,6 @@ export const useActions = () => {
     "id",
   );
 
-  const emissions = useAppStore((store) => store.emissions);
-
   const { useUpdateActions, useUpdateActionState } =
     useContext(UsecasesContext);
 
@@ -22,23 +20,29 @@ export const useActions = () => {
   const { updateActionState } = useUpdateActionState();
   const { footprints } = useFootprints();
 
+  const emissions = useAppStore((store) => store.emissions);
+
   useEffect(() => {
     updateActions();
   }, [emissions]);
 
-  const notStartedActions = storedActions.filter(
+  const applicableActions = storedActions.filter(
+    (action) => action.isApplicable,
+  );
+
+  const notStartedActions = applicableActions.filter(
     (action) => action.state === "notStarted",
   );
 
-  const inProgressActions = storedActions.filter(
+  const inProgressActions = applicableActions.filter(
     (action) => action.state === "inProgress",
   );
 
-  const completedActions = storedActions.filter(
+  const completedActions = applicableActions.filter(
     (action) => action.state === "completed",
   );
 
-  const skippedActions = storedActions.filter(
+  const skippedActions = applicableActions.filter(
     (action) => action.state === "skipped",
   );
 

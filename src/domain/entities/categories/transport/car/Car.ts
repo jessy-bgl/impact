@@ -82,6 +82,10 @@ export class Car implements WithAnnualFootprint {
     this.averageFuelConsumption = defaultAverageFuelConsumption[this.size];
   }
 
+  public get usage(): boolean {
+    return this.kmPerYear > 0;
+  }
+
   public get annualFootprint(): number {
     if (this.kmPerYear === 0) return 0;
     if (this.regularUser) return Math.floor(this.regularUserFootprint);

@@ -22,5 +22,9 @@
   "takeFerryHalfAsMuch": {
     "label": "Prendre deux fois moins le ferry",
     "description": ""
+  },
+  "carSharing": {
+    "label": "Se mettre à l'autopartage",
+    "description": ""
   }
 }
