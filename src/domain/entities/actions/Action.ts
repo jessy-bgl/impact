@@ -61,6 +61,10 @@ export abstract class Action {
     }
   }
 
+  get isApplicable(): boolean {
+    return true;
+  }
+
   abstract get isCompleted(): boolean;
 
   abstract computeSavedFootprint(): void;
