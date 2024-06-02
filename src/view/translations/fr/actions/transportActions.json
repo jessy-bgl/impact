@@ -30,5 +30,9 @@
   "useElectricCar": {
     "label": "Rouler en voiture électrique",
     "description": ""
+  },
+  "reduceCarSize": {
+    "label": "Choisir une petite voiture",
+    "description": ""
   }
 }

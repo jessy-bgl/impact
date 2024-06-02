@@ -72,3 +72,38 @@ export class UseElectricCar extends Action {
     );
   }
 }
+
+export class ReduceCarSize extends Action {
+  constructor(private car: Car) {
+    super({
+      id: "reduce-car-size",
+      label: i18n.t("transportActions:reduceCarSize.label"),
+      description: i18n.t("transportActions:reduceCarSize.description"),
+      category: "transport",
+    });
+  }
+
+  get isCompleted(): boolean {
+    return this.car.size === "small";
+  }
+
+  get isApplicable(): boolean {
+    return this.car.usage && this.car.regularUser;
+  }
+
+  computeSavedFootprint(): void {
+    if (this.isCompleted) {
+      this.savedFootprint = 0;
+      return;
+    }
+
+    const smallCar = new Car({
+      ...this.car,
+      size: "small",
+    });
+
+    this.savedFootprint = Math.floor(
+      this.car.annualFootprint - smallCar.annualFootprint,
+    );
+  }
+}

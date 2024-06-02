@@ -5,6 +5,7 @@ import {
 } from "@domain/entities/actions/transport/boat.actions";
 import {
   CarSharing,
+  ReduceCarSize,
   UseElectricCar,
 } from "@domain/entities/actions/transport/car.actions";
 import {
@@ -46,6 +47,7 @@ export const createUseUpdateActions = (
       new TakeFerryHalfAsMuchAction(transport.boat),
       new CarSharing(transport.car),
       new UseElectricCar(transport.car),
+      new ReduceCarSize(transport.car),
     ];
 
     const restoreActions = (actions: Action[], storedActions: Action[]) => {
