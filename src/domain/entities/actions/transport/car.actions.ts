@@ -37,3 +37,38 @@ export class CarSharing extends Action {
     );
   }
 }
+
+export class UseElectricCar extends Action {
+  constructor(private car: Car) {
+    super({
+      id: "use-electric-car",
+      label: i18n.t("transportActions:useElectricCar.label"),
+      description: i18n.t("transportActions:useElectricCar.description"),
+      category: "transport",
+    });
+  }
+
+  get isCompleted(): boolean {
+    return this.car.engine === "electric";
+  }
+
+  get isApplicable(): boolean {
+    return this.car.usage && this.car.regularUser;
+  }
+
+  computeSavedFootprint(): void {
+    if (this.isCompleted) {
+      this.savedFootprint = 0;
+      return;
+    }
+
+    const electricCar = new Car({
+      ...this.car,
+      engine: "electric",
+    });
+
+    this.savedFootprint = Math.floor(
+      this.car.annualFootprint - electricCar.annualFootprint,
+    );
+  }
+}

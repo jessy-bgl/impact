@@ -3,7 +3,10 @@ import {
   StopFerryAction,
   TakeFerryHalfAsMuchAction,
 } from "@domain/entities/actions/transport/boat.actions";
-import { CarSharing } from "@domain/entities/actions/transport/car.actions";
+import {
+  CarSharing,
+  UseElectricCar,
+} from "@domain/entities/actions/transport/car.actions";
 import {
   StopFlightAction,
   StopShortHaulFlightsAction,
@@ -42,6 +45,7 @@ export const createUseUpdateActions = (
       new StopFerryAction(transport.boat),
       new TakeFerryHalfAsMuchAction(transport.boat),
       new CarSharing(transport.car),
+      new UseElectricCar(transport.car),
     ];
 
     const restoreActions = (actions: Action[], storedActions: Action[]) => {

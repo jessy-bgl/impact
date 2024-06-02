@@ -26,5 +26,9 @@
   "carSharing": {
     "label": "Se mettre à l'autopartage",
     "description": ""
+  },
+  "useElectricCar": {
+    "label": "Rouler en voiture électrique",
+    "description": ""
   }
 }
