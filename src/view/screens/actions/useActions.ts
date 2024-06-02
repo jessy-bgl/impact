@@ -26,23 +26,23 @@ export const useActions = () => {
     updateActions();
   }, [emissions]);
 
-  const applicableActions = storedActions.filter(
-    (action) => action.isApplicable,
+  const actionsToDisplay = storedActions.filter(
+    (action) => action.isApplicable && action.savedFootprint > 0,
   );
 
-  const notStartedActions = applicableActions.filter(
+  const notStartedActions = actionsToDisplay.filter(
     (action) => action.state === "notStarted",
   );
 
-  const inProgressActions = applicableActions.filter(
+  const inProgressActions = actionsToDisplay.filter(
     (action) => action.state === "inProgress",
   );
 
-  const completedActions = applicableActions.filter(
+  const completedActions = actionsToDisplay.filter(
     (action) => action.state === "completed",
   );
 
-  const skippedActions = applicableActions.filter(
+  const skippedActions = actionsToDisplay.filter(
     (action) => action.state === "skipped",
   );
 
