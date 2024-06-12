@@ -20,10 +20,11 @@ import { AppNavigation } from "@common/AppNavigation";
 import { UsecasesContext } from "@common/UsecasesContext";
 import { AppTheme } from "./AppTheme";
 import "./logger.config";
+import "./src/view/translations/i18n";
+
 // NB : plausible removed because of Android build error:
 // ReferenceError: Property 'history' doesn't exist, js engine: hermes
 // import { plausible } from "./plausible";
-import "./src/view/translations/i18n";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 

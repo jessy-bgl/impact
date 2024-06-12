@@ -9,6 +9,7 @@ import infoEverydayThings from "./fr/info/infoEverydayThings.json";
 import infoFood from "./fr/info/infoFood.json";
 import infoHousing from "./fr/info/infoHousing.json";
 import infoTransport from "./fr/info/infoTransport.json";
+import intro from "./fr/intro.json";
 import pages from "./fr/pages.json";
 import publicServices from "./fr/publicServices.json";
 import transport from "./fr/transport.json";
@@ -24,6 +25,7 @@ export {
   infoFood,
   infoHousing,
   infoTransport,
+  intro,
   pages,
   publicServices,
   transport,
