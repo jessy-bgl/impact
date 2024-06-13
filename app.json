@@ -12,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -40,6 +42,7 @@
       "eas": {
         "projectId": "e2d24387-b1d5-4c95-b5a8-42f48c62af22"
       }
-    }
+    },
+    "owner": "jessy-bgl"
   }
 }
