@@ -16,9 +16,8 @@
     "prepare": "husky install .husky",
     "test": "cross-env NODE_ENV=test jest",
     "test:cov": "cross-env NODE_ENV=test jest --coverage",
-    "deploy": "gh-pages -t -d dist",
-    "predeploy": "mkdir -p public && touch public/.nojekyll && expo export -p web && npx workbox-cli generateSW workbox-config.js",
-    "predeploy:old": "expo export -p web"
+    "deploy:web": "gh-pages -t -d dist",
+    "predeploy:web": "mkdir -p public && touch public/.nojekyll && expo export -p web && npx workbox-cli generateSW workbox-config.js"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "7.18.9",
