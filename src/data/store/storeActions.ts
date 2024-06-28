@@ -6,6 +6,9 @@ import { Housing } from "@domain/entities/categories/housing/Housing";
 import { Transport } from "@domain/entities/categories/transport/Transport";
 
 export const appStoreActions = {
+  setFirstLaunch: (isFirstLaunch: boolean) =>
+    useAppStore.setState((state) => ({ ...state, isFirstLaunch })),
+
   getTransport: () => useAppStore.getState().emissions.transport,
 
   setTransport: (transport: Transport) =>

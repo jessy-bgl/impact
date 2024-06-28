@@ -8,12 +8,14 @@ import {
 import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
 
+import { useAppStore } from "@data/store/store";
 import { Actions } from "@view/screens/actions/Actions";
 import {
   AdemeComparatorType,
   Comparator,
 } from "@view/screens/comparator/Comparator";
 import { Emissions } from "@view/screens/emissions/Emissions";
+import { Intro } from "@view/screens/intro/Intro";
 import { Profile } from "@view/screens/profile/Profile";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { FoodProfile } from "@view/screens/profile/food/Food";
@@ -42,6 +44,10 @@ const iconSize = 24;
 
 export const AppNavigation = () => {
   const { t } = useTranslation("pages");
+
+  const isFirstLaunch = useAppStore((state) => state.isFirstLaunch);
+
+  if (isFirstLaunch) return <Intro />;
 
   return (
     <Stack.Navigator initialRouteName="Home">

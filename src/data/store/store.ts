@@ -10,6 +10,7 @@ import { Housing } from "@domain/entities/categories/housing/Housing";
 import { Transport } from "@domain/entities/categories/transport/Transport";
 
 export type AppState = {
+  isFirstLaunch: boolean;
   emissions: {
     transport: Transport;
     food: Food;
@@ -20,6 +21,7 @@ export type AppState = {
 };
 
 const appStore = (): AppState => ({
+  isFirstLaunch: true,
   emissions: {
     transport: new Transport({}),
     food: new Food({}),
