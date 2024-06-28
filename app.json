@@ -12,16 +12,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "splash": {
         "image": "./assets/splash.png",
-        "resizeMode": "native",
+        "resizeMode": "cover",
         "backgroundColor": "#ffffff"
       },
       "adaptiveIcon": {
