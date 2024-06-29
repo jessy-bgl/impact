@@ -19,7 +19,7 @@
     "android": {
       "splash": {
         "image": "./assets/splash.png",
-        "resizeMode": "cover",
+        "resizeMode": "native",
         "backgroundColor": "#ffffff"
       },
       "adaptiveIcon": {
