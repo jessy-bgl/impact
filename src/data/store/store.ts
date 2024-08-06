@@ -4,13 +4,20 @@ import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
 import { Action } from "@domain/entities/actions/Action";
+import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
 import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
 import { Food } from "@domain/entities/categories/food/Food";
 import { Housing } from "@domain/entities/categories/housing/Housing";
 import { Transport } from "@domain/entities/categories/transport/Transport";
+import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
+import { Profile } from "@domain/entities/profile/Profile";
 
 export type AppState = {
   isFirstLaunch: boolean;
+  profile: Profile;
+  footprints: {
+    transport: TransportFootprint;
+  };
   emissions: {
     transport: Transport;
     food: Food;
@@ -20,8 +27,14 @@ export type AppState = {
   actions: Action[];
 };
 
+const ademeFootprintEngine = new AdemeFootprintEngine({});
+
 const appStore = (): AppState => ({
   isFirstLaunch: true,
+  profile: {},
+  footprints: {
+    transport: ademeFootprintEngine.computeTransportFootprint(),
+  },
   emissions: {
     transport: new Transport({}),
     food: new Food({}),

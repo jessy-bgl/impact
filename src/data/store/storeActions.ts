@@ -4,10 +4,25 @@ import { EverydayThings } from "@domain/entities/categories/everyday-things/Ever
 import { Food } from "@domain/entities/categories/food/Food";
 import { Housing } from "@domain/entities/categories/housing/Housing";
 import { Transport } from "@domain/entities/categories/transport/Transport";
+import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
+import { Profile } from "@domain/entities/profile/Profile";
 
 export const appStoreActions = {
   setFirstLaunch: (isFirstLaunch: boolean) =>
     useAppStore.setState((state) => ({ ...state, isFirstLaunch })),
+
+  getProfile: () => useAppStore.getState().profile,
+
+  setProfile: (profile: Profile) =>
+    useAppStore.setState((state) => ({ ...state, profile })),
+
+  getTransportFootprint: () => useAppStore.getState().footprints.transport,
+
+  setTransportFootprint: (footprint: TransportFootprint) =>
+    useAppStore.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, transport: footprint },
+    })),
 
   getTransport: () => useAppStore.getState().emissions.transport,
 
