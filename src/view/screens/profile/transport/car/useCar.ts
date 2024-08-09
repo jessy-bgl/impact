@@ -1,43 +1,68 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
+import { DefaultValues, useForm } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Car } from "@domain/entities/categories/transport/car/Car";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Car>, "annualFootprint">;
+import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
+import { Question } from "@domain/entities/Question";
+import { useQuestionsContext } from "@view/screens/profile/useQuestionsContext";
+import { FormValues } from "@view/screens/profile/utils/types";
 
 export const useCar = () => {
-  const storedCar = useAppStore((store) => store.emissions.transport.car);
-  const storedRegularUser = storedCar.regularUser;
-  const annualFootprint = new Car(storedCar).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updateCar } = useUpdateTransport();
+  const kmPerYearQuestion = questions["transport . voiture . km"];
+  const averagePassengersQuestion =
+    questions["transport . voiture . voyageurs"];
+  const regularUsageOfSameCarQuestion =
+    questions["transport . voiture . utilisateur"];
+
+  const q = AdemeFootprintEngine.getQuestionRules();
+  const tmp = Object.values(q).filter(
+    (rule) =>
+      rule.rawNode["applicable si"] &&
+      (rule.explanation.valeur.sourceMap?.args["applicable si"] as any)
+        .nodeKind === "operation",
+  );
+  // .map((rule) => rule.rawNode["applicable si"]);
+  console.log(tmp);
 
   const getDefaultValues = (): DefaultValues<FormValues> => ({
-    kmPerYear: storedCar.kmPerYear.toString(),
-    regularUser: storedCar.regularUser.toString(),
-    size: storedCar.size.toString(),
-    engine: storedCar.engine.toString(),
-    fuelType: storedCar.fuelType.toString(),
-    age: storedCar.age.toString(),
-    averagePassengers: storedCar.averagePassengers.toString(),
-    averageFuelConsumption: storedCar.averageFuelConsumption.toString(),
+    [kmPerYearQuestion.label]: kmPerYearQuestion.defaultValue,
+    [averagePassengersQuestion.label]: averagePassengersQuestion.defaultValue,
+    [regularUsageOfSameCarQuestion.label]:
+      regularUsageOfSameCarQuestion.defaultValue,
+    // regularUser: storedCar.regularUser.toString(),
+    // size: storedCar.size.toString(),
+    // engine: storedCar.engine.toString(),
+    // fuelType: storedCar.fuelType.toString(),
+    // age: storedCar.age.toString(),
+    // averagePassengers: storedCar.averagePassengers.toString(),
+    // averageFuelConsumption: storedCar.averageFuelConsumption.toString(),
   });
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<
-    Car,
-    FormValues
-  >(getDefaultValues(), storedCar, updateCar);
+  const { control, watch, reset } = useForm<FormValues>({
+    defaultValues: getDefaultValues(),
+  });
 
-  useEffect(() => {
-    if (!storedRegularUser) reset(getDefaultValues());
-  }, [storedRegularUser]);
+  const handleUpdateTransportProfile = (question: Question, value: string) => {
+    updateTransportProfile(
+      question,
+      value || question.minValue?.toString() || "0",
+    );
+  };
 
-  const regularUser = watch("regularUser") === "true";
+  // useEffect(() => {
+  //   if (!storedRegularUser) reset(getDefaultValues());
+  // }, [storedRegularUser]);
 
-  return { control, handleUpdate, regularUser, annualFootprint };
+  // const regularUser = watch("regularUser") === "true";
+
+  return {
+    control,
+    handleUpdateTransportProfile,
+    kmPerYearQuestion,
+    averagePassengersQuestion,
+    regularUsageOfSameCarQuestion,
+  };
 };

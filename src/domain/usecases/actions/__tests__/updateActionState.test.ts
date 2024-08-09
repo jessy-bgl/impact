@@ -1,7 +1,7 @@
 import { initFakeRepositories } from "@common/UsecasesContext";
 import { StopShortHaulFlightsAction } from "@domain/entities/actions/transport/plane.actions";
 import { Plane } from "@domain/entities/categories/transport/plane/Plane";
-import { createUseUpdateActionState } from "@domain/usecases/actions/updateActionState";
+import { createUpdateActionState } from "@domain/usecases/actions/updateActionState";
 
 describe("update action state", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
@@ -15,9 +15,9 @@ describe("update action state", () => {
     const action = new StopShortHaulFlightsAction(new Plane({}));
     action.state = "notStarted";
     repositories.actionsRepository.actions = [action];
-    const { updateActionState } = createUseUpdateActionState(
+    const updateActionState = createUpdateActionState(
       repositories.actionsRepository,
-    )();
+    );
     // Act
     updateActionState(action.id, "completed");
     // Assert

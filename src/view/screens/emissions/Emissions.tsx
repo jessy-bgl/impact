@@ -9,7 +9,7 @@ import { EmissionsTitle } from "@view/screens/emissions/EmissionsTitle";
 import { useFootprints } from "@view/view-models/useFootprints";
 
 export const Emissions = () => {
-  const { footprints, totalAnnualFootprint } = useFootprints();
+  const { footprints, annualFootprint } = useFootprints();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -27,12 +27,12 @@ export const Emissions = () => {
           {Platform.OS === "web" ? (
             <EmissionsDistributionForWeb
               footprints={footprints}
-              totalFootprint={totalAnnualFootprint}
+              totalFootprint={annualFootprint}
             />
           ) : (
             <EmissionsDistributionForMobile
               footprints={footprints}
-              totalFootprint={totalAnnualFootprint}
+              totalFootprint={annualFootprint}
             />
           )}
         </View>

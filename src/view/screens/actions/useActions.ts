@@ -13,11 +13,8 @@ export const useActions = () => {
     "id",
   );
 
-  const { useUpdateActions, useUpdateActionState } =
-    useContext(UsecasesContext);
+  const { updateActions, updateActionState } = useContext(UsecasesContext);
 
-  const { updateActions } = useUpdateActions();
-  const { updateActionState } = useUpdateActionState();
   const { footprints } = useFootprints();
 
   const emissions = useAppStore((store) => store.emissions);

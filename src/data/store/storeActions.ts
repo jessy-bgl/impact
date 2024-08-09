@@ -13,8 +13,11 @@ export const appStoreActions = {
 
   getProfile: () => useAppStore.getState().profile,
 
-  setProfile: (profile: Profile) =>
-    useAppStore.setState((state) => ({ ...state, profile })),
+  updateProfile: (profile: Profile) =>
+    useAppStore.setState((state) => ({
+      ...state,
+      profile: { ...state.profile, ...profile },
+    })),
 
   getTransportFootprint: () => useAppStore.getState().footprints.transport,
 

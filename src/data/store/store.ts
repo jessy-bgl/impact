@@ -27,13 +27,11 @@ export type AppState = {
   actions: Action[];
 };
 
-const ademeFootprintEngine = new AdemeFootprintEngine({});
-
 const appStore = (): AppState => ({
   isFirstLaunch: true,
   profile: {},
   footprints: {
-    transport: ademeFootprintEngine.computeTransportFootprint(),
+    transport: AdemeFootprintEngine.computeTransportFootprint(),
   },
   emissions: {
     transport: new Transport({}),

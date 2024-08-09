@@ -8,7 +8,7 @@ export class ProfileStoreRepository implements ProfileRepository {
   }
 
   updateProfile(profile: Profile) {
-    appStoreActions.setProfile(profile);
+    appStoreActions.updateProfile(profile);
     return appStoreActions.getProfile();
   }
 }

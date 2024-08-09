@@ -18,52 +18,51 @@ import { Transport } from "@domain/entities/categories/transport/Transport";
 import { ActionsRepository } from "@domain/repositories/actions.repository";
 import { EmissionsRepository } from "@domain/repositories/emissions.repository";
 
-export const createUseUpdateActions = (
+export const createUpdateActions = (
   actionsRepository: ActionsRepository,
   emissionsRepository: EmissionsRepository,
-) =>
-  function useUpdateActions() {
-    const updateActions = () => {
-      const actions = initActions();
-      const storedActions = actionsRepository.fetchActions();
-      restoreActions(actions, storedActions);
-      computeSavedFootprint(actions);
-      updateState(actions);
-      actionsRepository.updateActions([...actions]);
-    };
-
-    const initActions = (): Action[] => {
-      const transport = emissionsRepository.fetchTransport();
-      const transportActions = initTransportActions(transport);
-      return [...transportActions];
-    };
-
-    const initTransportActions = (transport: Transport) => [
-      new StopFlightAction(transport.plane),
-      new StopShortHaulFlightsAction(transport.plane),
-      new TakeFlightHalfAsMuchAction(transport.plane),
-      new ChangeForElectricScooterAction(transport.twoWheeler),
-      new StopFerryAction(transport.boat),
-      new TakeFerryHalfAsMuchAction(transport.boat),
-      new CarSharing(transport.car),
-      new UseElectricCar(transport.car),
-      new ReduceCarSize(transport.car),
-    ];
-
-    const restoreActions = (actions: Action[], storedActions: Action[]) => {
-      actions.forEach((action) => {
-        const existingAction = storedActions.find(
-          (storedAction) => action.id === storedAction.id,
-        );
-        if (existingAction) action.restore(existingAction);
-      });
-    };
-
-    const computeSavedFootprint = (actions: Action[]) =>
-      actions.forEach((action) => action.computeSavedFootprint());
-
-    const updateState = (actions: Action[]) =>
-      actions.forEach((action) => action.updateState());
-
-    return { updateActions };
+) => {
+  const updateActions = () => {
+    const actions = initActions();
+    const storedActions = actionsRepository.fetchActions();
+    restoreActions(actions, storedActions);
+    computeSavedFootprint(actions);
+    updateState(actions);
+    actionsRepository.updateActions([...actions]);
   };
+
+  const initActions = (): Action[] => {
+    const transport = emissionsRepository.fetchTransport();
+    const transportActions = initTransportActions(transport);
+    return [...transportActions];
+  };
+
+  const initTransportActions = (transport: Transport) => [
+    new StopFlightAction(transport.plane),
+    new StopShortHaulFlightsAction(transport.plane),
+    new TakeFlightHalfAsMuchAction(transport.plane),
+    new ChangeForElectricScooterAction(transport.twoWheeler),
+    new StopFerryAction(transport.boat),
+    new TakeFerryHalfAsMuchAction(transport.boat),
+    new CarSharing(transport.car),
+    new UseElectricCar(transport.car),
+    new ReduceCarSize(transport.car),
+  ];
+
+  const restoreActions = (actions: Action[], storedActions: Action[]) => {
+    actions.forEach((action) => {
+      const existingAction = storedActions.find(
+        (storedAction) => action.id === storedAction.id,
+      );
+      if (existingAction) action.restore(existingAction);
+    });
+  };
+
+  const computeSavedFootprint = (actions: Action[]) =>
+    actions.forEach((action) => action.computeSavedFootprint());
+
+  const updateState = (actions: Action[]) =>
+    actions.forEach((action) => action.updateState());
+
+  return updateActions;
+};

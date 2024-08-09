@@ -2,7 +2,7 @@
   "name": "impact",
   "homepage": "http://jessy-bgl.github.io/impact",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "main.ts",
   "private": true,
   "scripts": {
     "start": "expo start",

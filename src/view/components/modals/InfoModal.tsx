@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { View, ViewStyle } from "react-native";
-import { Button, Modal, Portal, useTheme } from "react-native-paper";
+import { Button, Modal, Portal, Text, useTheme } from "react-native-paper";
 
 type Props = {
-  content?: JSX.Element;
+  content?: string;
   hide: () => void;
 };
 
@@ -31,7 +31,9 @@ export const InfoModal = ({ content, hide }: Props) => {
         contentContainerStyle={containerStyle}
         style={modalStyle}
       >
-        <View style={{ padding: 10 }}>{content}</View>
+        <View style={{ padding: 10 }}>
+          <Text>{content}</Text>
+        </View>
         <View style={{ marginTop: 10 }}>
           <Button compact onPress={hide}>
             {t("ok")}

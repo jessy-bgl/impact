@@ -1,15 +1,25 @@
 import { TextInput, TextInputProps } from "react-native-paper";
 
+import { Question } from "@domain/entities/Question";
+
 type Props = TextInputProps & {
+  question: Question;
   positive?: boolean;
-  min?: number;
 };
 
-export const NumericInput = (props: Props) => {
-  const positive = props.positive ?? true;
+export const NumericInput = ({
+  question,
+  positive = true,
+  ...props
+}: Props) => {
   const dense = props.dense ?? true;
   const mode = props.mode ?? "outlined";
-  const min = props.min !== undefined ? props.min : positive ? 0 : undefined;
+  const min =
+    question.minValue !== undefined
+      ? question.minValue
+      : positive
+        ? 0
+        : undefined;
 
   return (
     <TextInput

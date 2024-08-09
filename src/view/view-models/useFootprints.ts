@@ -11,6 +11,9 @@ export const useFootprints = () => {
   const appStore = useAppStore((store) => store);
 
   const {
+    fetchTransportFootprint,
+    computeAnnualFootprint,
+
     useFetchTransport,
     useFetchFood,
     useFetchHousing,
@@ -26,6 +29,13 @@ export const useFootprints = () => {
   const { fetchEverydayThings } = useFetchEverydayThings();
   const { fetchPublicServices } = useFetchPublicServices();
 
+  // TODO: voir si on peut optimiser en spécifiant davantage les dépendances
+  const transportFootprint = useMemo(
+    () => fetchTransportFootprint(),
+    [appStore],
+  );
+  const annualFootprint = useMemo(() => computeAnnualFootprint(), [appStore]);
+
   const transport = useMemo(() => fetchTransport(), [appStore]);
   const food = useMemo(() => fetchFood(), [appStore]);
   const housing = useMemo(() => fetchHousing(), [appStore]);
@@ -38,26 +48,26 @@ export const useFootprints = () => {
 
   const footprints: Footprints = {
     transport: FootprintCategoryViewModel.forTransport(
-      transport.annualFootprint,
-      totalAnnualFootprint,
+      transportFootprint.annualFootprint,
+      annualFootprint,
     ),
     food: FootprintCategoryViewModel.forFood(
       food.annualFootprint,
-      totalAnnualFootprint,
+      annualFootprint,
     ),
     housing: FootprintCategoryViewModel.forHousing(
       housing.annualFootprint,
-      totalAnnualFootprint,
+      annualFootprint,
     ),
     everydayThings: FootprintCategoryViewModel.forEverydayThings(
       everydayThings.annualFootprint,
-      totalAnnualFootprint,
+      annualFootprint,
     ),
     publicServices: FootprintCategoryViewModel.forPublicServices(
       publicServices.annualFootprint,
-      totalAnnualFootprint,
+      annualFootprint,
     ),
   };
 
-  return { footprints, totalAnnualFootprint };
+  return { footprints, annualFootprint };
 };
