@@ -14,11 +14,11 @@ export const ComparatorForWeb = ({ type }: Props) => {
   const { ademeComparator, isLoading, showComparator } = useWebComparator(type);
 
   return (
-    <>
+    <div style={{ paddingInline: 20, overflow: "auto" }}>
       {isLoading && (
         <MotiView
           animate={{ backgroundColor: colors.surface }}
-          style={{ padding: 20 }}
+          style={{ paddingVertical: 20 }}
         >
           <Skeleton height={window.innerHeight} width="100%" />
         </MotiView>
@@ -27,10 +27,9 @@ export const ComparatorForWeb = ({ type }: Props) => {
       <div
         ref={ademeComparator}
         style={{
-          overflow: "auto",
           display: showComparator ? "block" : "none",
         }}
       />
-    </>
+    </div>
   );
 };

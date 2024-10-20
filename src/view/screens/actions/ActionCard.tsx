@@ -1,11 +1,11 @@
-import { Avatar, Card } from "react-native-paper";
+import { Card, useTheme } from "react-native-paper";
 
-import { Action, ActionState } from "@domain/entities/actions/Action";
+import { Action, ActionState } from "@domain/entities/action/Action";
 import { ActionCardButtons } from "@view/screens/actions/ActionCardButtons";
+import { ActionCardCategoryIcon } from "@view/screens/actions/ActionCardCategoryIcon";
 import { ActionCardContent } from "@view/screens/actions/ActionCardContent";
-import { useActionStyles } from "@view/screens/actions/useActionStyles";
+import { ActionCardTitle } from "@view/screens/actions/ActionCardTitle";
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
-import { View } from "react-native";
 
 type Props = {
   action: Action;
@@ -18,37 +18,36 @@ export const ActionCard = ({
   updateState,
   footprintViewModel,
 }: Props) => {
-  const { label, state } = action;
-
-  const styles = useActionStyles();
+  const { roundness } = useTheme();
 
   const savedFootprintPart = Math.floor(
     (action.savedFootprint / footprintViewModel.totalFootprint) * 100,
   );
 
   return (
-    <Card style={styles[state].card}>
-      <View style={{ height: styles[state].card.height }}>
-        <Card.Title
-          title={label}
-          titleNumberOfLines={2}
-          titleVariant="titleSmall"
-          left={(props) => (
-            <Avatar.Icon
-              {...props}
-              icon={footprintViewModel.materialIcon}
-              style={{ backgroundColor: footprintViewModel.color }}
-            />
-          )}
-        />
-
-        <ActionCardContent
-          action={action}
-          savedFootprintPart={savedFootprintPart}
-        />
-
-        <ActionCardButtons actionState={state} updateState={updateState} />
-      </View>
+    <Card
+      style={{
+        borderColor: footprintViewModel.color,
+        borderRadius: roundness,
+        width: 250,
+        borderWidth: 1,
+        opacity: action.state === "skipped" ? 0.7 : 1,
+      }}
+    >
+      <ActionCardTitle
+        action={action}
+        footprintViewModel={footprintViewModel}
+      />
+      <ActionCardContent
+        action={action}
+        savedFootprintPart={savedFootprintPart}
+        footprintViewModel={footprintViewModel}
+      />
+      <ActionCardCategoryIcon
+        color={footprintViewModel.color}
+        icon={footprintViewModel.materialIcon}
+      />
+      <ActionCardButtons actionState={action.state} updateState={updateState} />
     </Card>
   );
 };

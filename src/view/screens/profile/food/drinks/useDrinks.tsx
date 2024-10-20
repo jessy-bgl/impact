@@ -1,63 +1,42 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Drinks } from "@domain/entities/categories/food/drinks/Drinks";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<
-    Drinks & {
-      chocolatePerWeek: number;
-      coffeePerWeek: number;
-      teaPerWeek: number;
-    }
-  >,
-  "annualFootprint"
->;
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useDrinks = () => {
-  const storedDrinks = useAppStore((store) => store.emissions.food.drinks);
-  const annualFootprint = new Drinks(storedDrinks).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateFoodProfile } = useContext(UsecasesContext);
 
-  const { useUpdateFood } = useContext(UsecasesContext);
-  const { updateDrinks } = useUpdateFood();
+  const drinksQuestions = {
+    hotDrinksQuestion: questions["alimentation . boisson . chaude"],
+    ...questions["alimentation . boisson . chaude"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    sodaConsumptionQuestion:
+      questions["alimentation . boisson . sucrées . litres"],
+    alcoholConsumptionQuestion:
+      questions["alimentation . boisson . alcool . litres"],
+    bottleWaterConsumptionQuestion:
+      questions["alimentation . boisson . eau en bouteille . consommateur"],
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    hotDrinksPerWeek: JSON.stringify(storedDrinks.hotDrinksPerWeek),
-    chocolatePerWeek: storedDrinks.hotDrinksPerWeek.chocolate.toString(),
-    coffeePerWeek: storedDrinks.hotDrinksPerWeek.coffee.toString(),
-    teaPerWeek: storedDrinks.hotDrinksPerWeek.tea.toString(),
-    milkType: storedDrinks.milkType,
-    alcoholLitersPerWeek: storedDrinks.alcoholLitersPerWeek.toString(),
-    sodaLitersPerWeek: storedDrinks.sodaLitersPerWeek.toString(),
-    bottledWater: storedDrinks.bottledWater.toString(),
-  });
+  const { control } = useProfileForm(drinksQuestions);
 
-  const { handleUpdate, control, watch, setValue } = useUpdateForm<
-    Drinks,
-    FormValues
-  >(getDefaultValues(), storedDrinks, updateDrinks);
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.food.drinksFootprint,
+  );
 
-  const chocolatePerWeek = watch("chocolatePerWeek");
-  const coffeePerWeek = watch("coffeePerWeek");
-  const teaPerWeek = watch("teaPerWeek");
-
-  useEffect(() => {
-    setValue(
-      "hotDrinksPerWeek",
-      JSON.stringify({
-        chocolate: Number(chocolatePerWeek) || 0,
-        coffee: Number(coffeePerWeek) || 0,
-        tea: Number(teaPerWeek) || 0,
-      }),
-    );
-    handleUpdate("hotDrinksPerWeek");
-  }, [chocolatePerWeek, coffeePerWeek, teaPerWeek]);
-
-  const disableMilkSelection = chocolatePerWeek === "0" || !chocolatePerWeek;
-
-  return { annualFootprint, control, handleUpdate, disableMilkSelection };
+  return {
+    annualFootprint,
+    control,
+    updateFoodProfile,
+    drinksQuestions,
+  };
 };

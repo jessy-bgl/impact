@@ -1,39 +1,34 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Plane } from "@domain/entities/categories/transport/plane/Plane";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Plane>, "annualFootprint">;
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const usePlane = () => {
-  const storedPlane = useAppStore((store) => store.emissions.transport.plane);
-  const storedPlaneUsage = storedPlane.usage;
-  const annualFootprint = new Plane(storedPlane).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updatePlane } = useUpdateTransport();
+  const planeQuestions = {
+    planeUsageQuestion: questions["transport . avion . usager"],
+    hoursPerYearInShortHaulQuestion:
+      questions["transport . avion . court courrier . heures de vol"],
+    hoursPerYearInMediumHaulQuestion:
+      questions["transport . avion . moyen courrier . heures de vol"],
+    hoursPerYearInLongHaulQuestion:
+      questions["transport . avion . long courrier . heures de vol"],
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    usage: storedPlane.usage.toString(),
-    hoursPerYearInShortHaul: storedPlane.hoursPerYearInShortHaul.toString(),
-    hoursPerYearInMediumHaul: storedPlane.hoursPerYearInMediumHaul.toString(),
-    hoursPerYearInLongHaul: storedPlane.hoursPerYearInLongHaul.toString(),
-  });
+  const { control } = useProfileForm(planeQuestions);
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<
-    Plane,
-    FormValues
-  >(getDefaultValues(), storedPlane, updatePlane);
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.transport.planeFootprint,
+  );
 
-  useEffect(() => {
-    if (!storedPlaneUsage) reset(getDefaultValues());
-  }, [storedPlaneUsage]);
-
-  const usage = watch("usage") === "true";
-
-  return { control, handleUpdate, usage, annualFootprint };
+  return {
+    annualFootprint,
+    control,
+    updateTransportProfile,
+    planeQuestions,
+  };
 };

@@ -1,68 +1,37 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { HouseholdAppliances } from "@domain/entities/categories/everyday-things/household-appliances/HouseholdAppliances";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<HouseholdAppliances>,
-  "annualFootprint"
->;
-
-export const HouseholdAppliancesLabels: (keyof FormValues)[] = [
-  "fridges",
-  "miniFridges",
-  "freezers",
-  "washingMachines",
-  "dryers",
-  "dishWashers",
-  "hoods",
-  "ovens",
-  "microwaves",
-  "hotPlates",
-  "kettles",
-  "coffeeMachines",
-  "vacuumCleaners",
-  "kitchenRobots",
-  "electricLawnMowers",
-];
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useHouseholdAppliances = () => {
-  const storedHouseholdAppliances = useAppStore(
-    (store) => store.emissions.everydayThings.householdAppliances,
+  const { questions } = useQuestionsContext();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
+
+  const househouldAppliances = {
+    householdAppliancesQuestion:
+      questions["divers . électroménager . appareils"],
+    ...questions["divers . électroménager . appareils"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+  };
+
+  const { control } = useProfileForm(househouldAppliances);
+
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.everydayThings.householdApplicancesFootprint,
   );
-  const annualFootprint = new HouseholdAppliances(storedHouseholdAppliances)
-    .annualFootprint;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updateHouseholdAppliances } = useUpdateEverydayThings();
-
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    preservation: storedHouseholdAppliances.preservation,
-    fridges: storedHouseholdAppliances.fridges.toString(),
-    miniFridges: storedHouseholdAppliances.miniFridges.toString(),
-    freezers: storedHouseholdAppliances.freezers.toString(),
-    washingMachines: storedHouseholdAppliances.washingMachines.toString(),
-    dryers: storedHouseholdAppliances.dryers.toString(),
-    dishWashers: storedHouseholdAppliances.dishWashers.toString(),
-    hoods: storedHouseholdAppliances.hoods.toString(),
-    ovens: storedHouseholdAppliances.ovens.toString(),
-    microwaves: storedHouseholdAppliances.microwaves.toString(),
-    hotPlates: storedHouseholdAppliances.hotPlates.toString(),
-    kettles: storedHouseholdAppliances.kettles.toString(),
-    coffeeMachines: storedHouseholdAppliances.coffeeMachines.toString(),
-    vacuumCleaners: storedHouseholdAppliances.vacuumCleaners.toString(),
-    kitchenRobots: storedHouseholdAppliances.kitchenRobots.toString(),
-    electricLawnMowers: storedHouseholdAppliances.electricLawnMowers.toString(),
-  });
-
-  const { handleUpdate, control } = useUpdateForm<
-    HouseholdAppliances,
-    FormValues
-  >(getDefaultValues(), storedHouseholdAppliances, updateHouseholdAppliances);
-
-  return { annualFootprint, control, handleUpdate };
+  return {
+    annualFootprint,
+    control,
+    updateEverydayThingsProfile,
+    househouldAppliances,
+  };
 };

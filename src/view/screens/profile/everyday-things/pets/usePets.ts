@@ -1,42 +1,38 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Pets } from "@domain/entities/categories/everyday-things/pets/Pets";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Pets>, "annualFootprint">;
-
-export const PetsLabels: (keyof FormValues)[] = [
-  "smallDogs",
-  "mediumDogs",
-  "bigDogs",
-  "cats",
-];
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const usePets = () => {
-  const storedPets = useAppStore(
-    (store) => store.emissions.everydayThings.pets,
+  const { questions } = useQuestionsContext();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
+
+  const petsQuestions = {
+    numberOfPetsQuestion: questions["divers . animaux domestiques . empreinte"],
+    ...questions[
+      "divers . animaux domestiques . empreinte"
+    ].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+  };
+
+  const { control } = useProfileForm(petsQuestions);
+
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.everydayThings.petFootprint,
   );
-  const annualFootprint = new Pets(storedPets).annualFootprint;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updatePets } = useUpdateEverydayThings();
-
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    smallDogs: storedPets.smallDogs.toString(),
-    mediumDogs: storedPets.mediumDogs.toString(),
-    bigDogs: storedPets.bigDogs.toString(),
-    cats: storedPets.cats.toString(),
-  });
-
-  const { handleUpdate, control } = useUpdateForm<Pets, FormValues>(
-    getDefaultValues(),
-    storedPets,
-    updatePets,
-  );
-
-  return { annualFootprint, control, handleUpdate };
+  return {
+    annualFootprint,
+    control,
+    updateEverydayThingsProfile,
+    petsQuestions,
+  };
 };

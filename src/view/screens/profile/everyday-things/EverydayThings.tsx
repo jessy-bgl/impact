@@ -15,24 +15,23 @@ export const EverydayThingsProfile = () => {
   return (
     <ScrollView>
       <List.Section>
-        <ClothesSection />
-        <Divider />
         <PetsSection />
+        <Divider />
+        <HobbiesSection />
+        <Divider />
+        <DigitalSection />
+        <Divider />
+        <ClothesSection />
         <Divider />
         <HouseholdAppliancesSection />
         <Divider />
         <FurnitureSection />
-        <Divider />
-        <DigitalSection />
-        <Divider />
-        <HobbiesSection />
         <Divider />
         <ConsumableProductsSection />
         <Divider />
         <TobaccoSection />
         <Divider />
         <OtherProductsSection />
-        <Divider />
       </List.Section>
     </ScrollView>
   );

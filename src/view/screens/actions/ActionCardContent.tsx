@@ -1,39 +1,55 @@
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Card, Icon, Text, useTheme } from "react-native-paper";
 
-import { Action } from "@domain/entities/actions/Action";
-import { useActionStyles } from "@view/screens/actions/useActionStyles";
-import { useTranslation } from "react-i18next";
+import { Action } from "@domain/entities/action/Action";
+import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 type Props = {
   action: Action;
   savedFootprintPart: number;
+  footprintViewModel: FootprintCategoryViewModel;
 };
 
-export const ActionCardContent = ({ action, savedFootprintPart }: Props) => {
-  const styles = useActionStyles();
-  const { colors } = useTheme();
+export const ActionCardContent = ({
+  action,
+  savedFootprintPart,
+  footprintViewModel,
+}: Props) => {
+  const { colors, roundness } = useTheme();
+
   const { t } = useTranslation(["common", "actions"]);
 
-  const { state, savedFootprint } = action;
-
   return (
-    <Card.Content style={styles[state].content}>
-      {state !== "completed" ? (
-        <>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Icon source="arrow-down" color={colors.primary} size={20} />
-          </View>
-          <View style={{ justifyContent: "center", gap: 5 }}>
-            <Text>{savedFootprintPart}%</Text>
-            <Text>{`${savedFootprint} ${t("footprintKg")}`}</Text>
-          </View>
-        </>
-      ) : (
-        <View style={{ alignItems: "center", justifyContent: "center" }}>
-          <Text>{t("actions:completed")}</Text>
-        </View>
-      )}
+    <Card.Content
+      style={{
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 10,
+        height: 60,
+        marginVertical: 5,
+      }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 5,
+          backgroundColor: footprintViewModel.color,
+          borderRadius: roundness,
+          padding: 5,
+        }}
+      >
+        <Icon source="arrow-down" size={20} color={colors.surface} />
+        <Text style={{ color: colors.surface, marginBottom: 2 }}>
+          {savedFootprintPart}%
+        </Text>
+      </View>
+      <View>
+        <Text>{`- ${action.savedFootprint} ${t("footprintKg")}`}</Text>
+      </View>
     </Card.Content>
   );
 };

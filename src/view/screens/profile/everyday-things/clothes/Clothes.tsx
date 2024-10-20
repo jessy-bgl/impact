@@ -1,16 +1,19 @@
-import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Text } from "react-native-paper";
 
-import { NumericInput } from "@view/components/forms/NumericInput";
-import { ListAccordion } from "@view/screens/profile/components/ListAccordion";
-import { ListContentContainer } from "@view/screens/profile/components/ListContentContainer";
-import { RowContainer } from "@view/screens/profile/components/RowContainer";
-import { ClothesLabels, FormValues, useClothes } from "./useClothes";
+import { ListAccordion } from "@view/screens/profile/components/lists/ListAccordion";
+import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
+import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
+import { useClothes } from "@view/screens/profile/everyday-things/clothes/useClothes";
 
 export const ClothesSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);
-  const { control, handleUpdate, annualFootprint } = useClothes();
+
+  const {
+    control,
+    clothesQuestions,
+    annualFootprint,
+    updateEverydayThingsProfile,
+  } = useClothes();
 
   return (
     <ListAccordion
@@ -19,31 +22,11 @@ export const ClothesSection = () => {
       icon="tshirt-crew"
     >
       <ListContentContainer>
-        <RowContainer style={{ marginBottom: 10 }}>
-          <Text variant="labelLarge" style={{ textAlign: "center" }}>
-            {t("clothes.title")}
-          </Text>
-        </RowContainer>
-
-        {ClothesLabels.map((label) => (
-          <RowContainer key={label} style={{ marginTop: 10 }}>
-            <Text variant="labelLarge" style={{ flex: 3 }}>
-              {t(`clothes.${label}`)}
-            </Text>
-            <Controller<FormValues>
-              name={label}
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <NumericInput
-                  style={{ flex: 1 }}
-                  onBlur={() => handleUpdate(label)}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-            />
-          </RowContainer>
-        ))}
+        <ListItemQuestion
+          question={clothesQuestions.newClothersPerYearQuestion}
+          control={control}
+          handleUpdate={updateEverydayThingsProfile}
+        />
       </ListContentContainer>
     </ListAccordion>
   );

@@ -1,38 +1,45 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { PublicTransport } from "@domain/entities/categories/transport/public-transport/PublicTransport";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<PublicTransport>,
-  "annualFootprint"
->;
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const usePublicTransport = () => {
-  const storedPublicTransport = useAppStore(
-    (store) => store.emissions.transport.publicTransport,
+  const { questions } = useQuestionsContext();
+  const { updateTransportProfile } = useContext(UsecasesContext);
+
+  const publicTransportQuestions = {
+    trainKmPerYearQuestion: questions["transport . train . km"],
+    publicTransportUsageQuestion: questions["transport . transports commun"],
+    ...questions["transport . transports commun"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    hoursPerWeekInBusQuestion:
+      questions["transport . transports commun . bus . heures par semaine"],
+    coachKmPerWeekQuestion:
+      questions["transport . transports commun . car . km par semaine"],
+    hoursPerWeekInMetroQuestion:
+      questions[
+        "transport . transports commun . métro ou tram . heures par semaine"
+      ],
+  };
+
+  const { control } = useProfileForm(publicTransportQuestions);
+
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.transport.publicTransportFootprint,
   );
-  const annualFootprint = new PublicTransport(storedPublicTransport)
-    .annualFootprint;
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updatePublicTransport } = useUpdateTransport();
-
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    hoursPerYearInTrain: storedPublicTransport.hoursPerYearInTrain.toString(),
-    hoursPerWeekInBus: storedPublicTransport.hoursPerWeekInBus.toString(),
-    hoursPerWeekInMetro: storedPublicTransport.hoursPerWeekInMetro.toString(),
-  });
-
-  const { handleUpdate, control } = useUpdateForm<PublicTransport, FormValues>(
-    getDefaultValues(),
-    storedPublicTransport,
-    updatePublicTransport,
-  );
-
-  return { control, handleUpdate, annualFootprint };
+  return {
+    control,
+    updateTransportProfile,
+    annualFootprint,
+    publicTransportQuestions,
+  };
 };

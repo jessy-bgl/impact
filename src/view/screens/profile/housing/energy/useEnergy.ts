@@ -1,92 +1,64 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Energy } from "@domain/entities/categories/housing/energy/Energy";
-import { HeatingEnergies } from "@domain/entities/categories/housing/energy/types";
-import { StringifyProperties, convertStringToType } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<Energy & HeatingEnergies>,
-  "annualFootprint" | "occupants" | "livingSpace" | "isAnApartment"
->;
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useEnergy = () => {
-  const storedEnergy = useAppStore((store) => store.emissions.housing.energy);
-  const annualFootprint = new Energy(storedEnergy).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateHousingProfile } = useContext(UsecasesContext);
 
-  const { useUpdateHousing } = useContext(UsecasesContext);
-  const { updateEnergy } = useUpdateHousing();
+  const energyQuestions = {
+    photovoltaicPanelQuestion:
+      questions["logement . électricité . photovoltaique . présent"],
+    photovoltaicProductionQuestion:
+      questions["logement . électricité . photovoltaique . production"],
+    photovoltaicPartQuestion:
+      questions[
+        "logement . électricité . photovoltaique . part autoconsommation"
+      ],
+    electricityConsumptionQuestion:
+      questions["logement . électricité . réseau . consommation"],
+    heatingEnergyTypeQuestion: questions["logement . chauffage"],
+    ...questions["logement . chauffage"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, any>,
+    ),
+    woodTypeQuestion: questions["logement . chauffage . bois . type"],
+    gasConsumptionQuestion:
+      questions["logement . chauffage . gaz . consommation"],
+    gasBottleConsumptionQuestion:
+      questions["logement . chauffage . bouteille gaz . consommation"],
+    gasPropaneConsumptionQuestion:
+      questions["logement . chauffage . citerne propane . consommation"],
+    fuelOilConsumptionQuestion:
+      questions["logement . chauffage . fioul . consommation"],
+    woodLogsConsumptionQuestion:
+      questions["logement . chauffage . bois . type . bûches . consommation"],
+    heatNetworkConsumptionQuestion:
+      questions["logement . chauffage . réseau de chaleur . consommation"],
+    bioGasContractQuestion: questions["logement . chauffage . gaz . biogaz"],
+    bioGasPartQuestion: questions["logement . chauffage . biogaz . part"],
+    airConditioningUsageQuestion:
+      questions["logement . climatisation . présent"],
+    airConditioningNumberQuestion:
+      questions["logement . climatisation . nombre"],
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    annualElectricityConsumption:
-      storedEnergy.annualElectricityConsumption.toString(),
-    airConditioners: storedEnergy.airConditioners.toString(),
-    heatingEnergies: JSON.stringify(storedEnergy.heatingEnergies),
-    electricity: storedEnergy.heatingEnergies.electricity.toString(),
-    gas: storedEnergy.heatingEnergies.gas.toString(),
-    heatNetwork: storedEnergy.heatingEnergies.heatNetwork.toString(),
-    fuel: storedEnergy.heatingEnergies.fuel.toString(),
-    wood: storedEnergy.heatingEnergies.wood.toString(),
-    propane: storedEnergy.heatingEnergies.propane.toString(),
-    gasCylinder: storedEnergy.heatingEnergies.gasCylinder.toString(),
-    heatPump: storedEnergy.heatingEnergies.heatPump.toString(),
-    bioGas: storedEnergy.heatingEnergies.bioGas.toString(),
-    woodType: storedEnergy.woodType.toString(),
-  });
+  const { control } = useProfileForm(energyQuestions);
 
-  const { handleUpdate, control, watch, setValue } = useUpdateForm<
-    Energy,
-    FormValues
-  >(getDefaultValues(), storedEnergy, updateEnergy);
-
-  const electricity = watch("electricity");
-  const gas = watch("gas");
-  const heatNetwork = watch("heatNetwork");
-  const fuel = watch("fuel");
-  const wood = watch("wood");
-  const propane = watch("propane");
-  const gasCylinder = watch("gasCylinder");
-  const heatPump = watch("heatPump");
-  const bioGas = watch("bioGas");
-
-  useEffect(() => {
-    const newHeatingEnergies = JSON.stringify({
-      electricity: convertStringToType(electricity, "boolean"),
-      gas: convertStringToType(gas, "boolean"),
-      heatNetwork: convertStringToType(heatNetwork, "boolean"),
-      fuel: convertStringToType(fuel, "boolean"),
-      wood: convertStringToType(wood, "boolean"),
-      propane: convertStringToType(propane, "boolean"),
-      gasCylinder: convertStringToType(gasCylinder, "boolean"),
-      heatPump: convertStringToType(heatPump, "boolean"),
-      bioGas: convertStringToType(bioGas, "boolean"),
-    });
-    setValue("heatingEnergies", newHeatingEnergies);
-    handleUpdate("heatingEnergies");
-  }, [
-    electricity,
-    gas,
-    heatNetwork,
-    fuel,
-    wood,
-    propane,
-    gasCylinder,
-    heatPump,
-    bioGas,
-  ]);
-
-  const showBioGas = gas === "true";
-  const showWoodType = wood === "true";
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.housing.energyFootprint,
+  );
 
   return {
     annualFootprint,
-    handleUpdate,
     control,
-    setValue,
-    showBioGas,
-    showWoodType,
+    updateHousingProfile,
+    energyQuestions,
   };
 };

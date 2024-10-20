@@ -1,43 +1,39 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Car } from "@domain/entities/categories/transport/car/Car";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Car>, "annualFootprint">;
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useCar = () => {
-  const storedCar = useAppStore((store) => store.emissions.transport.car);
-  const storedRegularUser = storedCar.regularUser;
-  const annualFootprint = new Car(storedCar).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updateCar } = useUpdateTransport();
+  const carQuestions = {
+    kmPerYearQuestion: questions["transport . voiture . km"],
+    averagePassengersQuestion: questions["transport . voiture . voyageurs"],
+    regularUsageOfSameCarQuestion:
+      questions["transport . voiture . utilisateur"],
+    carSizeQuestion: questions["transport . voiture . gabarit"],
+    carEngineQuestion: questions["transport . voiture . motorisation"],
+    carFuelTypeQuestion:
+      questions["transport . voiture . thermique . carburant"],
+    carFuelConsumptionQuestion:
+      questions["transport . voiture . thermique . consommation aux 100"],
+    carElectricityConsumptionQuestion:
+      questions["transport . voiture . électrique . consommation aux 100"],
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    kmPerYear: storedCar.kmPerYear.toString(),
-    regularUser: storedCar.regularUser.toString(),
-    size: storedCar.size.toString(),
-    engine: storedCar.engine.toString(),
-    fuelType: storedCar.fuelType.toString(),
-    age: storedCar.age.toString(),
-    averagePassengers: storedCar.averagePassengers.toString(),
-    averageFuelConsumption: storedCar.averageFuelConsumption.toString(),
-  });
+  const { control } = useProfileForm(carQuestions);
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<
-    Car,
-    FormValues
-  >(getDefaultValues(), storedCar, updateCar);
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.transport.carFootprint,
+  );
 
-  useEffect(() => {
-    if (!storedRegularUser) reset(getDefaultValues());
-  }, [storedRegularUser]);
-
-  const regularUser = watch("regularUser") === "true";
-
-  return { control, handleUpdate, regularUser, annualFootprint };
+  return {
+    annualFootprint,
+    control,
+    updateTransportProfile,
+    carQuestions,
+  };
 };

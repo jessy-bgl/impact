@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
@@ -8,56 +9,71 @@ import {
 } from "@view/view-models/Footprint";
 
 export const useFootprints = () => {
-  const appStore = useAppStore((store) => store);
+  const storedFootprints = useAppStore((store) => store.footprints);
 
   const {
-    useFetchTransport,
-    useFetchFood,
-    useFetchHousing,
-    useFetchEverydayThings,
-    useFetchPublicServices,
-    useComputeTotalAnnualFootprint,
+    fetchTransportFootprint,
+    fetchEverydayThingsFootprint,
+    fetchFoodFootprint,
+    fetchHousingFootprint,
+    fetchSocietalServicesFootprint,
+    computeAnnualFootprint,
   } = useContext(UsecasesContext);
 
-  const { computeTotalAnnualFootprint } = useComputeTotalAnnualFootprint();
-  const { fetchTransport } = useFetchTransport();
-  const { fetchFood } = useFetchFood();
-  const { fetchHousing } = useFetchHousing();
-  const { fetchEverydayThings } = useFetchEverydayThings();
-  const { fetchPublicServices } = useFetchPublicServices();
+  const transportFootprint = useMemo(
+    () => fetchTransportFootprint(),
+    [storedFootprints.transport],
+  );
 
-  const transport = useMemo(() => fetchTransport(), [appStore]);
-  const food = useMemo(() => fetchFood(), [appStore]);
-  const housing = useMemo(() => fetchHousing(), [appStore]);
-  const everydayThings = useMemo(() => fetchEverydayThings(), [appStore]);
-  const publicServices = useMemo(() => fetchPublicServices(), [appStore]);
-  const totalAnnualFootprint = useMemo(
-    () => computeTotalAnnualFootprint(),
-    [appStore],
+  const foodFootprint = useMemo(
+    () => fetchFoodFootprint(),
+    [storedFootprints.food],
+  );
+
+  const housingFootprint = useMemo(
+    () => fetchHousingFootprint(),
+    [storedFootprints.housing],
+  );
+
+  const everydayThingsFootprint = useMemo(
+    () => fetchEverydayThingsFootprint(),
+    [storedFootprints.everydayThings],
+  );
+
+  const societalServices = useMemo(
+    () => fetchSocietalServicesFootprint(),
+    [storedFootprints.societalServices],
+  );
+
+  const annualFootprint = useMemo(
+    () => computeAnnualFootprint(),
+    [storedFootprints],
   );
 
   const footprints: Footprints = {
     transport: FootprintCategoryViewModel.forTransport(
-      transport.annualFootprint,
-      totalAnnualFootprint,
+      transportFootprint.annualFootprint,
+      annualFootprint,
     ),
     food: FootprintCategoryViewModel.forFood(
-      food.annualFootprint,
-      totalAnnualFootprint,
+      foodFootprint.annualFootprint,
+      annualFootprint,
     ),
     housing: FootprintCategoryViewModel.forHousing(
-      housing.annualFootprint,
-      totalAnnualFootprint,
+      housingFootprint.annualFootprint,
+      annualFootprint,
     ),
     everydayThings: FootprintCategoryViewModel.forEverydayThings(
-      everydayThings.annualFootprint,
-      totalAnnualFootprint,
+      everydayThingsFootprint.annualFootprint,
+      annualFootprint,
     ),
-    publicServices: FootprintCategoryViewModel.forPublicServices(
-      publicServices.annualFootprint,
-      totalAnnualFootprint,
+    societalServices: FootprintCategoryViewModel.forSocietalServices(
+      societalServices.annualFootprint,
+      annualFootprint,
     ),
   };
 
-  return { footprints, totalAnnualFootprint };
+  FootprintCategoryViewModel.distributeParts(footprints);
+
+  return { footprints, annualFootprint };
 };

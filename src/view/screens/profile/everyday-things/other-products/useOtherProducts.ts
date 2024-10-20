@@ -1,40 +1,40 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import {
-  OtherProducts,
-  SpendingLevel,
-} from "@domain/entities/categories/everyday-things/other-products/OtherProducts";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<OtherProducts>,
-  "annualFootprint"
->;
-
-export const spendingLevels: SpendingLevel[] = ["low", "medium", "high"];
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useOtherProducts = () => {
-  const storedOtherProducts = useAppStore(
-    (store) => store.emissions.everydayThings.otherProducts,
+  const { questions } = useQuestionsContext();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
+
+  const otherQuestions = {
+    expensesQuestion:
+      questions["divers . autres produits . niveau de dépenses"],
+    ...questions[
+      "divers . autres produits . niveau de dépenses"
+    ].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    relationQuestion: questions["divers . ameublement . préservation"],
+  };
+
+  const { control } = useProfileForm(otherQuestions);
+
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.everydayThings.otherProductsFootprint,
   );
-  const annualFootprint = new OtherProducts(storedOtherProducts)
-    .annualFootprint;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updateOtherProducts } = useUpdateEverydayThings();
-
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    spendingLevel: storedOtherProducts.spendingLevel,
-  });
-
-  const { handleUpdate, control, setValue } = useUpdateForm<
-    OtherProducts,
-    FormValues
-  >(getDefaultValues(), storedOtherProducts, updateOtherProducts);
-
-  return { annualFootprint, control, handleUpdate, setValue };
+  return {
+    annualFootprint,
+    control,
+    updateEverydayThingsProfile,
+    otherQuestions,
+  };
 };

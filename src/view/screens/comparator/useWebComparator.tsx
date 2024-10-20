@@ -27,7 +27,7 @@ export const useWebComparator = (type: AdemeComparatorType) => {
       }, 500);
     };
     ademeComparator.current?.appendChild(script);
-  }, []);
+  }, [type]);
 
   return { ademeComparator, isLoading, showComparator };
 };
