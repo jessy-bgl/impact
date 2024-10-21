@@ -27,6 +27,15 @@ export abstract class AdemeEngine {
     }
   };
 
+  public static evaluate = (rule: DottedName): EvaluatedNode => {
+    try {
+      return ademeFootprintModel.evaluate(rule);
+    } catch (e) {
+      console.error(e);
+      return {} as EvaluatedNode;
+    }
+  };
+
   public static containsKey = (key: keyof Profile): boolean => {
     try {
       this.getRule(key);

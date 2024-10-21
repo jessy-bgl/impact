@@ -1,10 +1,8 @@
 import { DottedName } from "@incubateur-ademe/nosgestesclimat";
 import _ from "lodash";
+import { EvaluatedNode } from "publicodes";
 
-import {
-  ademeFootprintModel,
-  NGCRulesNodes,
-} from "@data/ademe-footprint-model";
+import { NGCRuleNode, NGCRulesNodes } from "@data/ademe-footprint-model";
 import { Action } from "@domain/entities/action/Action";
 import { AdemeAction } from "@domain/entities/action/AdemeAction";
 import { AdemeEngine } from "@domain/entities/AdemeEngine";
@@ -43,19 +41,20 @@ export abstract class AdemeFootprintEngine {
 
   public static getActions = (): Action[] => {
     // remove not applicable / completed actions
-    let actionEvaluatedNodes = this.getActionNames()
-      .filter((actionRuleName: DottedName) =>
-        AdemeEngine.getIsApplicable(actionRuleName),
-      )
-      .map((actionRuleName: DottedName) => {
-        const evaluation = ademeFootprintModel.evaluate(actionRuleName);
-        const rule = AdemeEngine.getRule(actionRuleName);
-        return {
-          ...evaluation,
-          ...rule,
-          dottedName: actionRuleName,
-        };
-      });
+    let actionEvaluatedNodes: (NGCRuleNode & EvaluatedNode)[] =
+      this.getActionNames()
+        .filter((actionRuleName: DottedName) =>
+          AdemeEngine.getIsApplicable(actionRuleName),
+        )
+        .map((actionRuleName: DottedName) => {
+          const evaluation = AdemeEngine.evaluate(actionRuleName);
+          const rule = AdemeEngine.getRule(actionRuleName);
+          return {
+            ...evaluation,
+            ...rule,
+            dottedName: actionRuleName,
+          };
+        });
     // TODO : filter irrelevant actions ?
     // sort actions by impact
     actionEvaluatedNodes = _.sortBy(
@@ -84,82 +83,73 @@ export abstract class AdemeFootprintEngine {
 
   public static computeTransportFootprint = () => {
     return new TransportFootprint({
-      carFootprint: ademeFootprintModel.evaluate("transport . voiture")
+      carFootprint: AdemeEngine.evaluate("transport . voiture")
         .nodeValue as number,
-      boatFootprint: ademeFootprintModel.evaluate("transport . ferry")
+      boatFootprint: AdemeEngine.evaluate("transport . ferry")
         .nodeValue as number,
-      planeFootprint: ademeFootprintModel.evaluate("transport . avion")
+      planeFootprint: AdemeEngine.evaluate("transport . avion")
         .nodeValue as number,
-      twoWheelerFootprint: ademeFootprintModel.evaluate(
-        "transport . deux roues",
-      ).nodeValue as number,
-      gentleMobilityFootprint: ademeFootprintModel.evaluate(
+      twoWheelerFootprint: AdemeEngine.evaluate("transport . deux roues")
+        .nodeValue as number,
+      gentleMobilityFootprint: AdemeEngine.evaluate(
         "transport . mobilité douce",
       ).nodeValue as number,
-      holidaysTransportFootprint: ademeFootprintModel.evaluate(
-        "transport . vacances",
-      ).nodeValue as number,
-      publicTransportFootprint: ademeFootprintModel.evaluate(
+      holidaysTransportFootprint: AdemeEngine.evaluate("transport . vacances")
+        .nodeValue as number,
+      publicTransportFootprint: AdemeEngine.evaluate(
         "transport . transports commun",
       ).nodeValue as number,
-      trainFootprint: ademeFootprintModel.evaluate("transport . train")
+      trainFootprint: AdemeEngine.evaluate("transport . train")
         .nodeValue as number,
     });
   };
 
   public static computeFoodFootprint = () => {
     return new FoodFootprint({
-      drinksFootprint: ademeFootprintModel.evaluate("alimentation . boisson")
+      drinksFootprint: AdemeEngine.evaluate("alimentation . boisson")
         .nodeValue as number,
-      mealsFootprint: ademeFootprintModel.evaluate("alimentation . repas")
+      mealsFootprint: AdemeEngine.evaluate("alimentation . repas")
         .nodeValue as number,
-      wasteFootprint: ademeFootprintModel.evaluate("alimentation . déchets")
+      wasteFootprint: AdemeEngine.evaluate("alimentation . déchets")
         .nodeValue as number,
     });
   };
 
   public static computeHousingFootprint = () => {
     return new HousingFootprint({
-      homeFootprint: ademeFootprintModel.evaluate("logement . construction")
+      homeFootprint: AdemeEngine.evaluate("logement . construction")
         .nodeValue as number,
       energyFootprint:
-        (ademeFootprintModel.evaluate("logement . électricité")
-          .nodeValue as number) +
-        (ademeFootprintModel.evaluate("logement . chauffage")
-          .nodeValue as number) +
-        (ademeFootprintModel.evaluate("logement . climatisation")
-          .nodeValue as number),
+        (AdemeEngine.evaluate("logement . électricité").nodeValue as number) +
+        (AdemeEngine.evaluate("logement . chauffage").nodeValue as number) +
+        (AdemeEngine.evaluate("logement . climatisation").nodeValue as number),
       leisureFootprint:
-        (ademeFootprintModel.evaluate("logement . vacances")
-          .nodeValue as number) +
-        (ademeFootprintModel.evaluate("logement . piscine")
-          .nodeValue as number) +
-        (ademeFootprintModel.evaluate("logement . extérieur")
-          .nodeValue as number),
+        (AdemeEngine.evaluate("logement . vacances").nodeValue as number) +
+        (AdemeEngine.evaluate("logement . piscine").nodeValue as number) +
+        (AdemeEngine.evaluate("logement . extérieur").nodeValue as number),
     });
   };
 
   public static computeEverydayThingsFootprint = () => {
     return new EverydayThingsFootprint({
-      petFootprint: ademeFootprintModel.evaluate("divers . animaux domestiques")
+      petFootprint: AdemeEngine.evaluate("divers . animaux domestiques")
         .nodeValue as number,
-      furnitureFootprint: ademeFootprintModel.evaluate("divers . ameublement")
+      furnitureFootprint: AdemeEngine.evaluate("divers . ameublement")
         .nodeValue as number,
-      otherProductsFootprint: ademeFootprintModel.evaluate(
-        "divers . autres produits",
-      ).nodeValue as number,
-      hobbiesFootprint: ademeFootprintModel.evaluate("divers . loisirs")
+      otherProductsFootprint: AdemeEngine.evaluate("divers . autres produits")
         .nodeValue as number,
-      clothesFootprint: ademeFootprintModel.evaluate("divers . textile")
+      hobbiesFootprint: AdemeEngine.evaluate("divers . loisirs")
         .nodeValue as number,
-      digitalFootprint: ademeFootprintModel.evaluate("divers . numérique")
+      clothesFootprint: AdemeEngine.evaluate("divers . textile")
         .nodeValue as number,
-      consumableProductsFootprint: ademeFootprintModel.evaluate(
+      digitalFootprint: AdemeEngine.evaluate("divers . numérique")
+        .nodeValue as number,
+      consumableProductsFootprint: AdemeEngine.evaluate(
         "divers . produits consommables",
       ).nodeValue as number,
-      tobaccoFootprint: ademeFootprintModel.evaluate("divers . tabac")
+      tobaccoFootprint: AdemeEngine.evaluate("divers . tabac")
         .nodeValue as number,
-      householdApplicancesFootprint: ademeFootprintModel.evaluate(
+      householdApplicancesFootprint: AdemeEngine.evaluate(
         "divers . électroménager",
       ).nodeValue as number,
     });
@@ -167,10 +157,10 @@ export abstract class AdemeFootprintEngine {
 
   public static computeSocietalServicesFootprint = () => {
     return new SocietalServicesFootprint({
-      merchantServicesFootprint: ademeFootprintModel.evaluate(
+      merchantServicesFootprint: AdemeEngine.evaluate(
         "services sociétaux . services marchands",
       ).nodeValue as number,
-      publicServicesFootprint: ademeFootprintModel.evaluate(
+      publicServicesFootprint: AdemeEngine.evaluate(
         "services sociétaux . services publics",
       ).nodeValue as number,
     });
