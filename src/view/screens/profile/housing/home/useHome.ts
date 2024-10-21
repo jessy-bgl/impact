@@ -1,38 +1,47 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Home } from "@domain/entities/categories/housing/home/Home";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Home>, "annualFootprint">;
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useHome = () => {
-  const storedHome = useAppStore((store) => store.emissions.housing.home);
-  const annualFootprint = new Home(storedHome).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateHousingProfile } = useContext(UsecasesContext);
 
-  const { useUpdateHousing } = useContext(UsecasesContext);
-  const { updateHome } = useUpdateHousing();
+  const housingQuestions = {
+    homeTypeQuestion: questions["logement . type"],
+    numberOfInhabitantsQuestion: questions["logement . habitants"],
+    homeAgeQuestion: questions["logement . âge"],
+    surfaceAreaQuestion: questions["logement . surface"],
+    renovationWorkQuestion:
+      questions["logement . construction . rénovation . travaux"],
+    ...questions[
+      "logement . construction . rénovation . travaux"
+    ].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    photovoltaicPanelQuestion:
+      questions["logement . électricité . photovoltaique . présent"],
+    photovoltaicProductionQuestion:
+      questions["logement . électricité . photovoltaique . production"],
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    occupants: storedHome.occupants.toString(),
-    livingSpace: storedHome.livingSpace.toString(),
-    ageInYears: storedHome.ageInYears.toString(),
-    isAnApartment: storedHome.isAnApartment.toString(),
-    isEcoBuilt: storedHome.isEcoBuilt.toString(),
-  });
+  const { control } = useProfileForm(housingQuestions);
 
-  const { handleUpdate, control } = useUpdateForm<Home, FormValues>(
-    getDefaultValues(),
-    storedHome,
-    updateHome,
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.housing.homeFootprint,
   );
 
   return {
     annualFootprint,
-    handleUpdate,
     control,
+    updateHousingProfile,
+    housingQuestions,
   };
 };

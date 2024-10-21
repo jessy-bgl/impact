@@ -10,7 +10,7 @@
     "housing": "Logement",
     "food": "Alimentation",
     "everydayThings": "Divers",
-    "publicServices": "Services publics"
+    "societalServices": "Services publics"
   },
   "transport": {
     "car": "Voiture",
@@ -39,6 +39,6 @@
     "hobbies": "Loisirs",
     "tobacco": "Tabac",
     "consumableProducts": "Produits consommables",
-    "otherProducts": "Autres produits"
+    "otherProducts": "Autres"
   }
 }

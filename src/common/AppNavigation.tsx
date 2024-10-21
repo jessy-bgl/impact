@@ -20,7 +20,7 @@ import { Profile } from "@view/screens/profile/Profile";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { FoodProfile } from "@view/screens/profile/food/Food";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
-import { PublicServicesProfile } from "@view/screens/profile/public-services/PublicServices";
+import { SocietalServicesProfile } from "@view/screens/profile/public-services/SocietalServices";
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { Tracking } from "@view/screens/tracking/Tracking";
 
@@ -35,7 +35,7 @@ type RootStackParamList = {
   FoodProfile: undefined;
   HousingProfile: undefined;
   EverydayThingsProfile: undefined;
-  PublicServicesProfile: undefined;
+  SocietalServicesProfile: undefined;
 };
 
 export type AppNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -82,9 +82,9 @@ export const AppNavigation = () => {
         options={{ title: t("EverydayThings") }}
       />
       <Stack.Screen
-        name="PublicServicesProfile"
-        component={PublicServicesProfile}
-        options={{ title: t("PublicServices") }}
+        name="SocietalServicesProfile"
+        component={SocietalServicesProfile}
+        options={{ title: t("SocietalServices") }}
       />
     </Stack.Navigator>
   );

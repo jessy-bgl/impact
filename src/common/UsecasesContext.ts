@@ -2,37 +2,43 @@ import { createContext } from "react";
 
 import { ActionsInMemoryRepository } from "@data/repositories/actions.memory.repository";
 import { ActionsStoreRepository } from "@data/repositories/actions.store.repository";
-import { EmissionsInMemoryRepository } from "@data/repositories/emissions.memory.repository";
-import { EmissionsStoreRepository } from "@data/repositories/emissions.store.repository";
+import { FootprintsStoreRepository } from "@data/repositories/footprints.store.repository";
+import { ProfileStoreRepository } from "@data/repositories/profile.store.repository";
 import { ActionsRepository } from "@domain/repositories/actions.repository";
-import { EmissionsRepository } from "@domain/repositories/emissions.repository";
-import { createUseUpdateActionState } from "@domain/usecases/actions/updateActionState";
-import { createUseUpdateActions } from "@domain/usecases/actions/updateActions";
-import { createUseComputeTotalAnnualFootprint } from "@domain/usecases/profil/computeTotalAnnualFootprint";
-import { createUseFetchEverydayThings } from "@domain/usecases/profil/fetchEverydayThings";
-import { createUseFetchFood } from "@domain/usecases/profil/fetchFood";
-import { createUseFetchHousing } from "@domain/usecases/profil/fetchHousing";
-import { createUseFetchPublicServices } from "@domain/usecases/profil/fetchPublicServices";
-import { createUseFetchTransport } from "@domain/usecases/profil/fetchTransport";
-import { createUseUpdateEverydayThings } from "@domain/usecases/profil/updateEverydayThings";
-import { createUseUpdateFood } from "@domain/usecases/profil/updateFood";
-import { createUseUpdateHousing } from "@domain/usecases/profil/updateHousing";
-import { createUseUpdateTransport } from "@domain/usecases/profil/updateTransport";
+import { FootprintsRepository } from "@domain/repositories/footprints.repository";
+import { ProfileRepository } from "@domain/repositories/profile.repository";
+import { createSyncEngineWithStoredActions } from "@domain/usecases/actions/syncEngineWithStoredActions";
+import { createUpdateActionState } from "@domain/usecases/actions/updateActionState";
+import { createComputeAnnualFootprint } from "@domain/usecases/footprints/computeAnnualFootprint";
+import { createFetchEverydayThingsFootprint } from "@domain/usecases/footprints/fetchEverydayThingsFootprint";
+import { createFetchFoodFootprint } from "@domain/usecases/footprints/fetchFoodFootprint";
+import { createFetchHousingFootprint } from "@domain/usecases/footprints/fetchHousingFootprint";
+import { createFetchSocietalServicesFootprint } from "@domain/usecases/footprints/fetchSocietalServicesFootprint";
+import { createFetchTransportFootprint } from "@domain/usecases/footprints/fetchTransportFootprint";
+import { createUpdateEverydayThingsFootprint } from "@domain/usecases/footprints/updateEverydayThingsFootprint";
+import { createUpdateFoodFootprint } from "@domain/usecases/footprints/updateFoodFootprint";
+import { createUpdateHousingFootprint } from "@domain/usecases/footprints/updateHousingFootprint";
+import { createUpdateTransportFootprint } from "@domain/usecases/footprints/updateTransportFootprint";
+import { createSyncStoredProfileWithEngine } from "@domain/usecases/profile/syncStoredProfileWithEngine";
+import { createUpdateProfile } from "@domain/usecases/profile/updateProfile";
 
 const isTestMode = process.env.NODE_ENV === "test";
 
 interface Repositories {
-  emissionsRepository: EmissionsRepository;
+  profileRepository: ProfileRepository;
+  footprintsRepository: FootprintsRepository;
   actionsRepository: ActionsRepository;
 }
 
 const initRealRepositories = () => ({
-  emissionsRepository: new EmissionsStoreRepository(),
+  profileRepository: new ProfileStoreRepository(),
+  footprintsRepository: new FootprintsStoreRepository(),
   actionsRepository: new ActionsStoreRepository(),
 });
 
 export const initFakeRepositories = () => ({
-  emissionsRepository: new EmissionsInMemoryRepository(),
+  profileRepository: new ProfileStoreRepository(),
+  footprintsRepository: new FootprintsStoreRepository(),
   actionsRepository: new ActionsInMemoryRepository(),
 });
 
@@ -41,31 +47,48 @@ const repositories: Repositories = isTestMode
   : initRealRepositories();
 
 const initUsecases = (repositories: Repositories) => {
-  const { emissionsRepository, actionsRepository } = repositories;
+  const { profileRepository, footprintsRepository, actionsRepository } =
+    repositories;
+
+  const {
+    updateTransportProfile,
+    updateFoodProfile,
+    updateHousingProfile,
+    updateEverydayThingsProfile,
+  } = createUpdateProfile(profileRepository, footprintsRepository);
 
   return {
-    useFetchTransport: createUseFetchTransport(emissionsRepository),
-    useUpdateTransport: createUseUpdateTransport(emissionsRepository),
+    updateActionState: createUpdateActionState(actionsRepository),
+    syncEngineWithStoredActions:
+      createSyncEngineWithStoredActions(actionsRepository),
 
-    useFetchFood: createUseFetchFood(emissionsRepository),
-    useUpdateFood: createUseUpdateFood(emissionsRepository),
+    updateTransportProfile,
+    updateFoodProfile,
+    updateHousingProfile,
+    updateEverydayThingsProfile,
+    syncStoredProfileWithEngine:
+      createSyncStoredProfileWithEngine(profileRepository),
 
-    useFetchHousing: createUseFetchHousing(emissionsRepository),
-    useUpdateHousing: createUseUpdateHousing(emissionsRepository),
+    fetchTransportFootprint:
+      createFetchTransportFootprint(footprintsRepository),
+    updateTransportFootprint:
+      createUpdateTransportFootprint(footprintsRepository),
 
-    useFetchEverydayThings: createUseFetchEverydayThings(emissionsRepository),
-    useUpdateEverydayThings: createUseUpdateEverydayThings(emissionsRepository),
+    fetchFoodFootprint: createFetchFoodFootprint(footprintsRepository),
+    updateFoodFootprint: createUpdateFoodFootprint(footprintsRepository),
 
-    useFetchPublicServices: createUseFetchPublicServices(emissionsRepository),
+    fetchHousingFootprint: createFetchHousingFootprint(footprintsRepository),
+    updateHousingFootprint: createUpdateHousingFootprint(footprintsRepository),
 
-    useComputeTotalAnnualFootprint:
-      createUseComputeTotalAnnualFootprint(emissionsRepository),
+    fetchEverydayThingsFootprint:
+      createFetchEverydayThingsFootprint(footprintsRepository),
+    updateEverydayThingsFootprint:
+      createUpdateEverydayThingsFootprint(footprintsRepository),
 
-    useUpdateActionState: createUseUpdateActionState(actionsRepository),
-    useUpdateActions: createUseUpdateActions(
-      actionsRepository,
-      emissionsRepository,
-    ),
+    fetchSocietalServicesFootprint:
+      createFetchSocietalServicesFootprint(footprintsRepository),
+
+    computeAnnualFootprint: createComputeAnnualFootprint(footprintsRepository),
   };
 };
 

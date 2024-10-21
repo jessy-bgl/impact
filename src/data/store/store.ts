@@ -3,30 +3,41 @@ import deepMerge from "deepmerge";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
-import { Action } from "@domain/entities/actions/Action";
-import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
-import { Food } from "@domain/entities/categories/food/Food";
-import { Housing } from "@domain/entities/categories/housing/Housing";
-import { Transport } from "@domain/entities/categories/transport/Transport";
+import { Action } from "@domain/entities/action/Action";
+import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
+import { EverydayThingsFootprint } from "@domain/entities/footprints/EverydayThingsFootprint";
+import { FoodFootprint } from "@domain/entities/footprints/FoodFootprint";
+import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
+import { SocietalServicesFootprint } from "@domain/entities/footprints/SocietalServicesFootprint";
+import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
+import { Profile } from "@domain/entities/profile/Profile";
 
 export type AppState = {
   isFirstLaunch: boolean;
-  emissions: {
-    transport: Transport;
-    food: Food;
-    housing: Housing;
-    everydayThings: EverydayThings;
+  profile: {
+    ademe: Profile;
+  };
+  footprints: {
+    transport: TransportFootprint;
+    food: FoodFootprint;
+    housing: HousingFootprint;
+    everydayThings: EverydayThingsFootprint;
+    societalServices: SocietalServicesFootprint;
   };
   actions: Action[];
 };
 
 const appStore = (): AppState => ({
   isFirstLaunch: true,
-  emissions: {
-    transport: new Transport({}),
-    food: new Food({}),
-    housing: new Housing({}),
-    everydayThings: new EverydayThings({}),
+  profile: {
+    ademe: {},
+  },
+  footprints: {
+    transport: AdemeFootprintEngine.computeTransportFootprint(),
+    food: AdemeFootprintEngine.computeFoodFootprint(),
+    housing: AdemeFootprintEngine.computeHousingFootprint(),
+    everydayThings: AdemeFootprintEngine.computeEverydayThingsFootprint(),
+    societalServices: AdemeFootprintEngine.computeSocietalServicesFootprint(),
   },
   actions: [],
 });

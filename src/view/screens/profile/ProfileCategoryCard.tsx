@@ -1,38 +1,36 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
-import { Avatar, Card } from "react-native-paper";
-import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
+import { Avatar, Card, useTheme } from "react-native-paper";
 
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 type Props = {
   title: string;
   footprintCategory: FootprintCategoryViewModel;
-  icon: IconSource;
   onClick: () => void;
 };
 
 export const ProfileCategoryCard = ({
   title,
   footprintCategory,
-  icon,
   onClick,
 }: Props) => {
   const { t } = useTranslation("common");
 
-  const { image, footprint, color, part } = footprintCategory;
+  const { colors } = useTheme();
+
+  const { image, footprint, color, part, materialIcon } = footprintCategory;
 
   const Image = image as any;
 
   return (
-    <Card style={styles.card} onPress={onClick}>
+    <Card style={{ width: "100%", maxWidth: 500 }} onPress={onClick}>
       <Card.Title
         title={title}
         subtitle={`${footprint} ${t("footprintKgPerYear")}`}
         left={(props: any) => (
           <Avatar.Icon
             {...props}
-            icon={icon}
+            icon={materialIcon}
             style={{ backgroundColor: color }}
           />
         )}
@@ -51,19 +49,11 @@ export const ProfileCategoryCard = ({
           />
         )}
         style={{ paddingRight: 16 }}
+        subtitleStyle={{ marginTop: -5, color: colors.onSurfaceVariant }}
       />
       <Card.Content>
-        <Image style={styles.image} />
+        <Image style={{ height: 125 }} />
       </Card.Content>
     </Card>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    width: "100%",
-  },
-  image: {
-    height: 125,
-  },
-});

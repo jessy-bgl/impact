@@ -6,7 +6,9 @@ import { AppNavigationProp } from "@common/AppNavigation";
 
 export const EmissionsEstimationButton = () => {
   const { t } = useTranslation("emissions");
+
   const { colors } = useTheme();
+
   const { navigate } = useNavigation<AppNavigationProp>();
 
   return (

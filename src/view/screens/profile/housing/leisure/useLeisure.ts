@@ -1,91 +1,66 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Leisure } from "@domain/entities/categories/housing/leisure/Leisure";
-import { HolidayAccomodations } from "@domain/entities/categories/housing/leisure/types";
-import { StringifyProperties, convertStringToType } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export const HolidayAccomodationLabels: (keyof HolidayAccomodations)[] = [
-  "hotel",
-  "rentals",
-  "youthHostel",
-  "camping",
-  "exchange",
-];
-
-export type FormValues = Omit<
-  StringifyProperties<Leisure & HolidayAccomodations>,
-  "annualFootprint"
->;
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useLeisure = () => {
-  const storedLeisure = useAppStore((store) => store.emissions.housing.leisure);
-  const isAnApartment = useAppStore(
-    (store) => store.emissions.housing.home.isAnApartment,
+  const { questions } = useQuestionsContext();
+  const { updateHousingProfile } = useContext(UsecasesContext);
+
+  const leisureQuestions = {
+    swimmingPoolTypeQuestion: questions["logement . piscine . type"],
+    swimmingPoolSizeQuestion: questions["logement . piscine . surface"],
+    outdoorEquipmentQuestion: questions["logement . extérieur"],
+    ...questions["logement . extérieur"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    holidaysLodgingQuestion: questions["logement . vacances"],
+    ...questions["logement . vacances"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    secondHomeSeasonsQuestion:
+      questions["logement . vacances . résidence secondaire . saison"],
+    secondHomeLocationQuestion:
+      questions["logement . vacances . résidence secondaire . localisation"],
+    secondHomeSurfaceQuestion:
+      questions["logement . vacances . résidence secondaire . surface"],
+    secondHomeTimeSpentPerYearQuestion:
+      questions["logement . vacances . résidence secondaire . durée"],
+    hotelNightsPerYearQuestion:
+      questions["logement . vacances . hotel . nombre de nuitées"],
+    campingNightPerYearQuestion:
+      questions["logement . vacances . camping . nombre de nuitées"],
+    youthHostelNightsPerYearQuestion:
+      questions[
+        "logement . vacances . auberge de jeunesse . nombre de nuitées"
+      ],
+    rentalNightsPerYearQuestion:
+      questions["logement . vacances . locations . nombre de nuitées"],
+    houseExchangeNightsPerYearQuestion:
+      questions["logement . vacances . échange . nombre de nuitées"],
+  };
+
+  const { control } = useProfileForm(leisureQuestions);
+
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.housing.leisureFootprint,
   );
-  const annualFootprint = new Leisure(storedLeisure).annualFootprint;
-
-  const { useUpdateHousing } = useContext(UsecasesContext);
-  const { updateLeisure } = useUpdateHousing();
-
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    hasIngroundPool: storedLeisure.hasIngroundPool.toString(),
-    campingNightsPerYear: storedLeisure.campingNightsPerYear.toString(),
-    exchangeNightsPerYear: storedLeisure.exchangeNightsPerYear.toString(),
-    hotelNightsPerYear: storedLeisure.hotelNightsPerYear.toString(),
-    rentalNightsPerYear: storedLeisure.rentalNightsPerYear.toString(),
-    youthHostelNightsPerYear: storedLeisure.youthHostelNightsPerYear.toString(),
-    holidayAccomodations: JSON.stringify(storedLeisure.holidayAccomodations),
-    camping: storedLeisure.holidayAccomodations.camping.toString(),
-    exchange: storedLeisure.holidayAccomodations.exchange.toString(),
-    hotel: storedLeisure.holidayAccomodations.hotel.toString(),
-    rentals: storedLeisure.holidayAccomodations.rentals.toString(),
-    youthHostel: storedLeisure.holidayAccomodations.youthHostel.toString(),
-  });
-
-  const { handleUpdate, control, watch, setValue } = useUpdateForm<
-    Leisure,
-    FormValues
-  >(getDefaultValues(), storedLeisure, updateLeisure);
-
-  const camping = watch("camping");
-  const exchange = watch("exchange");
-  const hotel = watch("hotel");
-  const rentals = watch("rentals");
-  const youthHostel = watch("youthHostel");
-
-  useEffect(() => {
-    const newHolidayAccomodations = JSON.stringify({
-      camping: convertStringToType(camping, "boolean"),
-      exchange: convertStringToType(exchange, "boolean"),
-      hotel: convertStringToType(hotel, "boolean"),
-      rentals: convertStringToType(rentals, "boolean"),
-      youthHostel: convertStringToType(youthHostel, "boolean"),
-    });
-    setValue("holidayAccomodations", newHolidayAccomodations);
-    handleUpdate("holidayAccomodations");
-  }, [camping, exchange, hotel, rentals, youthHostel]);
-
-  const disablePool = isAnApartment;
-  const showCamping = camping === "true";
-  const showExchange = exchange === "true";
-  const showHotel = hotel === "true";
-  const showRentals = rentals === "true";
-  const showYouthHostel = youthHostel === "true";
 
   return {
     annualFootprint,
-    handleUpdate,
     control,
-    setValue,
-    disablePool,
-    showCamping,
-    showExchange,
-    showHotel,
-    showRentals,
-    showYouthHostel,
+    updateHousingProfile,
+    leisureQuestions,
   };
 };

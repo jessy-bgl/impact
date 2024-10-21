@@ -6,8 +6,7 @@ import EverydayThingsImage from "@assets/images/goods.svg";
 import HousingImage from "@assets/images/house.svg";
 import PublicServicesImage from "@assets/images/public_services.svg";
 import TransportImage from "@assets/images/transport.svg";
-
-import { FootprintCategory } from "@domain/entities/categories/Categories";
+import { FootprintCategory } from "@domain/entities/footprints/types";
 
 export type Footprints = Record<FootprintCategory, FootprintCategoryViewModel>;
 
@@ -27,9 +26,39 @@ export class FootprintCategoryViewModel {
   }
 
   private computePart = (totalFootprint: number) =>
-    totalFootprint === 0
-      ? 0
-      : Math.floor((this.footprint / totalFootprint) * 100);
+    totalFootprint === 0 ? 0 : (this.footprint / totalFootprint) * 100;
+
+  static distributeParts = (footprints: Footprints): void => {
+    const categories = Object.values(footprints);
+
+    const totalFootprint = categories.reduce(
+      (sum, category) => sum + category.footprint,
+      0,
+    );
+
+    const parts = categories.map((category) =>
+      category.computePart(totalFootprint),
+    );
+
+    const roundedParts = parts.map(Math.floor);
+    const totalRounded = roundedParts.reduce((sum, part) => sum + part, 0);
+    const remainder = 100 - totalRounded;
+
+    const remainders = parts.map((part, index) => ({
+      index,
+      remainder: part - roundedParts[index],
+    }));
+
+    remainders.sort((a, b) => b.remainder - a.remainder);
+
+    for (let i = 0; i < remainder; i++) {
+      roundedParts[remainders[i].index]++;
+    }
+
+    Object.keys(footprints).forEach((key, index) => {
+      footprints[key as FootprintCategory].part = roundedParts[index];
+    });
+  };
 
   static forTransport(
     footprint: number,
@@ -57,6 +86,13 @@ export class FootprintCategoryViewModel {
     totalFootprint: number,
   ): FootprintCategoryViewModel {
     return new FootprintCategoryEverydayThings(footprint, totalFootprint);
+  }
+
+  static forSocietalServices(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryPublicServices(footprint, totalFootprint);
   }
 
   static forPublicServices(
@@ -116,7 +152,7 @@ class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
 
 class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
-    super("publicServices", footprint, totalFootprint);
+    super("societalServices", footprint, totalFootprint);
     this.color = "steelblue";
     this.icon = "🏛️";
     this.materialIcon = "bank";
@@ -126,7 +162,7 @@ class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
 
 class FootprintCategoryMerchantServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
-    super("publicServices", footprint, totalFootprint);
+    super("societalServices", footprint, totalFootprint);
     this.color = "cadetblue";
     this.icon = "✉️";
     this.materialIcon = "post";

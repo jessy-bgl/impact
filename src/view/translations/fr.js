@@ -11,7 +11,7 @@ import infoHousing from "./fr/info/infoHousing.json";
 import infoTransport from "./fr/info/infoTransport.json";
 import intro from "./fr/intro.json";
 import pages from "./fr/pages.json";
-import publicServices from "./fr/publicServices.json";
+import societalServices from "./fr/societalServices.json";
 import transport from "./fr/transport.json";
 
 export {
@@ -27,7 +27,7 @@ export {
   infoTransport,
   intro,
   pages,
-  publicServices,
+  societalServices,
   transport,
   transportActions,
 };

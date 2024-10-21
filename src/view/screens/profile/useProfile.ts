@@ -8,6 +8,6 @@ export const useProfile = () => {
     housingFootprint: footprints["housing"],
     foodFootprint: footprints["food"],
     everydayThingsFootprint: footprints["everydayThings"],
-    publicServicesFootprint: footprints["publicServices"],
+    societalServicesFootprint: footprints["societalServices"],
   };
 };

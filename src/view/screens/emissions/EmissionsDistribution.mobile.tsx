@@ -17,6 +17,7 @@ export const EmissionsDistributionForMobile = ({
   totalFootprint,
 }: Props) => {
   const { t } = useTranslation("emissions");
+
   const footprintByCategories = Object.values(footprints);
 
   // NB: as of april 2024, victory-native Pie.Chart does not support labels

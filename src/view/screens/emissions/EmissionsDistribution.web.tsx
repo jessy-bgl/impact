@@ -7,6 +7,7 @@ import { VictoryLabel, VictoryPie } from "victory";
 import { Footprints } from "@view/view-models/Footprint";
 
 const pieWidthAndHeight = 225;
+const minFootprintToDisplayIcon = 50;
 
 type Props = {
   footprints: Footprints;
@@ -18,7 +19,9 @@ export const EmissionsDistributionForWeb = ({
   totalFootprint,
 }: Props) => {
   const { t } = useTranslation("emissions");
+
   const { colors } = useTheme();
+
   const footprintByCategories = Object.values(footprints);
 
   return (
@@ -37,6 +40,9 @@ export const EmissionsDistributionForWeb = ({
             x: icon,
             y: footprint,
           }))}
+          labels={({ datum }) =>
+            datum.y > minFootprintToDisplayIcon ? datum.x : ""
+          }
         />
         <VictoryLabel
           textAnchor="middle"

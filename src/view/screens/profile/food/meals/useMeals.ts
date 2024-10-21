@@ -1,45 +1,36 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Meals } from "@domain/entities/categories/food/meals/Meals";
-import { BreakfastType } from "@domain/entities/categories/food/meals/types";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Meals>, "annualFootprint">;
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useMeals = () => {
-  const storedMeals = useAppStore((store) => store.emissions.food.meals);
-  const storedBreakfast = storedMeals.breakfast;
-  const annualFootprint = new Meals(storedMeals).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateFoodProfile } = useContext(UsecasesContext);
 
-  const { useUpdateFood } = useContext(UsecasesContext);
-  const { updateMeals } = useUpdateFood();
+  const mealsQuestions = {
+    mealsQuestion: questions["alimentation . plats"],
+    ...questions["alimentation . plats"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+    localProductsQuestions: questions["alimentation . local . consommation"],
+    breakfastTypeQuestion: questions["alimentation . petit déjeuner . type"],
+    milkTypeQuestion: questions["alimentation . type de lait"],
+    seasonalProductsQuestion:
+      questions["alimentation . de saison . consommation"],
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    breakfast: storedMeals.breakfast,
-    milkType: storedMeals.milkType,
-    diet: storedMeals.diet,
-    localProducts: storedMeals.localProducts,
-    seasonalProducts: storedMeals.seasonalProducts,
-  });
+  const { control } = useProfileForm(mealsQuestions);
 
-  const { handleUpdate, control, watch, setValue } = useUpdateForm<
-    Meals,
-    FormValues
-  >(getDefaultValues(), storedMeals, updateMeals);
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.food.mealsFootprint,
+  );
 
-  useEffect(() => {
-    if (storedBreakfast !== "milk & cereals") {
-      setValue("milkType", "cow");
-      handleUpdate("milkType");
-    }
-  }, [storedBreakfast]);
-
-  const milkAndCerealsBreakfast =
-    (watch("breakfast") as BreakfastType) === "milk & cereals";
-
-  return { annualFootprint, milkAndCerealsBreakfast, control, handleUpdate };
+  return { annualFootprint, control, updateFoodProfile, mealsQuestions };
 };

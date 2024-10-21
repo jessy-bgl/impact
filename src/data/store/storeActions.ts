@@ -1,45 +1,66 @@
 import { useAppStore } from "@data/store/store";
-import { Action } from "@domain/entities/actions/Action";
-import { EverydayThings } from "@domain/entities/categories/everyday-things/EverydayThings";
-import { Food } from "@domain/entities/categories/food/Food";
-import { Housing } from "@domain/entities/categories/housing/Housing";
-import { Transport } from "@domain/entities/categories/transport/Transport";
+import { Action } from "@domain/entities/action/Action";
+import { EverydayThingsFootprint } from "@domain/entities/footprints/EverydayThingsFootprint";
+import { FoodFootprint } from "@domain/entities/footprints/FoodFootprint";
+import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
+import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
+import { Profile } from "@domain/entities/profile/Profile";
 
 export const appStoreActions = {
   setFirstLaunch: (isFirstLaunch: boolean) =>
     useAppStore.setState((state) => ({ ...state, isFirstLaunch })),
 
-  getTransport: () => useAppStore.getState().emissions.transport,
+  getAdemeProfile: () => useAppStore.getState().profile.ademe,
 
-  setTransport: (transport: Transport) =>
+  updateAdemeProfile: (profile: Profile, override = false) => {
+    if (override) {
+      useAppStore.setState((state) => ({
+        ...state,
+        profile: { ...state.profile, ademe: profile },
+      }));
+    } else {
+      useAppStore.setState((state) => ({
+        ...state,
+        profile: { ademe: { ...state.profile.ademe, ...profile } },
+      }));
+    }
+  },
+
+  getTransportFootprint: () => useAppStore.getState().footprints.transport,
+
+  setTransportFootprint: (footprint: TransportFootprint) =>
     useAppStore.setState((state) => ({
       ...state,
-      emissions: { ...state.emissions, transport },
+      footprints: { ...state.footprints, transport: footprint },
     })),
 
-  getFood: () => useAppStore.getState().emissions.food,
+  getFoodFootprint: () => useAppStore.getState().footprints.food,
 
-  setFood: (food: Food) =>
+  setFoodFootprint: (footprint: FoodFootprint) =>
     useAppStore.setState((state) => ({
       ...state,
-      emissions: { ...state.emissions, food },
+      footprints: { ...state.footprints, food: footprint },
     })),
 
-  getHousing: () => useAppStore.getState().emissions.housing,
+  getHousingFootprint: () => useAppStore.getState().footprints.housing,
 
-  setHousing: (housing: Housing) =>
+  setHousingFootprint: (footprint: HousingFootprint) =>
     useAppStore.setState((state) => ({
       ...state,
-      emissions: { ...state.emissions, housing },
+      footprints: { ...state.footprints, housing: footprint },
     })),
 
-  getEverydayThings: () => useAppStore.getState().emissions.everydayThings,
+  getEverydayThingsFootprint: () =>
+    useAppStore.getState().footprints.everydayThings,
 
-  setEverydayThings: (everydayThings: EverydayThings) =>
+  setEverydayThingsFootprint: (footprint: EverydayThingsFootprint) =>
     useAppStore.setState((state) => ({
       ...state,
-      emissions: { ...state.emissions, everydayThings },
+      footprints: { ...state.footprints, everydayThings: footprint },
     })),
+
+  getSocietalServicesFootprint: () =>
+    useAppStore.getState().footprints.societalServices,
 
   getActions: () => useAppStore.getState().actions,
 

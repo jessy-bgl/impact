@@ -1,44 +1,39 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import {
-  ConsumableProducts,
-  ConsumptionFrequency,
-} from "@domain/entities/categories/everyday-things/consumable-products/ConsumableProducts";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<ConsumableProducts>,
-  "annualFootprint"
->;
-
-export const consumptionOptions: ConsumptionFrequency[] = [
-  "low",
-  "medium",
-  "high",
-];
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useConsumableProducts = () => {
-  const storedConsumableProducts = useAppStore(
-    (store) => store.emissions.everydayThings.consumableProducts,
+  const { questions } = useQuestionsContext();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
+
+  const consumableProductsQuestions = {
+    consumableProductsQuestion:
+      questions["divers . produits consommables . consommation"],
+    ...questions[
+      "divers . produits consommables . consommation"
+    ].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+  };
+
+  const { control } = useProfileForm(consumableProductsQuestions);
+
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.everydayThings.consumableProductsFootprint,
   );
-  const annualFootprint = new ConsumableProducts(storedConsumableProducts)
-    .annualFootprint;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updateConsumableProducts } = useUpdateEverydayThings();
-
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    consumption: storedConsumableProducts.consumption,
-  });
-
-  const { handleUpdate, control, setValue } = useUpdateForm<
-    ConsumableProducts,
-    FormValues
-  >(getDefaultValues(), storedConsumableProducts, updateConsumableProducts);
-
-  return { annualFootprint, control, handleUpdate, setValue };
+  return {
+    annualFootprint,
+    control,
+    updateEverydayThingsProfile,
+    consumableProductsQuestions,
+  };
 };

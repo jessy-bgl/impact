@@ -1,11 +1,11 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
 import EmptyBox from "@assets/images/empty_box.svg";
-import { Action, ActionState } from "@domain/entities/actions/Action";
+import { Action, ActionState } from "@domain/entities/action/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
 import { useActions } from "@view/screens/actions/useActions";
 
@@ -17,7 +17,6 @@ export const Actions = () => {
     footprints,
     notStartedActions,
     inProgressActions,
-    completedActions,
     skippedActions,
   } = useActions();
 
@@ -39,11 +38,19 @@ export const Actions = () => {
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <EmptyBox height={60} width={60} />
+          <EmptyBox height={50} width={50} />
           <Text>{t(`noAction.${state}`)}</Text>
         </View>
       ) : (
-        <View style={styles.gridContainer}>
+        <View
+          style={{
+            paddingVertical: 20,
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            gap: 15,
+          }}
+        >
           {actions.map((action) => (
             <ActionCard
               key={action.id}
@@ -105,22 +112,6 @@ export const Actions = () => {
         {() => <ActionsList actions={inProgressActions} state="inProgress" />}
       </Tab.Screen>
       <Tab.Screen
-        name="completedActions"
-        options={{
-          title: t("actionsCompleted"),
-          tabBarBadge: () => <ActionsBadge text={completedActions.length} />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="check-circle-outline"
-              color={color}
-              size={20}
-            />
-          ),
-        }}
-      >
-        {() => <ActionsList actions={completedActions} state="completed" />}
-      </Tab.Screen>
-      <Tab.Screen
         name="skippedActions"
         options={{
           title: t("actionsSkipped"),
@@ -139,14 +130,3 @@ export const Actions = () => {
     </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  gridContainer: {
-    marginTop: 10,
-    padding: 10,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: 10,
-  },
-});

@@ -1,25 +1,23 @@
 import { useTranslation } from "react-i18next";
-import { View, ViewStyle } from "react-native";
-import { Button, Modal, Portal, useTheme } from "react-native-paper";
+import { ScrollView, View, ViewStyle } from "react-native";
+import { Button, Modal, Portal, Text, useTheme } from "react-native-paper";
 
 type Props = {
-  content?: JSX.Element;
+  content?: string;
   hide: () => void;
 };
 
 export const InfoModal = ({ content, hide }: Props) => {
   const { t } = useTranslation("common");
-  const appTheme = useTheme();
 
-  const modalStyle: ViewStyle = {
-    margin: 20,
-  };
+  const { colors, roundness } = useTheme();
 
   const containerStyle: ViewStyle = {
-    borderRadius: 5,
-    backgroundColor: appTheme.colors.background,
+    borderRadius: roundness,
+    backgroundColor: colors.background,
     padding: 10,
-    maxWidth: 500,
+    maxWidth: "90%",
+    maxHeight: "80%",
     alignSelf: "center",
   };
 
@@ -29,9 +27,11 @@ export const InfoModal = ({ content, hide }: Props) => {
         visible
         onDismiss={hide}
         contentContainerStyle={containerStyle}
-        style={modalStyle}
+        style={{ padding: 20 }}
       >
-        <View style={{ padding: 10 }}>{content}</View>
+        <ScrollView style={{ padding: 10 }}>
+          <Text>{content}</Text>
+        </ScrollView>
         <View style={{ marginTop: 10 }}>
           <Button compact onPress={hide}>
             {t("ok")}

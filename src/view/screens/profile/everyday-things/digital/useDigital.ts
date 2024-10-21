@@ -1,62 +1,38 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { Digital } from "@domain/entities/categories/everyday-things/digital/Digital";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Digital>, "annualFootprint">;
-
-export const DigitalLabels: (keyof FormValues)[] = [
-  "mobilePhones",
-  "televisions",
-  "laptops",
-  "desktopComputers",
-  "tablets",
-  "videoProjectors",
-  "cameras",
-  "homeCinemas",
-  "bluetoothSpeakers",
-  "vocalSpeakers",
-  "smartWatches",
-  "gamingConsoles",
-  "portableConsoles",
-];
+import { Question } from "@domain/entities/question/Question";
+import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useDigital = () => {
-  const storedDigital = useAppStore(
-    (store) => store.emissions.everydayThings.digital,
-  );
-  const annualFootprint = new Digital(storedDigital).annualFootprint;
+  const { questions } = useQuestionsContext();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updateDigital } = useUpdateEverydayThings();
+  const digitalQuestions = {
+    hoursPerDayOnInternetQuestion:
+      questions["divers . numérique . internet . durée journalière"],
+    digitalDevicesQuestion: questions["divers . numérique . appareils"],
+    ...questions["divers . numérique . appareils"].subQuestions?.reduce(
+      (acc, question) => {
+        acc[question.label] = question;
+        return acc;
+      },
+      {} as Record<string, Question>,
+    ),
+  };
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    preservation: storedDigital.preservation,
-    internetDailyHours: storedDigital.internetDailyHours.toString(),
-    mobilePhones: storedDigital.mobilePhones.toString(),
-    televisions: storedDigital.televisions.toString(),
-    laptops: storedDigital.laptops.toString(),
-    desktopComputers: storedDigital.desktopComputers.toString(),
-    tablets: storedDigital.tablets.toString(),
-    videoProjectors: storedDigital.videoProjectors.toString(),
-    cameras: storedDigital.cameras.toString(),
-    homeCinemas: storedDigital.homeCinemas.toString(),
-    bluetoothSpeakers: storedDigital.bluetoothSpeakers.toString(),
-    vocalSpeakers: storedDigital.vocalSpeakers.toString(),
-    smartWatches: storedDigital.smartWatches.toString(),
-    gamingConsoles: storedDigital.gamingConsoles.toString(),
-    portableConsoles: storedDigital.portableConsoles.toString(),
-  });
+  const { control } = useProfileForm(digitalQuestions);
 
-  const { handleUpdate, control } = useUpdateForm<Digital, FormValues>(
-    getDefaultValues(),
-    storedDigital,
-    updateDigital,
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.everydayThings.digitalFootprint,
   );
 
-  return { annualFootprint, control, handleUpdate };
+  return {
+    annualFootprint,
+    control,
+    updateEverydayThingsProfile,
+    digitalQuestions,
+  };
 };
