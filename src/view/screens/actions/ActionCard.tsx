@@ -2,7 +2,7 @@ import { Card, useTheme } from "react-native-paper";
 
 import { Action, ActionState } from "@domain/entities/action/Action";
 import { ActionCardButtons } from "@view/screens/actions/ActionCardButtons";
-import { ActionCardCategoryIcon } from "@view/screens/actions/ActionCardCategoryIcon";
+import { ActionCardCategory } from "@view/screens/actions/ActionCardCategory";
 import { ActionCardContent } from "@view/screens/actions/ActionCardContent";
 import { ActionCardTitle } from "@view/screens/actions/ActionCardTitle";
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
@@ -43,9 +43,9 @@ export const ActionCard = ({
         savedFootprintPart={savedFootprintPart}
         footprintViewModel={footprintViewModel}
       />
-      <ActionCardCategoryIcon
-        color={footprintViewModel.color}
-        icon={footprintViewModel.materialIcon}
+      <ActionCardCategory
+        action={action}
+        footprintViewModel={footprintViewModel}
       />
       <ActionCardButtons actionState={action.state} updateState={updateState} />
     </Card>

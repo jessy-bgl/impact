@@ -3,7 +3,7 @@ import { StyleProp, TextStyle } from "react-native";
 import { Text } from "react-native-paper";
 
 import { Question } from "@domain/entities/question/Question";
-import { InfoModal } from "@view/screens/profile/components/modals/InfoModal";
+import { InfoModal } from "@view/components/modals/InfoModal";
 import { InfoModalState } from "@view/screens/profile/utils/types";
 
 type Props = {

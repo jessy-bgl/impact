@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { View, ViewStyle } from "react-native";
+import { ScrollView, View, ViewStyle } from "react-native";
 import { Button, Modal, Portal, Text, useTheme } from "react-native-paper";
 
 type Props = {
@@ -10,13 +10,14 @@ type Props = {
 export const InfoModal = ({ content, hide }: Props) => {
   const { t } = useTranslation("common");
 
-  const appTheme = useTheme();
+  const { colors, roundness } = useTheme();
 
   const containerStyle: ViewStyle = {
-    borderRadius: 5,
-    backgroundColor: appTheme.colors.background,
+    borderRadius: roundness,
+    backgroundColor: colors.background,
     padding: 10,
-    maxWidth: 500,
+    maxWidth: "90%",
+    maxHeight: "80%",
     alignSelf: "center",
   };
 
@@ -28,9 +29,9 @@ export const InfoModal = ({ content, hide }: Props) => {
         contentContainerStyle={containerStyle}
         style={{ padding: 20 }}
       >
-        <View style={{ padding: 10 }}>
+        <ScrollView style={{ padding: 10 }}>
           <Text>{content}</Text>
-        </View>
+        </ScrollView>
         <View style={{ marginTop: 10 }}>
           <Button compact onPress={hide}>
             {t("ok")}
