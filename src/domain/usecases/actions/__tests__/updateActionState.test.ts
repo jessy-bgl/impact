@@ -1,5 +1,10 @@
+import { DottedName } from "@incubateur-ademe/nosgestesclimat";
+import { EvaluatedNode } from "publicodes";
+
 import { initFakeRepositories } from "@common/UsecasesContext";
+import { NGCRuleNode } from "@data/ademe-footprint-model";
 import { AdemeAction } from "@domain/entities/action/AdemeAction";
+import { AdemeEngine } from "@domain/entities/AdemeEngine";
 import { createUpdateActionState } from "@domain/usecases/actions/updateActionState";
 
 describe("update action state", () => {
@@ -11,8 +16,13 @@ describe("update action state", () => {
 
   it("should update action state", () => {
     // Arrange
-    // TODO : create a fake action rule
-    const action = new AdemeAction({});
+    const ruleKey: DottedName = "transport . voiture . réduire taille";
+    const ademeRule = AdemeEngine.getRule(ruleKey);
+    const ademeEvaluation = AdemeEngine.evaluate(ruleKey);
+    const action = new AdemeAction({
+      ...ademeRule,
+      ...ademeEvaluation,
+    } as NGCRuleNode & EvaluatedNode);
     action.state = "notStarted";
     repositories.actionsRepository.actions = [action];
     const updateActionState = createUpdateActionState(
