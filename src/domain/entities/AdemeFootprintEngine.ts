@@ -16,25 +16,40 @@ import { AdemeQuestion } from "@domain/entities/question/AdemeQuestion";
 import { Question } from "@domain/entities/question/Question";
 
 export abstract class AdemeFootprintEngine {
+  /**
+   *
+   * @param profile
+   * @param questionKeys an optional parameter that allows to filter the questions to be returned (useful for performance)
+   * @returns
+   */
   public static getQuestions = (
     profile: Profile,
+    questionKeys: (keyof Profile)[],
   ): Record<keyof Profile, Question> => {
-    const ademeQuestionRules = this.getQuestionRules();
-    return Object.keys(ademeQuestionRules).reduce(
-      (acc, key) => {
-        const ruleKey = key as keyof Profile;
-        const rule = ademeQuestionRules[ruleKey];
-        acc[ruleKey] = new AdemeQuestion(profile, ruleKey, rule);
-        return acc;
-      },
-      {} as Record<keyof Profile, Question>,
-    );
+    const ademeQuestionRules = this._getQuestionRules(questionKeys);
+    return Object.keys(ademeQuestionRules).reduce<
+      Record<keyof Profile, Question>
+    >((acc, key) => {
+      const rule = ademeQuestionRules[key];
+      acc[key] = new AdemeQuestion(profile, key, rule);
+      return acc;
+    }, {});
   };
 
-  private static getQuestionRules = (): NGCRulesNodes => {
+  /**
+   *
+   * @param keys an optional parameter that allows to filter the questions to be returned (useful for performance)
+   * @returns
+   */
+  private static _getQuestionRules = (
+    keys?: (keyof Profile)[],
+  ): NGCRulesNodes => {
+    // TODO: peut être plus optimisé si on ne récupère que les règles utiles aux keys ?
     const rules = AdemeEngine.getRules();
     return Object.entries(rules).reduce((acc, [key, rule]) => {
-      if (rule.rawNode.question) acc[key as DottedName] = rule;
+      if (keys === undefined || keys.includes(key)) {
+        if (rule.rawNode.question) acc[key as DottedName] = rule;
+      }
       return acc;
     }, {} as NGCRulesNodes);
   };

@@ -52,11 +52,9 @@ export const createUpdateProfile = (
       value = question.minValue || 0;
     }
 
-    const updatedProfile = profileRepository.updateProfileKey(
-      question.label,
-      value,
-    );
-    AdemeEngine.setSituation(updatedProfile);
+    AdemeEngine.setSituation({ [question.label]: value }, true);
+
+    profileRepository.updateProfileKey(question.label, value);
   };
 
   return {

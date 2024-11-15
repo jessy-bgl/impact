@@ -3,10 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { Linking, Platform } from "react-native";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
-import { Profile } from "@domain/entities/profile/Profile";
-import { Question } from "@domain/entities/question/Question";
 
 export const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 
@@ -17,13 +13,6 @@ export const useApp = () => {
 
   const { syncStoredProfileWithEngine, syncEngineWithStoredActions } =
     useContext(UsecasesContext);
-
-  const ademeProfile = useAppStore((state) => state.profile.ademe);
-
-  // NB: do not use useMemo here, it causes questions to not be rendered
-  // and it does not improve performance
-  const questions: Record<keyof Profile, Question> =
-    AdemeFootprintEngine.getQuestions(ademeProfile);
 
   useEffect(() => {
     const restoreState = async () => {
@@ -58,6 +47,5 @@ export const useApp = () => {
   return {
     isReady,
     initialState,
-    questions,
   };
 };

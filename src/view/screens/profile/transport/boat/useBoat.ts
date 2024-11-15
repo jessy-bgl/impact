@@ -1,29 +1,24 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useBoat = () => {
-  const { questions } = useQuestionsContext();
-  const { updateTransportProfile } = useContext(UsecasesContext);
-
-  const boatQuestions = {
-    boatUsageQuestion: questions["transport . ferry . usager"],
-    boatHoursPerYearQuestion: questions["transport . ferry . heures"],
+  const questionKeys = {
+    boatUsage: "transport . ferry . usager",
+    boatHoursPerYear: "transport . ferry . heures",
   };
 
-  const { control } = useProfileForm(boatQuestions);
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.transport.boatFootprint,
-  );
+  const boatQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
+
+  const { control } = useProfileForm(boatQuestions);
 
   return {
     control,
     updateTransportProfile,
-    annualFootprint,
     boatQuestions,
   };
 };

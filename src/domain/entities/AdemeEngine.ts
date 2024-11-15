@@ -1,5 +1,5 @@
 import { DottedName } from "@incubateur-ademe/nosgestesclimat";
-import { EvaluatedNode } from "publicodes";
+import { EvaluatedNode, PublicodesExpression } from "publicodes";
 
 import {
   ademeFootprintModel,
@@ -19,15 +19,21 @@ export abstract class AdemeEngine {
     }
   };
 
-  public static setSituation = (profile: Profile): void => {
+  public static setSituation = (
+    profile: Profile,
+    keepPreviousSituation = false,
+  ): void => {
     try {
-      ademeFootprintModel.setSituation(profile, { strict: true });
+      ademeFootprintModel.setSituation(profile, {
+        strict: true,
+        keepPreviousSituation,
+      });
     } catch (e) {
       console.error(e);
     }
   };
 
-  public static evaluate = (rule: DottedName): EvaluatedNode => {
+  public static evaluate = (rule: PublicodesExpression): EvaluatedNode => {
     try {
       return ademeFootprintModel.evaluate(rule);
     } catch (e) {

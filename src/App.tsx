@@ -21,7 +21,7 @@ import "./view/translations/i18n";
 // import { plausible } from "./plausible";
 
 const App = () => {
-  const { initialState, isReady, questions } = useApp();
+  const { initialState, isReady } = useApp();
 
   if (!isReady) return <ActivityIndicator />;
 
@@ -29,7 +29,8 @@ const App = () => {
     <SafeAreaProvider>
       <StatusBar style="light" />
       <PaperProvider theme={AppTheme}>
-        <QuestionsContext.Provider value={questions}>
+        {/* TODO: supprimer ce Provider */}
+        <QuestionsContext.Provider value={{}}>
           <NavigationContainer
             theme={AppTheme}
             initialState={initialState}

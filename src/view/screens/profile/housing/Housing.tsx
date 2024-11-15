@@ -8,13 +8,13 @@ import { LeisureSection } from "@view/screens/profile/housing/leisure/Leisure";
 export const HousingProfile = () => {
   return (
     <ScrollView>
-      <List.Section>
+      <List.AccordionGroup>
         <HomeSection />
         <Divider />
         <EnergySection />
         <Divider />
         <LeisureSection />
-      </List.Section>
+      </List.AccordionGroup>
     </ScrollView>
   );
 };

@@ -18,6 +18,7 @@ export const ListAccordion = ({
 }: PropsWithChildren<Props>) => {
   return (
     <List.Accordion
+      id={title}
       title={<ListTitle title={title} subtitle={subtitle} />}
       left={(props) => <List.Icon {...props} icon={icon} />}
     >

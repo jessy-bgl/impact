@@ -1,19 +1,15 @@
 import { useTranslation } from "react-i18next";
 
+import { useAppStore } from "@data/store/store";
 import { ListAccordion } from "@view/screens/profile/components/lists/ListAccordion";
-import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
-import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
-import { usePublicTransport } from "./usePublicTransport";
+import { PublicTransportSectionContent } from "@view/screens/profile/transport/public-transport/PublicTransportSectionContent";
 
 export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
 
-  const {
-    control,
-    updateTransportProfile,
-    annualFootprint,
-    publicTransportQuestions,
-  } = usePublicTransport();
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.transport.publicTransportFootprint,
+  );
 
   return (
     <ListAccordion
@@ -21,51 +17,7 @@ export const PublicTransportSection = () => {
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="train"
     >
-      <ListContentContainer>
-        <ListItemQuestion
-          question={publicTransportQuestions.trainKmPerYearQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-          affix="km"
-          labelFlex={2}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={publicTransportQuestions.publicTransportUsageQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={publicTransportQuestions.hoursPerWeekInBusQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-          affix="h"
-          labelFlex={2}
-          inputFlex={1}
-        />
-        <ListItemQuestion
-          divider
-          question={publicTransportQuestions.coachKmPerWeekQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-          affix="km"
-          labelFlex={2}
-          inputFlex={1}
-          step={10}
-        />
-        <ListItemQuestion
-          divider
-          question={publicTransportQuestions.hoursPerWeekInMetroQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-          affix="h"
-          labelFlex={2}
-          inputFlex={1}
-        />
-      </ListContentContainer>
+      <PublicTransportSectionContent />
     </ListAccordion>
   );
 };

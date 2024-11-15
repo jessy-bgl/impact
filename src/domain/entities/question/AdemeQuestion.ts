@@ -1,8 +1,4 @@
-import {
-  ademeFootprintModel,
-  NGCRuleNode,
-  NGCRulesNodes,
-} from "@data/ademe-footprint-model";
+import { NGCRuleNode, NGCRulesNodes } from "@data/ademe-footprint-model";
 import { AdemeEngine } from "@domain/entities/AdemeEngine";
 import { Profile } from "@domain/entities/profile/Profile";
 import { Question } from "@domain/entities/question/Question";
@@ -48,8 +44,7 @@ export class AdemeQuestion extends Question {
 
     if (
       (this.rule.rawNode["unité"] === undefined &&
-        typeof ademeFootprintModel.evaluate(this.ruleKey).nodeValue !==
-          "number") ||
+        typeof AdemeEngine.evaluate(this.ruleKey).nodeValue !== "number") ||
       ["présent", "propriétaire"].some((key) => this.ruleKey.includes(key))
     ) {
       if (
@@ -65,7 +60,7 @@ export class AdemeQuestion extends Question {
   }
 
   private getIsApplicable(): boolean {
-    let isApplicable = ademeFootprintModel.evaluate({
+    let isApplicable = AdemeEngine.evaluate({
       "est applicable": this.rule,
     }).nodeValue;
     if (isApplicable === undefined) isApplicable = true;
@@ -127,7 +122,7 @@ export class AdemeQuestion extends Question {
   }
 
   private getDefaultValue(): string {
-    let defaultValue = ademeFootprintModel.evaluate({
+    let defaultValue = AdemeEngine.evaluate({
       "par défaut": this.rule,
     }).nodeValue;
 

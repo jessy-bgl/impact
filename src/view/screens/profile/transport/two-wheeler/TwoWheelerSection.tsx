@@ -1,19 +1,15 @@
 import { useTranslation } from "react-i18next";
 
+import { useAppStore } from "@data/store/store";
 import { ListAccordion } from "@view/screens/profile/components/lists/ListAccordion";
-import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
-import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
-import { useTwhoWheeler } from "./useTwoWheeler";
+import { TwoWheelerSectionContent } from "@view/screens/profile/transport/two-wheeler/TwoWheelerSectionContent";
 
 export const TwoWheelerSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
 
-  const {
-    annualFootprint,
-    control,
-    updateTransportProfile,
-    twoWheelerQuestions,
-  } = useTwhoWheeler();
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.transport.twoWheelerFootprint,
+  );
 
   return (
     <ListAccordion
@@ -21,30 +17,7 @@ export const TwoWheelerSection = () => {
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="motorbike"
     >
-      <ListContentContainer>
-        <ListItemQuestion
-          forceDisplay
-          question={twoWheelerQuestions.twoWheelerUsageQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={twoWheelerQuestions.twoWheelerEngineQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={twoWheelerQuestions.kmPerYearQuestion}
-          control={control}
-          handleUpdate={updateTransportProfile}
-          affix="km"
-          labelFlex={1.5}
-          inputFlex={1}
-          step={100}
-        />
-      </ListContentContainer>
+      <TwoWheelerSectionContent />
     </ListAccordion>
   );
 };

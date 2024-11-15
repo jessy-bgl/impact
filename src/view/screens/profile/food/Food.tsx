@@ -8,13 +8,13 @@ import { WasteSection } from "@view/screens/profile/food/waste/WasteSection";
 export const FoodProfile = () => {
   return (
     <ScrollView>
-      <List.Section>
+      <List.AccordionGroup>
         <MealsSection />
         <Divider />
         <DrinksSection />
         <Divider />
         <WasteSection />
-      </List.Section>
+      </List.AccordionGroup>
     </ScrollView>
   );
 };

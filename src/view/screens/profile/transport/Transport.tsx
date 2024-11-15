@@ -11,7 +11,7 @@ import { TwoWheelerSection } from "@view/screens/profile/transport/two-wheeler/T
 export const TransportProfile = () => {
   return (
     <ScrollView>
-      <List.Section>
+      <List.AccordionGroup>
         <CarSection />
         <Divider />
         <TwoWheelerSection />
@@ -23,7 +23,7 @@ export const TransportProfile = () => {
         <PublicTransportSection />
         <Divider />
         <OtherSection />
-      </List.Section>
+      </List.AccordionGroup>
     </ScrollView>
   );
 };

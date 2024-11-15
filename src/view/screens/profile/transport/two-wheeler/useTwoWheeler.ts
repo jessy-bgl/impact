@@ -1,28 +1,24 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
-export const useTwhoWheeler = () => {
-  const { questions } = useQuestionsContext();
+export const useTwoWheeler = () => {
+  const questionKeys = {
+    kmPerYear: "transport . deux roues . km",
+    twoWheelerEngine: "transport . deux roues . type",
+    twoWheelerUsage: "transport . deux roues . usager",
+  } as const;
+
   const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const twoWheelerQuestions = {
-    kmPerYearQuestion: questions["transport . deux roues . km"],
-    twoWheelerEngineQuestion: questions["transport . deux roues . type"],
-    twoWheelerUsageQuestion: questions["transport . deux roues . usager"],
-  };
+  const twoWheelerQuestions =
+    useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(twoWheelerQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.transport.twoWheelerFootprint,
-  );
-
   return {
-    annualFootprint,
     control,
     updateTransportProfile,
     twoWheelerQuestions,

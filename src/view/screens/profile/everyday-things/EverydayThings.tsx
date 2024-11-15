@@ -14,7 +14,7 @@ import { TobaccoSection } from "@view/screens/profile/everyday-things/tobacco/To
 export const EverydayThingsProfile = () => {
   return (
     <ScrollView>
-      <List.Section>
+      <List.AccordionGroup>
         <PetsSection />
         <Divider />
         <HobbiesSection />
@@ -32,7 +32,7 @@ export const EverydayThingsProfile = () => {
         <TobaccoSection />
         <Divider />
         <OtherProductsSection />
-      </List.Section>
+      </List.AccordionGroup>
     </ScrollView>
   );
 };
