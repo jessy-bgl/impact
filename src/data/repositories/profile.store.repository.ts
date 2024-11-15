@@ -7,20 +7,7 @@ export class ProfileStoreRepository implements ProfileRepository {
     return appStoreActions.getAdemeProfile();
   }
 
-  updateAdemeProfile(profile: Profile) {
-    appStoreActions.updateAdemeProfile(profile);
-    return appStoreActions.getAdemeProfile();
-  }
-
   updateProfileKey(key: keyof Profile, value: string | number | undefined) {
     appStoreActions.updateAdemeProfile({ [key]: value });
-    return appStoreActions.getAdemeProfile();
-  }
-
-  removeProfileKey(key: keyof Profile) {
-    const profile = appStoreActions.getAdemeProfile();
-    delete profile[key];
-    appStoreActions.updateAdemeProfile(profile, true);
-    return appStoreActions.getAdemeProfile();
   }
 }
