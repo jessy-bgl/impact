@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "7.18.9",
     "@expo/vector-icons": "14.0.2",
-    "@incubateur-ademe/nosgestesclimat": "3.1.1",
+    "@incubateur-ademe/nosgestesclimat": "3.3.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-picker/picker": "2.7.7",
     "@react-navigation/bottom-tabs": "6.5.20",
@@ -45,7 +45,7 @@
     "jest-expo": "51.0.2",
     "lodash": "4.17.21",
     "moti": "0.29.0",
-    "publicodes": "1.5.0",
+    "publicodes": "1.5.4",
     "react": "18.2.0",
     "react-art": "18.2.0",
     "react-dom": "18.2.0",

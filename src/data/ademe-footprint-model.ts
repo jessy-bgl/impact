@@ -1,8 +1,14 @@
-import { DottedName, NGCRule } from "@incubateur-ademe/nosgestesclimat";
+import {
+  DottedName,
+  NGCRule,
+  NGCRules,
+} from "@incubateur-ademe/nosgestesclimat";
 import AdemeModel from "@incubateur-ademe/nosgestesclimat/public/co2-model.FR-lang.fr.json";
 import PublicodesEngine, { RuleNode } from "publicodes";
 
-export const ademeFootprintModel = new PublicodesEngine(AdemeModel);
+export const ademeFootprintModel = new PublicodesEngine(
+  AdemeModel as unknown as NGCRules,
+);
 
 export type NGCRuleNode = RuleNode & {
   rawNode: NGCRule & {
