@@ -1,40 +1,25 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Question } from "@domain/entities/question/Question";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useDrinks = () => {
-  const { questions } = useQuestionsContext();
+  const questionKeys = {
+    hotDrinks: "alimentation . boisson . chaude",
+    sodaConsumption: "alimentation . boisson . sucrées . litres",
+    alcoholConsumption: "alimentation . boisson . alcool . litres",
+    bottleWaterConsumption:
+      "alimentation . boisson . eau en bouteille . consommateur",
+  } as const;
+
   const { updateFoodProfile } = useContext(UsecasesContext);
 
-  const drinksQuestions = {
-    hotDrinksQuestion: questions["alimentation . boisson . chaude"],
-    ...questions["alimentation . boisson . chaude"].subQuestions?.reduce(
-      (acc, question) => {
-        acc[question.label] = question;
-        return acc;
-      },
-      {} as Record<string, Question>,
-    ),
-    sodaConsumptionQuestion:
-      questions["alimentation . boisson . sucrées . litres"],
-    alcoholConsumptionQuestion:
-      questions["alimentation . boisson . alcool . litres"],
-    bottleWaterConsumptionQuestion:
-      questions["alimentation . boisson . eau en bouteille . consommateur"],
-  };
+  const drinksQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(drinksQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.food.drinksFootprint,
-  );
-
   return {
-    annualFootprint,
     control,
     updateFoodProfile,
     drinksQuestions,

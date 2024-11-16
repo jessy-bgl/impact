@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next";
 
+import { useAppStore } from "@data/store/store";
 import { ListAccordion } from "@view/screens/profile/components/lists/ListAccordion";
-import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
-import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
-import { useMeals } from "./useMeals";
+import { MealsSectionContent } from "@view/screens/profile/food/meals/MealsSectionContent";
 
 export const MealsSection = () => {
   const { t } = useTranslation(["food", "emissions", "common"]);
 
-  const { control, updateFoodProfile, annualFootprint, mealsQuestions } =
-    useMeals();
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.food.mealsFootprint,
+  );
 
   return (
     <ListAccordion
@@ -17,37 +17,7 @@ export const MealsSection = () => {
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="food"
     >
-      <ListContentContainer>
-        <ListItemQuestion
-          question={mealsQuestions.mealsQuestion}
-          control={control}
-          handleUpdate={updateFoodProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={mealsQuestions.localProductsQuestions}
-          control={control}
-          handleUpdate={updateFoodProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={mealsQuestions.breakfastTypeQuestion}
-          control={control}
-          handleUpdate={updateFoodProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={mealsQuestions.milkTypeQuestion}
-          control={control}
-          handleUpdate={updateFoodProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={mealsQuestions.seasonalProductsQuestion}
-          control={control}
-          handleUpdate={updateFoodProfile}
-        />
-      </ListContentContainer>
+      <MealsSectionContent />
     </ListAccordion>
   );
 };

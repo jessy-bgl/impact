@@ -1,36 +1,23 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Question } from "@domain/entities/question/Question";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useMeals = () => {
-  const { questions } = useQuestionsContext();
+  const questionKeys = {
+    meals: "alimentation . plats",
+    localProducts: "alimentation . local . consommation",
+    breakfastType: "alimentation . petit déjeuner . type",
+    milkType: "alimentation . type de lait",
+    seasonalProducts: "alimentation . de saison . consommation",
+  } as const;
+
   const { updateFoodProfile } = useContext(UsecasesContext);
 
-  const mealsQuestions = {
-    mealsQuestion: questions["alimentation . plats"],
-    ...questions["alimentation . plats"].subQuestions?.reduce(
-      (acc, question) => {
-        acc[question.label] = question;
-        return acc;
-      },
-      {} as Record<string, Question>,
-    ),
-    localProductsQuestions: questions["alimentation . local . consommation"],
-    breakfastTypeQuestion: questions["alimentation . petit déjeuner . type"],
-    milkTypeQuestion: questions["alimentation . type de lait"],
-    seasonalProductsQuestion:
-      questions["alimentation . de saison . consommation"],
-  };
+  const mealsQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(mealsQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.food.mealsFootprint,
-  );
-
-  return { annualFootprint, control, updateFoodProfile, mealsQuestions };
+  return { control, updateFoodProfile, mealsQuestions };
 };

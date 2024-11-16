@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next";
 
+import { useAppStore } from "@data/store/store";
 import { ListAccordion } from "@view/screens/profile/components/lists/ListAccordion";
-import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
-import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
-import { useEnergy } from "./useEnergy";
+import { EnergySectionContent } from "@view/screens/profile/housing/energy/EnergySectionContent";
 
 export const EnergySection = () => {
   const { t } = useTranslation(["housing", "emissions", "common"]);
 
-  const { annualFootprint, control, updateHousingProfile, energyQuestions } =
-    useEnergy();
+  const annualFootprint = useAppStore(
+    (store) => store.footprints.housing.energyFootprint,
+  );
 
   return (
     <ListAccordion
@@ -17,141 +17,7 @@ export const EnergySection = () => {
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="flash"
     >
-      <ListContentContainer>
-        <ListItemQuestion
-          question={energyQuestions.photovoltaicPanelQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.photovoltaicProductionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="kWh"
-          labelFlex={1.1}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.photovoltaicPartQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="%"
-          labelFlex={2}
-          inputFlex={1}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.electricityConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="kWh"
-          labelFlex={1.1}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.heatingEnergyTypeQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.woodTypeQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.gasConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="kWh"
-          labelFlex={1}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.gasBottleConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          labelFlex={2.5}
-          inputFlex={1}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.gasPropaneConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="kg"
-          labelFlex={1.25}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.fuelOilConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="litre(s)"
-          labelFlex={1}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.woodLogsConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="stère(s)"
-          labelFlex={1}
-          inputFlex={1}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.heatNetworkConsumptionQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="kWh"
-          labelFlex={1}
-          inputFlex={1}
-          step={100}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.bioGasContractQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.bioGasPartQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          affix="%"
-          labelFlex={2}
-          inputFlex={1}
-        />
-        <ListItemQuestion
-          divider
-          forceDisplay
-          question={energyQuestions.airConditioningUsageQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-        />
-        <ListItemQuestion
-          divider
-          question={energyQuestions.airConditioningNumberQuestion}
-          control={control}
-          handleUpdate={updateHousingProfile}
-          labelFlex={2.5}
-          inputFlex={1}
-        />
-      </ListContentContainer>
+      <EnergySectionContent />
     </ListAccordion>
   );
 };

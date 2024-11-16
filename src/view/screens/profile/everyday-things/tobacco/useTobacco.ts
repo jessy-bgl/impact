@@ -1,27 +1,21 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useTobacco = () => {
-  const { questions } = useQuestionsContext();
+  const questionKeys = {
+    tobaccoConsumption: "divers . tabac . consommation par semaine",
+  } as const;
+
   const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 
-  const tobaccoQuestions = {
-    tobaccoConsumptionQuestion:
-      questions["divers . tabac . consommation par semaine"],
-  };
+  const tobaccoQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(tobaccoQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.everydayThings.tobaccoFootprint,
-  );
-
   return {
-    annualFootprint,
     control,
     updateEverydayThingsProfile,
     tobaccoQuestions,

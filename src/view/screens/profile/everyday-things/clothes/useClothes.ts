@@ -1,34 +1,21 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Question } from "@domain/entities/question/Question";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useClothes = () => {
-  const { questions } = useQuestionsContext();
+  const questionKeys = {
+    newClothersPerYear: "divers . textile . empreinte",
+  } as const;
+
   const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 
-  const clothesQuestions = {
-    newClothersPerYearQuestion: questions["divers . textile . empreinte"],
-    ...questions["divers . textile . empreinte"].subQuestions?.reduce(
-      (acc, question) => {
-        acc[question.label] = question;
-        return acc;
-      },
-      {} as Record<string, Question>,
-    ),
-  };
+  const clothesQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(clothesQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.everydayThings.clothesFootprint,
-  );
-
   return {
-    annualFootprint,
     control,
     updateEverydayThingsProfile,
     clothesQuestions,

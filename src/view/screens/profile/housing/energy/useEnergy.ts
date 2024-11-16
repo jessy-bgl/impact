@@ -1,62 +1,41 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useEnergy = () => {
-  const { questions } = useQuestionsContext();
+  const questionKeys = {
+    photovoltaicPanel: "logement . électricité . photovoltaique . présent",
+    photovoltaicProduction:
+      "logement . électricité . photovoltaique . production",
+    photovoltaicPart:
+      "logement . électricité . photovoltaique . part autoconsommation",
+    electricityConsumption: "logement . électricité . réseau . consommation",
+    heatingEnergyType: "logement . chauffage",
+    woodType: "logement . chauffage . bois . type",
+    gasConsumption: "logement . chauffage . gaz . consommation",
+    gasBottleConsumption: "logement . chauffage . bouteille gaz . consommation",
+    gasPropaneConsumption:
+      "logement . chauffage . citerne propane . consommation",
+    fuelOilConsumption: "logement . chauffage . fioul . consommation",
+    woodLogsConsumption:
+      "logement . chauffage . bois . type . bûches . consommation",
+    heatNetworkConsumption:
+      "logement . chauffage . réseau de chaleur . consommation",
+    bioGasContract: "logement . chauffage . gaz . biogaz",
+    bioGasPart: "logement . chauffage . biogaz . part",
+    airConditioningUsage: "logement . climatisation . présent",
+    airConditioningNumber: "logement . climatisation . nombre",
+  };
+
   const { updateHousingProfile } = useContext(UsecasesContext);
 
-  const energyQuestions = {
-    photovoltaicPanelQuestion:
-      questions["logement . électricité . photovoltaique . présent"],
-    photovoltaicProductionQuestion:
-      questions["logement . électricité . photovoltaique . production"],
-    photovoltaicPartQuestion:
-      questions[
-        "logement . électricité . photovoltaique . part autoconsommation"
-      ],
-    electricityConsumptionQuestion:
-      questions["logement . électricité . réseau . consommation"],
-    heatingEnergyTypeQuestion: questions["logement . chauffage"],
-    ...questions["logement . chauffage"].subQuestions?.reduce(
-      (acc, question) => {
-        acc[question.label] = question;
-        return acc;
-      },
-      {} as Record<string, any>,
-    ),
-    woodTypeQuestion: questions["logement . chauffage . bois . type"],
-    gasConsumptionQuestion:
-      questions["logement . chauffage . gaz . consommation"],
-    gasBottleConsumptionQuestion:
-      questions["logement . chauffage . bouteille gaz . consommation"],
-    gasPropaneConsumptionQuestion:
-      questions["logement . chauffage . citerne propane . consommation"],
-    fuelOilConsumptionQuestion:
-      questions["logement . chauffage . fioul . consommation"],
-    woodLogsConsumptionQuestion:
-      questions["logement . chauffage . bois . type . bûches . consommation"],
-    heatNetworkConsumptionQuestion:
-      questions["logement . chauffage . réseau de chaleur . consommation"],
-    bioGasContractQuestion: questions["logement . chauffage . gaz . biogaz"],
-    bioGasPartQuestion: questions["logement . chauffage . biogaz . part"],
-    airConditioningUsageQuestion:
-      questions["logement . climatisation . présent"],
-    airConditioningNumberQuestion:
-      questions["logement . climatisation . nombre"],
-  };
+  const energyQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(energyQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.housing.energyFootprint,
-  );
-
   return {
-    annualFootprint,
     control,
     updateHousingProfile,
     energyQuestions,

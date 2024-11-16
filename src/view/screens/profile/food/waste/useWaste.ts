@@ -1,35 +1,22 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Question } from "@domain/entities/question/Question";
-import { useQuestionsContext } from "@view/screens/profile/QuestionsContext";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useWaste = () => {
-  const { questions } = useQuestionsContext();
+  const questionKeys = {
+    wasteQuantity: "alimentation . déchets . quantité jetée",
+    ecoGesture: "alimentation . déchets . gestes",
+  } as const;
+
   const { updateFoodProfile } = useContext(UsecasesContext);
 
-  const wasteQuestions = {
-    wasteQuantityQuestion: questions["alimentation . déchets . quantité jetée"],
-    ecoGestureQuestion: questions["alimentation . déchets . gestes"],
-    ...questions["alimentation . déchets . gestes"].subQuestions?.reduce(
-      (acc, question) => {
-        acc[question.label] = question;
-        return acc;
-      },
-      {} as Record<string, Question>,
-    ),
-  };
+  const wasteQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
   const { control } = useProfileForm(wasteQuestions);
 
-  const annualFootprint = useAppStore(
-    (store) => store.footprints.food.wasteFootprint,
-  );
-
   return {
-    annualFootprint,
     control,
     updateFoodProfile,
     wasteQuestions,

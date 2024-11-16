@@ -2,22 +2,22 @@ import { useTranslation } from "react-i18next";
 
 import { useAppStore } from "@data/store/store";
 import { ListAccordion } from "@view/screens/profile/components/lists/ListAccordion";
-import { HomeSectionContent } from "@view/screens/profile/housing/home/HomeSectionContent";
+import { LeisureSectionContent } from "@view/screens/profile/housing/leisure/LeisureSectionContent";
 
-export const HomeSection = () => {
+export const LeisureSection = () => {
   const { t } = useTranslation(["housing", "emissions", "common"]);
 
   const annualFootprint = useAppStore(
-    (store) => store.footprints.housing.homeFootprint,
+    (store) => store.footprints.housing.leisureFootprint,
   );
 
   return (
     <ListAccordion
-      title={t("emissions:housing.home")}
+      title={t("emissions:housing.leisure")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-      icon="home"
+      icon="beach"
     >
-      <HomeSectionContent />
+      <LeisureSectionContent />
     </ListAccordion>
   );
 };
