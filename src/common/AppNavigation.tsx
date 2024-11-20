@@ -59,32 +59,32 @@ export const AppNavigation = () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{ title: t("Profile") }}
+        options={{ title: t("Profile"), headerMode: "float" }}
       />
       <Stack.Screen
         name="TransportProfile"
         component={TransportProfile}
-        options={{ title: t("Transport") }}
+        options={{ title: t("Transport"), headerMode: "float" }}
       />
       <Stack.Screen
         name="FoodProfile"
         component={FoodProfile}
-        options={{ title: t("Food") }}
+        options={{ title: t("Food"), headerMode: "float" }}
       />
       <Stack.Screen
         name="HousingProfile"
         component={HousingProfile}
-        options={{ title: t("Housing") }}
+        options={{ title: t("Housing"), headerMode: "float" }}
       />
       <Stack.Screen
         name="EverydayThingsProfile"
         component={EverydayThingsProfile}
-        options={{ title: t("EverydayThings") }}
+        options={{ title: t("EverydayThings"), headerMode: "float" }}
       />
       <Stack.Screen
         name="SocietalServicesProfile"
         component={SocietalServicesProfile}
-        options={{ title: t("SocietalServices") }}
+        options={{ title: t("SocietalServices"), headerMode: "float" }}
       />
     </Stack.Navigator>
   );
