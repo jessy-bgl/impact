@@ -10,7 +10,6 @@ import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppNavigation } from "@common/AppNavigation";
-import { QuestionsContext } from "@view/screens/profile/QuestionsContext";
 import "../logger.config";
 import { AppTheme } from "./AppTheme";
 import { PERSISTENCE_KEY, useApp } from "./useApp";
@@ -29,37 +28,34 @@ const App = () => {
     <SafeAreaProvider>
       <StatusBar style="light" />
       <PaperProvider theme={AppTheme}>
-        {/* TODO: supprimer ce Provider */}
-        <QuestionsContext.Provider value={{}}>
-          <NavigationContainer
-            theme={AppTheme}
-            initialState={initialState}
-            onStateChange={(state) => {
-              AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+        <NavigationContainer
+          theme={AppTheme}
+          initialState={initialState}
+          onStateChange={(state) => {
+            AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
 
-              // const route = state?.routes[state.index];
-              // if (route === undefined) return;
+            // const route = state?.routes[state.index];
+            // if (route === undefined) return;
 
-              // NB : plausible removed because of Android build error (cf. top of file)
-              // if (route.state && route.state.index !== undefined) {
-              //   const subroute = route.state.routes[route.state.index];
-              //   plausible.trackEvent("Navigation", {
-              //     props: { page: subroute.name },
-              //   });
-              // } else {
-              //   plausible.trackEvent("Navigation", {
-              //     props: { page: route.name },
-              //   });
-              // }
-            }}
-          >
-            <View style={styles.container}>
-              <View style={styles.content}>
-                <AppNavigation />
-              </View>
+            // NB : plausible removed because of Android build error (cf. top of file)
+            // if (route.state && route.state.index !== undefined) {
+            //   const subroute = route.state.routes[route.state.index];
+            //   plausible.trackEvent("Navigation", {
+            //     props: { page: subroute.name },
+            //   });
+            // } else {
+            //   plausible.trackEvent("Navigation", {
+            //     props: { page: route.name },
+            //   });
+            // }
+          }}
+        >
+          <View style={styles.container}>
+            <View style={styles.content}>
+              <AppNavigation />
             </View>
-          </NavigationContainer>
-        </QuestionsContext.Provider>
+          </View>
+        </NavigationContainer>
       </PaperProvider>
     </SafeAreaProvider>
   );
