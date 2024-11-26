@@ -1,3 +1,4 @@
+import { View } from "react-native";
 import { Button, ButtonProps, Card, Icon, useTheme } from "react-native-paper";
 
 import { ActionState } from "@domain/entities/action/Action";
@@ -13,17 +14,14 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
   const buttonStyle: ButtonProps["style"] = {
     borderStyle: "solid",
     borderWidth: 1,
-    height: 37,
-    justifyContent: "center",
+    height: 40,
   };
-
-  const iconSize = 20;
 
   if (actionState === "notStarted")
     return (
       <Card.Actions>
         <Button onPress={() => updateState("skipped")} style={buttonStyle}>
-          <Icon source="cancel" size={iconSize} />
+          <IconView icon="cancel" />
         </Button>
         <Button
           onPress={() => updateState("inProgress")}
@@ -33,7 +31,7 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
           }}
           buttonColor={"transparent"}
         >
-          <Icon source="check-outline" size={iconSize} color={colors.primary} />
+          <IconView icon="check-outline" color={colors.primary} />
         </Button>
       </Card.Actions>
     );
@@ -42,7 +40,7 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
     return (
       <Card.Actions>
         <Button onPress={() => updateState("notStarted")} style={buttonStyle}>
-          <Icon source="close" size={iconSize} />
+          <IconView icon="close" />
         </Button>
       </Card.Actions>
     );
@@ -51,8 +49,16 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
     return (
       <Card.Actions>
         <Button onPress={() => updateState("notStarted")} style={buttonStyle}>
-          <Icon source="restore" size={iconSize} />
+          <IconView icon="restore" />
         </Button>
       </Card.Actions>
     );
+};
+
+const IconView = ({ icon, color }: { icon: string; color?: string }) => {
+  return (
+    <View style={{ display: "flex", alignItems: "center" }}>
+      <Icon source={icon} size={19} color={color} />
+    </View>
+  );
 };
