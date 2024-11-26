@@ -22,8 +22,8 @@ export const SelectSegmented = ({
   const { colors } = useTheme();
 
   const selectedColor = question.isEngineDefaultValueUsed
-    ? colors.onSurfaceDisabled
-    : undefined;
+    ? colors.inverseOnSurface
+    : colors.onSurfaceDisabled;
 
   if (!options.length) return;
 
