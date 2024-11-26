@@ -47,7 +47,7 @@ export const NumericInput = ({
     if (props.onChangeText && value !== undefined) {
       const currentValue = Number(value);
       if (max === undefined || (max !== undefined && currentValue < max)) {
-        let newValue = currentValue + step;
+        let newValue = Math.round(currentValue + step);
         if (max !== undefined && newValue > max) newValue = max;
         props.onChangeText(newValue.toString());
         onValueChange(newValue.toString());
@@ -59,7 +59,7 @@ export const NumericInput = ({
     if (props.onChangeText && value !== undefined) {
       const currentValue = Number(value);
       if (min === undefined || (min !== undefined && currentValue > min)) {
-        let newValue = currentValue - step;
+        let newValue = Math.round(currentValue - step);
         if (min !== undefined && newValue < min) newValue = min;
         props.onChangeText(newValue.toString());
         onValueChange(newValue.toString());
