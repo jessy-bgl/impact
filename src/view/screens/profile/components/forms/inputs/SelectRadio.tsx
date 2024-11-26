@@ -36,7 +36,7 @@ export const SelectRadio = ({ question, value, onValueChange }: Props) => {
               paddingHorizontal: 15,
             }}
           >
-            <Text>{option.label}</Text>
+            <Text style={{ flex: 1 }}>{option.label}</Text>
             <RadioButton value={option.value} color={color} />
           </View>
         );
