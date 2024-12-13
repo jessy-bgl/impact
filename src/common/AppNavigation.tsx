@@ -105,6 +105,7 @@ const BottomTabNavigator = () => {
         name="Emissions"
         component={Emissions}
         options={{
+          lazy: false,
           headerShown: false,
           title: t("Emissions"),
           tabBarIcon: ({ focused, color }) => {
@@ -139,6 +140,7 @@ const BottomTabNavigator = () => {
         name="Actions"
         component={Actions}
         options={{
+          lazy: false,
           title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
             return (

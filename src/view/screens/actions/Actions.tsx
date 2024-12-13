@@ -5,31 +5,72 @@ import { ScrollView, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
 import EmptyBox from "@assets/images/empty_box.svg";
-import { Action, ActionState } from "@domain/entities/action/Action";
+import { useAppStore } from "@data/store/store";
+import { ActionState } from "@domain/entities/action/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
 import { useActions } from "@view/screens/actions/useActions";
 
 const Tab = createMaterialTopTabNavigator();
 
 export const Actions = () => {
-  const {
-    updateActionState,
-    footprints,
-    notStartedActions,
-    inProgressActions,
-    skippedActions,
-  } = useActions();
+  const { t } = useTranslation("actions");
+
+  return (
+    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+      <Tab.Screen
+        name="notStartedActions"
+        options={{
+          title: t("actionsList"),
+          tabBarBadge: () => <ActionsTabBadge state="notStarted" />,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="apps" color={color} size={20} />
+          ),
+        }}
+      >
+        {() => <ActionsList state="notStarted" />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="inProgressActions"
+        options={{
+          title: t("actionsInProgress"),
+          tabBarBadge: () => <ActionsTabBadge state="inProgress" />,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="sync" color={color} size={20} />
+          ),
+        }}
+      >
+        {() => <ActionsList state="inProgress" />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="skippedActions"
+        options={{
+          title: t("actionsSkipped"),
+          tabBarBadge: () => <ActionsTabBadge state="skipped" />,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons
+              name="remove-circle-outline"
+              color={color}
+              size={20}
+            />
+          ),
+        }}
+      >
+        {() => <ActionsList state="skipped" />}
+      </Tab.Screen>
+    </Tab.Navigator>
+  );
+};
+
+const ActionsList = ({ state }: { state: ActionState }) => {
+  const { updateActionState, footprints } = useActions();
+
+  const actions = useAppStore((store) =>
+    store.actions.filter((action) => action.state === state),
+  );
 
   const { t } = useTranslation("actions");
-  const { colors } = useTheme();
 
-  const ActionsList = ({
-    actions,
-    state,
-  }: {
-    actions: Action[];
-    state: ActionState;
-  }) => (
+  return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ flexGrow: 1 }}
@@ -65,8 +106,16 @@ export const Actions = () => {
       )}
     </ScrollView>
   );
+};
 
-  const ActionsBadge = ({ text }: { text: string | number }) => (
+const ActionsTabBadge = ({ state }: { state: ActionState }) => {
+  const { colors } = useTheme();
+
+  const actionsCounter = useAppStore(
+    (store) => store.actions.filter((action) => action.state === state).length,
+  );
+
+  return (
     <View
       style={{
         marginTop: 5,
@@ -80,53 +129,8 @@ export const Actions = () => {
       }}
     >
       <Text adjustsFontSizeToFit style={{ color: colors.onSurfaceVariant }}>
-        {text}
+        {actionsCounter}
       </Text>
     </View>
-  );
-
-  return (
-    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
-      <Tab.Screen
-        name="notStartedActions"
-        options={{
-          title: t("actionsList"),
-          tabBarBadge: () => <ActionsBadge text={notStartedActions.length} />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="apps" color={color} size={20} />
-          ),
-        }}
-      >
-        {() => <ActionsList actions={notStartedActions} state="notStarted" />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="inProgressActions"
-        options={{
-          title: t("actionsInProgress"),
-          tabBarBadge: () => <ActionsBadge text={inProgressActions.length} />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="sync" color={color} size={20} />
-          ),
-        }}
-      >
-        {() => <ActionsList actions={inProgressActions} state="inProgress" />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="skippedActions"
-        options={{
-          title: t("actionsSkipped"),
-          tabBarBadge: () => <ActionsBadge text={skippedActions.length} />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="remove-circle-outline"
-              color={color}
-              size={20}
-            />
-          ),
-        }}
-      >
-        {() => <ActionsList actions={skippedActions} state="skipped" />}
-      </Tab.Screen>
-    </Tab.Navigator>
   );
 };
