@@ -140,7 +140,9 @@ const BottomTabNavigator = () => {
         name="Actions"
         component={Actions}
         options={{
-          lazy: false,
+          // NB: la page Actions étant assez lourde, la garder en mémoire
+          // impacte les performances (notamment pour le Profil)
+          unmountOnBlur: true,
           title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
             return (

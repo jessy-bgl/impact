@@ -1,18 +1,25 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
-import EmptyBox from "@assets/images/empty_box.svg";
+import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
 import { ActionState } from "@domain/entities/action/Action";
-import { ActionCard } from "@view/screens/actions/ActionCard";
-import { useActions } from "@view/screens/actions/useActions";
+import { ActionsList } from "@view/screens/actions/ActionsList";
 
 const Tab = createMaterialTopTabNavigator();
 
 export const Actions = () => {
+  const { syncEngineWithStoredActions, updateActionState } =
+    useContext(UsecasesContext);
+
+  useEffect(() => {
+    syncEngineWithStoredActions();
+  }, [syncEngineWithStoredActions]);
+
   const { t } = useTranslation("actions");
 
   return (
@@ -27,7 +34,12 @@ export const Actions = () => {
           ),
         }}
       >
-        {() => <ActionsList state="notStarted" />}
+        {() => (
+          <ActionsList
+            state="notStarted"
+            updateActionState={updateActionState}
+          />
+        )}
       </Tab.Screen>
       <Tab.Screen
         name="inProgressActions"
@@ -39,7 +51,12 @@ export const Actions = () => {
           ),
         }}
       >
-        {() => <ActionsList state="inProgress" />}
+        {() => (
+          <ActionsList
+            state="inProgress"
+            updateActionState={updateActionState}
+          />
+        )}
       </Tab.Screen>
       <Tab.Screen
         name="skippedActions"
@@ -55,56 +72,11 @@ export const Actions = () => {
           ),
         }}
       >
-        {() => <ActionsList state="skipped" />}
+        {() => (
+          <ActionsList state="skipped" updateActionState={updateActionState} />
+        )}
       </Tab.Screen>
     </Tab.Navigator>
-  );
-};
-
-const ActionsList = ({ state }: { state: ActionState }) => {
-  const { updateActionState, footprints } = useActions();
-
-  const actions = useAppStore((store) =>
-    store.actions.filter((action) => action.state === state),
-  );
-
-  const { t } = useTranslation("actions");
-
-  return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ flexGrow: 1 }}
-    >
-      {actions.length === 0 ? (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <EmptyBox height={50} width={50} />
-          <Text>{t(`noAction.${state}`)}</Text>
-        </View>
-      ) : (
-        <View
-          style={{
-            paddingVertical: 20,
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: 15,
-          }}
-        >
-          {actions.map((action) => (
-            <ActionCard
-              key={action.id}
-              action={action}
-              footprintViewModel={footprints[action.category]}
-              updateState={(newState: ActionState) =>
-                updateActionState(action.id, newState)
-              }
-            />
-          ))}
-        </View>
-      )}
-    </ScrollView>
   );
 };
 

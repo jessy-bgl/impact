@@ -5,20 +5,19 @@ import { ActionCardButtons } from "@view/screens/actions/ActionCardButtons";
 import { ActionCardCategory } from "@view/screens/actions/ActionCardCategory";
 import { ActionCardContent } from "@view/screens/actions/ActionCardContent";
 import { ActionCardTitle } from "@view/screens/actions/ActionCardTitle";
-import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
+import { useFootprints } from "@view/view-models/useFootprints";
 
 type Props = {
   action: Action;
   updateState: (newState: ActionState) => void;
-  footprintViewModel: FootprintCategoryViewModel;
 };
 
-export const ActionCard = ({
-  action,
-  updateState,
-  footprintViewModel,
-}: Props) => {
+export const ActionCard = ({ action, updateState }: Props) => {
   const { roundness } = useTheme();
+
+  const { footprints } = useFootprints();
+
+  const footprintViewModel = footprints[action.category];
 
   const savedFootprintPart = Math.floor(
     (action.savedFootprint / footprintViewModel.totalFootprint) * 100,
