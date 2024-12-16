@@ -9,21 +9,21 @@ const config: ExpoConfig = {
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "dark",
-  splash: {
-    image: "./assets/splash.png",
-    resizeMode: "contain",
-    backgroundColor: "#ffffff",
-  },
+  plugins: [
+    [
+      "expo-splash-screen",
+      {
+        backgroundColor: "#eeeeee",
+        image: "./assets/adaptive-icon.png",
+        imageWidth: 200,
+      },
+    ],
+  ],
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
   },
   android: {
-    splash: {
-      image: "./assets/splash.png",
-      resizeMode: "native",
-      backgroundColor: "#ffffff",
-    },
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",

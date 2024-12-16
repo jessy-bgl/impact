@@ -1,9 +1,11 @@
 import "@expo/metro-runtime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import "intl-pluralrules";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { useCallback } from "react";
+import { StyleSheet, View } from "react-native";
 import "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
@@ -17,15 +19,20 @@ import "./view/translations/i18n";
 
 // NB : plausible removed because of Android build error:
 // ReferenceError: Property 'history' doesn't exist, js engine: hermes
-// import { plausible } from "./plausible";
+
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const { initialState, isReady } = useApp();
 
-  if (!isReady) return <ActivityIndicator />;
+  const onLayoutRootView = useCallback(() => {
+    if (isReady) SplashScreen.hideAsync();
+  }, [isReady]);
+
+  if (!isReady) return null;
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider onLayout={onLayoutRootView}>
       <StatusBar style="light" />
       <PaperProvider theme={AppTheme}>
         <NavigationContainer
