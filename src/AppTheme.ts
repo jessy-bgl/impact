@@ -11,7 +11,6 @@ const MaterialTheme = {
     inversePrimary: "#fff",
     secondary: "#5F9EA0",
     onSecondary: "#111",
-    // background: "#282731",
   },
 };
 

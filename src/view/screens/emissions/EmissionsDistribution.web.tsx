@@ -7,7 +7,7 @@ import { VictoryLabel, VictoryPie } from "victory";
 import { Footprints } from "@view/view-models/Footprint";
 
 const pieWidthAndHeight = 225;
-const minFootprintToDisplayIcon = 50;
+const minFootprintToDisplayIcon = 100;
 
 type Props = {
   footprints: Footprints;

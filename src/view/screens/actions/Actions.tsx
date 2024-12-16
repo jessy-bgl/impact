@@ -1,5 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useIsFocused } from "@react-navigation/native";
 import { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
@@ -21,6 +22,10 @@ export const Actions = () => {
   }, [syncEngineWithStoredActions]);
 
   const { t } = useTranslation("actions");
+
+  // NB: this is a workaround to improve performance (mainly for Profil screen)
+  const isFocused = useIsFocused();
+  if (!isFocused) return null;
 
   return (
     <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
@@ -83,9 +88,9 @@ export const Actions = () => {
 const ActionsTabBadge = ({ state }: { state: ActionState }) => {
   const { colors } = useTheme();
 
-  const actionsCounter = useAppStore(
-    (store) => store.actions.filter((action) => action.state === state).length,
-  );
+  const actionsCounter = useAppStore((store) => store.actions).filter(
+    (action) => action.state === state,
+  ).length;
 
   return (
     <View

@@ -9,6 +9,7 @@ const config: ExpoConfig = {
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "dark",
+  newArchEnabled: true,
   plugins: [
     [
       "expo-splash-screen",

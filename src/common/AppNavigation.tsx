@@ -98,7 +98,7 @@ const BottomTabNavigator = () => {
       initialRouteName="Emissions"
       screenOptions={{
         tabBarLabelPosition: "below-icon",
-        tabBarStyle: { height: 55, paddingBottom: 8 },
+        tabBarStyle: { height: 55 },
       }}
     >
       <BottomTab.Screen
@@ -140,9 +140,6 @@ const BottomTabNavigator = () => {
         name="Actions"
         component={Actions}
         options={{
-          // NB: la page Actions étant assez lourde, la garder en mémoire
-          // impacte les performances (notamment pour le Profil)
-          unmountOnBlur: true,
           title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
             return (
@@ -182,10 +179,9 @@ const ComparatorNavigator = () => {
 
   return (
     <ComparatorDrawer.Navigator
-      initialRouteName="Comparator"
+      initialRouteName="Converter"
       screenOptions={{
         headerTintColor: colors.onBackground,
-        unmountOnBlur: true, // NB : this is a workaround to avoid scroll issues
       }}
     >
       <ComparatorDrawer.Screen

@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 
@@ -14,8 +13,8 @@ type Props = {
 };
 
 export const ActionsList = ({ state, updateActionState }: Props) => {
-  const actions = useAppStore((store) =>
-    store.actions.filter((action) => action.state === state),
+  const actions = useAppStore((store) => store.actions).filter(
+    (action) => action.state === state,
   );
 
   const { t } = useTranslation("actions");

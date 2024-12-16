@@ -1,6 +1,6 @@
+import { useIsFocused, useRoute } from "@react-navigation/native";
 import { Platform } from "react-native";
 
-import { useRoute } from "@react-navigation/native";
 import { ComparatorForMobile } from "@view/screens/comparator/ComparatorMobile";
 import { ComparatorForWeb } from "@view/screens/comparator/ComparatorWeb";
 
@@ -20,6 +20,10 @@ export type AdemeComparatorType =
 
 export const Comparator = () => {
   const { params } = useRoute();
+
+  // NB: this is a workaround to improve performance (mainly for Profil screen)
+  const isFocused = useIsFocused();
+  if (!isFocused) return null;
 
   if (!params || !(params as any).type) return <></>;
 
