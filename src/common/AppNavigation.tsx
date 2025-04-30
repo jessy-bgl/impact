@@ -50,7 +50,10 @@ export const AppNavigation = () => {
   if (isFirstLaunch) return <Intro />;
 
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ animation: "fade" }}
+    >
       <Stack.Screen
         name="Home"
         component={BottomTabNavigator}
@@ -59,32 +62,32 @@ export const AppNavigation = () => {
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{ title: t("Profile"), headerMode: "float" }}
+        options={{ title: t("Profile") }}
       />
       <Stack.Screen
         name="TransportProfile"
         component={TransportProfile}
-        options={{ title: t("Transport"), headerMode: "float" }}
+        options={{ title: t("Transport") }}
       />
       <Stack.Screen
         name="FoodProfile"
         component={FoodProfile}
-        options={{ title: t("Food"), headerMode: "float" }}
+        options={{ title: t("Food") }}
       />
       <Stack.Screen
         name="HousingProfile"
         component={HousingProfile}
-        options={{ title: t("Housing"), headerMode: "float" }}
+        options={{ title: t("Housing") }}
       />
       <Stack.Screen
         name="EverydayThingsProfile"
         component={EverydayThingsProfile}
-        options={{ title: t("EverydayThings"), headerMode: "float" }}
+        options={{ title: t("EverydayThings") }}
       />
       <Stack.Screen
         name="SocietalServicesProfile"
         component={SocietalServicesProfile}
-        options={{ title: t("SocietalServices"), headerMode: "float" }}
+        options={{ title: t("SocietalServices") }}
       />
     </Stack.Navigator>
   );
