@@ -105,9 +105,7 @@ const ActionsTabBadge = ({ state }: { state: ActionState }) => {
         alignItems: "center",
       }}
     >
-      <Text adjustsFontSizeToFit style={{ color: colors.onSurfaceVariant }}>
-        {actionsCounter}
-      </Text>
+      <Text style={{ fontSize: 10 }}>{actionsCounter}</Text>
     </View>
   );
 };
