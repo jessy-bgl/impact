@@ -1,11 +1,12 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
+import { Profile } from "@domain/entities/profile/Profile";
 import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useLeisure = () => {
-  const questionKeys = {
+  const questionKeys: Record<string, keyof Profile> = {
     swimmingPoolType: "logement . piscine . type",
     swimmingPoolSize: "logement . piscine . surface",
     outdoorEquipment: "logement . extérieur",

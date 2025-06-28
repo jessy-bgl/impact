@@ -1,11 +1,12 @@
 import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
+import { Profile } from "@domain/entities/profile/Profile";
 import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
 import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const usePublicTransport = () => {
-  const questionKeys = {
+  const questionKeys: Record<string, keyof Profile> = {
     trainKmPerYear: "transport . train . km",
     publicTransportUsage: "transport . transports commun",
     busHoursPerWeek: "transport . transports commun . bus . heures par semaine",
