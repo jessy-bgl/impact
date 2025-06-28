@@ -1,6 +1,7 @@
-import { Card, IconButton } from "react-native-paper";
+import { View } from "react-native";
+import { Button, ButtonProps, Card, Icon, useTheme } from "react-native-paper";
 
-import { ActionState } from "@domain/entities/actions/Action";
+import { ActionState } from "@domain/entities/action/Action";
 
 type Props = {
   actionState: ActionState;
@@ -8,43 +9,56 @@ type Props = {
 };
 
 export const ActionCardButtons = ({ actionState, updateState }: Props) => {
-  if (actionState === "completed") return;
+  const { colors } = useTheme();
+
+  const buttonStyle: ButtonProps["style"] = {
+    borderStyle: "solid",
+    borderWidth: 1,
+    height: 40,
+  };
 
   if (actionState === "notStarted")
     return (
       <Card.Actions>
-        <IconButton
-          icon="cancel"
-          onPress={() => updateState("skipped")}
-          style={{ flex: 1 }}
-        />
-        <IconButton
-          icon="check-outline"
+        <Button onPress={() => updateState("skipped")} style={buttonStyle}>
+          <IconView icon="cancel" />
+        </Button>
+        <Button
           onPress={() => updateState("inProgress")}
-          style={{ flex: 1 }}
-        />
+          style={{
+            ...buttonStyle,
+            borderColor: colors.primary,
+          }}
+          buttonColor={"transparent"}
+        >
+          <IconView icon="check-outline" color={colors.primary} />
+        </Button>
       </Card.Actions>
     );
 
   if (actionState === "inProgress")
     return (
       <Card.Actions>
-        <IconButton
-          icon="close"
-          onPress={() => updateState("notStarted")}
-          style={{ flex: 1 }}
-        />
+        <Button onPress={() => updateState("notStarted")} style={buttonStyle}>
+          <IconView icon="close" />
+        </Button>
       </Card.Actions>
     );
 
   if (actionState === "skipped")
     return (
       <Card.Actions>
-        <IconButton
-          icon="restore"
-          onPress={() => updateState("notStarted")}
-          style={{ flex: 1 }}
-        />
+        <Button onPress={() => updateState("notStarted")} style={buttonStyle}>
+          <IconView icon="restore" />
+        </Button>
       </Card.Actions>
     );
+};
+
+const IconView = ({ icon, color }: { icon: string; color?: string }) => {
+  return (
+    <View style={{ display: "flex", alignItems: "center" }}>
+      <Icon source={icon} size={19} color={color} />
+    </View>
+  );
 };

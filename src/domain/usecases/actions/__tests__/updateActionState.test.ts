@@ -1,7 +1,10 @@
+import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
+import { EvaluatedNode } from "publicodes";
+
 import { initFakeRepositories } from "@common/UsecasesContext";
-import { StopShortHaulFlightsAction } from "@domain/entities/actions/transport/plane.actions";
-import { Plane } from "@domain/entities/categories/transport/plane/Plane";
-import { createUseUpdateActionState } from "@domain/usecases/actions/updateActionState";
+import { AdemeAction } from "@domain/entities/action/AdemeAction";
+import { AdemeEngine } from "@domain/entities/AdemeEngine";
+import { createUpdateActionState } from "@domain/usecases/actions/updateActionState";
 
 describe("update action state", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
@@ -12,15 +15,21 @@ describe("update action state", () => {
 
   it("should update action state", () => {
     // Arrange
-    const action = new StopShortHaulFlightsAction(new Plane({}));
+    const ruleKey: DottedName = "transport . voiture . réduire taille";
+    const ademeRule = AdemeEngine.getRule(ruleKey);
+    const ademeEvaluation = AdemeEngine.evaluate(ruleKey);
+    const action = new AdemeAction({
+      ...ademeRule,
+      ...ademeEvaluation,
+    } as NGCRuleNode & EvaluatedNode);
     action.state = "notStarted";
     repositories.actionsRepository.actions = [action];
-    const { updateActionState } = createUseUpdateActionState(
+    const updateActionState = createUpdateActionState(
       repositories.actionsRepository,
-    )();
+    );
     // Act
-    updateActionState(action.id, "completed");
+    updateActionState(action.id, "inProgress");
     // Assert
-    expect(repositories.actionsRepository.actions[0].state).toBe("completed");
+    expect(action.state).toBe("inProgress");
   });
 });

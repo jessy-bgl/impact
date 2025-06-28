@@ -1,42 +1,23 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Pets } from "@domain/entities/categories/everyday-things/pets/Pets";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Pets>, "annualFootprint">;
-
-export const PetsLabels: (keyof FormValues)[] = [
-  "smallDogs",
-  "mediumDogs",
-  "bigDogs",
-  "cats",
-];
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const usePets = () => {
-  const storedPets = useAppStore(
-    (store) => store.emissions.everydayThings.pets,
-  );
-  const annualFootprint = new Pets(storedPets).annualFootprint;
+  const questionKeys = {
+    numberOfPets: "divers . animaux domestiques . empreinte",
+  } as const;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updatePets } = useUpdateEverydayThings();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    smallDogs: storedPets.smallDogs.toString(),
-    mediumDogs: storedPets.mediumDogs.toString(),
-    bigDogs: storedPets.bigDogs.toString(),
-    cats: storedPets.cats.toString(),
-  });
+  const petsQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const { handleUpdate, control } = useUpdateForm<Pets, FormValues>(
-    getDefaultValues(),
-    storedPets,
-    updatePets,
-  );
+  const { control } = useProfileForm(petsQuestions);
 
-  return { annualFootprint, control, handleUpdate };
+  return {
+    control,
+    updateEverydayThingsProfile,
+    petsQuestions,
+  };
 };

@@ -1,56 +1,24 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Clothes } from "@domain/entities/categories/everyday-things/clothes/Clothes";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Clothes>, "annualFootprint">;
-
-export const ClothesLabels: (keyof FormValues)[] = [
-  "tshirts",
-  "shirts",
-  "sweatshirts",
-  "sweaters",
-  "shorts",
-  "coats",
-  "dresses",
-  "pants",
-  "shoes",
-  "smallItems",
-  "bigItems",
-];
+import { Profile } from "@domain/entities/profile/Profile";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useClothes = () => {
-  const storedClothes = useAppStore(
-    (store) => store.emissions.everydayThings.clothes,
-  );
-  const annualFootprint = new Clothes(storedClothes).annualFootprint;
+  const questionKeys: Record<string, keyof Profile> = {
+    newClothersPerYear: "divers . textile . empreinte précise",
+  } as const;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updateClothes } = useUpdateEverydayThings();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    tshirts: storedClothes.tshirts.toString(),
-    shirts: storedClothes.shirts.toString(),
-    sweatshirts: storedClothes.sweatshirts.toString(),
-    sweaters: storedClothes.sweaters.toString(),
-    shorts: storedClothes.shorts.toString(),
-    coats: storedClothes.coats.toString(),
-    dresses: storedClothes.dresses.toString(),
-    pants: storedClothes.pants.toString(),
-    shoes: storedClothes.shoes.toString(),
-    smallItems: storedClothes.smallItems.toString(),
-    bigItems: storedClothes.bigItems.toString(),
-  });
+  const clothesQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const { handleUpdate, control } = useUpdateForm<Clothes, FormValues>(
-    getDefaultValues(),
-    storedClothes,
-    updateClothes,
-  );
+  const { control } = useProfileForm(clothesQuestions);
 
-  return { annualFootprint, control, handleUpdate };
+  return {
+    control,
+    updateEverydayThingsProfile,
+    clothesQuestions,
+  };
 };

@@ -1,54 +1,52 @@
-import { Avatar, Card } from "react-native-paper";
+import { Card, useTheme } from "react-native-paper";
 
-import { Action, ActionState } from "@domain/entities/actions/Action";
+import { Action, ActionState } from "@domain/entities/action/Action";
 import { ActionCardButtons } from "@view/screens/actions/ActionCardButtons";
+import { ActionCardCategory } from "@view/screens/actions/ActionCardCategory";
 import { ActionCardContent } from "@view/screens/actions/ActionCardContent";
-import { useActionStyles } from "@view/screens/actions/useActionStyles";
-import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
-import { View } from "react-native";
+import { ActionCardTitle } from "@view/screens/actions/ActionCardTitle";
+import { useFootprints } from "@view/view-models/useFootprints";
 
 type Props = {
   action: Action;
   updateState: (newState: ActionState) => void;
-  footprintViewModel: FootprintCategoryViewModel;
 };
 
-export const ActionCard = ({
-  action,
-  updateState,
-  footprintViewModel,
-}: Props) => {
-  const { label, state } = action;
+export const ActionCard = ({ action, updateState }: Props) => {
+  const { roundness } = useTheme();
 
-  const styles = useActionStyles();
+  const { footprints } = useFootprints();
+
+  const footprintViewModel = footprints[action.category];
 
   const savedFootprintPart = Math.floor(
     (action.savedFootprint / footprintViewModel.totalFootprint) * 100,
   );
 
   return (
-    <Card style={styles[state].card}>
-      <View style={{ height: styles[state].card.height }}>
-        <Card.Title
-          title={label}
-          titleNumberOfLines={2}
-          titleVariant="titleSmall"
-          left={(props) => (
-            <Avatar.Icon
-              {...props}
-              icon={footprintViewModel.materialIcon}
-              style={{ backgroundColor: footprintViewModel.color }}
-            />
-          )}
-        />
-
-        <ActionCardContent
-          action={action}
-          savedFootprintPart={savedFootprintPart}
-        />
-
-        <ActionCardButtons actionState={state} updateState={updateState} />
-      </View>
+    <Card
+      style={{
+        borderColor: footprintViewModel.color,
+        borderRadius: roundness,
+        width: 250,
+        borderWidth: 1,
+        opacity: action.state === "skipped" ? 0.7 : 1,
+      }}
+    >
+      <ActionCardTitle
+        action={action}
+        footprintViewModel={footprintViewModel}
+      />
+      <ActionCardContent
+        action={action}
+        savedFootprintPart={savedFootprintPart}
+        footprintViewModel={footprintViewModel}
+      />
+      <ActionCardCategory
+        action={action}
+        footprintViewModel={footprintViewModel}
+      />
+      <ActionCardButtons actionState={action.state} updateState={updateState} />
     </Card>
   );
 };

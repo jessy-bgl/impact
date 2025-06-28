@@ -1,37 +1,25 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Boat } from "@domain/entities/categories/transport/boat/Boat";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Boat>, "annualFootprint">;
+import { Profile } from "@domain/entities/profile/Profile";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useBoat = () => {
-  const storedBoat = useAppStore((store) => store.emissions.transport.boat);
-  const storedBoatUsage = storedBoat.usage;
-  const annualFootprint = new Boat(storedBoat).annualFootprint;
+  const questionKeys: Record<string, keyof Profile> = {
+    boatUsage: "transport . ferry . usager",
+    boatHoursPerYear: "transport . ferry . heures",
+  };
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updateBoat } = useUpdateTransport();
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    usage: storedBoat.usage.toString(),
-    hoursPerYear: storedBoat.hoursPerYear.toString(),
-  });
+  const boatQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<
-    Boat,
-    FormValues
-  >(getDefaultValues(), storedBoat, updateBoat);
+  const { control } = useProfileForm(boatQuestions);
 
-  useEffect(() => {
-    if (!storedBoatUsage) reset(getDefaultValues());
-  }, [storedBoatUsage]);
-
-  const usage = watch("usage") === "true";
-
-  return { control, handleUpdate, usage, annualFootprint };
+  return {
+    control,
+    updateTransportProfile,
+    boatQuestions,
+  };
 };

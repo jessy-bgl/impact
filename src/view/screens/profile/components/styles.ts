@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   listContentContainer: {
     padding: 15,
-    paddingLeft: 15, // needed to force the left padding
   },
   rowContainer: {
     flexDirection: "row",
@@ -14,9 +13,5 @@ export const styles = StyleSheet.create({
   columnContainer: {
     flexDirection: "column",
     gap: 10,
-  },
-  divider: {
-    marginTop: 10,
-    marginBottom: 10,
   },
 });

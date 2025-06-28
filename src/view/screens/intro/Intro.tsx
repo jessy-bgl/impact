@@ -7,7 +7,9 @@ import { appStoreActions } from "@data/store/storeActions";
 
 export const Intro = () => {
   const { colors } = useTheme();
+
   const { t } = useTranslation("intro");
+
   const { setFirstLaunch } = appStoreActions;
 
   const deviceWidth = Dimensions.get("window").width;

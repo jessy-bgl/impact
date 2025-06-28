@@ -1,44 +1,24 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import {
-  ConsumableProducts,
-  ConsumptionFrequency,
-} from "@domain/entities/categories/everyday-things/consumable-products/ConsumableProducts";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<ConsumableProducts>,
-  "annualFootprint"
->;
-
-export const consumptionOptions: ConsumptionFrequency[] = [
-  "low",
-  "medium",
-  "high",
-];
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useConsumableProducts = () => {
-  const storedConsumableProducts = useAppStore(
-    (store) => store.emissions.everydayThings.consumableProducts,
-  );
-  const annualFootprint = new ConsumableProducts(storedConsumableProducts)
-    .annualFootprint;
+  const questionKeys = {
+    consumableProducts: "divers . produits consommables . consommation",
+  } as const;
 
-  const { useUpdateEverydayThings } = useContext(UsecasesContext);
-  const { updateConsumableProducts } = useUpdateEverydayThings();
+  const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    consumption: storedConsumableProducts.consumption,
-  });
+  const consumableProductsQuestions =
+    useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const { handleUpdate, control, setValue } = useUpdateForm<
-    ConsumableProducts,
-    FormValues
-  >(getDefaultValues(), storedConsumableProducts, updateConsumableProducts);
+  const { control } = useProfileForm(consumableProductsQuestions);
 
-  return { annualFootprint, control, handleUpdate, setValue };
+  return {
+    control,
+    updateEverydayThingsProfile,
+    consumableProductsQuestions,
+  };
 };

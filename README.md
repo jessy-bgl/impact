@@ -19,3 +19,20 @@
 
 [<img width=250 alt="Actions" src="docs/screenshots/web/web_4.png?raw=true">](docs/screenshots/web/web_4.png?raw=true)&nbsp;&nbsp;
 [<img width=250 alt="Comparateur_Chauffage" src="docs/screenshots/web/web_6.png?raw=true">](docs/screenshots/web/web_6.png?raw=true)
+
+## Notes dev
+
+### Setup
+
+- installation de EAS CLI : `npm install -g eas-cli`
+- login EAS : `eas login`
+
+### Build - internal
+
+- local : `npx expo run:android`
+- EAS : `eas build --platform android --profile preview`
+
+### Build - production
+
+- mobile : `eas build --platform android`
+- web : `npm run build:web && deploy:web`

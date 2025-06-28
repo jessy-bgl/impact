@@ -1,4 +1,4 @@
-import { Action } from "@domain/entities/actions/Action";
+import { Action } from "@domain/entities/action/Action";
 
 export interface ActionsRepository {
   fetchActions(): Action[];

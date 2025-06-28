@@ -1,0 +1,11 @@
+{
+  "loading": "Chargement des actions...",
+  "actionsList": "Disponibles",
+  "actionsInProgress": "En cours",
+  "actionsSkipped": "Ecartées",
+  "noAction": {
+    "notStarted": "Aucune action disponible",
+    "inProgress": "Aucune action en cours",
+    "skipped": "Aucune action écartée"
+  }
+}

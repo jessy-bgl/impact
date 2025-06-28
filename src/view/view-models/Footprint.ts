@@ -1,13 +1,12 @@
-import { ReactNode } from "react";
+import { JSX } from "react";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import FoodImage from "@assets/images/food.svg";
-import EverydayThingsImage from "@assets/images/goods.svg";
-import HousingImage from "@assets/images/house.svg";
-import PublicServicesImage from "@assets/images/public_services.svg";
-import TransportImage from "@assets/images/transport.svg";
-
-import { FootprintCategory } from "@domain/entities/categories/Categories";
+import FoodImage from "@assets/images/food";
+import EverydayThingsImage from "@assets/images/goods";
+import HousingImage from "@assets/images/house";
+import PublicServicesImage from "@assets/images/public_services";
+import TransportImage from "@assets/images/transport";
+import { FootprintCategory } from "@domain/entities/footprints/types";
 
 export type Footprints = Record<FootprintCategory, FootprintCategoryViewModel>;
 
@@ -15,7 +14,7 @@ export class FootprintCategoryViewModel {
   public color: string = "";
   public icon: string = "";
   public part: number;
-  public image: ReactNode;
+  public image?: JSX.Element;
   public materialIcon: IconSource = "";
 
   protected constructor(
@@ -27,9 +26,39 @@ export class FootprintCategoryViewModel {
   }
 
   private computePart = (totalFootprint: number) =>
-    totalFootprint === 0
-      ? 0
-      : Math.floor((this.footprint / totalFootprint) * 100);
+    totalFootprint === 0 ? 0 : (this.footprint / totalFootprint) * 100;
+
+  static distributeParts = (footprints: Footprints): void => {
+    const categories = Object.values(footprints);
+
+    const totalFootprint = categories.reduce(
+      (sum, category) => sum + category.footprint,
+      0,
+    );
+
+    const parts = categories.map((category) =>
+      category.computePart(totalFootprint),
+    );
+
+    const roundedParts = parts.map(Math.floor);
+    const totalRounded = roundedParts.reduce((sum, part) => sum + part, 0);
+    const remainder = 100 - totalRounded;
+
+    const remainders = parts.map((part, index) => ({
+      index,
+      remainder: part - roundedParts[index],
+    }));
+
+    remainders.sort((a, b) => b.remainder - a.remainder);
+
+    for (let i = 0; i < remainder; i++) {
+      roundedParts[remainders[i].index]++;
+    }
+
+    Object.keys(footprints).forEach((key, index) => {
+      footprints[key as FootprintCategory].part = roundedParts[index];
+    });
+  };
 
   static forTransport(
     footprint: number,
@@ -59,6 +88,13 @@ export class FootprintCategoryViewModel {
     return new FootprintCategoryEverydayThings(footprint, totalFootprint);
   }
 
+  static forSocietalServices(
+    footprint: number,
+    totalFootprint: number,
+  ): FootprintCategoryViewModel {
+    return new FootprintCategoryPublicServices(footprint, totalFootprint);
+  }
+
   static forPublicServices(
     footprint: number,
     totalFootprint: number,
@@ -80,7 +116,7 @@ class FootprintCategoryTransport extends FootprintCategoryViewModel {
     this.color = "sandybrown";
     this.icon = "🚗";
     this.materialIcon = "car";
-    this.image = TransportImage;
+    this.image = TransportImage({});
   }
 }
 
@@ -90,7 +126,7 @@ class FootprintCategoryFood extends FootprintCategoryViewModel {
     this.color = "plum";
     this.icon = "🍲";
     this.materialIcon = "food";
-    this.image = FoodImage;
+    this.image = FoodImage({});
   }
 }
 
@@ -100,7 +136,7 @@ class FootprintCategoryHousing extends FootprintCategoryViewModel {
     this.color = "cadetblue";
     this.icon = "🏠";
     this.materialIcon = "home";
-    this.image = HousingImage;
+    this.image = HousingImage({});
   }
 }
 
@@ -110,23 +146,23 @@ class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
     this.color = "khaki";
     this.icon = "🛍️";
     this.materialIcon = "package";
-    this.image = EverydayThingsImage;
+    this.image = EverydayThingsImage({});
   }
 }
 
 class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
-    super("publicServices", footprint, totalFootprint);
+    super("societalServices", footprint, totalFootprint);
     this.color = "steelblue";
     this.icon = "🏛️";
     this.materialIcon = "bank";
-    this.image = PublicServicesImage;
+    this.image = PublicServicesImage({});
   }
 }
 
 class FootprintCategoryMerchantServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
-    super("publicServices", footprint, totalFootprint);
+    super("societalServices", footprint, totalFootprint);
     this.color = "cadetblue";
     this.icon = "✉️";
     this.materialIcon = "post";

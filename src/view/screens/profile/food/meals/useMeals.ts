@@ -1,45 +1,23 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { Meals } from "@domain/entities/categories/food/meals/Meals";
-import { BreakfastType } from "@domain/entities/categories/food/meals/types";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<StringifyProperties<Meals>, "annualFootprint">;
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const useMeals = () => {
-  const storedMeals = useAppStore((store) => store.emissions.food.meals);
-  const storedBreakfast = storedMeals.breakfast;
-  const annualFootprint = new Meals(storedMeals).annualFootprint;
+  const questionKeys = {
+    meals: "alimentation . plats",
+    localProducts: "alimentation . local . consommation",
+    breakfastType: "alimentation . petit déjeuner . type",
+    milkType: "alimentation . type de lait",
+    seasonalProducts: "alimentation . de saison . consommation",
+  } as const;
 
-  const { useUpdateFood } = useContext(UsecasesContext);
-  const { updateMeals } = useUpdateFood();
+  const { updateFoodProfile } = useContext(UsecasesContext);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    breakfast: storedMeals.breakfast,
-    milkType: storedMeals.milkType,
-    diet: storedMeals.diet,
-    localProducts: storedMeals.localProducts,
-    seasonalProducts: storedMeals.seasonalProducts,
-  });
+  const mealsQuestions = useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const { handleUpdate, control, watch, setValue } = useUpdateForm<
-    Meals,
-    FormValues
-  >(getDefaultValues(), storedMeals, updateMeals);
+  const { control } = useProfileForm(mealsQuestions);
 
-  useEffect(() => {
-    if (storedBreakfast !== "milk & cereals") {
-      setValue("milkType", "cow");
-      handleUpdate("milkType");
-    }
-  }, [storedBreakfast]);
-
-  const milkAndCerealsBreakfast =
-    (watch("breakfast") as BreakfastType) === "milk & cereals";
-
-  return { annualFootprint, milkAndCerealsBreakfast, control, handleUpdate };
+  return { control, updateFoodProfile, mealsQuestions };
 };

@@ -1,43 +1,26 @@
-import { useContext, useEffect } from "react";
-import { DefaultValues } from "react-hook-form";
+import { useContext } from "react";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { TwoWheeler } from "@domain/entities/categories/transport/two-wheeler/TwoWheeler";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
-export type FormValues = Omit<
-  StringifyProperties<TwoWheeler>,
-  "annualFootprint"
->;
+export const useTwoWheeler = () => {
+  const questionKeys = {
+    kmPerYear: "transport . deux roues . km",
+    twoWheelerEngine: "transport . deux roues . type",
+    twoWheelerUsage: "transport . deux roues . usager",
+  } as const;
 
-export const useTwhoWheeler = () => {
-  const storedTwoWheeler = useAppStore(
-    (store) => store.emissions.transport.twoWheeler,
-  );
-  const storedTwoWheelerUsage = storedTwoWheeler.usage;
-  const annualFootprint = new TwoWheeler(storedTwoWheeler).annualFootprint;
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updateTwoWheeler } = useUpdateTransport();
+  const twoWheelerQuestions =
+    useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    kmPerYear: storedTwoWheeler.kmPerYear.toString(),
-    type: storedTwoWheeler.type.toString(),
-    usage: storedTwoWheeler.usage.toString(),
-  });
+  const { control } = useProfileForm(twoWheelerQuestions);
 
-  const { handleUpdate, control, watch, reset } = useUpdateForm<
-    TwoWheeler,
-    FormValues
-  >(getDefaultValues(), storedTwoWheeler, updateTwoWheeler);
-
-  useEffect(() => {
-    if (!storedTwoWheelerUsage) reset(getDefaultValues());
-  }, [storedTwoWheelerUsage]);
-
-  const usage = watch("usage") === "true";
-
-  return { control, handleUpdate, usage, annualFootprint };
+  return {
+    control,
+    updateTransportProfile,
+    twoWheelerQuestions,
+  };
 };

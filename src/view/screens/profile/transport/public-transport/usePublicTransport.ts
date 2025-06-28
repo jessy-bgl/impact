@@ -1,38 +1,30 @@
 import { useContext } from "react";
-import { DefaultValues } from "react-hook-form";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { useAppStore } from "@data/store/store";
-import { PublicTransport } from "@domain/entities/categories/transport/public-transport/PublicTransport";
-import { StringifyProperties } from "@srctypes/utils";
-import { useUpdateForm } from "@view/screens/profile/utils/useUpdateForm";
-
-export type FormValues = Omit<
-  StringifyProperties<PublicTransport>,
-  "annualFootprint"
->;
+import { Profile } from "@domain/entities/profile/Profile";
+import { useGetQuestions } from "@view/screens/profile/utils/useGetQuestions";
+import { useProfileForm } from "@view/screens/profile/utils/useProfileForm";
 
 export const usePublicTransport = () => {
-  const storedPublicTransport = useAppStore(
-    (store) => store.emissions.transport.publicTransport,
-  );
-  const annualFootprint = new PublicTransport(storedPublicTransport)
-    .annualFootprint;
+  const questionKeys: Record<string, keyof Profile> = {
+    trainKmPerYear: "transport . train . km",
+    publicTransportUsage: "transport . transports commun",
+    busHoursPerWeek: "transport . transports commun . bus . heures par semaine",
+    coachKmPerWeek: "transport . transports commun . car . km par semaine",
+    metroHoursPerWeek:
+      "transport . transports commun . métro ou tram . heures par semaine",
+  };
 
-  const { useUpdateTransport } = useContext(UsecasesContext);
-  const { updatePublicTransport } = useUpdateTransport();
+  const { updateTransportProfile } = useContext(UsecasesContext);
 
-  const getDefaultValues = (): DefaultValues<FormValues> => ({
-    hoursPerYearInTrain: storedPublicTransport.hoursPerYearInTrain.toString(),
-    hoursPerWeekInBus: storedPublicTransport.hoursPerWeekInBus.toString(),
-    hoursPerWeekInMetro: storedPublicTransport.hoursPerWeekInMetro.toString(),
-  });
+  const publicTransportQuestions =
+    useGetQuestions<typeof questionKeys>(questionKeys);
 
-  const { handleUpdate, control } = useUpdateForm<PublicTransport, FormValues>(
-    getDefaultValues(),
-    storedPublicTransport,
-    updatePublicTransport,
-  );
+  const { control } = useProfileForm(publicTransportQuestions);
 
-  return { control, handleUpdate, annualFootprint };
+  return {
+    control,
+    updateTransportProfile,
+    publicTransportQuestions,
+  };
 };

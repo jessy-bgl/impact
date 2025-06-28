@@ -20,7 +20,7 @@ import { Profile } from "@view/screens/profile/Profile";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { FoodProfile } from "@view/screens/profile/food/Food";
 import { HousingProfile } from "@view/screens/profile/housing/Housing";
-import { PublicServicesProfile } from "@view/screens/profile/public-services/PublicServices";
+import { SocietalServicesProfile } from "@view/screens/profile/public-services/SocietalServices";
 import { TransportProfile } from "@view/screens/profile/transport/Transport";
 import { Tracking } from "@view/screens/tracking/Tracking";
 
@@ -35,7 +35,7 @@ type RootStackParamList = {
   FoodProfile: undefined;
   HousingProfile: undefined;
   EverydayThingsProfile: undefined;
-  PublicServicesProfile: undefined;
+  SocietalServicesProfile: undefined;
 };
 
 export type AppNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -50,7 +50,10 @@ export const AppNavigation = () => {
   if (isFirstLaunch) return <Intro />;
 
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ animation: "fade" }}
+    >
       <Stack.Screen
         name="Home"
         component={BottomTabNavigator}
@@ -82,9 +85,9 @@ export const AppNavigation = () => {
         options={{ title: t("EverydayThings") }}
       />
       <Stack.Screen
-        name="PublicServicesProfile"
-        component={PublicServicesProfile}
-        options={{ title: t("PublicServices") }}
+        name="SocietalServicesProfile"
+        component={SocietalServicesProfile}
+        options={{ title: t("SocietalServices") }}
       />
     </Stack.Navigator>
   );
@@ -98,13 +101,14 @@ const BottomTabNavigator = () => {
       initialRouteName="Emissions"
       screenOptions={{
         tabBarLabelPosition: "below-icon",
-        tabBarStyle: { height: 55, paddingBottom: 8 },
+        tabBarStyle: { height: 55 },
       }}
     >
       <BottomTab.Screen
         name="Emissions"
         component={Emissions}
         options={{
+          lazy: false,
           headerShown: false,
           title: t("Emissions"),
           tabBarIcon: ({ focused, color }) => {
@@ -178,10 +182,9 @@ const ComparatorNavigator = () => {
 
   return (
     <ComparatorDrawer.Navigator
-      initialRouteName="Comparator"
+      initialRouteName="Converter"
       screenOptions={{
         headerTintColor: colors.onBackground,
-        unmountOnBlur: true, // NB : this is a workaround to avoid scroll issues
       }}
     >
       <ComparatorDrawer.Screen

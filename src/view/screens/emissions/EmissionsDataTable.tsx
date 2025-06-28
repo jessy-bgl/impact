@@ -10,6 +10,7 @@ type Props = {
 
 export const EmissionsDataTable = ({ footprints }: Props) => {
   const { t } = useTranslation(["emissions", "common"]);
+
   const { colors } = useTheme();
 
   return (
@@ -45,7 +46,6 @@ export const EmissionsDataTable = ({ footprints }: Props) => {
                 <Text>{t(`categories.${emissionsCategory.category}`)}</Text>
               </View>
             </DataTable.Cell>
-
             <DataTable.Cell numeric>
               {emissionsCategory.footprint} {t("common:footprintKg")}
             </DataTable.Cell>
