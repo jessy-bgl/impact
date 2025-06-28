@@ -9,6 +9,7 @@ export const ClothesSectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
+        forceDisplay
         question={clothesQuestions.newClothersPerYear}
         control={control}
         handleUpdate={updateEverydayThingsProfile}

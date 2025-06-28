@@ -3,7 +3,7 @@ import { ScrollView, View } from "react-native";
 
 interface ScrollProfileSectionContextType {
   expandedId: string | number | undefined;
-  scrollViewRef: RefObject<ScrollView>;
+  scrollViewRef: RefObject<ScrollView | null>;
   sectionRefs: RefObject<{ [key: string]: View | null }>;
 }
 

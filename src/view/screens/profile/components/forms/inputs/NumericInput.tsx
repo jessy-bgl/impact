@@ -13,6 +13,7 @@ type Props = TextInputProps & {
   onValueChange: (value: string) => void;
   positive?: boolean;
   step?: number;
+  maxWidth?: number;
 };
 
 export const NumericInput = ({
@@ -20,6 +21,7 @@ export const NumericInput = ({
   onValueChange,
   positive = true,
   step = 1,
+  maxWidth = 290,
   ...props
 }: Props) => {
   const { colors } = useTheme();
@@ -73,7 +75,7 @@ export const NumericInput = ({
         ...(props.style as TextStyle),
         flexDirection: "row",
         gap: 10,
-        maxWidth: 300,
+        maxWidth: maxWidth,
         alignSelf: "center",
       }}
     >

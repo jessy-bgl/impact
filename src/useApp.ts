@@ -11,8 +11,7 @@ export const useApp = () => {
 
   const [initialState, setInitialState] = useState();
 
-  const { syncStoredProfileWithEngine, syncEngineWithStoredActions } =
-    useContext(UsecasesContext);
+  const { syncStoredProfileWithEngine } = useContext(UsecasesContext);
 
   useEffect(() => {
     const restoreState = async () => {
@@ -31,7 +30,6 @@ export const useApp = () => {
       try {
         restoreState();
         syncStoredProfileWithEngine();
-        syncEngineWithStoredActions();
       } catch (e) {
         // TODO: envoyer l'erreur à un service de monitoring
         console.error(e);

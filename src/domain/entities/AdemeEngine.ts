@@ -1,9 +1,8 @@
-import { DottedName } from "@incubateur-ademe/nosgestesclimat";
+import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
 import { EvaluatedNode, PublicodesExpression } from "publicodes";
 
 import {
   ademeFootprintModel,
-  NGCRuleNode,
   NGCRulesNodes,
 } from "@data/ademe-footprint-model";
 import { FootprintCategory } from "@domain/entities/footprints/types";
@@ -46,8 +45,7 @@ export abstract class AdemeEngine {
     try {
       this.getRule(key);
       return true;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (_) {
+    } catch {
       return false;
     }
   };

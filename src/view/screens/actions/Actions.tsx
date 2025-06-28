@@ -1,10 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useIsFocused } from "@react-navigation/native";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { ActivityIndicator, Text, useTheme } from "react-native-paper";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
@@ -14,21 +13,34 @@ import { ActionsList } from "@view/screens/actions/ActionsList";
 const Tab = createMaterialTopTabNavigator();
 
 export const Actions = () => {
+  const { t } = useTranslation("actions");
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const { syncEngineWithStoredActions, updateActionState } =
     useContext(UsecasesContext);
 
   useEffect(() => {
-    syncEngineWithStoredActions();
+    // Allow the component to render with loading state first
+    const timeoutId = setTimeout(() => {
+      syncEngineWithStoredActions();
+      setIsLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [syncEngineWithStoredActions]);
 
-  const { t } = useTranslation("actions");
-
-  // NB: this is a workaround to improve performance (mainly for Profil screen)
-  const isFocused = useIsFocused();
-  if (!isFocused) return null;
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+        <Text style={{ marginTop: 10 }}>{t("loading")}</Text>
+      </View>
+    );
+  }
 
   return (
-    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+    <Tab.Navigator>
       <Tab.Screen
         name="notStartedActions"
         options={{

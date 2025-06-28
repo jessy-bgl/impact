@@ -10,7 +10,10 @@ export const useScrollProfile = () => {
   const handleExpandProfileSection = (id: string | number) => {
     if (id !== expandedId) {
       setExpandedId(id);
-      scrollToSection(id);
+      setTimeout(() => {
+        // Ensure the section is scrolled into view after expansion
+        scrollToSection(id);
+      }, 10);
     } else {
       setExpandedId(expandedId ? undefined : id);
     }

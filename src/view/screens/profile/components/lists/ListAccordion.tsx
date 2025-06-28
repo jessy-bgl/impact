@@ -18,14 +18,14 @@ export const ListAccordion = ({
   icon,
   children,
 }: PropsWithChildren<Props>) => {
-  const { expandedId, scrollViewRef, sectionRefs } = useScrollProfileSection();
-
-  if (expandedId === title) {
-    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-  }
+  const { sectionRefs } = useScrollProfileSection();
 
   return (
-    <View ref={(ref) => (sectionRefs.current![title] = ref)}>
+    <View
+      ref={(ref) => {
+        if (ref) sectionRefs.current![title] = ref;
+      }}
+    >
       <List.Accordion
         id={title}
         title={<ListTitle title={title} subtitle={subtitle} />}

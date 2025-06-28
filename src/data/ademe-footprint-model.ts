@@ -1,21 +1,20 @@
-import {
-  DottedName,
-  NGCRule,
-  NGCRules,
-} from "@incubateur-ademe/nosgestesclimat";
+import { NGCRuleNode, NGCRules } from "@incubateur-ademe/nosgestesclimat";
 import AdemeModel from "@incubateur-ademe/nosgestesclimat/public/co2-model.FR-lang.fr.json";
-import PublicodesEngine, { RuleNode } from "publicodes";
+import PublicodesEngine from "publicodes";
 
 export const ademeFootprintModel = new PublicodesEngine(
   AdemeModel as unknown as NGCRules,
+  {
+    strict: {
+      situation: false,
+      noOrphanRule: true,
+      checkPossibleValues: false,
+      noCycleRuntime: false,
+    },
+    warn: {
+      cyclicReferences: false,
+    },
+  },
 );
 
-export type NGCRuleNode = RuleNode & {
-  rawNode: NGCRule & {
-    "par défaut"?: string | number;
-    "applicable si"?: string;
-    formule?: any; // string or object
-  };
-};
-
-export type NGCRulesNodes = Record<DottedName, NGCRuleNode>;
+export type NGCRulesNodes = Record<string, NGCRuleNode>;

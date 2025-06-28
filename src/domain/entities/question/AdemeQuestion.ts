@@ -1,4 +1,5 @@
-import { NGCRuleNode, NGCRulesNodes } from "@data/ademe-footprint-model";
+import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
+
 import { AdemeEngine } from "@domain/entities/AdemeEngine";
 import { Profile } from "@domain/entities/profile/Profile";
 import { Question } from "@domain/entities/question/Question";
@@ -27,7 +28,7 @@ export class AdemeQuestion extends Question {
     this.warning = rawNode.avertissement;
     this.isApplicable = this.getIsApplicable();
     this.isInactive = rawNode.inactif === "oui";
-    this.minValue = rawNode.plancher;
+    this.minValue = rawNode.plancher as number | undefined;
     this.maxValue = rawNode.plafond as number | undefined;
     this.options = this.getOptions();
     this.subQuestions = this.getSubQuestions(profile);
@@ -47,10 +48,7 @@ export class AdemeQuestion extends Question {
         typeof AdemeEngine.evaluate(this.ruleKey).nodeValue !== "number") ||
       ["présent", "propriétaire"].some((key) => this.ruleKey.includes(key))
     ) {
-      if (
-        this.rule.rawNode.formule &&
-        this.rule.rawNode.formule["une possibilité"]
-      ) {
+      if (this.rule.rawNode && this.rule.rawNode["une possibilité"]) {
         return "select";
       }
       return "select-boolean";
@@ -70,16 +68,17 @@ export class AdemeQuestion extends Question {
 
   private getOptions(): Question["options"] | undefined {
     if (this.type === "select") {
-      return (
-        this.rule.rawNode.formule["une possibilité"].possibilités as string[]
-      ).map((option) => {
-        const optionKey = this.ruleKey + " . " + option;
-        const optionValue = option.startsWith("'") ? option : `'${option}'`;
-        return {
-          label: AdemeEngine.getRule(optionKey as keyof NGCRulesNodes).title,
-          value: optionValue,
-        };
-      });
+      if (this.rule.rawNode["une possibilité"] === undefined) return undefined;
+      return (this.rule.rawNode["une possibilité"] as string[]).map(
+        (option: string) => {
+          const optionKey = (this.ruleKey + " . " + option) as DottedName;
+          const optionValue = option.startsWith("'") ? option : `'${option}'`;
+          return {
+            label: AdemeEngine.getRule(optionKey).title,
+            value: optionValue,
+          };
+        },
+      );
     }
     if (this.type === "select-boolean") {
       return [
@@ -113,8 +112,7 @@ export class AdemeQuestion extends Question {
           title,
         );
         subQuestions.push(newQuestion);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (_) {
+      } catch {
         // ignore unknown questions
       }
     }

@@ -6,7 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import "intl-pluralrules";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -57,11 +57,11 @@ const App = () => {
             // }
           }}
         >
-          <View style={styles.container}>
+          <GestureHandlerRootView style={styles.container}>
             <View style={styles.content}>
               <AppNavigation />
             </View>
-          </View>
+          </GestureHandlerRootView>
         </NavigationContainer>
       </PaperProvider>
     </SafeAreaProvider>

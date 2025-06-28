@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   listContentContainer: {
     padding: 15,
-    // paddingLeft: 15, // needed to force the left padding
   },
   rowContainer: {
     flexDirection: "row",

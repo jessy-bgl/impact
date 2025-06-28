@@ -29,7 +29,7 @@ export const NumericFields = ({
   inputFlex,
 }: Props) => {
   const { width } = useWindowDimensions();
-  const widthLimit = 350;
+  const widthLimit = 450;
   const isWidthLimitReached = width > widthLimit;
 
   const ContainerView = isWidthLimitReached ? RowContainer : ColumnContainer;
@@ -57,6 +57,7 @@ export const NumericFields = ({
                   }}
                   onChangeText={onChange}
                   value={value}
+                  maxWidth={250}
                   style={
                     isWidthLimitReached
                       ? { flex: inputFlex ?? 2, textAlign: "center" }

@@ -9,7 +9,6 @@ const config: ExpoConfig = {
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "dark",
-  newArchEnabled: true,
   plugins: [
     [
       "expo-splash-screen",
@@ -23,6 +22,7 @@ const config: ExpoConfig = {
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
+    bundleIdentifier: "com.impactech.impact",
   },
   android: {
     adaptiveIcon: {
@@ -30,20 +30,11 @@ const config: ExpoConfig = {
       backgroundColor: "#ffffff",
     },
     package: "com.impactech.impact",
+    edgeToEdgeEnabled: true,
   },
-  web: {
-    bundler: "metro",
-    favicon: "./assets/favicon.png",
-  },
-  experiments: {
-    tsconfigPaths: true,
-    baseUrl: "/impact",
-  },
-  extra: {
-    eas: {
-      projectId: "e2d24387-b1d5-4c95-b5a8-42f48c62af22",
-    },
-  },
+  web: { bundler: "metro", favicon: "./assets/favicon.png" },
+  experiments: { tsconfigPaths: true, baseUrl: "/impact" },
+  extra: { eas: { projectId: "e2d24387-b1d5-4c95-b5a8-42f48c62af22" } },
   owner: "jessy-bgl",
 };
 

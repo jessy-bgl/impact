@@ -1,7 +1,6 @@
-import { DottedName } from "@incubateur-ademe/nosgestesclimat";
+import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
 import { EvaluatedNode } from "publicodes";
 
-import { NGCRuleNode } from "@data/ademe-footprint-model";
 import { Action } from "@domain/entities/action/Action";
 import { AdemeEngine } from "@domain/entities/AdemeEngine";
 

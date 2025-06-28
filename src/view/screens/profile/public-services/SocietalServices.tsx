@@ -1,12 +1,11 @@
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { Platform, ScrollView, View, ViewStyle } from "react-native";
+import { ScrollView, View, ViewStyle } from "react-native";
 import { Card, Icon, Text, useTheme } from "react-native-paper";
 
 import { UsecasesContext } from "@common/UsecasesContext";
-import { SocietalServicesEmissionsDistributionForMobile } from "@view/screens/profile/public-services/EmissionsDistribution.mobile";
-import { SocietalServicesEmissionsDistributionForWeb } from "@view/screens/profile/public-services/EmissionsDistribution.web";
+import { SocietalServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
-import { useContext } from "react";
 
 export const SocietalServicesProfile = () => {
   const { fetchSocietalServicesFootprint } = useContext(UsecasesContext);
@@ -45,17 +44,12 @@ export const SocietalServicesProfile = () => {
 
       <Text style={{ marginTop: 10 }}>{t("description")}</Text>
 
-      {Platform.OS === "web" ? (
-        <SocietalServicesEmissionsDistributionForWeb
+      <View style={{ marginTop: 10, marginBottom: 10 }}>
+        <SocietalServicesEmissionsDistribution
           merchantServices={merchantServices}
           publicServices={societalServices}
         />
-      ) : (
-        <SocietalServicesEmissionsDistributionForMobile
-          publicServices={societalServices}
-          merchantServices={merchantServices}
-        />
-      )}
+      </View>
 
       <Text style={{ marginTop: 10 }}>
         {t("societalServicesDescription", {

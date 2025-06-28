@@ -1,8 +1,8 @@
-import { DottedName } from "@incubateur-ademe/nosgestesclimat";
+import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
 import _ from "lodash";
 import { EvaluatedNode } from "publicodes";
 
-import { NGCRuleNode, NGCRulesNodes } from "@data/ademe-footprint-model";
+import { NGCRulesNodes } from "@data/ademe-footprint-model";
 import { Action } from "@domain/entities/action/Action";
 import { AdemeAction } from "@domain/entities/action/AdemeAction";
 import { AdemeEngine } from "@domain/entities/AdemeEngine";
@@ -19,7 +19,7 @@ export abstract class AdemeFootprintEngine {
   /**
    *
    * @param profile
-   * @param questionKeys an optional parameter that allows to filter the questions to be returned (useful for performance)
+   * @param questionKeys allows to filter the questions to be returned (useful for performance)
    * @returns
    */
   public static getQuestions = (
@@ -27,13 +27,15 @@ export abstract class AdemeFootprintEngine {
     questionKeys: (keyof Profile)[],
   ): Record<keyof Profile, Question> => {
     const ademeQuestionRules = this._getQuestionRules(questionKeys);
-    return Object.keys(ademeQuestionRules).reduce<
-      Record<keyof Profile, Question>
-    >((acc, key) => {
-      const rule = ademeQuestionRules[key];
-      acc[key] = new AdemeQuestion(profile, key, rule);
-      return acc;
-    }, {});
+    return Object.keys(ademeQuestionRules).reduce(
+      (acc, key) => {
+        const k = key as DottedName;
+        const rule = ademeQuestionRules[k];
+        acc[k] = new AdemeQuestion(profile, k, rule);
+        return acc;
+      },
+      {} as Record<keyof Profile, Question>,
+    );
   };
 
   /**
@@ -47,8 +49,10 @@ export abstract class AdemeFootprintEngine {
     // TODO: peut être plus optimisé si on ne récupère que les règles utiles aux keys ?
     const rules = AdemeEngine.getRules();
     return Object.entries(rules).reduce((acc, [key, rule]) => {
-      if (keys === undefined || keys.includes(key)) {
-        if (rule.rawNode.question) acc[key as DottedName] = rule;
+      if (keys === undefined || keys.includes(key as DottedName)) {
+        if (rule.rawNode.question) {
+          acc[key as DottedName] = rule;
+        }
       }
       return acc;
     }, {} as NGCRulesNodes);
@@ -92,7 +96,8 @@ export abstract class AdemeFootprintEngine {
 
   private static getActionNames = (): DottedName[] => {
     const actionsNode = AdemeEngine.getRules().actions;
-    const actionNames = actionsNode.rawNode.formule.somme as DottedName[];
+    const actionNames = (actionsNode.rawNode.formule as any)
+      .somme as DottedName[];
     return actionNames;
   };
 

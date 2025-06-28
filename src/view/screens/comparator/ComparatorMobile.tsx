@@ -3,7 +3,6 @@ import { Skeleton } from "moti/skeleton";
 import { useState } from "react";
 import { useTheme } from "react-native-paper";
 import WebView from "react-native-webview";
-import { WebViewNavigationEvent } from "react-native-webview/lib/WebViewTypes";
 
 import { AdemeComparatorType } from "@view/screens/comparator/Comparator";
 
@@ -13,6 +12,7 @@ type Props = {
 
 export const ComparatorForMobile = ({ type }: Props) => {
   const { colors } = useTheme();
+
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -33,12 +33,7 @@ export const ComparatorForMobile = ({ type }: Props) => {
         }}
         scalesPageToFit={false}
         showsVerticalScrollIndicator={false}
-        // Remove the div that contains a link to the Impact CO2 website
-        injectedJavaScript={`document.body.querySelector("div").remove();`}
-        renderError={() => <div>Erreur</div>}
-        onLoad={(_: WebViewNavigationEvent) => {
-          setTimeout(() => setIsLoading(false), 1000);
-        }}
+        onLoadEnd={() => setTimeout(() => setIsLoading(false), 500)}
         originWhitelist={["*"]}
         source={{
           html: `
