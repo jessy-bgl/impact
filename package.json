@@ -107,5 +107,6 @@
     "react-native-picker-select": {
       "@react-native-picker/picker": "$@react-native-picker/picker"
     }
-  }
+  },
+  "expo.doctor.reactNativeDirectoryCheck.listUnknownPackages": false
 }
