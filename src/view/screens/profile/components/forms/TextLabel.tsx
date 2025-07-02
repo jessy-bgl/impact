@@ -1,8 +1,8 @@
 import { StyleProp, TextStyle, TouchableOpacity, View } from "react-native";
 import { Icon, Text, useTheme } from "react-native-paper";
 
+import { useCustomBottomSheetModal } from "@common/BottomSheetContext";
 import { Question } from "@domain/entities/question/Question";
-import { useCustomBottomSheetModal } from "../../../../../BottomSheetContext";
 
 type Props = {
   question: Question;
