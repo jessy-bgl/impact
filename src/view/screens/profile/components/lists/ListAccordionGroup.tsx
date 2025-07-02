@@ -2,33 +2,39 @@ import { PropsWithChildren } from "react";
 import { ScrollView } from "react-native";
 import { List } from "react-native-paper";
 
+import { BottomSheetProvider } from "@common/BottomSheetContext";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { CustomBottomSheet } from "@view/components/BottomSheet";
 import { ScrollProfileSectionContext } from "@view/screens/profile/utils/ScrollProfileSectionContext";
 import { useScrollProfile } from "@view/screens/profile/utils/useScrollProfile";
-import { BottomSheetProvider } from "../../../../../BottomSheetContext";
 
 export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
   const { handleExpandProfileSection, scrollViewRef, sectionRefs, expandedId } =
     useScrollProfile();
 
   return (
-    <ScrollProfileSectionContext.Provider
-      value={{ expandedId, scrollViewRef, sectionRefs }}
-    >
-      <BottomSheetModalProvider>
-        <BottomSheetProvider>
-          <ScrollView ref={scrollViewRef}>
-            <List.AccordionGroup
-              expandedId={expandedId}
-              onAccordionPress={handleExpandProfileSection}
+    <BottomSheetModalProvider>
+      <BottomSheetProvider>
+        <ScrollProfileSectionContext.Provider
+          value={{ expandedId, scrollViewRef, sectionRefs }}
+        >
+          <List.AccordionGroup
+            expandedId={expandedId}
+            onAccordionPress={handleExpandProfileSection}
+          >
+            <ScrollView
+              ref={scrollViewRef}
+              style={{
+                // NB: fixed height is necessary to make scrollTo() and BottomSheet work properly
+                height: 0,
+              }}
             >
               {children}
-            </List.AccordionGroup>
-          </ScrollView>
-          <CustomBottomSheet style={{}} />
-        </BottomSheetProvider>
-      </BottomSheetModalProvider>
-    </ScrollProfileSectionContext.Provider>
+            </ScrollView>
+          </List.AccordionGroup>
+        </ScrollProfileSectionContext.Provider>
+        <CustomBottomSheet style={{}} />
+      </BottomSheetProvider>
+    </BottomSheetModalProvider>
   );
 };
