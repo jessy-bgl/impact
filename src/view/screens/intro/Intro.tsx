@@ -77,7 +77,7 @@ export const Intro = () => {
         <View style={styles.buttonContainer}>
           <Button
             mode="contained"
-            textColor={colors.onPrimaryContainer}
+            textColor={"#fff"}
             onPress={() => setFirstLaunch(false)}
           >
             {`${t("Understood")} !`}
