@@ -13,6 +13,7 @@
     />
     <title>Impact</title>
     <link rel="manifest" href="/impact/manifest.json" />
+    <!-- <link rel="apple-touch-icon" href="icon192.png" /> -->
     <link rel="canonical" href="https://jessy-bgl.github.io/impact/" />
     <style>
       /**
@@ -62,6 +63,10 @@
         }
       }*/
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/ios-pwa-splash@1.0.0/cdn.min.js"></script>
+    <script>
+      iosPWASplash("icon192.png", "#fff");
+    </script>
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
@@ -79,7 +84,7 @@
         });
       }
     </script>
-  <link rel="shortcut icon" href="/impact/favicon.ico" /></head>
+  <link rel="icon" href="/impact/favicon.ico" /></head>
 
   <body>
     <!-- 
@@ -132,6 +137,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script src="/impact/_expo/static/js/web/AppEntry-db9439cc6e46acfe19ad53261a2cf7da.js" defer></script>
+  <script src="/impact/_expo/static/js/web/main-ade96164b2b82990dafdc83fadabf7c9.js" defer></script>
 </body>
 </html>
