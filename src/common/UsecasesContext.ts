@@ -21,8 +21,7 @@ import { createUpdateHousingFootprint } from "@domain/usecases/footprints/update
 import { createUpdateTransportFootprint } from "@domain/usecases/footprints/updateTransportFootprint";
 import { createSyncStoredProfileWithEngine } from "@domain/usecases/profile/syncStoredProfileWithEngine";
 import { createUpdateProfile } from "@domain/usecases/profile/updateProfile";
-
-const isTestMode = process.env.NODE_ENV === "test";
+import { isTestMode } from "../constants";
 
 interface Repositories {
   profileRepository: ProfileRepository;

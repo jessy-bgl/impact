@@ -11,6 +11,7 @@ import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
 import { Profile } from "@domain/entities/profile/Profile";
+import { isTestMode } from "../../constants";
 
 export type AppState = {
   isFirstLaunch: boolean;
@@ -52,7 +53,9 @@ const middlewares = (f: any) =>
     }),
   );
 
-export const useAppStore = create<
-  AppState,
-  [["zustand/devtools", never], ["zustand/persist", unknown]]
->(middlewares(appStore));
+export const useAppStore = isTestMode
+  ? create(appStore)
+  : create<
+      AppState,
+      [["zustand/devtools", never], ["zustand/persist", unknown]]
+    >(middlewares(appStore));
