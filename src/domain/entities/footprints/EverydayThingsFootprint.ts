@@ -49,6 +49,16 @@ export class EverydayThingsFootprint implements WithAnnualFootprint {
   }
 
   public get annualFootprint(): number {
-    return Math.round(this.petFootprint);
+    return Math.round(
+      this.petFootprint +
+        this.furnitureFootprint +
+        this.otherProductsFootprint +
+        this.hobbiesFootprint +
+        this.clothesFootprint +
+        this.digitalFootprint +
+        this.consumableProductsFootprint +
+        this.tobaccoFootprint +
+        this.householdApplicancesFootprint,
+    );
   }
 }
