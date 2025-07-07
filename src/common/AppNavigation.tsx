@@ -45,9 +45,9 @@ const iconSize = 24;
 export const AppNavigation = () => {
   const { t } = useTranslation("pages");
 
-  const isFirstLaunch = useAppStore((state) => state.isFirstLaunch);
+  const shouldShowAppIntro = useAppStore((state) => state.shouldShowIntro.app);
 
-  if (isFirstLaunch) return <Intro />;
+  if (shouldShowAppIntro) return <Intro />;
 
   return (
     <Stack.Navigator

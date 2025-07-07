@@ -10,7 +10,7 @@ export const Intro = () => {
 
   const { t } = useTranslation("intro");
 
-  const { setFirstLaunch } = appStoreActions;
+  const { setShouldShowAppIntro } = appStoreActions;
 
   const deviceWidth = Dimensions.get("window").width;
   const imageSize = Math.min(deviceWidth / 1.7, 300);
@@ -78,7 +78,7 @@ export const Intro = () => {
           <Button
             mode="contained"
             textColor={"#fff"}
-            onPress={() => setFirstLaunch(false)}
+            onPress={() => setShouldShowAppIntro(false)}
           >
             {`${t("Understood")} !`}
           </Button>

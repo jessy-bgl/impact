@@ -7,8 +7,17 @@ import { TransportFootprint } from "@domain/entities/footprints/TransportFootpri
 import { Profile } from "@domain/entities/profile/Profile";
 
 export const appStoreActions = {
-  setFirstLaunch: (isFirstLaunch: boolean) =>
-    useAppStore.setState((state) => ({ ...state, isFirstLaunch })),
+  setShouldShowAppIntro: (shouldShow: boolean) =>
+    useAppStore.setState((state) => ({
+      ...state,
+      shouldShowIntro: { ...state.shouldShowIntro, app: shouldShow },
+    })),
+
+  setShouldShowActionsIntro: (shouldShow: boolean) =>
+    useAppStore.setState((state) => ({
+      ...state,
+      shouldShowIntro: { ...state.shouldShowIntro, actions: shouldShow },
+    })),
 
   getAdemeProfile: () => useAppStore.getState().profile.ademe,
 

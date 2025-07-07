@@ -14,7 +14,10 @@ import { Profile } from "@domain/entities/profile/Profile";
 import { isTestMode } from "../../constants";
 
 export type AppState = {
-  isFirstLaunch: boolean;
+  shouldShowIntro: {
+    app: boolean;
+    actions: boolean;
+  };
   profile: {
     ademe: Profile;
   };
@@ -29,7 +32,10 @@ export type AppState = {
 };
 
 const appStore = (): AppState => ({
-  isFirstLaunch: true,
+  shouldShowIntro: {
+    app: true,
+    actions: true,
+  },
   profile: {
     ademe: {},
   },
