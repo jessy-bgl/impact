@@ -1,9 +1,26 @@
 {
-  "cli": { "version": ">= 8.0.0", "appVersionSource": "remote" },
-  "build": {
-    "development": { "developmentClient": true, "distribution": "internal" },
-    "preview": { "distribution": "internal" },
-    "production": { "autoIncrement": true, "android": { "image": "latest" } }
+  "cli": {
+    "version": ">= 8.0.0",
+    "appVersionSource": "remote"
   },
-  "submit": { "production": {} }
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "autoIncrement": true
+    },
+    "preview": {
+      "distribution": "internal",
+      "autoIncrement": true
+    },
+    "production": {
+      "distribution": "store",
+      "autoIncrement": true,
+      "android": { "image": "latest" }
+    }
+  },
+  "submit": {
+    "preview": { "android": { "track": "internal" } },
+    "production": { "android": { "track": "beta" } }
+  }
 }
