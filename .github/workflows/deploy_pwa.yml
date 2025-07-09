@@ -8,16 +8,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js v22
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install dependencies
+
+      - name: 📦 Install dependencies
         run: npm ci
-      - name: Build the PWA
+
+      - name: 🚀 Build PWA
         run: npm run build:web
-      - name: Upload production-ready build files
+
+      - name: 🚀 Upload production-ready build files
         uses: actions/upload-pages-artifact@v3
         with:
           name: dist
@@ -33,12 +38,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
