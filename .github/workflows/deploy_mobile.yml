@@ -1,9 +1,11 @@
+name: Deploy Mobile App
+
 on:
   release:
     types: [released]
 
 jobs:
-  build:
+  build_android:
     runs-on: ubuntu-latest
     steps:
       - name: 🏗 Setup repo
@@ -13,6 +15,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
       - name: 🏗 Setup EAS
         uses: expo/expo-github-action@v8
@@ -31,4 +34,4 @@ jobs:
           npm version $VERSION --no-git-tag-version
 
       - name: 🚀 Build app
-        run: eas build --non-interactive --platform android --profile preview
+        run: eas build --platform android --profile production --non-interactive --no-wait
