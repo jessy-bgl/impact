@@ -29,10 +29,15 @@
 
 ### Build - internal
 
-- local : `npx expo run:android`
-- EAS : `eas build --platform android --profile preview`
+- mobile - local : `npx expo run:android` ou `eas build --platform android --profile production --local`
+- mobile - EAS : `eas build --platform android --profile preview`
 
 ### Build - production
 
 - mobile : `eas build --platform android`
-- web : `npm run build:web && deploy:web`
+- web : `npm run build:web`
+
+### Deploy
+
+- mobile : `eas submit --platform android`
+- web : `npm run deploy:web`
