@@ -35,7 +35,7 @@
 ### Build - production
 
 - mobile : `eas build --platform android`
-- web : `npm run build:web`
+- web : `npm run build:web`. Pour exécuter en local, retirer la partie "/impact/" de la source du dernier script dans index.html
 
 ### Deploy
 
