@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import "intl-pluralrules";
-import { useCallback } from "react";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { PaperProvider } from "react-native-paper";
@@ -25,14 +25,14 @@ SplashScreen.preventAutoHideAsync();
 const App = () => {
   const { initialState, isReady } = useApp();
 
-  const onLayoutRootView = useCallback(() => {
-    if (isReady) SplashScreen.hideAsync();
+  useEffect(() => {
+    if (isReady) SplashScreen.hide();
   }, [isReady]);
 
   if (!isReady) return null;
 
   return (
-    <SafeAreaProvider onLayout={onLayoutRootView}>
+    <SafeAreaProvider>
       <StatusBar style="light" />
       <PaperProvider theme={AppTheme}>
         <NavigationContainer
