@@ -6,7 +6,7 @@
 
 ## Fonctionnalités
 
-- Estimer son impact carbone en fonction de son mode de vie (simulateur inspiré de [Nos gestes climat](https://nosgestesclimat.fr/))
+- Estimer son impact carbone en fonction de son mode de vie (modèle de calcul [Nos gestes climat](https://nosgestesclimat.fr/))
 - Visualiser ses émissions carbone par catégories
 - Comparer l'impact des éléments du quotidien (grâce à l'outil [Impact CO2](https://impactco2.fr/))
 - Sélectionner des actions concrètes pour réduire ses émissions
@@ -35,7 +35,9 @@
 ### Build - production
 
 - mobile : `eas build --platform android`
-- web : `npm run build:web`. Pour exécuter en local, retirer la partie "/impact/" de la source du dernier script dans index.html
+- web : `npm run build:web`.
+
+Pour exécuter la version de production web en local, retirer la partie "/impact/" de la source du dernier script dans index.html, puis lancer `npx serve -s dist`.
 
 ### Deploy
 
