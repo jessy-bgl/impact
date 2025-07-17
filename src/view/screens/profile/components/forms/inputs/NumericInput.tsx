@@ -105,8 +105,8 @@ export const NumericInput = ({
           if (positive && text.includes("-")) return;
           props.onChangeText(text);
         }}
-        onBlur={(e) => {
-          const enteredValue = e.target.value;
+        onEndEditing={(e) => {
+          const enteredValue = e.nativeEvent.text;
           if (props.onChangeText !== undefined) {
             if (enteredValue === "")
               props.onChangeText(min !== undefined ? min.toString() : "0");
