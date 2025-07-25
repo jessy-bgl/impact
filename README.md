@@ -17,10 +17,10 @@
 [<img width=250 alt="Emissions" src="docs/screenshots/web/web_1.png?raw=true">](docs/screenshots/web/web_1.png?raw=true)&nbsp;&nbsp;
 [<img width=250 alt="Profile" src="docs/screenshots/web/web_2.png?raw=true">](docs/screenshots/web/web_2.png?raw=true)&nbsp;&nbsp;
 
-[<img width=250 alt="Actions" src="docs/screenshots/web/web_4.png?raw=true">](docs/screenshots/web/web_4.png?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Actions" src="docs/screenshots/web/web_4.png?raw=true">](docs/screenshots/web/web_5.png?raw=true)&nbsp;&nbsp;
 [<img width=250 alt="Comparateur_Chauffage" src="docs/screenshots/web/web_6.png?raw=true">](docs/screenshots/web/web_6.png?raw=true)
 
-## Notes dev
+## Notes techniques
 
 ### Setup
 
