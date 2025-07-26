@@ -16,6 +16,7 @@ import {
 } from "@view/screens/comparator/Comparator";
 import { Emissions } from "@view/screens/emissions/Emissions";
 import { Intro } from "@view/screens/intro/Intro";
+import { IntroActions } from "@view/screens/intro/IntroActions";
 import { Profile } from "@view/screens/profile/Profile";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { FoodProfile } from "@view/screens/profile/food/Food";
@@ -96,6 +97,10 @@ export const AppNavigation = () => {
 const BottomTabNavigator = () => {
   const { t } = useTranslation("pages");
 
+  const shouldShowActionsIntro = useAppStore(
+    (state) => state.shouldShowIntro.actions,
+  );
+
   return (
     <BottomTab.Navigator
       initialRouteName="Emissions"
@@ -141,7 +146,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Actions"
-        component={Actions}
+        component={shouldShowActionsIntro ? IntroActions : Actions}
         options={{
           title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
