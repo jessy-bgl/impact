@@ -26,7 +26,7 @@ export const Intro = () => {
             variant="titleLarge"
             style={{ color: colors.primary, textAlign: "center" }}
           >
-            {t("title")}
+            {t("main.title")}
           </Text>
           <Text
             variant="titleMedium"
@@ -36,7 +36,7 @@ export const Intro = () => {
               marginTop: 10,
             }}
           >
-            {t("subtitle")}
+            {t("main.subtitle")}
           </Text>
           <Image
             style={{
@@ -50,28 +50,28 @@ export const Intro = () => {
             variant="titleMedium"
             style={{ color: colors.inverseOnSurface }}
           >
-            {`${t("With")} ${t("Impact")}, `}
+            {`${t("main.With")} ${t("main.Impact")}, `}
             <Text style={{ color: colors.primary, fontWeight: "bold" }}>
-              {`${t("evaluate")} `}
+              {`${t("main.evaluate")} `}
             </Text>
-            {`${t("your")} ${t("annualFootprint")}, `}
+            {`${t("main.your")} ${t("main.annualFootprint")}, `}
             <Text style={{ color: colors.primary, fontWeight: "bold" }}>
-              {`${t("identify")} `}
+              {`${t("main.identify")} `}
             </Text>
-            {`${t("yours")} ${t("mainSourcesOfCarbonEmissions")} ${t("and")} `}
+            {`${t("main.yours")} ${t("main.mainSourcesOfCarbonEmissions")} ${t("main.and")} `}
             <Text style={{ color: colors.primary, fontWeight: "bold" }}>
-              {`${t("reduce")} `}
+              {`${t("main.reduce")} `}
             </Text>
-            {`${t("their")} ${t("impact")} ${t("with")} ${t("concreteActions")}.`}
+            {`${t("main.their")} ${t("main.impact")} ${t("main.with")} ${t("main.concreteActions")}.`}
           </Text>
           <Text
             variant="titleMedium"
             style={{ color: colors.inverseOnSurface }}
           >
-            {t("instructions")}
+            {t("main.instructions")}
           </Text>
           <Text variant="titleSmall" style={{ color: colors.inverseOnSurface }}>
-            {`*${t("simulatorInfo")}`}
+            {`*${t("main.simulatorInfo")}`}
           </Text>
         </View>
         <View style={styles.buttonContainer}>
@@ -80,7 +80,7 @@ export const Intro = () => {
             textColor={"#fff"}
             onPress={() => setShouldShowAppIntro(false)}
           >
-            {`${t("Understood")} !`}
+            {`${t("main.Understood")} !`}
           </Button>
         </View>
       </View>
@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "100%",
-    alignItems: "center",
+    maxWidth: 200,
   },
 });
