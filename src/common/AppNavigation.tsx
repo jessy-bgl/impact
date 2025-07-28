@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useAppStore } from "@data/store/store";
 import { Actions } from "@view/screens/actions/Actions";
@@ -101,12 +102,17 @@ const BottomTabNavigator = () => {
     (state) => state.shouldShowIntro.actions,
   );
 
+  const insets = useSafeAreaInsets();
+
   return (
     <BottomTab.Navigator
       initialRouteName="Emissions"
       screenOptions={{
         tabBarLabelPosition: "below-icon",
-        tabBarStyle: { height: 55 },
+        tabBarStyle: {
+          height: 55 + insets.bottom,
+          paddingBottom: insets.bottom,
+        },
       }}
     >
       <BottomTab.Screen
