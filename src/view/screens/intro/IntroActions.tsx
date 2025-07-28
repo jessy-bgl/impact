@@ -15,9 +15,9 @@ import { AppNavigationProp } from "@common/AppNavigation";
 import { appStoreActions } from "@data/store/storeActions";
 
 export const IntroActions: React.FC = () => {
-  const { colors } = useTheme();
-
   const { t } = useTranslation(["intro", "actions", "common"]);
+
+  const { colors } = useTheme();
 
   const { setShouldShowActionsIntro } = appStoreActions;
 
@@ -77,104 +77,18 @@ export const IntroActions: React.FC = () => {
         padding: 16,
         gap: 24,
         maxWidth: 600,
-        marginInline: "auto",
+        alignSelf: "center",
+        width: "100%",
       }}
     >
-      <View style={{ gap: 12 }}>
-        <Text
-          variant="titleLarge"
-          style={{ textAlign: "center", color: colors.primary }}
-        >
-          {t("intro:actions.title")}
-        </Text>
-
-        <Text
-          variant="bodyLarge"
-          style={{ textAlign: "center", color: colors.onSurface }}
-        >
-          {t("intro:actions.navigationDescription")}
-        </Text>
-
-        <View style={{ gap: 12 }}>
-          <Card style={styles.actionsListCard}>
-            <Card.Content style={styles.actionsListCardContent}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <MaterialIcons
-                  name="apps"
-                  size={16}
-                  color={colors.onSurfaceVariant}
-                  style={{ marginTop: 3 }}
-                />
-                <Text variant="titleMedium" style={styles.actionsListCardTitle}>
-                  {t("actions:actionsList")}
-                </Text>
-              </View>
-              <Text
-                variant="bodyMedium"
-                style={styles.actionsListCardDescription}
-              >
-                {t("intro:actions.availableTab")}
-              </Text>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.actionsListCard}>
-            <Card.Content style={styles.actionsListCardContent}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <MaterialIcons
-                  name="sync"
-                  size={16}
-                  color={colors.onSurfaceVariant}
-                  style={{ marginTop: 3 }}
-                />
-                <Text variant="titleMedium" style={styles.actionsListCardTitle}>
-                  {t("actions:actionsInProgress")}
-                </Text>
-              </View>
-              <Text
-                variant="bodyMedium"
-                style={styles.actionsListCardDescription}
-              >
-                {t("intro:actions.inProgressTab")}
-              </Text>
-            </Card.Content>
-          </Card>
-
-          <Card style={styles.actionsListCard}>
-            <Card.Content style={styles.actionsListCardContent}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <MaterialIcons
-                  name="remove-circle-outline"
-                  size={16}
-                  color={colors.onSurfaceVariant}
-                  style={{ marginTop: 3 }}
-                />{" "}
-                <Text variant="titleMedium" style={styles.actionsListCardTitle}>
-                  {t("actions:actionsSkipped")}
-                </Text>
-              </View>
-              <Text
-                variant="bodyMedium"
-                style={styles.actionsListCardDescription}
-              >
-                {t("intro:actions.dismissedTab")}
-              </Text>
-            </Card.Content>
-          </Card>
-        </View>
-      </View>
+      <Text
+        variant="titleLarge"
+        style={{ textAlign: "center", color: colors.primary }}
+      >
+        {t("intro:actions.title")}
+      </Text>
 
       <View style={{ gap: 12 }}>
-        <Text
-          variant="titleLarge"
-          style={{
-            textAlign: "center",
-            color: colors.primary,
-          }}
-        >
-          {t("intro:actions.exampleTitle")}
-        </Text>
-
         <Image
           source={require("@assets/images/intro_actions.png")}
           style={{
@@ -237,6 +151,81 @@ export const IntroActions: React.FC = () => {
         </View>
       </View>
 
+      <Text
+        variant="bodyLarge"
+        style={{ textAlign: "center", color: colors.onSurface }}
+      >
+        {t("intro:actions.navigationDescription")}
+      </Text>
+
+      <View style={{ gap: 12 }}>
+        <Card style={styles.actionsListCard}>
+          <Card.Content style={styles.actionsListCardContent}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <MaterialIcons
+                name="apps"
+                size={16}
+                color={colors.onSurfaceVariant}
+                style={{ marginTop: 3 }}
+              />
+              <Text variant="titleMedium" style={styles.actionsListCardTitle}>
+                {t("actions:actionsList")}
+              </Text>
+            </View>
+            <Text
+              variant="bodyMedium"
+              style={styles.actionsListCardDescription}
+            >
+              {t("intro:actions.availableTab")}
+            </Text>
+          </Card.Content>
+        </Card>
+
+        <Card style={styles.actionsListCard}>
+          <Card.Content style={styles.actionsListCardContent}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <MaterialIcons
+                name="sync"
+                size={16}
+                color={colors.onSurfaceVariant}
+                style={{ marginTop: 3 }}
+              />
+              <Text variant="titleMedium" style={styles.actionsListCardTitle}>
+                {t("actions:actionsInProgress")}
+              </Text>
+            </View>
+            <Text
+              variant="bodyMedium"
+              style={styles.actionsListCardDescription}
+            >
+              {t("intro:actions.inProgressTab")}
+            </Text>
+          </Card.Content>
+        </Card>
+
+        <Card style={styles.actionsListCard}>
+          <Card.Content style={styles.actionsListCardContent}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <MaterialIcons
+                name="remove-circle-outline"
+                size={16}
+                color={colors.onSurfaceVariant}
+                style={{ marginTop: 3 }}
+              />
+              <Text variant="titleMedium" style={styles.actionsListCardTitle}>
+                {t("actions:actionsSkipped")}
+              </Text>
+            </View>
+            <Text
+              variant="bodyMedium"
+              style={styles.actionsListCardDescription}
+            >
+              {t("intro:actions.dismissedTab")}
+            </Text>
+          </Card.Content>
+        </Card>
+      </View>
+
       <View style={{ marginTop: 12, gap: 12 }}>
         <Card
           style={{
@@ -247,7 +236,9 @@ export const IntroActions: React.FC = () => {
         >
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
             <MaterialIcons name="info" size={24} color={colors.secondary} />
-            <Text>{t("intro:actions.beforeSubmitWarning")}</Text>
+            <Text style={{ flexShrink: 1 }}>
+              {t("intro:actions.beforeSubmitWarning")}
+            </Text>
           </View>
         </Card>
         <View
