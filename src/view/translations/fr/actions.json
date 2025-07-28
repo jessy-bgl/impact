@@ -2,7 +2,7 @@
   "loading": "Chargement des actions...",
   "actionsList": "Disponibles",
   "actionsInProgress": "En cours",
-  "actionsSkipped": "Ecartées",
+  "actionsSkipped": "Écartées",
   "noAction": {
     "notStarted": "Aucune action disponible",
     "inProgress": "Aucune action en cours",

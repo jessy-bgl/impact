@@ -24,13 +24,13 @@
     "title": "Retrouve ici des actions personnalisées qui t'aideront à réduire ton impact",
     "navigationDescription": "Les actions sont réparties dans trois listes :",
     "availableTab": "Toutes les actions disponibles, filtrées selon ton profil et triées par émissions de CO2 économisées.",
-    "inProgressTab": "Actions que tu as sélectionnées et souhaites accomplir.",
-    "dismissedTab": "Actions que tu as écartées et ne souhaites plus voir.",
+    "inProgressTab": "Actions que tu as sélectionnées et que tu es en train d'accomplir.",
+    "dismissedTab": "Actions que tu as écartées et ne souhaites plus voir dans la liste des actions disponibles.",
     "exampleTitle": "Exemple d'action",
     "carbonSavings": "Économies de CO2 si tu réalises cette action.",
     "category": "Catégorie de l'action. Tu peux appuyer dessus pour avoir plus d'informations sur l'action.",
     "buttons": "Boutons pour sélectionner ou écarter l'action.",
-    "beforeSubmitWarning": "Tu peux accéder à la liste des actions à tout moment, mais tu dois d'abord compléter ton profil dans le menu Emissions pour que les actions proposées soient pertinentes.",
+    "beforeSubmitWarning": "Tu peux accéder à la liste des actions à tout moment, mais tu dois d'abord compléter ton profil dans le menu Émissions pour que les actions proposées soient pertinentes.",
     "completeProfile": "Je complète mon profil",
     "dismissActionsIntro": "J'accède aux actions"
   }

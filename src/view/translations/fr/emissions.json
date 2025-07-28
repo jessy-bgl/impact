@@ -3,7 +3,7 @@
   "estimate": "Estimer mon impact carbone",
   "year": "an",
   "category": "Catégorie",
-  "annualFootprint": "Emissions annuelles",
+  "annualFootprint": "Émissions annuelles",
   "part": "Proportion",
   "categories": {
     "transport": "Transports",
