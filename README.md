@@ -27,6 +27,15 @@
 - installation de EAS CLI : `npm install -g eas-cli`
 - login EAS : `eas login`
 
+### Prebuild
+
+Commande pour regénérer les fichiers android et iOS en fonction de la configuration de l'app (app.config.js) : `npx expo prebuild --clean`
+
+### Run
+
+- web : `npm run web`
+- android : `npm run android`
+
 ### Build - internal
 
 - mobile - local : `npx expo run:android` ou `eas build --platform android --profile production --local`
