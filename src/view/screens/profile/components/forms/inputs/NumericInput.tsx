@@ -1,5 +1,5 @@
-import { Question } from "@domain/entities/question/Question";
 import { View } from "moti";
+import { useCallback, useRef } from "react";
 import { TextStyle } from "react-native";
 import {
   Button,
@@ -7,6 +7,8 @@ import {
   TextInputProps,
   useTheme,
 } from "react-native-paper";
+
+import { Question } from "@domain/entities/question/Question";
 
 type Props = TextInputProps & {
   question: Question;
@@ -25,6 +27,15 @@ export const NumericInput = ({
   ...props
 }: Props) => {
   const { colors } = useTheme();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const debouncedValueChange = useCallback(
+    (value: string) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => onValueChange(value), 1000);
+    },
+    [onValueChange],
+  );
 
   const dense = props.dense ?? true;
   const mode = props.mode ?? "outlined";
@@ -104,9 +115,13 @@ export const NumericInput = ({
           if (!isNumber) return;
           if (positive && text.includes("-")) return;
           props.onChangeText(text);
+          debouncedValueChange(text);
         }}
         onEndEditing={(e) => {
           const enteredValue = e.nativeEvent.text;
+          if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
+          }
           if (props.onChangeText !== undefined) {
             if (enteredValue === "")
               props.onChangeText(min !== undefined ? min.toString() : "0");
