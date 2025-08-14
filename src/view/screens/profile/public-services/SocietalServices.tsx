@@ -21,7 +21,7 @@ export const SocietalServicesProfile = () => {
     borderRadius: 5,
   };
 
-  const societalServices = FootprintCategoryViewModel.forSocietalServices(
+  const publicServices = FootprintCategoryViewModel.forPublicServices(
     societalServicesFootprint.publicServicesFootprint,
     societalServicesFootprint.annualFootprint,
   );
@@ -47,14 +47,14 @@ export const SocietalServicesProfile = () => {
       <View style={{ marginTop: 10, marginBottom: 10 }}>
         <SocietalServicesEmissionsDistribution
           merchantServices={merchantServices}
-          publicServices={societalServices}
+          publicServices={publicServices}
         />
       </View>
 
       <Text style={{ marginTop: 10 }}>
-        {t("societalServicesDescription", {
-          icon: societalServices.icon,
-          footprint: societalServices.footprint,
+        {t("publicServicesDescription", {
+          icon: publicServices.icon,
+          footprint: publicServices.footprint,
         })}
       </Text>
 
