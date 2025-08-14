@@ -4,23 +4,43 @@ import { EverydayThingsFootprint } from "@domain/entities/footprints/EverydayThi
 import { FoodFootprint } from "@domain/entities/footprints/FoodFootprint";
 import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
 import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
+import {
+  FootprintCategory,
+  FootprintSubCategory,
+} from "@domain/entities/footprints/types";
 import { Profile } from "@domain/entities/profile/Profile";
 
 export const appStoreActions = {
   getAdemeProfile: () => useAppStore.getState().profile.ademe,
 
-  updateAdemeProfile: (profile: Profile, override = false) => {
-    if (override) {
-      useAppStore.setState((state) => ({
-        ...state,
-        profile: { ...state.profile, ademe: profile },
-      }));
-    } else {
-      useAppStore.setState((state) => ({
-        ...state,
-        profile: { ademe: { ...state.profile.ademe, ...profile } },
-      }));
-    }
+  updateAdemeProfile: (profile: Profile) => {
+    useAppStore.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        ademe: { ...state.profile.ademe, ...profile },
+      },
+    }));
+  },
+
+  updateProfileCompletion: (
+    category: FootprintCategory,
+    subCategory: FootprintSubCategory,
+    completed: boolean,
+  ) => {
+    useAppStore.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        completion: {
+          ...state.profile.completion,
+          [category]: {
+            ...state.profile.completion[category],
+            [subCategory]: completed,
+          },
+        },
+      },
+    }));
   },
 
   getTransportFootprint: () => useAppStore.getState().footprints.transport,

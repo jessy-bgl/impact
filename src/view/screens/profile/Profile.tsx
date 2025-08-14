@@ -12,6 +12,7 @@ export const Profile = () => {
   const { navigate } = useNavigation<AppNavigationProp>();
 
   const {
+    profileCompletion,
     transportFootprint,
     housingFootprint,
     foodFootprint,
@@ -33,26 +34,35 @@ export const Profile = () => {
           title={t("Transport")}
           footprintCategory={transportFootprint}
           onClick={() => navigate("TransportProfile")}
+          completed={Object.values(profileCompletion.transport).every(Boolean)}
         />
         <ProfileCategoryCard
           title={t("Housing")}
           footprintCategory={housingFootprint}
           onClick={() => navigate("HousingProfile")}
+          completed={Object.values(profileCompletion.housing).every(Boolean)}
         />
         <ProfileCategoryCard
           title={t("Food")}
           footprintCategory={foodFootprint}
           onClick={() => navigate("FoodProfile")}
+          completed={Object.values(profileCompletion.food).every(Boolean)}
         />
         <ProfileCategoryCard
           title={t("EverydayThings")}
           footprintCategory={everydayThingsFootprint}
           onClick={() => navigate("EverydayThingsProfile")}
+          completed={Object.values(profileCompletion.everydayThings).every(
+            Boolean,
+          )}
         />
         <ProfileCategoryCard
           title={t("SocietalServices")}
           footprintCategory={societalServicesFootprint}
           onClick={() => navigate("SocietalServicesProfile")}
+          completed={Object.values(profileCompletion.societalServices).every(
+            Boolean,
+          )}
         />
       </View>
     </ScrollView>
