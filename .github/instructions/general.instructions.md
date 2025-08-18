@@ -6,7 +6,7 @@ applyTo: "**"
 
 ## Project Structure
 
-- This is a React Native app
+- This is a React Native app built with Expo
 - Assets (images, fonts, etc.) are stored in the `assets/` directory
 - The main application code is located in the `src/` directory
 
