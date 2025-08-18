@@ -11,11 +11,16 @@ export const WasteSection = () => {
     (store) => store.footprints.food.wasteFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.food.waste,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:food.waste")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="recycle"
+      completed={isCompleted}
     >
       <WasteSectionContent />
     </ListAccordion>

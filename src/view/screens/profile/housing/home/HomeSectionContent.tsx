@@ -1,3 +1,4 @@
+import { ValidateResponsesButton } from "@view/screens/profile/components/forms/ValidateResponsesButton";
 import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
 import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
 import { useHome } from "@view/screens/profile/housing/home/useHome";
@@ -44,6 +45,7 @@ export const HomeSectionContent = () => {
         control={control}
         handleUpdate={updateHousingProfile}
       />
+      <ValidateResponsesButton category="housing" subCategory="home" />
     </ListContentContainer>
   );
 };

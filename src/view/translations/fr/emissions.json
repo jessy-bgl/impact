@@ -5,6 +5,7 @@
   "category": "Catégorie",
   "annualFootprint": "Émissions annuelles",
   "part": "Proportion",
+  "validateResponses": "Valider mes réponses",
   "categories": {
     "transport": "Transports",
     "housing": "Logement",

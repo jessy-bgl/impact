@@ -11,11 +11,16 @@ export const TwoWheelerSection = () => {
     (store) => store.footprints.transport.twoWheelerFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.transport.twoWheeler,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:transport.twoWheeler")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="motorbike"
+      completed={isCompleted}
     >
       <TwoWheelerSectionContent />
     </ListAccordion>

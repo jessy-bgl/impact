@@ -54,6 +54,7 @@ const initUsecases = (repositories: Repositories) => {
     updateFoodProfile,
     updateHousingProfile,
     updateEverydayThingsProfile,
+    updateProfileCompletion,
   } = createUpdateProfile(profileRepository, footprintsRepository);
 
   return {
@@ -65,8 +66,11 @@ const initUsecases = (repositories: Repositories) => {
     updateFoodProfile,
     updateHousingProfile,
     updateEverydayThingsProfile,
+
     syncStoredProfileWithEngine:
       createSyncStoredProfileWithEngine(profileRepository),
+
+    updateProfileCompletion,
 
     fetchTransportFootprint:
       createFetchTransportFootprint(footprintsRepository),

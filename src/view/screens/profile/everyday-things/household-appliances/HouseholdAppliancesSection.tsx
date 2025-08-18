@@ -11,11 +11,16 @@ export const HouseholdAppliancesSection = () => {
     (store) => store.footprints.everydayThings.householdApplicancesFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.householdAppliances,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.householdAppliances")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="microwave"
+      completed={isCompleted}
     >
       <HouseholdAppliancesSectionContent />
     </ListAccordion>

@@ -11,11 +11,16 @@ export const EnergySection = () => {
     (store) => store.footprints.housing.energyFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.housing.energy,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:housing.energy")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="flash"
+      completed={isCompleted}
     >
       <EnergySectionContent />
     </ListAccordion>

@@ -1,3 +1,4 @@
+import { ValidateResponsesButton } from "@view/screens/profile/components/forms/ValidateResponsesButton";
 import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
 import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
 import { useTwoWheeler } from "@view/screens/profile/transport/two-wheeler/useTwoWheeler";
@@ -30,6 +31,7 @@ export const TwoWheelerSectionContent = () => {
         inputFlex={1}
         step={100}
       />
+      <ValidateResponsesButton category="transport" subCategory="twoWheeler" />
     </ListContentContainer>
   );
 };

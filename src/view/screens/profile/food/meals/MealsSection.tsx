@@ -11,11 +11,16 @@ export const MealsSection = () => {
     (store) => store.footprints.food.mealsFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.food.meals,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:food.meals")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="food"
+      completed={isCompleted}
     >
       <MealsSectionContent />
     </ListAccordion>

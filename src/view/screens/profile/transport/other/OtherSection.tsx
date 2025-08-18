@@ -13,11 +13,16 @@ export const OtherSection = () => {
       store.footprints.transport.holidaysTransportFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.transport.otherTransport,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:transport.other")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="bike"
+      completed={isCompleted}
     >
       <OtherSectionContent />
     </ListAccordion>

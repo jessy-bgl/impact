@@ -11,11 +11,16 @@ export const DigitalSection = () => {
     (store) => store.footprints.everydayThings.digitalFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.digital,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.digital")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="devices"
+      completed={isCompleted}
     >
       <DigitalSectionContent />
     </ListAccordion>

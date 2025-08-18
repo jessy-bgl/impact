@@ -11,11 +11,16 @@ export const FurnitureSection = () => {
     (store) => store.footprints.everydayThings.furnitureFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.furniture,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.furniture")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="bed"
+      completed={isCompleted}
     >
       <FurnitureSectionContent />
     </ListAccordion>

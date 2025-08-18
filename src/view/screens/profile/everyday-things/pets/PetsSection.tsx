@@ -11,11 +11,16 @@ export const PetsSection = () => {
     (store) => store.footprints.everydayThings.petFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.pets,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.pets")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="dog"
+      completed={isCompleted}
     >
       <PetsSectionContent />
     </ListAccordion>

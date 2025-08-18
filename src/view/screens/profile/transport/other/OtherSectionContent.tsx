@@ -1,3 +1,4 @@
+import { ValidateResponsesButton } from "@view/screens/profile/components/forms/ValidateResponsesButton";
 import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
 import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
 import { useOther } from "@view/screens/profile/transport/other/useOther";
@@ -65,6 +66,10 @@ export const OtherSectionContent = () => {
         affix="l/100km"
         labelFlex={1.5}
         inputFlex={1}
+      />
+      <ValidateResponsesButton
+        category="transport"
+        subCategory="otherTransport"
       />
     </ListContentContainer>
   );

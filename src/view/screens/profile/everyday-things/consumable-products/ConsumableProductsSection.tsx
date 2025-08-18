@@ -11,11 +11,16 @@ export const ConsumableProductsSection = () => {
     (store) => store.footprints.everydayThings.consumableProductsFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.consumableProducts,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.consumableProducts")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="washing-machine"
+      completed={isCompleted}
     >
       <ConsumableProductsSectionContent />
     </ListAccordion>

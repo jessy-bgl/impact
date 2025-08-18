@@ -11,11 +11,16 @@ export const HobbiesSection = () => {
     (store) => store.footprints.everydayThings.hobbiesFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.hobbies,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.hobbies")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="bike"
+      completed={isCompleted}
     >
       <HobbiesSectionContent />
     </ListAccordion>

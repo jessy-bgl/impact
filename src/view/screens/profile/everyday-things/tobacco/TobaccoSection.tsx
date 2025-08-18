@@ -11,11 +11,16 @@ export const TobaccoSection = () => {
     (store) => store.footprints.everydayThings.tobaccoFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.everydayThings.tobacco,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:everydayThings.tobacco")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="smoking"
+      completed={isCompleted}
     >
       <TobaccoSectionContent />
     </ListAccordion>

@@ -3,23 +3,37 @@ import deepMerge from "deepmerge";
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 
+import { defaultAppStore } from "@data/store/storeDefaultValues";
 import { Action } from "@domain/entities/action/Action";
-import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
 import { EverydayThingsFootprint } from "@domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@domain/entities/footprints/FoodFootprint";
 import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
+import {
+  EverydayThingsFootprintSubCategory,
+  FoodFootprintSubCategory,
+  HousingFootprintSubCategory,
+  SocietalServicesFootprintSubCategory,
+  TransportFootprintSubCategory,
+} from "@domain/entities/footprints/types";
 import { Profile } from "@domain/entities/profile/Profile";
 import { isTestMode } from "../../constants";
 
-export type AppState = {
+export type AppStore = {
   shouldShowIntro: {
     app: boolean;
     actions: boolean;
   };
   profile: {
     ademe: Profile;
+    completion: {
+      transport: Record<TransportFootprintSubCategory, boolean>;
+      food: Record<FoodFootprintSubCategory, boolean>;
+      housing: Record<HousingFootprintSubCategory, boolean>;
+      everydayThings: Record<EverydayThingsFootprintSubCategory, boolean>;
+      societalServices: Record<SocietalServicesFootprintSubCategory, boolean>;
+    };
   };
   footprints: {
     transport: TransportFootprint;
@@ -31,37 +45,21 @@ export type AppState = {
   actions: Action[];
 };
 
-const appStore = (): AppState => ({
-  shouldShowIntro: {
-    app: true,
-    actions: true,
-  },
-  profile: {
-    ademe: {},
-  },
-  footprints: {
-    transport: AdemeFootprintEngine.computeTransportFootprint(),
-    food: AdemeFootprintEngine.computeFoodFootprint(),
-    housing: AdemeFootprintEngine.computeHousingFootprint(),
-    everydayThings: AdemeFootprintEngine.computeEverydayThingsFootprint(),
-    societalServices: AdemeFootprintEngine.computeSocietalServicesFootprint(),
-  },
-  actions: [],
-});
+const appStore = (): AppStore => defaultAppStore;
 
 const middlewares = (f: any) =>
   devtools(
-    persist<AppState>(f, {
+    persist<AppStore>(f, {
       name: "app-storage",
       storage: createJSONStorage(() => AsyncStorage),
       merge: (persistedState, currentState) =>
-        deepMerge(currentState, persistedState as AppState),
+        deepMerge(currentState, persistedState as AppStore),
     }),
   );
 
 export const useAppStore = isTestMode
   ? create(appStore)
   : create<
-      AppState,
+      AppStore,
       [["zustand/devtools", never], ["zustand/persist", unknown]]
     >(middlewares(appStore));

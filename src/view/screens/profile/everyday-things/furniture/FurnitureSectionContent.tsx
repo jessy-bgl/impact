@@ -1,3 +1,4 @@
+import { ValidateResponsesButton } from "@view/screens/profile/components/forms/ValidateResponsesButton";
 import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
 import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
 import { useFurniture } from "@view/screens/profile/everyday-things/furniture/useFurniture";
@@ -12,6 +13,10 @@ export const FurnitureSectionContent = () => {
         question={furnitureQuestions.furniture}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
+      />
+      <ValidateResponsesButton
+        category="everydayThings"
+        subCategory="furniture"
       />
     </ListContentContainer>
   );

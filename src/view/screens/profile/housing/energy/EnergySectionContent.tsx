@@ -1,3 +1,4 @@
+import { ValidateResponsesButton } from "@view/screens/profile/components/forms/ValidateResponsesButton";
 import { ListContentContainer } from "@view/screens/profile/components/lists/ListContentContainer";
 import { ListItemQuestion } from "@view/screens/profile/components/lists/ListItemQuestion";
 import { useEnergy } from "@view/screens/profile/housing/energy/useEnergy";
@@ -140,6 +141,7 @@ export const EnergySectionContent = () => {
         labelFlex={2.5}
         inputFlex={1}
       />
+      <ValidateResponsesButton category="housing" subCategory="energy" />
     </ListContentContainer>
   );
 };

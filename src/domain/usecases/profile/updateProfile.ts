@@ -1,5 +1,9 @@
 import { AdemeEngine } from "@domain/entities/AdemeEngine";
 import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
+import {
+  FootprintCategory,
+  FootprintSubCategory,
+} from "@domain/entities/footprints/types";
 import { Question } from "@domain/entities/question/Question";
 import { FootprintsRepository } from "@domain/repositories/footprints.repository";
 import { ProfileRepository } from "@domain/repositories/profile.repository";
@@ -57,10 +61,19 @@ export const createUpdateProfile = (
     profileRepository.updateProfileKey(question.label, value);
   };
 
+  const updateProfileCompletion = (
+    category: FootprintCategory,
+    subCategory: FootprintSubCategory,
+    completed: boolean,
+  ) => {
+    profileRepository.updateProfileCompletion(category, subCategory, completed);
+  };
+
   return {
     updateTransportProfile,
     updateFoodProfile,
     updateHousingProfile,
     updateEverydayThingsProfile,
+    updateProfileCompletion,
   };
 };

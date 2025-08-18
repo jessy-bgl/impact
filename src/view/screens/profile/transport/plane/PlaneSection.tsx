@@ -11,11 +11,16 @@ export const PlaneSection = () => {
     (store) => store.footprints.transport.planeFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.transport.plane,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:transport.plane")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="airplane"
+      completed={isCompleted}
     >
       <PlaneSectionContent />
     </ListAccordion>

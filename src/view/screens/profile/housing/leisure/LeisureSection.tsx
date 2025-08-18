@@ -11,11 +11,16 @@ export const LeisureSection = () => {
     (store) => store.footprints.housing.leisureFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.housing.leisure,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:housing.leisure")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="beach"
+      completed={isCompleted}
     >
       <LeisureSectionContent />
     </ListAccordion>

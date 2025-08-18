@@ -1,7 +1,7 @@
 import { cloneElement, isValidElement } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Avatar, Card, useTheme } from "react-native-paper";
+import { Avatar, Card, Icon, Text, useTheme } from "react-native-paper";
 
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
@@ -9,44 +9,92 @@ type Props = {
   title: string;
   footprintCategory: FootprintCategoryViewModel;
   onClick: () => void;
+  completion: Record<string, boolean>;
 };
 
 export const ProfileCategoryCard = ({
   title,
   footprintCategory,
   onClick,
+  completion,
 }: Props) => {
   const { t } = useTranslation("common");
 
   const { colors } = useTheme();
 
-  const { image, footprint, color, part, materialIcon } = footprintCategory;
+  const { image, footprint, color, materialIcon } = footprintCategory;
+
+  const isCompleted = Object.values(completion).every(Boolean);
 
   return (
     <Card style={{ width: "100%", maxWidth: 500 }} onPress={onClick}>
       <Card.Title
-        title={title}
-        subtitle={`${footprint} ${t("footprintKgPerYear")}`}
-        left={(props: any) => (
+        title={
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              marginTop: 2,
+            }}
+          >
+            <Text variant="titleMedium">{title}</Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
+            >
+              <Icon
+                source={isCompleted ? "check-circle" : "information-outline"}
+                color={isCompleted ? colors.primary : colors.error}
+                size={12}
+              />
+              <Text
+                variant="bodyMedium"
+                style={{ color: colors.onSurfaceVariant }}
+              >
+                {isCompleted ? "Complété" : "A compléter"}
+              </Text>
+            </View>
+          </View>
+        }
+        left={(props) => (
           <Avatar.Icon
             {...props}
             icon={materialIcon}
             style={{ backgroundColor: color }}
           />
         )}
-        right={(props: any) => (
-          <Avatar.Text
+        right={(props) => (
+          <View
             {...props}
-            label={`${part} %`}
-            color={color}
             style={{
-              backgroundColor: null,
-              borderWidth: 2,
+              backgroundColor: "transparent",
+              borderWidth: 1,
               borderColor: color,
-              width: 40,
+              width: 75,
               height: 40,
+              borderRadius: 5,
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
+          >
+            <Text
+              variant="labelMedium"
+              style={{
+                color: color,
+                textAlign: "center",
+              }}
+            >
+              {footprint}
+            </Text>
+            <Text
+              variant="labelSmall"
+              style={{
+                color: color,
+                textAlign: "center",
+              }}
+            >
+              {t("footprintKgPerYear")}
+            </Text>
+          </View>
         )}
         style={{ paddingRight: 16 }}
         subtitleStyle={{ marginTop: -5, color: colors.onSurfaceVariant }}

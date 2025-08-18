@@ -11,11 +11,16 @@ export const PublicTransportSection = () => {
     (store) => store.footprints.transport.publicTransportFootprint,
   );
 
+  const isCompleted = useAppStore(
+    (state) => state.profile.completion.transport.publicTransport,
+  );
+
   return (
     <ListAccordion
       title={t("emissions:transport.public")}
       subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
       icon="train"
+      completed={isCompleted}
     >
       <PublicTransportSectionContent />
     </ListAccordion>
