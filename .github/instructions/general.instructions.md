@@ -37,4 +37,4 @@ applyTo: "**"
 - Use Axios for making HTTP requests
 - Use i18next for internationalization
 - Use Jest and React Testing Library for testing React components
-- Use react-native-paper for Material Design components
+- Use react-native-paper for Material Design components and icons
