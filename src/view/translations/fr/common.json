@@ -5,5 +5,7 @@
   "close": "FERMER",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
-  "comingSoon": "Bientôt disponible"
+  "comingSoon": "Bientôt disponible",
+  "completed": "Complété",
+  "toComplete": "À compléter"
 }

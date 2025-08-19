@@ -47,10 +47,10 @@ export const ProfileCategoryCard = ({
                 size={12}
               />
               <Text
-                variant="bodyMedium"
+                variant="bodySmall"
                 style={{ color: colors.onSurfaceVariant }}
               >
-                {isCompleted ? "Complété" : "A compléter"}
+                {isCompleted ? t("completed") : t("toComplete")}
               </Text>
             </View>
           </View>
