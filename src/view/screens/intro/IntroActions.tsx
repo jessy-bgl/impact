@@ -12,16 +12,23 @@ import {
 } from "react-native-paper";
 
 import { AppNavigationProp } from "@common/AppNavigation";
+import { useAppStore } from "@data/store/store";
 import { appStoreActions } from "@data/store/storeActions";
 
 export const IntroActions: React.FC = () => {
   const { t } = useTranslation(["intro", "actions", "common"]);
 
+  const { navigate } = useNavigation<AppNavigationProp>();
+
   const { colors } = useTheme();
 
   const { setShouldShowActionsIntro } = appStoreActions;
 
-  const { navigate } = useNavigation<AppNavigationProp>();
+  const profileCompletion = useAppStore((state) => state.profile.completion);
+
+  const isProfileComplete = Object.values(profileCompletion).every((category) =>
+    Object.values(category).every(Boolean),
+  );
 
   const styles = StyleSheet.create({
     actionsListCard: {
@@ -232,42 +239,50 @@ export const IntroActions: React.FC = () => {
       </View>
 
       <View style={{ marginTop: 12, gap: 12 }}>
-        <Card
-          style={{
-            borderWidth: 1,
-            borderColor: colors.surfaceVariant,
-            padding: 8,
-          }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <MaterialIcons name="info" size={24} color={colors.secondary} />
-            <Text style={{ flexShrink: 1 }}>
-              {t("intro:actions.beforeSubmitWarning")}
-            </Text>
-          </View>
-        </Card>
+        {!isProfileComplete && (
+          <Card
+            style={{
+              borderWidth: 1,
+              borderColor: colors.surfaceVariant,
+              padding: 8,
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+            >
+              <MaterialIcons name="info" size={24} color={colors.secondary} />
+              <Text style={{ flexShrink: 1 }}>
+                {t("intro:actions.beforeSubmitWarning")}
+              </Text>
+            </View>
+          </Card>
+        )}
         <View
           style={{ flexDirection: "row", justifyContent: "center", gap: 8 }}
         >
-          <Surface
-            style={{
-              ...styles.submitButtonSurface,
-              backgroundColor: colors.secondary,
-            }}
-          >
-            <TouchableRipple
-              onPress={() => navigate("Profile")}
-              style={styles.submitButton}
+          {!isProfileComplete && (
+            <Surface
+              style={{
+                ...styles.submitButtonSurface,
+                backgroundColor: colors.secondary,
+                maxWidth: 200,
+              }}
             >
-              <Text numberOfLines={2} style={{ textAlign: "center" }}>
-                {t("intro:actions.completeProfile")}
-              </Text>
-            </TouchableRipple>
-          </Surface>
+              <TouchableRipple
+                onPress={() => navigate("Profile")}
+                style={styles.submitButton}
+              >
+                <Text numberOfLines={2} style={{ textAlign: "center" }}>
+                  {t("intro:actions.completeProfile")}
+                </Text>
+              </TouchableRipple>
+            </Surface>
+          )}
           <Surface
             style={{
               ...styles.submitButtonSurface,
               backgroundColor: colors.primary,
+              maxWidth: 200,
             }}
           >
             <TouchableRipple
