@@ -21,7 +21,10 @@
     "Understood": "Compris"
   },
   "actions": {
-    "title": "Retrouve ici des actions personnalisées qui t'aideront à réduire ton impact",
+    "find": "Retrouve ici des",
+    "customizedActions": " actions personnalisées",
+    "helping": " qui t'aideront à",
+    "reduceYourImpact": " réduire ton impact",
     "navigationDescription": "Les actions sont réparties dans trois listes :",
     "availableTab": "Toutes les actions disponibles, filtrées selon ton profil et triées par émissions de CO2 économisées.",
     "inProgressTab": "Actions que tu as sélectionnées et que tu es en train d'accomplir.",

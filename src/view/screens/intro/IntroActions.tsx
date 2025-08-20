@@ -46,13 +46,14 @@ export const IntroActions: React.FC = () => {
     sampleActionLegendLabel: {
       width: 28,
       height: 28,
-      borderRadius: 14,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: colors.primary,
+      borderRadius: 14,
+      borderColor: colors.primary,
+      borderWidth: 2,
     },
     sampleActionLegendLabelText: {
-      color: colors.onPrimary,
+      color: colors.primary,
     },
     sampleActionLegendDescription: {
       color: colors.onSurface,
@@ -81,11 +82,15 @@ export const IntroActions: React.FC = () => {
         width: "100%",
       }}
     >
-      <Text
-        variant="titleLarge"
-        style={{ textAlign: "center", color: colors.primary }}
-      >
-        {t("intro:actions.title")}
+      <Text variant="titleLarge" style={{ textAlign: "center" }}>
+        <Text>{t("intro:actions.find")}</Text>
+        <Text style={{ color: colors.primary }}>
+          {t("intro:actions.customizedActions")}
+        </Text>
+        <Text>{t("intro:actions.helping")}</Text>
+        <Text style={{ color: colors.primary }}>
+          {t("intro:actions.reduceYourImpact")}
+        </Text>
       </Text>
 
       <View style={{ gap: 12 }}>
