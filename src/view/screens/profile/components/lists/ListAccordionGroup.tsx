@@ -9,14 +9,22 @@ import { ScrollProfileSectionContext } from "@view/screens/profile/utils/ScrollP
 import { useScrollProfile } from "@view/screens/profile/utils/useScrollProfile";
 
 export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
-  const { handleExpandProfileSection, scrollViewRef, sectionRefs, expandedId } =
-    useScrollProfile();
+  const {
+    handleExpandProfileSection,
+    resetExpandedSection,
+    scrollViewRef,
+    sectionRefs,
+    expandedId,
+  } = useScrollProfile();
 
   return (
     <BottomSheetModalProvider>
       <BottomSheetProvider>
         <ScrollProfileSectionContext.Provider
-          value={{ expandedId, scrollViewRef, sectionRefs }}
+          value={{
+            sectionRefs,
+            resetExpandedSection,
+          }}
         >
           <List.AccordionGroup
             expandedId={expandedId}

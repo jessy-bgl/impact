@@ -8,6 +8,7 @@ import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@domain/entities/footprints/types";
+import { useScrollProfileSection } from "@view/screens/profile/utils/ScrollProfileSectionContext";
 
 export const ValidateResponsesButton = ({
   category,
@@ -19,6 +20,8 @@ export const ValidateResponsesButton = ({
   const { t } = useTranslation(["transport", "emissions", "common"]);
 
   const { colors } = useTheme();
+
+  const { resetExpandedSection } = useScrollProfileSection();
 
   const { updateProfileCompletion } = useContext(UsecasesContext);
 
@@ -42,7 +45,10 @@ export const ValidateResponsesButton = ({
       <Button
         compact
         mode="outlined"
-        onPress={() => updateProfileCompletion(category, subCategory, true)}
+        onPress={() => {
+          updateProfileCompletion(category, subCategory, true);
+          resetExpandedSection();
+        }}
         style={{ padding: 0, margin: "auto" }}
         icon="check"
       >

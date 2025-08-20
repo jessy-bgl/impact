@@ -21,6 +21,7 @@ export const ListAccordion = ({
   children,
 }: PropsWithChildren<Props>) => {
   const { sectionRefs } = useScrollProfileSection();
+
   const { colors } = useTheme();
 
   const renderIcon = (props: any) => (

@@ -7,6 +7,10 @@ export const useScrollProfile = () => {
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionRefs = useRef<{ [key: string]: View | null }>({});
 
+  const resetExpandedSection = () => {
+    setExpandedId(undefined);
+  };
+
   const handleExpandProfileSection = (id: string | number) => {
     if (id !== expandedId) {
       setExpandedId(id);
@@ -29,9 +33,10 @@ export const useScrollProfile = () => {
   };
 
   return {
-    handleExpandProfileSection,
     scrollViewRef,
     sectionRefs,
     expandedId,
+    handleExpandProfileSection,
+    resetExpandedSection,
   };
 };
