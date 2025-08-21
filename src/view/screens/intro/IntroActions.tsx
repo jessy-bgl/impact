@@ -31,8 +31,12 @@ export const IntroActions: React.FC = () => {
   );
 
   const styles = StyleSheet.create({
-    actionsListCard: {
-      backgroundColor: colors.surfaceVariant,
+    mainContainer: {
+      padding: 16,
+      gap: 24,
+      maxWidth: 500,
+      alignSelf: "center",
+      width: "100%",
     },
     actionsListCardContent: {
       paddingVertical: 12,
@@ -40,7 +44,6 @@ export const IntroActions: React.FC = () => {
     actionsListCardTitle: {
       marginBottom: 6,
       fontWeight: "600",
-      color: colors.primary,
     },
     actionsListCardDescription: {
       color: colors.onSurfaceVariant,
@@ -51,16 +54,13 @@ export const IntroActions: React.FC = () => {
       gap: 12,
     },
     sampleActionLegendLabel: {
-      width: 28,
-      height: 28,
+      width: 24,
+      height: 24,
       alignItems: "center",
       justifyContent: "center",
       borderRadius: 14,
-      borderColor: colors.primary,
+      borderColor: colors.onBackground,
       borderWidth: 2,
-    },
-    sampleActionLegendLabelText: {
-      color: colors.primary,
     },
     sampleActionLegendDescription: {
       color: colors.onSurface,
@@ -77,18 +77,15 @@ export const IntroActions: React.FC = () => {
       justifyContent: "center",
       padding: 8,
     },
+    submitButtonText: { textAlign: "center", color: colors.onPrimary },
+    image: {
+      width: "100%",
+      height: 200,
+    },
   });
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 16,
-        gap: 24,
-        maxWidth: 600,
-        alignSelf: "center",
-        width: "100%",
-      }}
-    >
+    <ScrollView contentContainerStyle={styles.mainContainer}>
       <Text variant="titleLarge" style={{ textAlign: "center" }}>
         <Text>{t("intro:actions.find")}</Text>
         <Text style={{ color: colors.primary }}>
@@ -96,29 +93,19 @@ export const IntroActions: React.FC = () => {
         </Text>
         <Text>{t("intro:actions.helping")}</Text>
         <Text style={{ color: colors.primary }}>
-          {t("intro:actions.reduceYourImpact")}
+          {t("intro:actions.reduceYourImpact")} 🌱
         </Text>
       </Text>
 
       <View style={{ gap: 12 }}>
         <Image
           source={require("@assets/images/intro_actions.png")}
-          style={{
-            width: "100%",
-            height: 200,
-            marginBottom: 6,
-          }}
+          style={styles.image}
           resizeMode="contain"
         />
-
         <View style={styles.sampleActionLegendContainer}>
           <View style={styles.sampleActionLegendLabel}>
-            <Text
-              variant="labelLarge"
-              style={styles.sampleActionLegendLabelText}
-            >
-              1
-            </Text>
+            <Text>1</Text>
           </View>
           <Text
             variant="bodyMedium"
@@ -127,15 +114,9 @@ export const IntroActions: React.FC = () => {
             {t("intro:actions.carbonSavings")}
           </Text>
         </View>
-
         <View style={styles.sampleActionLegendContainer}>
           <View style={styles.sampleActionLegendLabel}>
-            <Text
-              variant="labelLarge"
-              style={styles.sampleActionLegendLabelText}
-            >
-              2
-            </Text>
+            <Text>2</Text>
           </View>
           <Text
             variant="bodyMedium"
@@ -144,15 +125,9 @@ export const IntroActions: React.FC = () => {
             {t("intro:actions.category")}
           </Text>
         </View>
-
         <View style={styles.sampleActionLegendContainer}>
           <View style={styles.sampleActionLegendLabel}>
-            <Text
-              variant="labelLarge"
-              style={styles.sampleActionLegendLabelText}
-            >
-              3
-            </Text>
+            <Text>3</Text>
           </View>
           <Text
             variant="bodyMedium"
@@ -163,24 +138,29 @@ export const IntroActions: React.FC = () => {
         </View>
       </View>
 
-      <Text
-        variant="bodyLarge"
-        style={{ textAlign: "center", color: colors.onSurface }}
-      >
-        {t("intro:actions.navigationDescription")}
-      </Text>
-
       <View style={{ gap: 12 }}>
-        <Card style={styles.actionsListCard}>
+        <Text
+          variant="bodyLarge"
+          style={{ textAlign: "center", color: colors.onSurface }}
+        >
+          {t("intro:actions.navigationDescription")}
+        </Text>
+        <Card mode="contained">
           <Card.Content style={styles.actionsListCardContent}>
             <View style={{ flexDirection: "row", gap: 8 }}>
               <MaterialIcons
                 name="apps"
                 size={16}
-                color={colors.onSurfaceVariant}
+                color={colors.secondary}
                 style={{ marginTop: 3 }}
               />
-              <Text variant="titleMedium" style={styles.actionsListCardTitle}>
+              <Text
+                variant="titleMedium"
+                style={{
+                  ...styles.actionsListCardTitle,
+                  color: colors.secondary,
+                }}
+              >
                 {t("actions:actionsList")}
               </Text>
             </View>
@@ -192,17 +172,22 @@ export const IntroActions: React.FC = () => {
             </Text>
           </Card.Content>
         </Card>
-
-        <Card style={styles.actionsListCard}>
+        <Card mode="contained">
           <Card.Content style={styles.actionsListCardContent}>
             <View style={{ flexDirection: "row", gap: 8 }}>
               <MaterialIcons
                 name="sync"
                 size={16}
-                color={colors.onSurfaceVariant}
+                color={colors.primary}
                 style={{ marginTop: 3 }}
               />
-              <Text variant="titleMedium" style={styles.actionsListCardTitle}>
+              <Text
+                variant="titleMedium"
+                style={{
+                  ...styles.actionsListCardTitle,
+                  color: colors.primary,
+                }}
+              >
                 {t("actions:actionsInProgress")}
               </Text>
             </View>
@@ -214,17 +199,19 @@ export const IntroActions: React.FC = () => {
             </Text>
           </Card.Content>
         </Card>
-
-        <Card style={styles.actionsListCard}>
+        <Card mode="contained">
           <Card.Content style={styles.actionsListCardContent}>
             <View style={{ flexDirection: "row", gap: 8 }}>
               <MaterialIcons
                 name="remove-circle-outline"
                 size={16}
-                color={colors.onSurfaceVariant}
+                color={colors.error}
                 style={{ marginTop: 3 }}
               />
-              <Text variant="titleMedium" style={styles.actionsListCardTitle}>
+              <Text
+                variant="titleMedium"
+                style={{ ...styles.actionsListCardTitle, color: colors.error }}
+              >
                 {t("actions:actionsSkipped")}
               </Text>
             </View>
@@ -238,23 +225,14 @@ export const IntroActions: React.FC = () => {
         </Card>
       </View>
 
-      <View style={{ marginTop: 12, gap: 12 }}>
+      <View style={{ gap: 12 }}>
         {!isProfileComplete && (
-          <Card
-            style={{
-              borderWidth: 1,
-              borderColor: colors.surfaceVariant,
-              padding: 8,
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
-            >
-              <MaterialIcons name="info" size={24} color={colors.secondary} />
-              <Text style={{ flexShrink: 1 }}>
+          <Card mode="outlined">
+            <Card.Content>
+              <Text variant="bodyMedium" style={{ flexShrink: 1 }}>
                 {t("intro:actions.beforeSubmitWarning")}
               </Text>
-            </View>
+            </Card.Content>
           </Card>
         )}
         <View
@@ -265,14 +243,13 @@ export const IntroActions: React.FC = () => {
               style={{
                 ...styles.submitButtonSurface,
                 backgroundColor: colors.secondary,
-                maxWidth: 200,
               }}
             >
               <TouchableRipple
                 onPress={() => navigate("Profile")}
                 style={styles.submitButton}
               >
-                <Text numberOfLines={2} style={{ textAlign: "center" }}>
+                <Text numberOfLines={2} style={styles.submitButtonText}>
                   {t("intro:actions.completeProfile")}
                 </Text>
               </TouchableRipple>
@@ -282,14 +259,13 @@ export const IntroActions: React.FC = () => {
             style={{
               ...styles.submitButtonSurface,
               backgroundColor: colors.primary,
-              maxWidth: 200,
             }}
           >
             <TouchableRipple
               onPress={() => setShouldShowActionsIntro(false)}
               style={styles.submitButton}
             >
-              <Text numberOfLines={2} style={{ textAlign: "center" }}>
+              <Text numberOfLines={2} style={styles.submitButtonText}>
                 {t("intro:actions.dismissActionsIntro")}
               </Text>
             </TouchableRipple>

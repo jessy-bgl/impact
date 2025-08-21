@@ -33,7 +33,7 @@
     "carbonSavings": "Économies de CO2 si tu réalises cette action.",
     "category": "Catégorie de l'action. Tu peux appuyer dessus pour avoir plus d'informations sur l'action.",
     "buttons": "Boutons pour sélectionner ou écarter l'action.",
-    "beforeSubmitWarning": "Tu peux accéder à la liste des actions à tout moment, mais tu dois d'abord compléter ton profil dans le menu Émissions pour que les actions proposées soient pertinentes.",
+    "beforeSubmitWarning": "Tu peux accéder aux actions à tout moment, mais tu dois compléter ton profil dans le menu Émissions pour que les actions proposées soient pertinentes.",
     "completeProfile": "Je complète mon profil",
     "dismissActionsIntro": "J'accède aux actions"
   }
