@@ -65,21 +65,27 @@ export const IntroProfile = () => {
         <Card.Content style={{ gap: 4 }}>
           <View style={styles.textWithIconContainer}>
             <Icon source="information-outline" size={14} />
-            <Text variant="bodyMedium">{t("profile.questionsInfoButton")}</Text>
+            <Text variant="bodyMedium" style={{ flexShrink: 1 }}>
+              {t("profile.questionsInfoButton")}
+            </Text>
           </View>
           <View style={styles.textWithIconContainer}>
             <Icon source="content-save" size={14} />
-            <Text variant="bodyMedium">{t("profile.questionsAutoSave")}</Text>
+            <Text variant="bodyMedium" style={{ flexShrink: 1 }}>
+              {t("profile.questionsAutoSave")}
+            </Text>
           </View>
           <View style={styles.textWithIconContainer}>
             <Icon source="contrast-circle" size={14} />
-            <Text variant="bodyMedium">
+            <Text variant="bodyMedium" style={{ flexShrink: 1 }}>
               {t("profile.questionsDefaultValues")}
             </Text>
           </View>
           <View style={styles.textWithIconContainer}>
             <Icon source="check-circle-outline" size={14} />
-            <Text variant="bodyMedium">{t("profile.questionsCompletion")}</Text>
+            <Text variant="bodyMedium" style={{ flexShrink: 1 }}>
+              {t("profile.questionsCompletion")}
+            </Text>
           </View>
         </Card.Content>
       </Card>
