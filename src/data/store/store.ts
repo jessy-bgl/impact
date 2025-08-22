@@ -23,6 +23,7 @@ import { isTestMode } from "../../constants";
 export type AppStore = {
   shouldShowIntro: {
     app: boolean;
+    profile: boolean;
     actions: boolean;
   };
   profile: {

@@ -21,6 +21,7 @@ import {
 import { Emissions } from "@view/screens/emissions/Emissions";
 import { Intro } from "@view/screens/intro/Intro";
 import { IntroActions } from "@view/screens/intro/IntroActions";
+import { IntroProfile } from "@view/screens/intro/IntroProfile";
 import { Profile } from "@view/screens/profile/Profile";
 import { EverydayThingsProfile } from "@view/screens/profile/everyday-things/EverydayThings";
 import { FoodProfile } from "@view/screens/profile/food/Food";
@@ -52,6 +53,10 @@ export const AppNavigation = () => {
 
   const shouldShowAppIntro = useAppStore((state) => state.shouldShowIntro.app);
 
+  const shouldShowProfileIntro = useAppStore(
+    (state) => state.shouldShowIntro.profile,
+  );
+
   if (shouldShowAppIntro) return <Intro />;
 
   return (
@@ -71,22 +76,24 @@ export const AppNavigation = () => {
       />
       <Stack.Screen
         name="TransportProfile"
-        component={TransportProfile}
+        component={shouldShowProfileIntro ? IntroProfile : TransportProfile}
         options={{ title: t("Transport") }}
       />
       <Stack.Screen
         name="FoodProfile"
-        component={FoodProfile}
+        component={shouldShowProfileIntro ? IntroProfile : FoodProfile}
         options={{ title: t("Food") }}
       />
       <Stack.Screen
         name="HousingProfile"
-        component={HousingProfile}
+        component={shouldShowProfileIntro ? IntroProfile : HousingProfile}
         options={{ title: t("Housing") }}
       />
       <Stack.Screen
         name="EverydayThingsProfile"
-        component={EverydayThingsProfile}
+        component={
+          shouldShowProfileIntro ? IntroProfile : EverydayThingsProfile
+        }
         options={{ title: t("EverydayThings") }}
       />
       <Stack.Screen

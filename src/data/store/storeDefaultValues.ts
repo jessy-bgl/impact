@@ -4,6 +4,7 @@ import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
 export const defaultAppStore: AppStore = {
   shouldShowIntro: {
     app: true,
+    profile: true,
     actions: true,
   },
   profile: {

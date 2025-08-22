@@ -20,6 +20,21 @@
     "simulatorInfo": "Le simulateur est basé sur les données de l'ADEME",
     "Understood": "Compris"
   },
+  "profile": {
+    "find": "Retrouve ici des",
+    "questions": " questions",
+    "toEstimate": " qui permettront d'estimer ton",
+    "carbonImpact": " impact carbone",
+    "byCategory": " par catégorie",
+    "categoriesExplained": "Chaque grande catégorie est composée de plusieurs sous-catégories.",
+    "categoryExample": "Prenons l'exemple de la sous-catégorie « voiture » qui fait partie de la catégorie « transports » :",
+    "questionsInfoButton": "Les questions marquées d'une petite icône d'information peuvent être sélectionnées pour obtenir plus de détails.",
+    "questionsAutoSave": "Tes réponses sont sauvegardées automatiquement.",
+    "questionsDefaultValues": "Si une réponse est affichée en gris, c'est qu'une valeur par défaut a été pré-remplie. Si elle est en blanc, cela signifie que tu l'as modifiée.",
+    "questionsCompletion": "Quand tu as terminé une catégorie, n'oublie pas de valider tes réponses.",
+    "beforeSubmitWarning": "Tu pourras toujours modifier tes réponses plus tard. La validation permet simplement à l'application de suivre ta progression, d'activer le suivi de ton empreinte carbone dans le temps et de te proposer des actions pertinentes pour réduire ton impact 🌱.",
+    "dismissProfileIntro": "J'accède aux questions"
+  },
   "actions": {
     "find": "Retrouve ici des",
     "customizedActions": " actions personnalisées",

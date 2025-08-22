@@ -90,6 +90,12 @@ export const appStoreActions = {
       shouldShowIntro: { ...state.shouldShowIntro, app: shouldShow },
     })),
 
+  setShouldShowProfileIntro: (shouldShow: boolean) =>
+    useAppStore.setState((state) => ({
+      ...state,
+      shouldShowIntro: { ...state.shouldShowIntro, profile: shouldShow },
+    })),
+
   setShouldShowActionsIntro: (shouldShow: boolean) =>
     useAppStore.setState((state) => ({
       ...state,
