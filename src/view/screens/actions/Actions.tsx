@@ -25,10 +25,9 @@ export const Actions = () => {
 
   useEffect(() => {
     if (!isFocused) return;
-    syncEngineWithStoredActions();
-    // Allow the component to render with loading state first
-    const timeoutId = setTimeout(() => setIsLoading(false), 100);
-    return () => clearTimeout(timeoutId);
+    setTimeout(() => syncEngineWithStoredActions(), 0);
+    setIsLoading(false);
+    return () => setIsLoading(true);
   }, [syncEngineWithStoredActions, isFocused]);
 
   return (

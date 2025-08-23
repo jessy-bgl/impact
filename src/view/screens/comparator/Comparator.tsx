@@ -21,7 +21,7 @@ export type AdemeComparatorType =
 export const Comparator = () => {
   const { params } = useRoute();
 
-  // NB: this is a workaround to improve performance (mainly for Profil screen)
+  // This is a workaround to improve performance
   const isFocused = useIsFocused();
   if (!isFocused) return null;
 

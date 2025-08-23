@@ -163,6 +163,7 @@ const BottomTabNavigator = () => {
         name="Actions"
         component={shouldShowActionsIntro ? IntroActions : Actions}
         options={{
+          lazy: false,
           headerShown: shouldShowActionsIntro ? false : undefined,
           title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
