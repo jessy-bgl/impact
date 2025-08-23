@@ -5,14 +5,16 @@ import {
 } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
+  StackHeaderRightProps,
   StackNavigationProp,
   createStackNavigator,
 } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { useTheme } from "react-native-paper";
+import { IconButton, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useAppStore } from "@data/store/store";
+import { appStoreActions } from "@data/store/storeActions";
 import { Actions } from "@view/screens/actions/Actions";
 import {
   AdemeComparatorType,
@@ -59,6 +61,17 @@ export const AppNavigation = () => {
 
   if (shouldShowAppIntro) return <Intro />;
 
+  const { setShouldShowProfileIntro } = appStoreActions;
+
+  const renderProfileHelpIcon = (props: StackHeaderRightProps) => (
+    <IconButton
+      {...props}
+      icon="help-circle"
+      size={iconSize}
+      onPress={() => setShouldShowProfileIntro(!shouldShowProfileIntro)}
+    />
+  );
+
   return (
     <Stack.Navigator
       initialRouteName="Home"
@@ -77,24 +90,36 @@ export const AppNavigation = () => {
       <Stack.Screen
         name="TransportProfile"
         component={shouldShowProfileIntro ? IntroProfile : TransportProfile}
-        options={{ title: t("Transport") }}
+        options={{
+          title: t("Transport"),
+          headerRight: renderProfileHelpIcon,
+        }}
       />
       <Stack.Screen
         name="FoodProfile"
         component={shouldShowProfileIntro ? IntroProfile : FoodProfile}
-        options={{ title: t("Food") }}
+        options={{
+          title: t("Food"),
+          headerRight: renderProfileHelpIcon,
+        }}
       />
       <Stack.Screen
         name="HousingProfile"
         component={shouldShowProfileIntro ? IntroProfile : HousingProfile}
-        options={{ title: t("Housing") }}
+        options={{
+          title: t("Housing"),
+          headerRight: renderProfileHelpIcon,
+        }}
       />
       <Stack.Screen
         name="EverydayThingsProfile"
         component={
           shouldShowProfileIntro ? IntroProfile : EverydayThingsProfile
         }
-        options={{ title: t("EverydayThings") }}
+        options={{
+          title: t("EverydayThings"),
+          headerRight: renderProfileHelpIcon,
+        }}
       />
       <Stack.Screen
         name="SocietalServicesProfile"
@@ -111,6 +136,8 @@ const BottomTabNavigator = () => {
   const shouldShowActionsIntro = useAppStore(
     (state) => state.shouldShowIntro.actions,
   );
+
+  const { setShouldShowActionsIntro } = appStoreActions;
 
   const insets = useSafeAreaInsets();
 
@@ -164,7 +191,6 @@ const BottomTabNavigator = () => {
         component={shouldShowActionsIntro ? IntroActions : Actions}
         options={{
           lazy: false,
-          headerShown: shouldShowActionsIntro ? false : undefined,
           title: t("Actions"),
           tabBarIcon: ({ focused, color }) => {
             return (
@@ -175,6 +201,14 @@ const BottomTabNavigator = () => {
               />
             );
           },
+          headerRight: (props) => (
+            <IconButton
+              {...props}
+              icon="help-circle"
+              size={iconSize}
+              onPress={() => setShouldShowActionsIntro(!shouldShowActionsIntro)}
+            />
+          ),
         }}
       />
       <BottomTab.Screen

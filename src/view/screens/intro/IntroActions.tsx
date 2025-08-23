@@ -16,7 +16,6 @@ import { AppNavigationProp } from "@common/AppNavigation";
 import { useAppStore } from "@data/store/store";
 import { appStoreActions } from "@data/store/storeActions";
 import { getImageAsset } from "@view/utils/imageAssets";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 export const IntroActions: React.FC = () => {
   const { t } = useTranslation(["intro", "actions", "common"]);
@@ -89,198 +88,196 @@ export const IntroActions: React.FC = () => {
   });
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.mainContainer}>
-        <Text variant="titleLarge" style={{ textAlign: "center" }}>
-          <Text>{t("intro:actions.find")}</Text>
-          <Text style={{ color: colors.primary }}>
-            {t("intro:actions.customizedActions")}
-          </Text>
-          <Text>{t("intro:actions.helping")}</Text>
-          <Text style={{ color: colors.primary }}>
-            {t("intro:actions.reduceYourImpact")} 🌱
-          </Text>
+    <ScrollView contentContainerStyle={styles.mainContainer}>
+      <Text variant="titleLarge" style={{ textAlign: "center" }}>
+        <Text>{t("intro:actions.find")}</Text>
+        <Text style={{ color: colors.primary }}>
+          {t("intro:actions.customizedActions")}
         </Text>
+        <Text>{t("intro:actions.helping")}</Text>
+        <Text style={{ color: colors.primary }}>
+          {t("intro:actions.reduceYourImpact")} 🌱
+        </Text>
+      </Text>
 
-        <View style={{ gap: 12 }}>
-          <Image
-            source={getImageAsset("intro_actions")}
-            style={styles.image}
-            contentFit="contain"
-          />
-          <View style={styles.sampleActionLegendContainer}>
-            <View style={styles.sampleActionLegendLabel}>
-              <Text>1</Text>
-            </View>
-            <Text
-              variant="bodyMedium"
-              style={styles.sampleActionLegendDescription}
-            >
-              {t("intro:actions.carbonSavings")}
-            </Text>
+      <View style={{ gap: 12 }}>
+        <Image
+          source={getImageAsset("intro_actions")}
+          style={styles.image}
+          contentFit="contain"
+        />
+        <View style={styles.sampleActionLegendContainer}>
+          <View style={styles.sampleActionLegendLabel}>
+            <Text>1</Text>
           </View>
-          <View style={styles.sampleActionLegendContainer}>
-            <View style={styles.sampleActionLegendLabel}>
-              <Text>2</Text>
-            </View>
-            <Text
-              variant="bodyMedium"
-              style={styles.sampleActionLegendDescription}
-            >
-              {t("intro:actions.category")}
-            </Text>
-          </View>
-          <View style={styles.sampleActionLegendContainer}>
-            <View style={styles.sampleActionLegendLabel}>
-              <Text>3</Text>
-            </View>
-            <Text
-              variant="bodyMedium"
-              style={styles.sampleActionLegendDescription}
-            >
-              {t("intro:actions.buttons")}
-            </Text>
-          </View>
-        </View>
-
-        <View style={{ gap: 12 }}>
           <Text
-            variant="bodyLarge"
-            style={{ textAlign: "center", color: colors.onSurface }}
+            variant="bodyMedium"
+            style={styles.sampleActionLegendDescription}
           >
-            {t("intro:actions.navigationDescription")}
+            {t("intro:actions.carbonSavings")}
           </Text>
-          <Card mode="contained">
-            <Card.Content style={styles.actionsListCardContent}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <MaterialIcons
-                  name="apps"
-                  size={16}
-                  color={colors.secondary}
-                  style={{ marginTop: 3 }}
-                />
-                <Text
-                  variant="titleMedium"
-                  style={{
-                    ...styles.actionsListCardTitle,
-                    color: colors.secondary,
-                  }}
-                >
-                  {t("actions:actionsList")}
-                </Text>
-              </View>
-              <Text
-                variant="bodyMedium"
-                style={styles.actionsListCardDescription}
-              >
-                {t("intro:actions.availableTab")}
-              </Text>
-            </Card.Content>
-          </Card>
-          <Card mode="contained">
-            <Card.Content style={styles.actionsListCardContent}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <MaterialIcons
-                  name="sync"
-                  size={16}
-                  color={colors.primary}
-                  style={{ marginTop: 3 }}
-                />
-                <Text
-                  variant="titleMedium"
-                  style={{
-                    ...styles.actionsListCardTitle,
-                    color: colors.primary,
-                  }}
-                >
-                  {t("actions:actionsInProgress")}
-                </Text>
-              </View>
-              <Text
-                variant="bodyMedium"
-                style={styles.actionsListCardDescription}
-              >
-                {t("intro:actions.inProgressTab")}
-              </Text>
-            </Card.Content>
-          </Card>
-          <Card mode="contained">
-            <Card.Content style={styles.actionsListCardContent}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <MaterialIcons
-                  name="remove-circle-outline"
-                  size={16}
-                  color={colors.error}
-                  style={{ marginTop: 3 }}
-                />
-                <Text
-                  variant="titleMedium"
-                  style={{
-                    ...styles.actionsListCardTitle,
-                    color: colors.error,
-                  }}
-                >
-                  {t("actions:actionsSkipped")}
-                </Text>
-              </View>
-              <Text
-                variant="bodyMedium"
-                style={styles.actionsListCardDescription}
-              >
-                {t("intro:actions.dismissedTab")}
-              </Text>
-            </Card.Content>
-          </Card>
         </View>
-
-        <View style={{ gap: 12 }}>
-          {!isProfileComplete && (
-            <Card mode="outlined">
-              <Card.Content>
-                <Text variant="bodyMedium">
-                  {t("intro:actions.beforeSubmitWarning")}
-                </Text>
-              </Card.Content>
-            </Card>
-          )}
-          <View
-            style={{ flexDirection: "row", justifyContent: "center", gap: 8 }}
+        <View style={styles.sampleActionLegendContainer}>
+          <View style={styles.sampleActionLegendLabel}>
+            <Text>2</Text>
+          </View>
+          <Text
+            variant="bodyMedium"
+            style={styles.sampleActionLegendDescription}
           >
-            {!isProfileComplete && (
-              <Surface
+            {t("intro:actions.category")}
+          </Text>
+        </View>
+        <View style={styles.sampleActionLegendContainer}>
+          <View style={styles.sampleActionLegendLabel}>
+            <Text>3</Text>
+          </View>
+          <Text
+            variant="bodyMedium"
+            style={styles.sampleActionLegendDescription}
+          >
+            {t("intro:actions.buttons")}
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ gap: 12 }}>
+        <Text
+          variant="bodyLarge"
+          style={{ textAlign: "center", color: colors.onSurface }}
+        >
+          {t("intro:actions.navigationDescription")}
+        </Text>
+        <Card mode="contained">
+          <Card.Content style={styles.actionsListCardContent}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <MaterialIcons
+                name="apps"
+                size={16}
+                color={colors.secondary}
+                style={{ marginTop: 3 }}
+              />
+              <Text
+                variant="titleMedium"
                 style={{
-                  ...styles.submitButtonSurface,
-                  backgroundColor: colors.secondary,
+                  ...styles.actionsListCardTitle,
+                  color: colors.secondary,
                 }}
               >
-                <TouchableRipple
-                  onPress={() => navigate("Profile")}
-                  style={styles.submitButton}
-                >
-                  <Text numberOfLines={2} style={styles.submitButtonText}>
-                    {t("intro:actions.completeProfile")}
-                  </Text>
-                </TouchableRipple>
-              </Surface>
-            )}
+                {t("actions:actionsList")}
+              </Text>
+            </View>
+            <Text
+              variant="bodyMedium"
+              style={styles.actionsListCardDescription}
+            >
+              {t("intro:actions.availableTab")}
+            </Text>
+          </Card.Content>
+        </Card>
+        <Card mode="contained">
+          <Card.Content style={styles.actionsListCardContent}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <MaterialIcons
+                name="sync"
+                size={16}
+                color={colors.primary}
+                style={{ marginTop: 3 }}
+              />
+              <Text
+                variant="titleMedium"
+                style={{
+                  ...styles.actionsListCardTitle,
+                  color: colors.primary,
+                }}
+              >
+                {t("actions:actionsInProgress")}
+              </Text>
+            </View>
+            <Text
+              variant="bodyMedium"
+              style={styles.actionsListCardDescription}
+            >
+              {t("intro:actions.inProgressTab")}
+            </Text>
+          </Card.Content>
+        </Card>
+        <Card mode="contained">
+          <Card.Content style={styles.actionsListCardContent}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              <MaterialIcons
+                name="remove-circle-outline"
+                size={16}
+                color={colors.error}
+                style={{ marginTop: 3 }}
+              />
+              <Text
+                variant="titleMedium"
+                style={{
+                  ...styles.actionsListCardTitle,
+                  color: colors.error,
+                }}
+              >
+                {t("actions:actionsSkipped")}
+              </Text>
+            </View>
+            <Text
+              variant="bodyMedium"
+              style={styles.actionsListCardDescription}
+            >
+              {t("intro:actions.dismissedTab")}
+            </Text>
+          </Card.Content>
+        </Card>
+      </View>
+
+      <View style={{ gap: 12 }}>
+        {!isProfileComplete && (
+          <Card mode="outlined">
+            <Card.Content>
+              <Text variant="bodyMedium">
+                {t("intro:actions.beforeSubmitWarning")}
+              </Text>
+            </Card.Content>
+          </Card>
+        )}
+        <View
+          style={{ flexDirection: "row", justifyContent: "center", gap: 8 }}
+        >
+          {!isProfileComplete && (
             <Surface
               style={{
                 ...styles.submitButtonSurface,
-                backgroundColor: colors.primary,
+                backgroundColor: colors.secondary,
               }}
             >
               <TouchableRipple
-                onPress={() => setShouldShowActionsIntro(false)}
+                onPress={() => navigate("Profile")}
                 style={styles.submitButton}
               >
                 <Text numberOfLines={2} style={styles.submitButtonText}>
-                  {t("intro:actions.dismissActionsIntro")}
+                  {t("intro:actions.completeProfile")}
                 </Text>
               </TouchableRipple>
             </Surface>
-          </View>
+          )}
+          <Surface
+            style={{
+              ...styles.submitButtonSurface,
+              backgroundColor: colors.primary,
+            }}
+          >
+            <TouchableRipple
+              onPress={() => setShouldShowActionsIntro(false)}
+              style={styles.submitButton}
+            >
+              <Text numberOfLines={2} style={styles.submitButtonText}>
+                {t("intro:actions.dismissActionsIntro")}
+              </Text>
+            </TouchableRipple>
+          </Surface>
         </View>
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 };
