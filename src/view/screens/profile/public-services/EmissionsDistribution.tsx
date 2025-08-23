@@ -1,9 +1,7 @@
+import { Platform, useWindowDimensions, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
-import { Platform, View } from "react-native";
-
-const pieSize = 100;
 
 type Props = {
   publicServices: FootprintCategoryViewModel;
@@ -14,17 +12,17 @@ export const SocietalServicesEmissionsDistribution = ({
   publicServices,
   merchantServices,
 }: Props) => {
+  const { width } = useWindowDimensions();
+
+  const pieSize =
+    Platform.OS === "web" ? Math.min(250, width * 0.6) : width * 0.9;
+
   return (
-    <View
-      style={{
-        alignItems: "center",
-        marginBottom: Platform.OS === "web" ? -pieSize : 0,
-      }}
-    >
+    <View style={{ alignItems: "center" }}>
       <PieChart
         showText
-        semiCircle
-        radius={pieSize * 2}
+        semiCircle={Platform.OS !== "web"}
+        radius={pieSize / 2}
         textSize={20}
         data={[
           {

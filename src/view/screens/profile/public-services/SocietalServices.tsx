@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View, ViewStyle } from "react-native";
-import { Card, Icon, Text, useTheme } from "react-native-paper";
+import { ScrollView, View } from "react-native";
+import { Card, Text } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { UsecasesContext } from "@common/UsecasesContext";
 import { SocietalServicesEmissionsDistribution } from "@view/screens/profile/public-services/EmissionsDistribution";
@@ -14,12 +15,7 @@ export const SocietalServicesProfile = () => {
 
   const { t } = useTranslation("societalServices");
 
-  const appTheme = useTheme();
-
-  const infoCardStyle: ViewStyle = {
-    borderColor: appTheme.colors.secondary,
-    borderRadius: 5,
-  };
+  const insets = useSafeAreaInsets();
 
   const publicServices = FootprintCategoryViewModel.forPublicServices(
     societalServicesFootprint.publicServicesFootprint,
@@ -32,38 +28,51 @@ export const SocietalServicesProfile = () => {
   );
 
   return (
-    <ScrollView style={{ padding: 10 }}>
-      <Card mode="outlined" style={infoCardStyle}>
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ marginLeft: 10, justifyContent: "center" }}>
-            <Icon size={20} source="information-outline" />
-          </View>
-          <Text style={{ flex: 1, padding: 10 }}>{t("info")}</Text>
-        </View>
+    <ScrollView
+      contentContainerStyle={{
+        gap: 10,
+        maxWidth: 500,
+        alignSelf: "center",
+        padding: 10,
+        paddingBottom: insets.bottom || 10,
+      }}
+    >
+      <Card mode="outlined">
+        <Card.Content>
+          <Text variant="bodyMedium">{t("info")}</Text>
+        </Card.Content>
       </Card>
 
-      <Text style={{ marginTop: 10 }}>{t("description")}</Text>
+      <Text variant="bodyMedium">{t("description")}</Text>
 
-      <View style={{ marginTop: 10, marginBottom: 10 }}>
+      <View>
         <SocietalServicesEmissionsDistribution
           merchantServices={merchantServices}
           publicServices={publicServices}
         />
       </View>
 
-      <Text style={{ marginTop: 10 }}>
-        {t("publicServicesDescription", {
-          icon: publicServices.icon,
-          footprint: publicServices.footprint,
-        })}
-      </Text>
+      <Card>
+        <Card.Content>
+          <Text variant="bodyMedium">
+            {t("publicServicesDescription", {
+              icon: publicServices.icon,
+              footprint: publicServices.footprint,
+            })}
+          </Text>
+        </Card.Content>
+      </Card>
 
-      <Text style={{ marginTop: 10 }}>
-        {t("merchantDescription", {
-          icon: merchantServices.icon,
-          footprint: merchantServices.footprint,
-        })}
-      </Text>
+      <Card>
+        <Card.Content>
+          <Text variant="bodyMedium">
+            {t("merchantDescription", {
+              icon: merchantServices.icon,
+              footprint: merchantServices.footprint,
+            })}
+          </Text>
+        </Card.Content>
+      </Card>
     </ScrollView>
   );
 };

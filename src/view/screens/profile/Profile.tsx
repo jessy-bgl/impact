@@ -53,7 +53,7 @@ export const Profile = () => {
         flexDirection: "column",
         alignItems: "center",
         padding: 10,
-        paddingBottom: insets.bottom,
+        paddingBottom: insets.bottom || 10,
         gap: 10,
       }}
     >
