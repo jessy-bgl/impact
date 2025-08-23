@@ -13,6 +13,7 @@ describe("update actions", () => {
       // Arrange
       repositories.actionsRepository.actions = [];
       const updateActions = createSyncEngineWithStoredActions(
+        repositories.computeEngine,
         repositories.actionsRepository,
       );
       // Act

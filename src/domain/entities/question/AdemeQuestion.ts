@@ -1,6 +1,6 @@
 import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
 
-import { AdemeEngine } from "@domain/entities/AdemeEngine";
+import { AdemeEngine } from "@domain/entities/engine/AdemeEngine";
 import { Profile } from "@domain/entities/profile/Profile";
 import { Question } from "@domain/entities/question/Question";
 

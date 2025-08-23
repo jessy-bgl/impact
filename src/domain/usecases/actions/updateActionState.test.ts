@@ -3,7 +3,7 @@ import { EvaluatedNode } from "publicodes";
 
 import { initFakeRepositories } from "@common/UsecasesContext";
 import { AdemeAction } from "@domain/entities/action/AdemeAction";
-import { AdemeEngine } from "@domain/entities/AdemeEngine";
+import { AdemeEngine } from "@domain/entities/engine/AdemeEngine";
 import { createUpdateActionState } from "@domain/usecases/actions/updateActionState";
 
 describe("update action state", () => {

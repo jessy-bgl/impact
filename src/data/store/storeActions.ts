@@ -3,6 +3,7 @@ import { Action } from "@domain/entities/action/Action";
 import { EverydayThingsFootprint } from "@domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@domain/entities/footprints/FoodFootprint";
 import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
+import { SocietalServicesFootprint } from "@domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@domain/entities/footprints/TransportFootprint";
 import {
   FootprintCategory,
@@ -78,6 +79,12 @@ export const appStoreActions = {
 
   getSocietalServicesFootprint: () =>
     useAppStore.getState().footprints.societalServices,
+
+  setSocietalServicesFootprint: (footprint: SocietalServicesFootprint) =>
+    useAppStore.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, societalServices: footprint },
+    })),
 
   getActions: () => useAppStore.getState().actions,
 

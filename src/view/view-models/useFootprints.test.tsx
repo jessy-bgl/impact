@@ -6,7 +6,7 @@ describe("useFootprints", () => {
   it("returns the correct annual and category footprints", () => {
     const { result } = renderHook(() => useFootprints());
 
-    // These values are calculated by the real AdemeFootprintEngine
+    // These values are calculated by the real AdemeComputeEngine
     expect(result.current.annualFootprint).toBe(8886);
     expect(result.current.footprints.transport.footprint).toBe(1959);
     expect(result.current.footprints.food.footprint).toBe(2339);

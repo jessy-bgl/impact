@@ -13,7 +13,7 @@ export abstract class AdemeEngine {
     try {
       return ademeFootprintModel.getSituation();
     } catch (e) {
-      console.error(e);
+      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
       return {};
     }
   };
@@ -28,7 +28,7 @@ export abstract class AdemeEngine {
         keepPreviousSituation,
       });
     } catch (e) {
-      console.error(e);
+      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
     }
   };
 
@@ -36,7 +36,7 @@ export abstract class AdemeEngine {
     try {
       return ademeFootprintModel.evaluate(rule);
     } catch (e) {
-      console.error(e);
+      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
       return {} as EvaluatedNode;
     }
   };

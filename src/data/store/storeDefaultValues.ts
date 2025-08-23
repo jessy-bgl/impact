@@ -1,5 +1,7 @@
 import { AppStore } from "@data/store/store";
-import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
+import { AdemeComputeEngine } from "@domain/entities/engine/AdemeComputeEngine";
+
+const ademeComputeEngine = new AdemeComputeEngine();
 
 export const defaultAppStore: AppStore = {
   shouldShowIntro: {
@@ -46,11 +48,11 @@ export const defaultAppStore: AppStore = {
     },
   },
   footprints: {
-    transport: AdemeFootprintEngine.computeTransportFootprint(),
-    food: AdemeFootprintEngine.computeFoodFootprint(),
-    housing: AdemeFootprintEngine.computeHousingFootprint(),
-    everydayThings: AdemeFootprintEngine.computeEverydayThingsFootprint(),
-    societalServices: AdemeFootprintEngine.computeSocietalServicesFootprint(),
+    transport: ademeComputeEngine.computeTransportFootprint(),
+    food: ademeComputeEngine.computeFoodFootprint(),
+    housing: ademeComputeEngine.computeHousingFootprint(),
+    everydayThings: ademeComputeEngine.computeEverydayThingsFootprint(),
+    societalServices: ademeComputeEngine.computeSocietalServicesFootprint(),
   },
   actions: [],
 };

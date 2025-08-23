@@ -18,4 +18,5 @@ export interface FootprintsRepository {
   updateEverydayThingsFootprint(footprint: EverydayThingsFootprint): void;
 
   fetchSocietalServicesFootprint(): SocietalServicesFootprint;
+  updateSocietalServicesFootprint(footprint: SocietalServicesFootprint): void;
 }

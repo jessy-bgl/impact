@@ -5,7 +5,8 @@ import { EvaluatedNode } from "publicodes";
 import { NGCRulesNodes } from "@data/ademe-footprint-model";
 import { Action } from "@domain/entities/action/Action";
 import { AdemeAction } from "@domain/entities/action/AdemeAction";
-import { AdemeEngine } from "@domain/entities/AdemeEngine";
+import { AdemeEngine } from "@domain/entities/engine/AdemeEngine";
+import { ComputeEngine } from "@domain/entities/engine/ComputeEngine";
 import { EverydayThingsFootprint } from "@domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@domain/entities/footprints/FoodFootprint";
 import { HousingFootprint } from "@domain/entities/footprints/HousingFootprint";
@@ -15,18 +16,18 @@ import { Profile } from "@domain/entities/profile/Profile";
 import { AdemeQuestion } from "@domain/entities/question/AdemeQuestion";
 import { Question } from "@domain/entities/question/Question";
 
-export abstract class AdemeFootprintEngine {
+export class AdemeComputeEngine implements ComputeEngine {
   /**
    *
    * @param profile
-   * @param questionKeys allows to filter the questions to be returned (useful for performance)
+   * @param questionLabels allows to filter the questions to be returned (useful for performance)
    * @returns
    */
-  public static getQuestions = (
+  public getQuestions = (
     profile: Profile,
-    questionKeys: (keyof Profile)[],
+    questionLabels: (keyof Profile)[],
   ): Record<keyof Profile, Question> => {
-    const ademeQuestionRules = this._getQuestionRules(questionKeys);
+    const ademeQuestionRules = this._getQuestionRules(questionLabels);
     return Object.keys(ademeQuestionRules).reduce(
       (acc, key) => {
         const k = key as DottedName;
@@ -43,10 +44,7 @@ export abstract class AdemeFootprintEngine {
    * @param keys an optional parameter that allows to filter the questions to be returned (useful for performance)
    * @returns
    */
-  private static _getQuestionRules = (
-    keys?: (keyof Profile)[],
-  ): NGCRulesNodes => {
-    // TODO: peut être plus optimisé si on ne récupère que les règles utiles aux keys ?
+  private _getQuestionRules = (keys?: (keyof Profile)[]): NGCRulesNodes => {
     const rules = AdemeEngine.getRules();
     return Object.entries(rules).reduce((acc, [key, rule]) => {
       if (keys === undefined || keys.includes(key as DottedName)) {
@@ -58,7 +56,7 @@ export abstract class AdemeFootprintEngine {
     }, {} as NGCRulesNodes);
   };
 
-  public static getActions = (): Action[] => {
+  public getActions = (): Action[] => {
     // remove not applicable / completed actions
     let actionEvaluatedNodes: (NGCRuleNode & EvaluatedNode)[] =
       this.getActionNames()
@@ -94,14 +92,14 @@ export abstract class AdemeFootprintEngine {
     return actionEvaluatedNodes.map((action) => new AdemeAction(action));
   };
 
-  private static getActionNames = (): DottedName[] => {
+  private getActionNames = (): DottedName[] => {
     const actionsNode = AdemeEngine.getRules().actions;
     const actionNames = (actionsNode.rawNode.formule as any)
       .somme as DottedName[];
     return actionNames;
   };
 
-  public static computeTransportFootprint = () => {
+  public computeTransportFootprint = () => {
     return new TransportFootprint({
       carFootprint: AdemeEngine.evaluate("transport . voiture")
         .nodeValue as number,
@@ -124,7 +122,7 @@ export abstract class AdemeFootprintEngine {
     });
   };
 
-  public static computeFoodFootprint = () => {
+  public computeFoodFootprint = () => {
     return new FoodFootprint({
       drinksFootprint: AdemeEngine.evaluate("alimentation . boisson")
         .nodeValue as number,
@@ -135,7 +133,7 @@ export abstract class AdemeFootprintEngine {
     });
   };
 
-  public static computeHousingFootprint = () => {
+  public computeHousingFootprint = () => {
     return new HousingFootprint({
       homeFootprint: AdemeEngine.evaluate("logement . construction")
         .nodeValue as number,
@@ -150,7 +148,7 @@ export abstract class AdemeFootprintEngine {
     });
   };
 
-  public static computeEverydayThingsFootprint = () => {
+  public computeEverydayThingsFootprint = () => {
     return new EverydayThingsFootprint({
       petFootprint: AdemeEngine.evaluate("divers . animaux domestiques")
         .nodeValue as number,
@@ -175,7 +173,7 @@ export abstract class AdemeFootprintEngine {
     });
   };
 
-  public static computeSocietalServicesFootprint = () => {
+  public computeSocietalServicesFootprint = () => {
     return new SocietalServicesFootprint({
       merchantServicesFootprint: AdemeEngine.evaluate(
         "services sociétaux . services marchands",
@@ -184,5 +182,19 @@ export abstract class AdemeFootprintEngine {
         "services sociétaux . services publics",
       ).nodeValue as number,
     });
+  };
+
+  public computeFootprints = () => {
+    return {
+      transport: this.computeTransportFootprint(),
+      food: this.computeFoodFootprint(),
+      housing: this.computeHousingFootprint(),
+      everydayThings: this.computeEverydayThingsFootprint(),
+      societalServices: this.computeSocietalServicesFootprint(),
+    };
+  };
+
+  public setProfile = (profile: Profile, keepPreviousSituation = false) => {
+    return AdemeEngine.setSituation(profile, keepPreviousSituation);
   };
 }

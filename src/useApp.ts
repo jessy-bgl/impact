@@ -11,7 +11,7 @@ export const useApp = () => {
 
   const [initialState, setInitialState] = useState();
 
-  const { syncStoredProfileWithEngine } = useContext(UsecasesContext);
+  const { syncFootprintsProfileWithEngine } = useContext(UsecasesContext);
 
   useEffect(() => {
     const restoreNavigationState = async () => {
@@ -26,11 +26,12 @@ export const useApp = () => {
     try {
       if (!isReady) {
         restoreNavigationState();
-        syncStoredProfileWithEngine();
+        // sync profile with engine at startup is important in case
+        // the engine has been updated
+        syncFootprintsProfileWithEngine();
       }
     } catch (e) {
-      // TODO: envoyer l'erreur à un service de monitoring
-      console.error(e);
+      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
     } finally {
       setIsReady(true);
     }

@@ -1,5 +1,4 @@
-import { AdemeEngine } from "@domain/entities/AdemeEngine";
-import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
+import { ComputeEngine } from "@domain/entities/engine/ComputeEngine";
 import {
   FootprintCategory,
   FootprintSubCategory,
@@ -9,6 +8,7 @@ import { FootprintsRepository } from "@domain/repositories/footprints.repository
 import { ProfileRepository } from "@domain/repositories/profile.repository";
 
 export const createUpdateProfile = (
+  computeEngine: ComputeEngine,
   profileRepository: ProfileRepository,
   footprintsRepository: FootprintsRepository,
 ) => {
@@ -17,19 +17,19 @@ export const createUpdateProfile = (
     value: string | number,
   ) => {
     _updateProfile(question, value);
-    const footprint = AdemeFootprintEngine.computeTransportFootprint();
+    const footprint = computeEngine.computeTransportFootprint();
     footprintsRepository.updateTransportFootprint(footprint);
   };
 
   const updateFoodProfile = (question: Question, value: string | number) => {
     _updateProfile(question, value);
-    const footprint = AdemeFootprintEngine.computeFoodFootprint();
+    const footprint = computeEngine.computeFoodFootprint();
     footprintsRepository.updateFoodFootprint(footprint);
   };
 
   const updateHousingProfile = (question: Question, value: string | number) => {
     _updateProfile(question, value);
-    const footprint = AdemeFootprintEngine.computeHousingFootprint();
+    const footprint = computeEngine.computeHousingFootprint();
     footprintsRepository.updateHousingFootprint(footprint);
   };
 
@@ -38,7 +38,7 @@ export const createUpdateProfile = (
     value: string | number,
   ) => {
     _updateProfile(question, value);
-    const footprint = AdemeFootprintEngine.computeEverydayThingsFootprint();
+    const footprint = computeEngine.computeEverydayThingsFootprint();
     footprintsRepository.updateEverydayThingsFootprint(footprint);
   };
 
@@ -56,7 +56,7 @@ export const createUpdateProfile = (
       value = question.minValue || 0;
     }
 
-    AdemeEngine.setSituation({ [question.label]: value }, true);
+    computeEngine.setProfile({ [question.label]: value }, true);
 
     profileRepository.updateProfileKey(question.label, value);
   };

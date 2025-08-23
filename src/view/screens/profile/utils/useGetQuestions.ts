@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 
+import { UsecasesContext } from "@common/UsecasesContext";
 import { useAppStore } from "@data/store/store";
-import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
 import { Profile } from "@domain/entities/profile/Profile";
 import { Question } from "@domain/entities/question/Question";
 
@@ -10,11 +10,10 @@ export const useGetQuestions = <T>(
 ): Record<keyof T, Question> => {
   const ademeProfile = useAppStore((state) => state.profile.ademe);
 
+  const { fetchQuestions } = useContext(UsecasesContext);
+
   const questions: Record<keyof Profile, Question> = useMemo(() => {
-    return AdemeFootprintEngine.getQuestions(
-      ademeProfile,
-      Object.values(questionKeys),
-    );
+    return fetchQuestions(ademeProfile, Object.values(questionKeys));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ademeProfile]);
 

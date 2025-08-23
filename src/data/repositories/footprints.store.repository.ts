@@ -39,13 +39,17 @@ export class FootprintsStoreRepository implements FootprintsRepository {
     return new EverydayThingsFootprint(storedEverydayThings);
   }
 
+  updateEverydayThingsFootprint(footprint: EverydayThingsFootprint) {
+    return appStoreActions.setEverydayThingsFootprint(footprint);
+  }
+
   fetchSocietalServicesFootprint() {
     const storedSocietalServices =
       appStoreActions.getSocietalServicesFootprint();
     return new SocietalServicesFootprint(storedSocietalServices);
   }
 
-  updateEverydayThingsFootprint(footprint: EverydayThingsFootprint) {
-    return appStoreActions.setEverydayThingsFootprint(footprint);
+  updateSocietalServicesFootprint(footprint: SocietalServicesFootprint) {
+    return appStoreActions.setSocietalServicesFootprint(footprint);
   }
 }

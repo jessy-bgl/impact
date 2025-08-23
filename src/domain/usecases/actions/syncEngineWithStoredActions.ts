@@ -1,12 +1,13 @@
 import { Action } from "@domain/entities/action/Action";
-import { AdemeFootprintEngine } from "@domain/entities/AdemeFootprintEngine";
+import { ComputeEngine } from "@domain/entities/engine/ComputeEngine";
 import { ActionsRepository } from "@domain/repositories/actions.repository";
 
 export const createSyncEngineWithStoredActions = (
+  computeEngine: ComputeEngine,
   actionsRepository: ActionsRepository,
 ) => {
   const syncEngineWithStoredActions = () => {
-    const actions = AdemeFootprintEngine.getActions();
+    const actions = computeEngine.getActions();
     const storedActions = actionsRepository.fetchActions();
     _restoreActionStates(actions, storedActions);
     actionsRepository.updateActions([...actions]);
