@@ -27,6 +27,12 @@ const config: ExpoConfig = {
         imageWidth: 200,
       },
     ],
+    [
+      "expo-asset",
+      {
+        assets: ["./assets/images"],
+      },
+    ],
   ],
   assetBundlePatterns: ["**/*"],
   experiments: {

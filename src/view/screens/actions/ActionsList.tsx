@@ -3,10 +3,11 @@ import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 
-import EmptyBox from "@assets/images/empty_box";
 import { useAppStore } from "@data/store/store";
 import { Action, ActionState } from "@domain/entities/action/Action";
 import { ActionCard } from "@view/screens/actions/ActionCard";
+import { getImageAsset } from "@view/utils/imageAssets";
+import { Image } from "expo-image";
 
 type Props = {
   state: ActionState;
@@ -37,7 +38,10 @@ export const ActionsList = ({ state, isLoading, updateActionState }: Props) => {
   if (actions.length === 0)
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <EmptyBox height={50} width={50} />
+        <Image
+          source={getImageAsset("empty_box")}
+          style={{ height: 50, width: 50 }}
+        />
         <Text>{t(`noAction.${state}`)}</Text>
       </View>
     );

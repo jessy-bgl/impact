@@ -1,8 +1,9 @@
-import { cloneElement, isValidElement } from "react";
+import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Avatar, Card, Icon, Text, useTheme } from "react-native-paper";
 
+import { getImageAsset } from "@view/utils/imageAssets";
 import { FootprintCategoryViewModel } from "@view/view-models/Footprint";
 
 type Props = {
@@ -100,9 +101,11 @@ export const ProfileCategoryCard = ({
         subtitleStyle={{ marginTop: -5, color: colors.onSurfaceVariant }}
       />
       <Card.Content>
-        <View style={{ height: 150 }}>
-          {image && isValidElement(image) ? cloneElement(image) : image}
-        </View>
+        <Image
+          source={getImageAsset(image)}
+          contentFit="contain"
+          style={{ height: 130 }}
+        />
       </Card.Content>
     </Card>
   );

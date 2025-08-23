@@ -1,8 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Image } from "expo-image";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Card,
   Surface,
@@ -14,6 +15,7 @@ import {
 import { AppNavigationProp } from "@common/AppNavigation";
 import { useAppStore } from "@data/store/store";
 import { appStoreActions } from "@data/store/storeActions";
+import { getImageAsset } from "@view/utils/imageAssets";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const IntroActions: React.FC = () => {
@@ -102,9 +104,9 @@ export const IntroActions: React.FC = () => {
 
         <View style={{ gap: 12 }}>
           <Image
-            source={require("@assets/images/intro_actions.png")}
+            source={getImageAsset("intro_actions")}
             style={styles.image}
-            resizeMode="contain"
+            contentFit="contain"
           />
           <View style={styles.sampleActionLegendContainer}>
             <View style={styles.sampleActionLegendLabel}>

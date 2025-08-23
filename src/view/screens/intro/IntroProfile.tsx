@@ -1,7 +1,11 @@
-import { appStoreActions } from "@data/store/storeActions";
+import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Card, Icon, Text, useTheme } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { appStoreActions } from "@data/store/storeActions";
+import { getImageAsset } from "@view/utils/imageAssets";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -30,8 +34,13 @@ export const IntroProfile = () => {
 
   const { setShouldShowProfileIntro } = appStoreActions;
 
+  const insets = useSafeAreaInsets();
+
   return (
-    <ScrollView contentContainerStyle={styles.mainContainer}>
+    <ScrollView
+      contentContainerStyle={styles.mainContainer}
+      style={{ marginBottom: insets.bottom }}
+    >
       <View>
         <Text variant="titleLarge" style={{ textAlign: "center" }}>
           <Text>{t("profile.find")}</Text>
@@ -55,9 +64,9 @@ export const IntroProfile = () => {
 
       <View>
         <Image
-          source={require("@assets/images/intro_profile.png")}
+          source={getImageAsset("intro_profile")}
           style={styles.image}
-          resizeMode="contain"
+          contentFit="contain"
         />
       </View>
 

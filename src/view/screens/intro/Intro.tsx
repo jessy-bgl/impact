@@ -1,10 +1,12 @@
+import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Image, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { appStoreActions } from "@data/store/storeActions";
+import { getImageAsset } from "@view/utils/imageAssets";
 
 export const Intro = () => {
   const { colors } = useTheme();
@@ -41,12 +43,12 @@ export const Intro = () => {
               {t("main.subtitle")}
             </Text>
             <Image
+              source={getImageAsset("ecology")}
               style={{
                 width: imageSize,
                 height: imageSize,
                 alignSelf: "center",
               }}
-              source={require("@assets/images/ecology.gif")}
             />
             <Text
               variant="titleMedium"
