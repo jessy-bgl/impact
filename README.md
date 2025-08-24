@@ -14,11 +14,13 @@
 
 ## Captures d'écran
 
-[<img width=250 alt="Emissions" src="docs/screenshots/web/web_1.png?raw=true">](docs/screenshots/web/web_1.png?raw=true)&nbsp;&nbsp;
-[<img width=250 alt="Profile" src="docs/screenshots/web/web_2.png?raw=true">](docs/screenshots/web/web_2.png?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Emissions" src="docs/screenshots/mobile/mobile_1.jpg?raw=true">](docs/screenshots/mobile/mobile_1.jpg?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Profile" src="docs/screenshots/mobile/mobile_2.jpg?raw=true">](docs/screenshots/mobile/mobile_2.jpg?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Profile" src="docs/screenshots/mobile/mobile_3.jpg?raw=true">](docs/screenshots/mobile/mobile_3.jpg?raw=true)&nbsp;&nbsp;
 
-[<img width=250 alt="Actions" src="docs/screenshots/web/web_5.png?raw=true">](docs/screenshots/web/web_5.png?raw=true)&nbsp;&nbsp;
-[<img width=250 alt="Comparateur_Chauffage" src="docs/screenshots/web/web_6.png?raw=true">](docs/screenshots/web/web_6.png?raw=true)
+[<img width=250 alt="Actions" src="docs/screenshots/mobile/mobile_4.jpg?raw=true">](docs/screenshots/mobile/mobile_4.jpg?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Actions" src="docs/screenshots/mobile/mobile_5.jpg?raw=true">](docs/screenshots/mobile/mobile_5.jpg?raw=true)&nbsp;&nbsp;
+[<img width=250 alt="Comparateur_Chauffage" src="docs/screenshots/mobile/mobile_6.jpg?raw=true">](docs/screenshots/mobile/mobile_6.jpg?raw=true)
 
 ## Notes techniques
 
