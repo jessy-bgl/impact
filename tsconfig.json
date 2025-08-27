@@ -4,11 +4,9 @@
     "strict": true,
     "jsx": "react-jsx",
     "paths": {
-      "@domain/*": ["./src/domain/*"],
       "@common/*": ["./src/common/*"],
-      "@view/*": ["./src/view/*"],
-      "@data/*": ["./src/data/*"],
-      "@srctypes/*": ["./src/types/*"],
+      "@app/*": ["./src/app/*"],
+      "@carbonFootprint/*": ["./src/features/carbon-footprint/*"],
       "@assets/*": ["./assets/*"]
     }
   },
