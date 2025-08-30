@@ -2,14 +2,16 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
-import { Footprints } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintViewModels } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { useAppStore } from "@common/store/useStore";
+import { Skeleton } from "moti/skeleton";
 
 type Props = {
-  footprints: Footprints;
+  isLoading: boolean;
+  footprints: FootprintViewModels;
 };
 
-export const EmissionsDataTable = ({ footprints }: Props) => {
+export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
   const { t } = useTranslation(["emissions", "common"]);
 
   const { colors } = useTheme();
@@ -29,6 +31,14 @@ export const EmissionsDataTable = ({ footprints }: Props) => {
           const isCompleted = Object.values(
             profileCompletion[emissionsCategory.category],
           ).every(Boolean);
+          if (isLoading)
+            return (
+              <DataTable.Row key={emissionsCategory.category}>
+                <DataTable.Cell>
+                  <Skeleton width="100%" />
+                </DataTable.Cell>
+              </DataTable.Row>
+            );
           return (
             <DataTable.Row key={emissionsCategory.category}>
               <DataTable.Cell>

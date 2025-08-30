@@ -1,26 +1,17 @@
-import { FootprintsRepository } from "@carbonFootprint/domain/repositories/footprints.repository";
+import { Footprints } from "@carbonFootprint/domain/entities/footprints/types";
 
-export const createComputeAnnualFootprint = (
-  footprintsRepository: FootprintsRepository,
-) => {
-  const computeAnnualFootprint = (): number => {
-    const transport = footprintsRepository.fetchTransportFootprint();
-    const food = footprintsRepository.fetchFoodFootprint();
-    const housing = footprintsRepository.fetchHousingFootprint();
-    const everydayThings = footprintsRepository.fetchEverydayThingsFootprint();
-    const societalServices =
-      footprintsRepository.fetchSocietalServicesFootprint();
-
+export const createComputeAnnualFootprint = () => {
+  const computeAnnualFootprint = (footprints: Footprints): number => {
     return Number(
       (
-        transport.annualFootprint +
-        food.annualFootprint +
-        housing.annualFootprint +
-        everydayThings.annualFootprint +
-        societalServices.annualFootprint
+        footprints.transport.annualFootprint +
+        footprints.food.annualFootprint +
+        footprints.housing.annualFootprint +
+        footprints.everydayThings.annualFootprint +
+        footprints.societalServices.annualFootprint
       ).toFixed(2),
     );
   };
 
-  return computeAnnualFootprint;
+  return { computeAnnualFootprint };
 };

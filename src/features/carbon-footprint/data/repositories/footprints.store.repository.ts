@@ -1,55 +1,46 @@
-import { appStoreActions } from "@carbonFootprint/data/store/storeActions";
 import { EverydayThingsFootprint } from "@carbonFootprint/domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodFootprint";
 import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
 import { FootprintsRepository } from "@carbonFootprint/domain/repositories/footprints.repository";
+import { useAppStore } from "@common/store/useStore";
 
 export class FootprintsStoreRepository implements FootprintsRepository {
-  fetchTransportFootprint(): TransportFootprint {
-    const storedTransport = appStoreActions.getTransportFootprint();
-    return new TransportFootprint(storedTransport);
-  }
+  constructor(private store: typeof useAppStore) {}
 
   updateTransportFootprint(footprint: TransportFootprint) {
-    return appStoreActions.setTransportFootprint(footprint);
-  }
-
-  fetchFoodFootprint() {
-    const storedFood = appStoreActions.getFoodFootprint();
-    return new FoodFootprint(storedFood);
+    this.store.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, transport: footprint },
+    }));
   }
 
   updateFoodFootprint(footprint: FoodFootprint) {
-    return appStoreActions.setFoodFootprint(footprint);
-  }
-
-  fetchHousingFootprint(): HousingFootprint {
-    const storedHousing = appStoreActions.getHousingFootprint();
-    return new HousingFootprint(storedHousing);
+    this.store.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, food: footprint },
+    }));
   }
 
   updateHousingFootprint(footprint: HousingFootprint) {
-    return appStoreActions.setHousingFootprint(footprint);
-  }
-
-  fetchEverydayThingsFootprint() {
-    const storedEverydayThings = appStoreActions.getEverydayThingsFootprint();
-    return new EverydayThingsFootprint(storedEverydayThings);
+    this.store.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, housing: footprint },
+    }));
   }
 
   updateEverydayThingsFootprint(footprint: EverydayThingsFootprint) {
-    return appStoreActions.setEverydayThingsFootprint(footprint);
-  }
-
-  fetchSocietalServicesFootprint() {
-    const storedSocietalServices =
-      appStoreActions.getSocietalServicesFootprint();
-    return new SocietalServicesFootprint(storedSocietalServices);
+    this.store.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, everydayThings: footprint },
+    }));
   }
 
   updateSocietalServicesFootprint(footprint: SocietalServicesFootprint) {
-    return appStoreActions.setSocietalServicesFootprint(footprint);
+    this.store.setState((state) => ({
+      ...state,
+      footprints: { ...state.footprints, societalServices: footprint },
+    }));
   }
 }

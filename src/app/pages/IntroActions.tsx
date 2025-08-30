@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
-import React from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View } from "react-native";
 import {
@@ -13,9 +13,9 @@ import {
 } from "react-native-paper";
 
 import { AppNavigationProp } from "@app/AppNavigation";
-import { useAppStore } from "@carbonFootprint/data/store/store";
-import { appStoreActions } from "@carbonFootprint/data/store/storeActions";
 import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
+import { UsecasesContext } from "@common/context/UsecasesContext";
+import { useAppStore } from "@common/store/useStore";
 
 export const IntroActions: React.FC = () => {
   const { t } = useTranslation(["intro", "actions", "common"]);
@@ -24,7 +24,7 @@ export const IntroActions: React.FC = () => {
 
   const { colors } = useTheme();
 
-  const { setShouldShowActionsIntro } = appStoreActions;
+  const { setShouldShowActionsIntro } = useContext(UsecasesContext);
 
   const profileCompletion = useAppStore((state) => state.profile.completion);
 

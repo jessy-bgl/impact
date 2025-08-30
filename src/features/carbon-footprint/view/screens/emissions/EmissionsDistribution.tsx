@@ -3,16 +3,18 @@ import { View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { Text, useTheme } from "react-native-paper";
 
-import { Footprints } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintViewModels } from "@carbonFootprint/domain/entities/FootprintViewModel";
 
 const pieWidthAndHeight = 250;
 
 type Props = {
-  footprints: Footprints;
+  isLoading: boolean;
+  footprints: FootprintViewModels;
   totalFootprint: number;
 };
 
 export const EmissionsDistribution = ({
+  isLoading,
   footprints,
   totalFootprint,
 }: Props) => {
@@ -35,13 +37,17 @@ export const EmissionsDistribution = ({
         showText
         innerRadius={pieWidthAndHeight / 3.5}
         innerCircleColor={colors.background}
-        data={footprintByCategories.map(({ icon, footprint, color }) => {
-          return {
-            text: icon,
-            value: footprint,
-            color,
-          };
-        })}
+        data={
+          isLoading
+            ? []
+            : footprintByCategories.map(({ icon, footprint, color }) => {
+                return {
+                  text: icon,
+                  value: footprint,
+                  color,
+                };
+              })
+        }
         centerLabelComponent={() => (
           <Text variant="titleLarge" style={{ textAlign: "center" }}>
             {`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}

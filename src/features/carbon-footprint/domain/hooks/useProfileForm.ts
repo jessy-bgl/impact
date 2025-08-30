@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { DefaultValues, useForm } from "react-hook-form";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 import { FormValues } from "@carbonFootprint/view/screens/profile/types";
+import { useAppStore } from "@common/store/useStore";
 
 export const useProfileForm = (categoryQuestions: Record<string, Question>) => {
   const ademeProfile = useAppStore((state) => state.profile.ademe);

@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import { ListAccordion } from "@carbonFootprint/view/screens/profile/components/lists/ListAccordion";
 import { OtherProductsSectionContent } from "@carbonFootprint/view/screens/profile/everyday-things/other-products/OtherProductsSectionContent";
+import { useAppStore } from "@common/store/useStore";
 
 export const OtherProductsSection = () => {
   const { t } = useTranslation(["everydayThings", "emissions", "common"]);

@@ -1,19 +1,20 @@
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { appStoreActions } from "@carbonFootprint/data/store/storeActions";
 import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
+import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const Intro = () => {
   const { colors } = useTheme();
 
   const { t } = useTranslation("intro");
 
-  const { setShouldShowAppIntro } = appStoreActions;
+  const { setShouldShowAppIntro } = useContext(UsecasesContext);
 
   const deviceWidth = Dimensions.get("window").width;
   const imageSize = Math.min(deviceWidth / 1.7, 300);

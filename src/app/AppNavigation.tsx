@@ -9,6 +9,7 @@ import {
   StackNavigationProp,
   createStackNavigator,
 } from "@react-navigation/stack";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { IconButton, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -18,11 +19,9 @@ import { Comparator } from "@app/pages/Comparator";
 import { Emissions } from "@app/pages/Emissions";
 import { Intro } from "@app/pages/Intro";
 import { IntroActions } from "@app/pages/IntroActions";
+import { IntroProfile } from "@app/pages/IntroProfile";
 import { Profile } from "@app/pages/Profile";
 
-import { IntroProfile } from "@app/pages/IntroProfile";
-import { useAppStore } from "@carbonFootprint/data/store/store";
-import { appStoreActions } from "@carbonFootprint/data/store/storeActions";
 import { AdemeComparatorType } from "@carbonFootprint/domain/entities/comparator/AdemeComparator";
 import { Tracking } from "@carbonFootprint/view/screens/history/EmissionsHistory";
 import { EverydayThingsProfile } from "@carbonFootprint/view/screens/profile/everyday-things/EverydayThings";
@@ -30,6 +29,8 @@ import { FoodProfile } from "@carbonFootprint/view/screens/profile/food/Food";
 import { HousingProfile } from "@carbonFootprint/view/screens/profile/housing/Housing";
 import { SocietalServicesProfile } from "@carbonFootprint/view/screens/profile/public-services/SocietalServices";
 import { TransportProfile } from "@carbonFootprint/view/screens/profile/transport/Transport";
+import { UsecasesContext } from "@common/context/UsecasesContext";
+import { useAppStore } from "@common/store/useStore";
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -58,9 +59,9 @@ export const AppNavigation = () => {
     (state) => state.shouldShowIntro.profile,
   );
 
-  if (shouldShowAppIntro) return <Intro />;
+  const { setShouldShowProfileIntro } = useContext(UsecasesContext);
 
-  const { setShouldShowProfileIntro } = appStoreActions;
+  if (shouldShowAppIntro) return <Intro />;
 
   const renderProfileHelpIcon = (props: StackHeaderRightProps) => (
     <IconButton
@@ -136,7 +137,7 @@ const BottomTabNavigator = () => {
     (state) => state.shouldShowIntro.actions,
   );
 
-  const { setShouldShowActionsIntro } = appStoreActions;
+  const { setShouldShowActionsIntro } = useContext(UsecasesContext);
 
   const insets = useSafeAreaInsets();
 

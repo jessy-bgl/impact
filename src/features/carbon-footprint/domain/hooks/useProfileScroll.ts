@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 
-export const useScrollProfile = () => {
+export const useProfileScroll = () => {
   const [expandedId, setExpandedId] = useState<string | number>();
 
   const scrollViewRef = useRef<ScrollView>(null);

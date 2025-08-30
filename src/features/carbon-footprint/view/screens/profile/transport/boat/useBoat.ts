@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { useGetQuestions } from "@carbonFootprint/domain/hooks/useGetQuestions";
 import { useProfileForm } from "@carbonFootprint/domain/hooks/useProfileForm";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useBoat = () => {
   const questionKeys: Record<string, keyof Profile> = {

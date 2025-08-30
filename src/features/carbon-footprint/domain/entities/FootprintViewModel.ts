@@ -3,7 +3,10 @@ import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
 import { ImageAssets } from "@carbonFootprint/view/utils/imageAssets";
 
-export type Footprints = Record<FootprintCategory, FootprintCategoryViewModel>;
+export type FootprintViewModels = Record<
+  FootprintCategory,
+  FootprintCategoryViewModel
+>;
 
 export class FootprintCategoryViewModel {
   public color: string = "";
@@ -23,7 +26,9 @@ export class FootprintCategoryViewModel {
   private computePart = (totalFootprint: number) =>
     totalFootprint === 0 ? 0 : (this.footprint / totalFootprint) * 100;
 
-  static distributeParts = (footprints: Footprints): void => {
+  static distributeParts = (
+    footprints: FootprintViewModels,
+  ): FootprintViewModels => {
     const categories = Object.values(footprints);
 
     const totalFootprint = categories.reduce(
@@ -53,6 +58,8 @@ export class FootprintCategoryViewModel {
     Object.keys(footprints).forEach((key, index) => {
       footprints[key as FootprintCategory].part = roundedParts[index];
     });
+
+    return footprints;
   };
 
   static forTransport(

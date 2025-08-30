@@ -2,21 +2,20 @@ import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Divider, useTheme } from "react-native-paper";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
 import { useScrollProfileSection } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
+import { useAppStore } from "@common/store/useStore";
 
-export const ValidateResponsesButton = ({
-  category,
-  subCategory,
-}: {
+type Props = {
   category: FootprintCategory;
   subCategory: FootprintSubCategory;
-}) => {
+};
+
+export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
 
   const { colors } = useTheme();

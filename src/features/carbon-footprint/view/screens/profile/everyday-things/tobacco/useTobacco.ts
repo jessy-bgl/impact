@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { useGetQuestions } from "@carbonFootprint/domain/hooks/useGetQuestions";
 import { useProfileForm } from "@carbonFootprint/domain/hooks/useProfileForm";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useTobacco = () => {
   const questionKeys = {

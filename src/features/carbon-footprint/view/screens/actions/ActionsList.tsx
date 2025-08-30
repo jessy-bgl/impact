@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 import { FlatList, View } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import {
   Action,
   ActionState,
 } from "@carbonFootprint/domain/entities/action/Action";
 import { ActionCard } from "@carbonFootprint/view/screens/actions/ActionCard";
 import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
+import { useAppStore } from "@common/store/useStore";
 
 type Props = {
   state: ActionState;

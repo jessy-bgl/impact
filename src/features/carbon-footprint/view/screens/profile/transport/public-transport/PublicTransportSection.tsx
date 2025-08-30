@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import { ListAccordion } from "@carbonFootprint/view/screens/profile/components/lists/ListAccordion";
 import { PublicTransportSectionContent } from "@carbonFootprint/view/screens/profile/transport/public-transport/PublicTransportSectionContent";
+import { useAppStore } from "@common/store/useStore";
 
 export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);

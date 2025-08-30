@@ -9,5 +9,5 @@ export const createFetchQuestions = (computeEngine: ComputeEngine) => {
     return computeEngine.getQuestions(profile, questionLabels);
   };
 
-  return fetchQuestions;
+  return { fetchQuestions };
 };

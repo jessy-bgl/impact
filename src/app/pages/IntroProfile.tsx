@@ -1,11 +1,12 @@
 import { Image } from "expo-image";
+import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Card, Icon, Text, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStoreActions } from "@carbonFootprint/data/store/storeActions";
 import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
+import { UsecasesContext } from "@common/context/UsecasesContext";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -32,7 +33,7 @@ export const IntroProfile = () => {
 
   const { t } = useTranslation("intro");
 
-  const { setShouldShowProfileIntro } = appStoreActions;
+  const { setShouldShowProfileIntro } = useContext(UsecasesContext);
 
   const insets = useSafeAreaInsets();
 

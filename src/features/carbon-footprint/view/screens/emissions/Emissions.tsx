@@ -8,7 +8,7 @@ import { EmissionsEstimationButton } from "@carbonFootprint/view/screens/emissio
 import { EmissionsTitle } from "@carbonFootprint/view/screens/emissions/EmissionsTitle";
 
 export const Emissions = () => {
-  const { footprints, annualFootprint } = useFootprints();
+  const { isLoading, footprints, annualFootprint } = useFootprints();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -24,13 +24,14 @@ export const Emissions = () => {
 
         <View style={{ padding: 10 }}>
           <EmissionsDistribution
+            isLoading={isLoading}
             footprints={footprints}
             totalFootprint={annualFootprint}
           />
         </View>
 
         <View style={{ width: "90%", maxWidth: 400 }}>
-          <EmissionsDataTable footprints={footprints} />
+          <EmissionsDataTable footprints={footprints} isLoading={isLoading} />
         </View>
 
         <View

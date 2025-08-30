@@ -61,5 +61,5 @@ export const createSyncFootprintsProfileWithEngine = (
     );
   };
 
-  return syncFootprintsProfileWithEngine;
+  return { syncFootprintsProfileWithEngine };
 };

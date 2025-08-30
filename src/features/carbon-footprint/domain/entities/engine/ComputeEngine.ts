@@ -4,6 +4,7 @@ import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodF
 import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
+import { Footprints } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
@@ -18,12 +19,6 @@ export interface ComputeEngine {
   computeHousingFootprint: () => HousingFootprint;
   computeEverydayThingsFootprint: () => EverydayThingsFootprint;
   computeSocietalServicesFootprint: () => SocietalServicesFootprint;
-  computeFootprints: () => {
-    transport: TransportFootprint;
-    food: FoodFootprint;
-    housing: HousingFootprint;
-    everydayThings: EverydayThingsFootprint;
-    societalServices: SocietalServicesFootprint;
-  };
+  computeFootprints: () => Footprints;
   setProfile: (profile: Profile, keepCurrentValues?: boolean) => void;
 }

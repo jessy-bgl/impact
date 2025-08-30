@@ -22,5 +22,5 @@ export const createSyncEngineWithStoredActions = (
     });
   };
 
-  return syncEngineWithStoredActions;
+  return { syncEngineWithStoredActions };
 };

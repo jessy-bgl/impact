@@ -1,79 +1,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo } from "react";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import {
   FootprintCategoryViewModel,
-  Footprints,
+  FootprintViewModels,
 } from "@carbonFootprint/domain/entities/FootprintViewModel";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
+import { useAppStore } from "@common/store/useStore";
 
 export const useFootprints = () => {
   const storedFootprints = useAppStore((store) => store.footprints);
 
-  const {
-    fetchTransportFootprint,
-    fetchEverydayThingsFootprint,
-    fetchFoodFootprint,
-    fetchHousingFootprint,
-    fetchSocietalServicesFootprint,
-    computeAnnualFootprint,
-  } = useContext(UsecasesContext);
-
-  const transportFootprint = useMemo(
-    () => fetchTransportFootprint(),
-    [storedFootprints.transport],
-  );
-
-  const foodFootprint = useMemo(
-    () => fetchFoodFootprint(),
-    [storedFootprints.food],
-  );
-
-  const housingFootprint = useMemo(
-    () => fetchHousingFootprint(),
-    [storedFootprints.housing],
-  );
-
-  const everydayThingsFootprint = useMemo(
-    () => fetchEverydayThingsFootprint(),
-    [storedFootprints.everydayThings],
-  );
-
-  const societalServices = useMemo(
-    () => fetchSocietalServicesFootprint(),
-    [storedFootprints.societalServices],
-  );
+  const { computeAnnualFootprint } = useContext(UsecasesContext);
 
   const annualFootprint = useMemo(
-    () => computeAnnualFootprint(),
+    () => computeAnnualFootprint(storedFootprints),
     [storedFootprints],
   );
 
-  const footprints: Footprints = {
+  let footprints: FootprintViewModels = {
     transport: FootprintCategoryViewModel.forTransport(
-      transportFootprint.annualFootprint,
+      storedFootprints.transport.annualFootprint,
       annualFootprint,
     ),
     food: FootprintCategoryViewModel.forFood(
-      foodFootprint.annualFootprint,
+      storedFootprints.food.annualFootprint,
       annualFootprint,
     ),
     housing: FootprintCategoryViewModel.forHousing(
-      housingFootprint.annualFootprint,
+      storedFootprints.housing.annualFootprint,
       annualFootprint,
     ),
     everydayThings: FootprintCategoryViewModel.forEverydayThings(
-      everydayThingsFootprint.annualFootprint,
+      storedFootprints.everydayThings.annualFootprint,
       annualFootprint,
     ),
     societalServices: FootprintCategoryViewModel.forSocietalServices(
-      societalServices.annualFootprint,
+      storedFootprints.societalServices.annualFootprint,
       annualFootprint,
     ),
   };
 
-  FootprintCategoryViewModel.distributeParts(footprints);
+  footprints = FootprintCategoryViewModel.distributeParts(footprints);
 
-  return { footprints, annualFootprint };
+  const isLoading = isNaN(annualFootprint);
+
+  return { isLoading, footprints, annualFootprint };
 };

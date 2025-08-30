@@ -8,7 +8,7 @@ import { useCallback } from "react";
 import { ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
-import { useCustomBottomSheetModal } from "@common/BottomSheetContext";
+import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
 
 type Props = {
   style?: ViewStyle;

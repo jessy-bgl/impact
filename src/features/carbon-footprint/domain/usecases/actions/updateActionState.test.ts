@@ -4,7 +4,7 @@ import { EvaluatedNode } from "publicodes";
 import { AdemeAction } from "@carbonFootprint/domain/entities/action/AdemeAction";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { createUpdateActionState } from "@carbonFootprint/domain/usecases/actions/updateActionState";
-import { initFakeRepositories } from "@common/UsecasesContext";
+import { initFakeRepositories } from "@common/context/UsecasesContext";
 
 describe("update action state", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
@@ -24,7 +24,7 @@ describe("update action state", () => {
     } as NGCRuleNode & EvaluatedNode);
     action.state = "notStarted";
     repositories.actionsRepository.actions = [action];
-    const updateActionState = createUpdateActionState(
+    const { updateActionState } = createUpdateActionState(
       repositories.actionsRepository,
     );
     // Act

@@ -1,9 +1,9 @@
 import { useContext, useMemo } from "react";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
+import { useAppStore } from "@common/store/useStore";
 
 export const useGetQuestions = <T>(
   questionKeys: Record<string, keyof Profile>,

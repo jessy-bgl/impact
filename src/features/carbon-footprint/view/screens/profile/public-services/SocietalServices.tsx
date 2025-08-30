@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
@@ -6,12 +5,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/FootprintViewModel";
 import { SocietalServicesEmissionsDistribution } from "@carbonFootprint/view/screens/profile/public-services/EmissionsDistribution";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { useAppStore } from "@common/store/useStore";
 
 export const SocietalServicesProfile = () => {
-  const { fetchSocietalServicesFootprint } = useContext(UsecasesContext);
-
-  const societalServicesFootprint = fetchSocietalServicesFootprint();
+  const societalServicesFootprint = useAppStore(
+    (state) => state.footprints.societalServices,
+  );
 
   const { t } = useTranslation("societalServices");
 

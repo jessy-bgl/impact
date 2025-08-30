@@ -1,18 +1,29 @@
-import { appStoreActions } from "@carbonFootprint/data/store/storeActions";
 import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { ProfileRepository } from "@carbonFootprint/domain/repositories/profile.repository";
+import { useAppStore } from "@common/store/useStore";
 
 export class ProfileStoreRepository implements ProfileRepository {
+  constructor(private store: typeof useAppStore) {}
+
   fetchAdemeProfile(): Profile {
-    return appStoreActions.getAdemeProfile();
+    return this.store.getState().profile.ademe;
   }
 
   updateProfileKey(key: keyof Profile, value: string | number | undefined) {
-    appStoreActions.updateAdemeProfile({ [key]: value });
+    this.store.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        ademe: {
+          ...state.profile.ademe,
+          [key]: value,
+        },
+      },
+    }));
   }
 
   updateProfileCompletion(
@@ -20,6 +31,18 @@ export class ProfileStoreRepository implements ProfileRepository {
     subCategory: FootprintSubCategory,
     completed: boolean,
   ) {
-    appStoreActions.updateProfileCompletion(category, subCategory, completed);
+    this.store.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        completion: {
+          ...state.profile.completion,
+          [category]: {
+            ...state.profile.completion[category],
+            [subCategory]: completed,
+          },
+        },
+      },
+    }));
   }
 }

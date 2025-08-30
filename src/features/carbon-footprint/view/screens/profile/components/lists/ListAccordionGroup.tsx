@@ -1,12 +1,12 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PropsWithChildren } from "react";
 import { ScrollView } from "react-native";
 import { List } from "react-native-paper";
 
+import { useProfileScroll } from "@carbonFootprint/domain/hooks/useProfileScroll";
 import { CustomBottomSheet } from "@carbonFootprint/view/components/BottomSheet";
 import { ScrollProfileSectionContext } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
-import { useScrollProfile } from "@carbonFootprint/view/screens/profile/useScrollProfile";
-import { BottomSheetProvider } from "@common/BottomSheetContext";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { BottomSheetProvider } from "@common/context/BottomSheetContext";
 
 export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
   const {
@@ -15,7 +15,7 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
     scrollViewRef,
     sectionRefs,
     expandedId,
-  } = useScrollProfile();
+  } = useProfileScroll();
 
   return (
     <BottomSheetModalProvider>

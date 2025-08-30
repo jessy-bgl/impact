@@ -1,9 +1,9 @@
-import { AppStore } from "@carbonFootprint/data/store/store";
 import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
+import { AppStore } from "@common/store/store";
 
 const ademeComputeEngine = new AdemeComputeEngine();
 
-export const defaultAppStore: AppStore = {
+export const defaultAppStoreValues: AppStore = {
   shouldShowIntro: {
     app: true,
     profile: true,

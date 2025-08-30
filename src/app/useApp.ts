@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, useEffect, useState } from "react";
 import { Linking, Platform } from "react-native";
 
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 

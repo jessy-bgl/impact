@@ -15,5 +15,5 @@ export const createUpdateActionState = (
     actionsRepository.updateActions([...storedActions]);
   };
 
-  return updateActionState;
+  return { updateActionState };
 };

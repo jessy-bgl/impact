@@ -1,5 +1,5 @@
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import { useFootprints } from "@carbonFootprint/domain/hooks/useFootprints";
+import { useAppStore } from "@common/store/useStore";
 
 export const useProfile = () => {
   const { footprints } = useFootprints();

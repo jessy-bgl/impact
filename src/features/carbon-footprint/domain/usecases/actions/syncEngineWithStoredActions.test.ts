@@ -1,5 +1,5 @@
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
-import { initFakeRepositories } from "@common/UsecasesContext";
+import { initFakeRepositories } from "@common/context/UsecasesContext";
 
 describe("update actions", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
@@ -12,12 +12,12 @@ describe("update actions", () => {
     it("should add actions to store", () => {
       // Arrange
       repositories.actionsRepository.actions = [];
-      const updateActions = createSyncEngineWithStoredActions(
+      const { syncEngineWithStoredActions } = createSyncEngineWithStoredActions(
         repositories.computeEngine,
         repositories.actionsRepository,
       );
       // Act
-      updateActions();
+      syncEngineWithStoredActions();
       // Assert
       expect(repositories.actionsRepository.actions.length).toBeGreaterThan(0);
     });

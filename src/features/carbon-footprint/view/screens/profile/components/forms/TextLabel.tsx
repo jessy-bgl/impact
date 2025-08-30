@@ -2,7 +2,7 @@ import { StyleProp, TextStyle, TouchableOpacity, View } from "react-native";
 import { Icon, Text, useTheme } from "react-native-paper";
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
-import { useCustomBottomSheetModal } from "@common/BottomSheetContext";
+import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
 
 type Props = {
   question: Question;

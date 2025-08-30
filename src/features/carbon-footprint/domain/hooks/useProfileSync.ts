@@ -11,7 +11,7 @@ import {
 import { Animated } from "react-native";
 
 import { AppNavigationProp } from "@app/AppNavigation";
-import { UsecasesContext } from "@common/UsecasesContext";
+import { UsecasesContext } from "@common/context/UsecasesContext";
 
 type Props = {
   renderSyncIcon: (animatedValue: Animated.Value) => JSX.Element;

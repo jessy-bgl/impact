@@ -1,34 +1,20 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 
-import { useAppStore } from "@carbonFootprint/data/store/store";
 import { ActionState } from "@carbonFootprint/domain/entities/action/Action";
+import { useActions } from "@carbonFootprint/domain/hooks/useActions";
 import { ActionsList } from "@carbonFootprint/view/screens/actions/ActionsList";
-import { UsecasesContext } from "@common/UsecasesContext";
-import { useIsFocused } from "@react-navigation/native";
+import { useAppStore } from "@common/store/useStore";
 
 const Tab = createMaterialTopTabNavigator();
 
 export const Actions = () => {
   const { t } = useTranslation("actions");
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const { syncEngineWithStoredActions, updateActionState } =
-    useContext(UsecasesContext);
-
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (!isFocused) return;
-    setTimeout(() => syncEngineWithStoredActions(), 0);
-    setIsLoading(false);
-    return () => setIsLoading(true);
-  }, [syncEngineWithStoredActions, isFocused]);
+  const { isLoading, updateActionState } = useActions();
 
   return (
     <Tab.Navigator>

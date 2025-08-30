@@ -1,6 +1,20 @@
+import { EverydayThingsFootprint } from "@carbonFootprint/domain/entities/footprints/EverydayThingsFootprint";
+import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodFootprint";
+import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
+import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
+import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
+
 export interface WithAnnualFootprint {
   annualFootprint: number;
 }
+
+export type Footprints = {
+  transport: TransportFootprint;
+  food: FoodFootprint;
+  housing: HousingFootprint;
+  everydayThings: EverydayThingsFootprint;
+  societalServices: SocietalServicesFootprint;
+};
 
 export type FootprintCategory =
   | "transport"
