@@ -2,7 +2,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Animated, ScrollView } from "react-native";
 import { Icon, useTheme } from "react-native-paper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AppNavigationProp } from "@app/AppNavigation";
 import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
@@ -45,15 +44,13 @@ export const Profile = () => {
 
   useProfileSync({ renderSyncIcon });
 
-  const insets = useSafeAreaInsets();
-
   return (
     <ScrollView
       contentContainerStyle={{
         flexDirection: "column",
         alignItems: "center",
         padding: 10,
-        paddingBottom: insets.bottom || 10,
+        paddingBottom: 10,
         gap: 10,
       }}
     >

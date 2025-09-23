@@ -1,8 +1,5 @@
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
-import {
-  BottomTabNavigationOptions,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import {
   StackHeaderRightProps,
@@ -141,15 +138,13 @@ const BottomTabNavigator = () => {
 
   const insets = useSafeAreaInsets();
 
-  const tabBarStyle: BottomTabNavigationOptions["tabBarStyle"] = {
-    height: 55 + insets.bottom,
-    paddingBottom: insets.bottom,
-  };
-
   return (
     <BottomTab.Navigator
       initialRouteName="Emissions"
-      screenOptions={{ tabBarStyle, tabBarLabelPosition: "below-icon" }}
+      screenOptions={{
+        tabBarStyle: { height: 55 + insets.bottom },
+        tabBarLabelPosition: "below-icon",
+      }}
     >
       <BottomTab.Screen
         name="Emissions"

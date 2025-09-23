@@ -1,4 +1,5 @@
 import { Divider } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ListAccordionGroup } from "@carbonFootprint/view/screens/profile/components/lists/ListAccordionGroup";
 import { ClothesSection } from "@carbonFootprint/view/screens/profile/everyday-things/clothes/ClothesSection";
@@ -13,24 +14,26 @@ import { TobaccoSection } from "@carbonFootprint/view/screens/profile/everyday-t
 
 export const EverydayThingsProfile = () => {
   return (
-    <ListAccordionGroup>
-      <PetsSection />
-      <Divider />
-      <HobbiesSection />
-      <Divider />
-      <DigitalSection />
-      <Divider />
-      <ClothesSection />
-      <Divider />
-      <HouseholdAppliancesSection />
-      <Divider />
-      <FurnitureSection />
-      <Divider />
-      <ConsumableProductsSection />
-      <Divider />
-      <TobaccoSection />
-      <Divider />
-      <OtherProductsSection />
-    </ListAccordionGroup>
+    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+      <ListAccordionGroup>
+        <PetsSection />
+        <Divider />
+        <HobbiesSection />
+        <Divider />
+        <DigitalSection />
+        <Divider />
+        <ClothesSection />
+        <Divider />
+        <HouseholdAppliancesSection />
+        <Divider />
+        <FurnitureSection />
+        <Divider />
+        <ConsumableProductsSection />
+        <Divider />
+        <TobaccoSection />
+        <Divider />
+        <OtherProductsSection />
+      </ListAccordionGroup>
+    </SafeAreaView>
   );
 };

@@ -67,7 +67,6 @@ export const ActionsList = ({ state, isLoading, updateActionState }: Props) => {
       keyExtractor={(action) => action.id.toString()}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
-        flexGrow: 1,
         paddingVertical: 20,
         alignItems: "center",
         gap: 15,

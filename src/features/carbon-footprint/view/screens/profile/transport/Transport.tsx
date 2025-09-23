@@ -1,4 +1,5 @@
 import { Divider } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ListAccordionGroup } from "@carbonFootprint/view/screens/profile/components/lists/ListAccordionGroup";
 import { BoatSection } from "@carbonFootprint/view/screens/profile/transport/boat/BoatSection";
@@ -10,18 +11,20 @@ import { TwoWheelerSection } from "@carbonFootprint/view/screens/profile/transpo
 
 export const TransportProfile = () => {
   return (
-    <ListAccordionGroup>
-      <CarSection />
-      <Divider />
-      <TwoWheelerSection />
-      <Divider />
-      <PlaneSection />
-      <Divider />
-      <BoatSection />
-      <Divider />
-      <PublicTransportSection />
-      <Divider />
-      <OtherSection />
-    </ListAccordionGroup>
+    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+      <ListAccordionGroup>
+        <CarSection />
+        <Divider />
+        <TwoWheelerSection />
+        <Divider />
+        <PlaneSection />
+        <Divider />
+        <BoatSection />
+        <Divider />
+        <PublicTransportSection />
+        <Divider />
+        <OtherSection />
+      </ListAccordionGroup>
+    </SafeAreaView>
   );
 };
