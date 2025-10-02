@@ -1,6 +1,6 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PropsWithChildren } from "react";
-import { ScrollView } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { List } from "react-native-paper";
 
 import { useProfileScroll } from "@carbonFootprint/domain/hooks/useProfileScroll";
@@ -30,15 +30,16 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
             expandedId={expandedId}
             onAccordionPress={handleExpandProfileSection}
           >
-            <ScrollView
+            <KeyboardAwareScrollView
               ref={scrollViewRef}
               style={{
                 // NB: fixed height is necessary to make scrollTo() and BottomSheet work properly
                 height: 0,
               }}
+              bottomOffset={15}
             >
               {children}
-            </ScrollView>
+            </KeyboardAwareScrollView>
           </List.AccordionGroup>
         </ScrollProfileSectionContext.Provider>
         <CustomBottomSheet style={{}} />

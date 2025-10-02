@@ -7,6 +7,7 @@ import "intl-pluralrules";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -35,34 +36,36 @@ const App = () => {
     <SafeAreaProvider>
       <StatusBar style="light" />
       <PaperProvider theme={AppTheme}>
-        <NavigationContainer
-          theme={AppTheme}
-          initialState={initialState}
-          onStateChange={(state) => {
-            AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+        <KeyboardProvider>
+          <NavigationContainer
+            theme={AppTheme}
+            initialState={initialState}
+            onStateChange={(state) => {
+              AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
 
-            // const route = state?.routes[state.index];
-            // if (route === undefined) return;
+              // const route = state?.routes[state.index];
+              // if (route === undefined) return;
 
-            // NB : plausible removed because of Android build error (cf. top of file)
-            // if (route.state && route.state.index !== undefined) {
-            //   const subroute = route.state.routes[route.state.index];
-            //   plausible.trackEvent("Navigation", {
-            //     props: { page: subroute.name },
-            //   });
-            // } else {
-            //   plausible.trackEvent("Navigation", {
-            //     props: { page: route.name },
-            //   });
-            // }
-          }}
-        >
-          <GestureHandlerRootView style={styles.container}>
-            <View style={styles.content}>
-              <AppNavigation />
-            </View>
-          </GestureHandlerRootView>
-        </NavigationContainer>
+              // NB : plausible removed because of Android build error (cf. top of file)
+              // if (route.state && route.state.index !== undefined) {
+              //   const subroute = route.state.routes[route.state.index];
+              //   plausible.trackEvent("Navigation", {
+              //     props: { page: subroute.name },
+              //   });
+              // } else {
+              //   plausible.trackEvent("Navigation", {
+              //     props: { page: route.name },
+              //   });
+              // }
+            }}
+          >
+            <GestureHandlerRootView style={styles.container}>
+              <View style={styles.content}>
+                <AppNavigation />
+              </View>
+            </GestureHandlerRootView>
+          </NavigationContainer>
+        </KeyboardProvider>
       </PaperProvider>
     </SafeAreaProvider>
   );
