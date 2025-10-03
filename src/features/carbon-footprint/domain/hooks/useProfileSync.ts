@@ -29,7 +29,7 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
 
   // Sync profile with engine is required here when returning from other screens
   // because some footprint categories are linked together. For example,
-  // updating the housing profile may affect the transport footprint
+  // updating the housing profile may affect the transport footprint.
   useEffect(() => {
     if (!isFocused) return;
 
@@ -52,9 +52,7 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
 
     syncProfile();
 
-    return () => {
-      setIsSyncing(false);
-    };
+    return () => setIsSyncing(false);
   }, [isFocused, syncFootprintsProfileWithEngine]);
 
   const syncAnimation = useRef(new Animated.Value(0)).current;
