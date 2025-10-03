@@ -23,7 +23,7 @@ export const NumericInput = ({
   onValueChange,
   positive = true,
   step = 1,
-  maxWidth = 290,
+  maxWidth = 310,
   ...props
 }: Props) => {
   const { colors } = useTheme();
