@@ -10,7 +10,7 @@ import {
 } from "react";
 import { Animated } from "react-native";
 
-import { AppNavigationProp } from "@app/AppNavigation";
+import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 type Props = {
@@ -25,7 +25,7 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
 
   const [isSyncing, setIsSyncing] = useState(false);
 
-  const { setOptions } = useNavigation<AppNavigationProp>();
+  const { setOptions } = useNavigation<EmissionsNavigatorProp>();
 
   // Sync profile with engine is required here when returning from other screens
   // because some footprint categories are linked together. For example,
@@ -44,7 +44,7 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
       try {
         await syncFootprintsProfileWithEngine();
       } catch (error) {
-        console.error("Error syncing profile:", error); // TODO: envoyer l'erreur à un service de monitoring
+        console.error("Syncing profile error:", error); // TODO: envoyer l'erreur à un service de monitoring
       } finally {
         setIsSyncing(false);
       }

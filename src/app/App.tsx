@@ -12,7 +12,7 @@ import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { AppNavigation } from "@app/AppNavigation";
+import { AppNavigator } from "@app/AppNavigator";
 import { AppTheme } from "@app/AppTheme";
 import { PERSISTENCE_KEY, useApp } from "@app/useApp";
 import "@common/translations/i18n";
@@ -61,7 +61,7 @@ const App = () => {
           >
             <GestureHandlerRootView style={styles.container}>
               <View style={styles.content}>
-                <AppNavigation />
+                <AppNavigator />
               </View>
             </GestureHandlerRootView>
           </NavigationContainer>
