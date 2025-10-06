@@ -2,14 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Button, useTheme } from "react-native-paper";
 
-import { AppNavigationProp } from "@app/AppNavigation";
+import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 
 export const EmissionsEstimationButton = () => {
   const { t } = useTranslation("emissions");
 
   const { colors } = useTheme();
 
-  const { navigate } = useNavigation<AppNavigationProp>();
+  const { navigate } = useNavigation<EmissionsNavigatorProp>();
 
   return (
     <Button

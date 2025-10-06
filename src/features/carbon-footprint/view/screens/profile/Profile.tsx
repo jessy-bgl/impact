@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Animated, ScrollView } from "react-native";
 import { Icon, useTheme } from "react-native-paper";
 
-import { AppNavigationProp } from "@app/AppNavigation";
+import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
 import { useProfileSync } from "@carbonFootprint/domain/hooks/useProfileSync";
 import { ProfileCategoryCard } from "@carbonFootprint/view/screens/profile/ProfileCategoryCard";
@@ -11,7 +11,7 @@ import { ProfileCategoryCard } from "@carbonFootprint/view/screens/profile/Profi
 export const Profile = () => {
   const { t } = useTranslation("pages");
 
-  const { navigate } = useNavigation<AppNavigationProp>();
+  const { navigate } = useNavigation<EmissionsNavigatorProp>();
 
   const { colors } = useTheme();
 
