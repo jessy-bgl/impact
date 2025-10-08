@@ -36,7 +36,7 @@ export const IntroProfile = () => {
   const { setShouldShowProfileIntro } = useContext(UsecasesContext);
 
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]}>
+    <SafeAreaView style={{ flex: 1 }} edges={["bottom", "left", "right"]}>
       <ScrollView contentContainerStyle={styles.mainContainer}>
         <View>
           <Text variant="titleLarge" style={{ textAlign: "center" }}>
