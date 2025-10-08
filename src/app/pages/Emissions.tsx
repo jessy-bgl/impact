@@ -2,7 +2,7 @@ import { Emissions as EmissionsScreen } from "@carbonFootprint/view/screens/emis
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export const Emissions = () => (
-  <SafeAreaView edges={["top", "left", "right"]}>
+  <SafeAreaView style={{ flex: 1 }} edges={["top", "left", "right"]}>
     <EmissionsScreen />
   </SafeAreaView>
 );
