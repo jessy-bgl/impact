@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 
 import { ContactScreen } from "@app/pages/ContactScreen";
@@ -7,9 +10,21 @@ import { Menu } from "@app/pages/Menu";
 import { MyDataScreen } from "@app/pages/MyDataScreen";
 import { RateAppScreen } from "@app/pages/RateAppScreen";
 import { SourcesScreen } from "@app/pages/SourcesScreen";
-import { ThemeScreen } from "@app/pages/ThemeScreen";
+import { ThemeSetting } from "@app/pages/ThemeSetting";
 
-const MenuStack = createStackNavigator();
+type MenuStackParamList = {
+  MenuHome: undefined;
+  ThemeScreen: undefined;
+  ContactScreen: undefined;
+  RateAppScreen: undefined;
+  FollowUsScreen: undefined;
+  MyDataScreen: undefined;
+  SourcesScreen: undefined;
+};
+
+export type MenuNavigationProp = StackNavigationProp<MenuStackParamList>;
+
+const MenuStack = createStackNavigator<MenuStackParamList>();
 
 export const MenuNavigator = () => {
   const { t } = useTranslation("pages");
@@ -23,7 +38,7 @@ export const MenuNavigator = () => {
       />
       <MenuStack.Screen
         name="ThemeScreen"
-        component={ThemeScreen}
+        component={ThemeSetting}
         options={{ title: t("Theme") }}
       />
       <MenuStack.Screen

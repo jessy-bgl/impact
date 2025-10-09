@@ -1,23 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet } from "react-native";
 import { Divider, List } from "react-native-paper";
 
-type MenuStackParamList = {
-  MenuHome: undefined;
-  ThemeScreen: undefined;
-  ContactScreen: undefined;
-  RateAppScreen: undefined;
-  FollowUsScreen: undefined;
-  MyDataScreen: undefined;
-  SourcesScreen: undefined;
-};
-
-type MenuNavigationProp = StackNavigationProp<MenuStackParamList>;
+import { MenuNavigationProp } from "@app/MenuNavigator";
 
 export const Menu = () => {
   const { t } = useTranslation(["pages", "menu"]);
+
   const navigation = useNavigation<MenuNavigationProp>();
 
   return (

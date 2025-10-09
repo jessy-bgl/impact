@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const ComparatorForWeb = ({ type }: Props) => {
-  const { colors } = useTheme();
+  const { colors, dark } = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showComparator, setShowComparator] = useState(false);
@@ -23,7 +23,7 @@ export const ComparatorForWeb = ({ type }: Props) => {
     script.id = "datagir-impact-co2";
     script.src = "https://impactco2.fr/iframe.js";
     script.dataset.type = type;
-    script.dataset.search = "?theme=night";
+    script.dataset.search = `?theme=${dark ? "night" : "default"}`;
     script.async = true;
     script.onload = () => {
       setTimeout(() => {
@@ -34,7 +34,7 @@ export const ComparatorForWeb = ({ type }: Props) => {
       }, 500);
     };
     ademeComparator.current?.appendChild(script);
-  }, [type]);
+  }, [dark, type]);
 
   return (
     <div style={{ paddingInline: 20, overflow: "auto" }}>
@@ -43,7 +43,11 @@ export const ComparatorForWeb = ({ type }: Props) => {
           animate={{ backgroundColor: colors.surface }}
           style={{ paddingVertical: 20 }}
         >
-          <Skeleton height={window.innerHeight} width="100%" />
+          <Skeleton
+            colorMode={dark ? "dark" : "light"}
+            height={window.innerHeight}
+            width="100%"
+          />
         </MotiView>
       )}
 

@@ -115,7 +115,7 @@ export class FootprintCategoryViewModel {
 class FootprintCategoryTransport extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("transport", footprint, totalFootprint);
-    this.color = "sandybrown";
+    this.color = "cadetblue";
     this.icon = "🚗";
     this.materialIcon = "car";
     this.image = "transport";
@@ -125,7 +125,7 @@ class FootprintCategoryTransport extends FootprintCategoryViewModel {
 class FootprintCategoryFood extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("food", footprint, totalFootprint);
-    this.color = "plum";
+    this.color = "lightcoral";
     this.icon = "🍲";
     this.materialIcon = "food";
     this.image = "food";
@@ -135,7 +135,7 @@ class FootprintCategoryFood extends FootprintCategoryViewModel {
 class FootprintCategoryHousing extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("housing", footprint, totalFootprint);
-    this.color = "cadetblue";
+    this.color = "#4d90c6ff";
     this.icon = "🏠";
     this.materialIcon = "home";
     this.image = "house";
@@ -145,7 +145,7 @@ class FootprintCategoryHousing extends FootprintCategoryViewModel {
 class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("everydayThings", footprint, totalFootprint);
-    this.color = "khaki";
+    this.color = "#c37ec3ff";
     this.icon = "🛍️";
     this.materialIcon = "package";
     this.image = "goods";
@@ -155,7 +155,7 @@ class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
 class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("societalServices", footprint, totalFootprint);
-    this.color = "steelblue";
+    this.color = "burlywood";
     this.icon = "🏛️";
     this.materialIcon = "bank";
     this.image = "public_services";

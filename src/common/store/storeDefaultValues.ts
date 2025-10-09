@@ -4,6 +4,7 @@ import { AppStore } from "@common/store/store";
 const ademeComputeEngine = new AdemeComputeEngine();
 
 export const defaultAppStoreValues: AppStore = {
+  theme: "auto",
   shouldShowIntro: {
     app: true,
     profile: true,

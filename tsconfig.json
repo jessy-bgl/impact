@@ -6,8 +6,9 @@
     "paths": {
       "@common/*": ["./src/common/*"],
       "@app/*": ["./src/app/*"],
+      "@assets/*": ["./assets/*"],
       "@carbonFootprint/*": ["./src/features/carbon-footprint/*"],
-      "@assets/*": ["./assets/*"]
+      "@settings/*": ["./src/features/settings/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

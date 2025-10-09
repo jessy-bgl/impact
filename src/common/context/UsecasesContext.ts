@@ -21,6 +21,9 @@ import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/u
 import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/updateProfile";
 import { isTestMode } from "@common/constants";
 import { useAppStore } from "@common/store/useStore";
+import { SettingsStoreRepository } from "@settings/data/repositories/settings.store.repository";
+import { SettingsRepository } from "@settings/domain/repositories/settings.repository";
+import { createSetTheme } from "@settings/domain/usecases/setTheme";
 
 export interface Repositories {
   computeEngine: ComputeEngine;
@@ -28,6 +31,7 @@ export interface Repositories {
   footprintsRepository: FootprintsRepository;
   actionsRepository: ActionsRepository;
   introRepository: IntroRepository;
+  settingsRepository: SettingsRepository;
 }
 
 const initRealRepositories = () => ({
@@ -36,6 +40,7 @@ const initRealRepositories = () => ({
   footprintsRepository: new FootprintsStoreRepository(useAppStore),
   actionsRepository: new ActionsStoreRepository(useAppStore),
   introRepository: new IntroStoreRepository(useAppStore),
+  settingsRepository: new SettingsStoreRepository(useAppStore),
 });
 
 export const initFakeRepositories = () => ({
@@ -44,6 +49,7 @@ export const initFakeRepositories = () => ({
   footprintsRepository: new FootprintsStoreRepository(useAppStore),
   actionsRepository: new ActionsInMemoryRepository(),
   introRepository: new IntroStoreRepository(useAppStore),
+  settingsRepository: new SettingsStoreRepository(useAppStore),
 });
 
 const repositories: Repositories = isTestMode
@@ -57,6 +63,7 @@ const initUsecases = (repositories: Repositories) => {
     footprintsRepository,
     actionsRepository,
     introRepository,
+    settingsRepository,
   } = repositories;
 
   return {
@@ -76,6 +83,7 @@ const initUsecases = (repositories: Repositories) => {
     ...createComputeAnnualFootprint(),
     ...createUpdateFootprint(footprintsRepository),
     ...createUpdateShowIntro(introRepository),
+    ...createSetTheme(settingsRepository),
   };
 };
 
