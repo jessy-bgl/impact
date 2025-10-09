@@ -14,7 +14,7 @@ type Props = {
 export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
   const { t } = useTranslation(["emissions", "common"]);
 
-  const { colors } = useTheme();
+  const { colors, dark } = useTheme();
 
   const profileCompletion = useAppStore((state) => state.profile.completion);
 
@@ -35,7 +35,7 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
             return (
               <DataTable.Row key={emissionsCategory.category}>
                 <DataTable.Cell>
-                  <Skeleton width="100%" />
+                  <Skeleton colorMode={dark ? "dark" : "light"} width="100%" />
                 </DataTable.Cell>
               </DataTable.Row>
             );
@@ -60,7 +60,12 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
                       justifyContent: "center",
                     }}
                   >
-                    <Text style={{ color: colors.background, fontSize: 12 }}>
+                    <Text
+                      style={{
+                        color: colors.background,
+                        fontSize: 12,
+                      }}
+                    >
                       {emissionsCategory.part}%
                     </Text>
                   </View>

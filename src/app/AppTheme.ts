@@ -1,8 +1,14 @@
-import { DarkTheme as NavigationTheme } from "@react-navigation/native";
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationLightTheme,
+} from "@react-navigation/native";
 import merge from "deepmerge";
-import { MD3DarkTheme } from "react-native-paper";
+import { useColorScheme } from "react-native";
+import { MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 
-const MaterialTheme = {
+import { useAppStore } from "@common/store/useStore";
+
+const DarkMaterialTheme = {
   ...MD3DarkTheme,
   colors: {
     ...MD3DarkTheme.colors,
@@ -14,4 +20,28 @@ const MaterialTheme = {
   },
 };
 
-export const AppTheme = merge(NavigationTheme, MaterialTheme);
+const LightMaterialTheme = {
+  ...MD3LightTheme,
+  colors: {
+    ...MD3LightTheme.colors,
+    primary: "#59B158",
+    onPrimary: "#fff",
+    inversePrimary: "#111",
+    secondary: "#5F9EA0",
+    onSecondary: "#fff",
+  },
+};
+
+export const DarkTheme = merge(NavigationDarkTheme, DarkMaterialTheme);
+export const LightTheme = merge(NavigationLightTheme, LightMaterialTheme);
+
+export const useAppTheme = () => {
+  const themeMode = useAppStore((store) => store.theme);
+  const deviceColorScheme = useColorScheme();
+
+  if (themeMode === "auto") {
+    return deviceColorScheme === "dark" ? DarkTheme : LightTheme;
+  }
+
+  return themeMode === "dark" ? DarkTheme : LightTheme;
+};

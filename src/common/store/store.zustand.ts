@@ -12,7 +12,9 @@ const middlewares = (f: any) =>
       name: "app-storage",
       storage: createJSONStorage(() => AsyncStorage),
       merge: (persistedState, currentState) =>
-        deepMerge(currentState, persistedState as AppStore),
+        deepMerge(currentState, persistedState as AppStore, {
+          arrayMerge: (_, sourceArray) => sourceArray,
+        }),
     }),
   );
 

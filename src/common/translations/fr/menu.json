@@ -1,0 +1,9 @@
+{
+  "theme": {
+    "description": "Personnaliser les couleurs de l'application",
+    "auto": "Automatique",
+    "autoDescription": "Utilise le thème de l'appareil",
+    "light": "Clair",
+    "dark": "Sombre"
+  }
+}

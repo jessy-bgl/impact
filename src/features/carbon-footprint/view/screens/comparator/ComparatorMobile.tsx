@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const ComparatorForMobile = ({ type }: Props) => {
-  const { colors } = useTheme();
+  const { colors, dark } = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,7 +22,11 @@ export const ComparatorForMobile = ({ type }: Props) => {
           animate={{ backgroundColor: colors.surface }}
           style={{ paddingTop: 25, paddingLeft: 18, paddingRight: 18 }}
         >
-          <Skeleton height="100%" width="100%" />
+          <Skeleton
+            colorMode={dark ? "dark" : "light"}
+            height="100%"
+            width="100%"
+          />
         </MotiView>
       )}
 
@@ -40,7 +44,7 @@ export const ComparatorForMobile = ({ type }: Props) => {
           <!DOCTYPE html>
           <html>
             <body>
-              <script name="impact-co2" src="https://impactco2.fr/iframe.js" data-type=${type} data-search="?theme=night"></script>
+              <script name="impact-co2" src="https://impactco2.fr/iframe.js" data-type=${type} data-search="?theme=${dark ? "night" : "default"}"></script>
             </body>
           </html>
         `,

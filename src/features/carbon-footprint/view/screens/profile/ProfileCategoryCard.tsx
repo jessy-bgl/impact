@@ -80,7 +80,6 @@ export const ProfileCategoryCard = ({
             <Text
               variant="labelMedium"
               style={{
-                color: color,
                 textAlign: "center",
               }}
             >
@@ -89,7 +88,6 @@ export const ProfileCategoryCard = ({
             <Text
               variant="labelSmall"
               style={{
-                color: color,
                 textAlign: "center",
               }}
             >

@@ -10,7 +10,10 @@ import {
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { defaultAppStoreValues } from "@common/store/storeDefaultValues";
 
+export type ThemeMode = "light" | "dark" | "auto";
+
 export type AppStore = {
+  theme: ThemeMode;
   shouldShowIntro: {
     app: boolean;
     profile: boolean;

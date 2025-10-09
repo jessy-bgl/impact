@@ -13,7 +13,7 @@ import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppNavigator } from "@app/AppNavigator";
-import { AppTheme } from "@app/AppTheme";
+import { useAppTheme } from "@app/AppTheme";
 import { PERSISTENCE_KEY, useApp } from "@app/useApp";
 import "@common/translations/i18n";
 import "../../logger.config";
@@ -26,6 +26,8 @@ SplashScreen.preventAutoHideAsync();
 const App = () => {
   const { initialState, isReady } = useApp();
 
+  const theme = useAppTheme();
+
   useEffect(() => {
     if (isReady) SplashScreen.hide();
   }, [isReady]);
@@ -34,11 +36,11 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="light" />
-      <PaperProvider theme={AppTheme}>
+      <StatusBar style={theme.dark ? "light" : "dark"} />
+      <PaperProvider theme={theme}>
         <KeyboardProvider>
           <NavigationContainer
-            theme={AppTheme}
+            theme={theme}
             initialState={initialState}
             onStateChange={(state) => {
               AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
