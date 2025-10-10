@@ -9,7 +9,7 @@ import { FollowUsScreen } from "@app/pages/FollowUsScreen";
 import { Menu } from "@app/pages/Menu";
 import { MyDataScreen } from "@app/pages/MyDataScreen";
 import { RateAppScreen } from "@app/pages/RateAppScreen";
-import { SourcesScreen } from "@app/pages/SourcesScreen";
+import { Sources } from "@app/pages/Sources";
 import { ThemeSetting } from "@app/pages/ThemeSetting";
 
 type MenuStackParamList = {
@@ -63,7 +63,7 @@ export const MenuNavigator = () => {
       />
       <MenuStack.Screen
         name="SourcesScreen"
-        component={SourcesScreen}
+        component={Sources}
         options={{ title: t("Sources") }}
       />
     </MenuStack.Navigator>

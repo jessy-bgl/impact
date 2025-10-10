@@ -5,5 +5,13 @@
     "autoDescription": "Utilise le thème de l'appareil",
     "light": "Clair",
     "dark": "Sombre"
+  },
+  "sources": {
+    "ademe": "ADEME",
+    "ademeDescription": "Agence de la transition écologique",
+    "ngc": "Nos Gestes Climat",
+    "ngcDescription": "Calculateur d'empreinte carbone",
+    "impactCO2": "Impact CO2",
+    "impactCO2Description": "Comparateur et ordres de grandeur des émissions de CO2"
   }
 }
