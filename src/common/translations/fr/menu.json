@@ -13,5 +13,10 @@
     "ngcDescription": "Calculateur d'empreinte carbone",
     "impactCO2": "Impact CO2",
     "impactCO2Description": "Comparateur et ordres de grandeur des émissions de CO2"
+  },
+  "dataPolicy": {
+    "title": "Respect de la vie privée",
+    "description": "Impact a été conçue pour fonctionner sans compte utilisateur et sans collecte de données personnelles.",
+    "privacyPolicy": "Politique de confidentialité"
   }
 }

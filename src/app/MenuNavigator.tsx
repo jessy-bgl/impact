@@ -5,21 +5,21 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { ContactScreen } from "@app/pages/ContactScreen";
+import { DataPolicy } from "@app/pages/DataPolicy";
 import { FollowUsScreen } from "@app/pages/FollowUsScreen";
 import { Menu } from "@app/pages/Menu";
-import { MyDataScreen } from "@app/pages/MyDataScreen";
 import { RateAppScreen } from "@app/pages/RateAppScreen";
 import { Sources } from "@app/pages/Sources";
 import { ThemeSetting } from "@app/pages/ThemeSetting";
 
 type MenuStackParamList = {
   MenuHome: undefined;
-  ThemeScreen: undefined;
+  ThemeSetting: undefined;
   ContactScreen: undefined;
   RateAppScreen: undefined;
   FollowUsScreen: undefined;
-  MyDataScreen: undefined;
-  SourcesScreen: undefined;
+  DataPolicy: undefined;
+  Sources: undefined;
 };
 
 export type MenuNavigationProp = StackNavigationProp<MenuStackParamList>;
@@ -37,7 +37,7 @@ export const MenuNavigator = () => {
         options={{ title: t("Menu") }}
       />
       <MenuStack.Screen
-        name="ThemeScreen"
+        name="ThemeSetting"
         component={ThemeSetting}
         options={{ title: t("Theme") }}
       />
@@ -57,12 +57,12 @@ export const MenuNavigator = () => {
         options={{ title: t("FollowUs") }}
       />
       <MenuStack.Screen
-        name="MyDataScreen"
-        component={MyDataScreen}
-        options={{ title: t("MyData") }}
+        name="DataPolicy"
+        component={DataPolicy}
+        options={{ title: t("DataPolicy") }}
       />
       <MenuStack.Screen
-        name="SourcesScreen"
+        name="Sources"
         component={Sources}
         options={{ title: t("Sources") }}
       />

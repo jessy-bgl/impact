@@ -19,7 +19,7 @@ export const Menu = () => {
           description={t("ThemeDescription")}
           left={(props) => <List.Icon {...props} icon="palette" />}
           right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={() => navigation.navigate("ThemeScreen")}
+          onPress={() => navigation.navigate("ThemeSetting")}
         />
       </List.Section>
 
@@ -28,18 +28,18 @@ export const Menu = () => {
       <List.Section>
         <List.Subheader>{t("About")}</List.Subheader>
         <List.Item
-          title={t("MyData")}
-          description={t("MyDataDescription")}
-          left={(props) => <List.Icon {...props} icon="database" />}
-          right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={() => navigation.navigate("MyDataScreen")}
-        />
-        <List.Item
           title={t("Sources")}
           description={t("SourcesDescription")}
           left={(props) => <List.Icon {...props} icon="book-open-variant" />}
           right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={() => navigation.navigate("SourcesScreen")}
+          onPress={() => navigation.navigate("Sources")}
+        />
+        <List.Item
+          title={t("DataPolicy")}
+          description={t("DataPolicyDescription")}
+          left={(props) => <List.Icon {...props} icon="database" />}
+          right={(props) => <List.Icon {...props} icon="chevron-right" />}
+          onPress={() => navigation.navigate("DataPolicy")}
         />
       </List.Section>
 
