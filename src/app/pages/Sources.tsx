@@ -1,8 +1,8 @@
 import { Image } from "expo-image";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, ScrollView, StyleSheet, View } from "react-native";
-import { Card, Text, TouchableRipple } from "react-native-paper";
+import { Linking, ScrollView, View } from "react-native";
+import { Card, Text } from "react-native-paper";
 
 type DataSource = {
   id: string;
@@ -49,59 +49,37 @@ export const Sources = () => {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.scrollContent}>
-        {dataSources.map((source) => (
-          <Card key={source.id} mode="elevated">
-            <TouchableRipple onPress={() => handleOpenUrl(source.url)}>
-              <View style={styles.cardContent}>
-                <View style={styles.textContent}>
-                  <Text variant="titleMedium" style={{ fontWeight: "600" }}>
-                    {source.name}
-                  </Text>
-                  <Text variant="bodyMedium">{source.description}</Text>
-                </View>
-                <View style={styles.logoContainer}>
-                  <Image
-                    source={source.logo}
-                    style={styles.logo}
-                    contentFit="contain"
-                  />
-                </View>
-              </View>
-            </TouchableRipple>
-          </Card>
-        ))}
-      </View>
+    <ScrollView
+      contentContainerStyle={{
+        padding: 16,
+        gap: 16,
+        maxWidth: 500,
+        alignSelf: "center",
+      }}
+    >
+      {dataSources.map((source) => (
+        <Card
+          key={source.id}
+          mode="elevated"
+          onPress={() => handleOpenUrl(source.url)}
+        >
+          <Card.Content style={{ flexDirection: "row", gap: 16 }}>
+            <View style={{ flex: 1, gap: 4 }}>
+              <Text variant="titleMedium" style={{ fontWeight: "600" }}>
+                {source.name}
+              </Text>
+              <Text variant="bodyMedium">{source.description}</Text>
+            </View>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Image
+                style={{ width: 100, height: 80 }}
+                source={source.logo}
+                contentFit="contain"
+              />
+            </View>
+          </Card.Content>
+        </Card>
+      ))}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollContent: {
-    padding: 16,
-    gap: 16,
-    maxWidth: 500,
-    alignSelf: "center",
-  },
-  cardContent: {
-    flexDirection: "row",
-    gap: 16,
-    padding: 16,
-  },
-  logoContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logo: {
-    width: 100,
-    height: 80,
-  },
-  textContent: {
-    flex: 1,
-    gap: 4,
-  },
-});
