@@ -4,7 +4,6 @@ import {
 } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 
-import { ContactScreen } from "@app/pages/ContactScreen";
 import { DataPolicy } from "@app/pages/DataPolicy";
 import { FollowUsScreen } from "@app/pages/FollowUsScreen";
 import { Menu } from "@app/pages/Menu";
@@ -15,7 +14,6 @@ import { ThemeSetting } from "@app/pages/ThemeSetting";
 type MenuStackParamList = {
   MenuHome: undefined;
   ThemeSetting: undefined;
-  ContactScreen: undefined;
   RateAppScreen: undefined;
   FollowUsScreen: undefined;
   DataPolicy: undefined;
@@ -40,11 +38,6 @@ export const MenuNavigator = () => {
         name="ThemeSetting"
         component={ThemeSetting}
         options={{ title: t("Theme") }}
-      />
-      <MenuStack.Screen
-        name="ContactScreen"
-        component={ContactScreen}
-        options={{ title: t("Contact") }}
       />
       <MenuStack.Screen
         name="RateAppScreen"
