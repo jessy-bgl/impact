@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Avatar, Card, Icon, Text, useTheme } from "react-native-paper";
 
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/FootprintViewModel";
-import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
+import { getImageAsset } from "@common/utils/imageAssets";
 
 type Props = {
   title: string;

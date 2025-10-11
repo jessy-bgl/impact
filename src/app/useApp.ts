@@ -23,18 +23,22 @@ export const useApp = () => {
       }
     };
 
-    try {
-      if (!isReady) {
-        restoreNavigationState();
-        // sync profile with engine at startup is important in case
-        // the engine has been updated
-        syncFootprintsProfileWithEngine();
+    const initialize = async () => {
+      try {
+        if (!isReady) {
+          restoreNavigationState();
+          // Sync profile with engine at startup is important in case
+          // the engine has been updated
+          syncFootprintsProfileWithEngine();
+        }
+      } catch (e) {
+        console.error(e); // TODO: envoyer l'erreur à un service de monitoring
+      } finally {
+        setIsReady(true);
       }
-    } catch (e) {
-      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
-    } finally {
-      setIsReady(true);
-    }
+    };
+
+    initialize();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady]);
 

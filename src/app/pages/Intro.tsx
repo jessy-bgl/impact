@@ -6,8 +6,8 @@ import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
 import { UsecasesContext } from "@common/context/UsecasesContext";
+import { getImageAsset } from "@common/utils/imageAssets";
 
 export const Intro = () => {
   const { colors } = useTheme();

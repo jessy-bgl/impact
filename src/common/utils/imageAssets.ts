@@ -9,6 +9,9 @@ export const ImageAssets = {
   intro_profile: require("@assets/images/intro_profile.png"),
   public_services: require("@assets/images/public_services.png"),
   transport: require("@assets/images/transport.png"),
+  ademe: require("@assets/images/ademe.jpg"),
+  ngc: require("@assets/images/ngc.jpg"),
+  impact_co2: require("@assets/images/impact_co2.png"),
 } as const;
 
 export const getImageAsset = (key: keyof typeof ImageAssets): string | null => {

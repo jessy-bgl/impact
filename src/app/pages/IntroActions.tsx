@@ -13,9 +13,9 @@ import {
 } from "react-native-paper";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
-import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
+import { getImageAsset } from "@common/utils/imageAssets";
 
 export const IntroActions: React.FC = () => {
   const { t } = useTranslation(["intro", "actions", "common"]);

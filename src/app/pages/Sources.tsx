@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 
+import { ImageAssets } from "@common/utils/imageAssets";
+
 type DataSource = {
   id: string;
   name: string;
@@ -21,21 +23,21 @@ export const Sources = () => {
       name: t("sources.ademe"),
       description: t("sources.ademeDescription"),
       url: "https://www.ademe.fr/",
-      logo: require("@assets/images/ademe.jpg"),
+      logo: ImageAssets.ademe,
     },
     {
       id: "ngc",
       name: t("sources.ngc"),
       description: t("sources.ngcDescription"),
       url: "https://nosgestesclimat.fr/",
-      logo: require("@assets/images/ngc.jpg"),
+      logo: ImageAssets.ngc,
     },
     {
       id: "impact-co2",
       name: t("sources.impactCO2"),
       description: t("sources.impactCO2Description"),
       url: "https://impactco2.fr/",
-      logo: require("@assets/images/impact_co2.png"),
+      logo: ImageAssets.impact_co2,
     },
   ];
 

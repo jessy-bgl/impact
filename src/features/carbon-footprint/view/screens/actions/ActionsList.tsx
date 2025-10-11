@@ -9,8 +9,8 @@ import {
   ActionState,
 } from "@carbonFootprint/domain/entities/action/Action";
 import { ActionCard } from "@carbonFootprint/view/screens/actions/ActionCard";
-import { getImageAsset } from "@carbonFootprint/view/utils/imageAssets";
 import { useAppStore } from "@common/store/useStore";
+import { getImageAsset } from "@common/utils/imageAssets";
 
 type Props = {
   state: ActionState;
