@@ -49,14 +49,7 @@ export const Sources = () => {
   }, []);
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        padding: 16,
-        gap: 16,
-        maxWidth: 500,
-        alignSelf: "center",
-      }}
-    >
+    <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
       {dataSources.map((source) => (
         <Card
           key={source.id}
