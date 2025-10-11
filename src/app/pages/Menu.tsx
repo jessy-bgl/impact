@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet } from "react-native";
+import { Linking, ScrollView, StyleSheet } from "react-native";
 import { Divider, List } from "react-native-paper";
 
 import { MenuNavigationProp } from "@app/MenuNavigator";
@@ -63,9 +63,10 @@ export const Menu = () => {
         />
         <List.Item
           title={t("Contact")}
+          description={t("ContactDescription")}
           left={(props) => <List.Icon {...props} icon="email" />}
           right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={() => navigation.navigate("ContactScreen")}
+          onPress={() => Linking.openURL("mailto:impactech@proton.me")}
         />
       </List.Section>
     </ScrollView>
