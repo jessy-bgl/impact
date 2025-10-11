@@ -33,5 +33,5 @@ jobs:
           VERSION=${VERSION#v}
           npm version $VERSION --no-git-tag-version
 
-      - name: 🚀 Build app
+      - name: 🚀 Build and deploy app
         run: eas build --platform android --profile production --non-interactive --no-wait --auto-submit
