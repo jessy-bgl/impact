@@ -10,8 +10,7 @@ export const DataPolicy = () => {
 
   const handleOpenUrl = useCallback(async (url: string) => {
     try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) await Linking.openURL(url);
+      await Linking.openURL(url);
     } catch (error) {
       console.error("Error opening URL:", error);
     }
