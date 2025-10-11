@@ -40,14 +40,14 @@ const BottomTabNavigator = () => {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Emissions"
+      initialRouteName="Home"
       screenOptions={{
         tabBarStyle: { height: 55 + insets.bottom },
         tabBarLabelPosition: "below-icon",
       }}
     >
       <BottomTab.Screen
-        name="Emissions"
+        name="Home"
         component={EmissionsNavigator}
         options={{
           lazy: false,
