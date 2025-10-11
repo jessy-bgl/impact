@@ -5,17 +5,13 @@ import {
 import { useTranslation } from "react-i18next";
 
 import { DataPolicy } from "@app/pages/DataPolicy";
-import { FollowUsScreen } from "@app/pages/FollowUsScreen";
 import { Menu } from "@app/pages/Menu";
-import { RateAppScreen } from "@app/pages/RateAppScreen";
 import { Sources } from "@app/pages/Sources";
 import { ThemeSetting } from "@app/pages/ThemeSetting";
 
 type MenuStackParamList = {
   MenuHome: undefined;
   ThemeSetting: undefined;
-  RateAppScreen: undefined;
-  FollowUsScreen: undefined;
   DataPolicy: undefined;
   Sources: undefined;
 };
@@ -38,16 +34,6 @@ export const MenuNavigator = () => {
         name="ThemeSetting"
         component={ThemeSetting}
         options={{ title: t("Theme") }}
-      />
-      <MenuStack.Screen
-        name="RateAppScreen"
-        component={RateAppScreen}
-        options={{ title: t("RateApp") }}
-      />
-      <MenuStack.Screen
-        name="FollowUsScreen"
-        component={FollowUsScreen}
-        options={{ title: t("FollowUs") }}
       />
       <MenuStack.Screen
         name="DataPolicy"

@@ -1,9 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Linking, ScrollView, StyleSheet } from "react-native";
+import { Linking, Platform, ScrollView, StyleSheet } from "react-native";
 import { Divider, List } from "react-native-paper";
 
 import { MenuNavigationProp } from "@app/MenuNavigator";
+
+const INSTAGRAM_URL =
+  "https://www.instagram.com/impact_app_?igsh=MWp0aWE2MW43enFodg==";
+const GITHUB_URL = "https://github.com/jessy-bgl/impact";
+const PLAY_STORE_URL =
+  "https://play.google.com/store/apps/details?id=com.impactech.impact&pcampaignid=web_share";
 
 export const Menu = () => {
   const { t } = useTranslation(["pages", "menu"]);
@@ -48,24 +54,31 @@ export const Menu = () => {
       <List.Section>
         <List.Subheader>{t("Community")}</List.Subheader>
         <List.Item
-          title={t("RateApp")}
-          description={t("RateAppDescription")}
-          left={(props) => <List.Icon {...props} icon="star" />}
-          right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={() => navigation.navigate("RateAppScreen")}
+          title="Instagram"
+          left={(props) => <List.Icon {...props} icon="instagram" />}
+          right={(props) => <List.Icon {...props} icon="open-in-new" />}
+          onPress={() => Linking.openURL(INSTAGRAM_URL)}
         />
         <List.Item
-          title={t("FollowUs")}
-          description={t("FollowUsDescription")}
-          left={(props) => <List.Icon {...props} icon="account-group" />}
-          right={(props) => <List.Icon {...props} icon="chevron-right" />}
-          onPress={() => navigation.navigate("FollowUsScreen")}
+          title="GitHub"
+          left={(props) => <List.Icon {...props} icon="github" />}
+          right={(props) => <List.Icon {...props} icon="open-in-new" />}
+          onPress={() => Linking.openURL(GITHUB_URL)}
         />
+        {Platform.OS === "android" && (
+          <List.Item
+            title={t("RateApp")}
+            description={t("RateAppDescription")}
+            left={(props) => <List.Icon {...props} icon="star" />}
+            right={(props) => <List.Icon {...props} icon="open-in-new" />}
+            onPress={() => Linking.openURL(PLAY_STORE_URL)}
+          />
+        )}
         <List.Item
           title={t("Contact")}
           description={t("ContactDescription")}
           left={(props) => <List.Icon {...props} icon="email" />}
-          right={(props) => <List.Icon {...props} icon="chevron-right" />}
+          right={(props) => <List.Icon {...props} icon="open-in-new" />}
           onPress={() => Linking.openURL("mailto:impactech@proton.me")}
         />
       </List.Section>
