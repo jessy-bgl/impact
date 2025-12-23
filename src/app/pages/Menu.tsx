@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import * as Application from "expo-application";
 import { useTranslation } from "react-i18next";
 import { Linking, Platform, ScrollView, StyleSheet } from "react-native";
 import { Divider, List } from "react-native-paper";
@@ -15,6 +16,8 @@ export const Menu = () => {
   const { t } = useTranslation(["pages", "menu"]);
 
   const navigation = useNavigation<MenuNavigationProp>();
+
+  const appVersion = Application.nativeApplicationVersion;
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -47,6 +50,15 @@ export const Menu = () => {
           right={(props) => <List.Icon {...props} icon="chevron-right" />}
           onPress={() => navigation.navigate("DataPolicy")}
         />
+        {appVersion && (
+          <List.Item
+            title={t("AppVersion")}
+            description={appVersion}
+            left={(props) => (
+              <List.Icon {...props} icon="information-outline" />
+            )}
+          />
+        )}
       </List.Section>
 
       <Divider />

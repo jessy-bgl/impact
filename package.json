@@ -32,6 +32,7 @@
     "@react-navigation/stack": "7.4.5",
     "deepmerge": "4.3.1",
     "expo": "53.0.20",
+    "expo-application": "7.0.8",
     "expo-asset": "~11.1.7",
     "expo-dev-client": "~5.2.4",
     "expo-image": "~2.4.0",
