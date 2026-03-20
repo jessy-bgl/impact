@@ -1,0 +1,9 @@
+# Questions referenced in the app but absent from the model - Nos Gestes Climat
+
+These dottedNames are referenced in the app source code but do not exist in
+the @incubateur-ademe/nosgestesclimat model. Possible causes:
+  - Typo / renamed rule after a model upgrade
+  - Rule deleted from the model
+  - Intermediate expression string mistakenly matched (review manually)
+
+✅ All dottedNames referenced in the app exist in the model.
