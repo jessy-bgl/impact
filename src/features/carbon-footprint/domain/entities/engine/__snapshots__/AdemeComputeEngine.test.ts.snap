@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdemeComputeEngine régressions par persona Anne Claire 1`] = `
+{
+  "everydayThings": 694,
+  "food": 1455,
+  "housing": 1494,
+  "societalServices": 1450,
+  "transport": 4825,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Corentin 1`] = `
+{
+  "everydayThings": 1025,
+  "food": 1453,
+  "housing": 1188,
+  "societalServices": 1450,
+  "transport": 383,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Gérard 1`] = `
+{
+  "everydayThings": 1648,
+  "food": 3971,
+  "housing": 685,
+  "societalServices": 1450,
+  "transport": 5485,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Jessica 1`] = `
+{
+  "everydayThings": 2144,
+  "food": 2701,
+  "housing": 823,
+  "societalServices": 1450,
+  "transport": 1460,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Marie 1`] = `
+{
+  "everydayThings": 977,
+  "food": 2339,
+  "housing": 2161,
+  "societalServices": 1450,
+  "transport": 1959,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Mehdi 1`] = `
+{
+  "everydayThings": 1532,
+  "food": 3314,
+  "housing": 2377,
+  "societalServices": 1450,
+  "transport": 2803,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Nolan 1`] = `
+{
+  "everydayThings": 1250,
+  "food": 3303,
+  "housing": 816,
+  "societalServices": 1450,
+  "transport": 820,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Sandy 1`] = `
+{
+  "everydayThings": 973,
+  "food": 3459,
+  "housing": 1744,
+  "societalServices": 1450,
+  "transport": 2327,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Sylviane 1`] = `
+{
+  "everydayThings": 1554,
+  "food": 2077,
+  "housing": 4362,
+  "societalServices": 1450,
+  "transport": 888,
+}
+`;
+
+exports[`AdemeComputeEngine régressions par persona Yoram 1`] = `
+{
+  "everydayThings": 378,
+  "food": 798,
+  "housing": 516,
+  "societalServices": 1450,
+  "transport": 54,
+}
+`;

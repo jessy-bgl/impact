@@ -94,93 +94,75 @@ export class AdemeComputeEngine implements ComputeEngine {
 
   private getActionNames = (): DottedName[] => {
     const actionsNode = AdemeEngine.getRules().actions;
-    const actionNames = (actionsNode.rawNode.formule as any)
-      .somme as DottedName[];
-    return actionNames;
+    const formule = actionsNode.rawNode.formule as
+      | { somme?: DottedName[] }
+      | undefined;
+    return formule?.somme ?? [];
   };
 
   public computeTransportFootprint = () => {
     return new TransportFootprint({
-      carFootprint: AdemeEngine.evaluate("transport . voiture")
-        .nodeValue as number,
-      boatFootprint: AdemeEngine.evaluate("transport . ferry")
-        .nodeValue as number,
-      planeFootprint: AdemeEngine.evaluate("transport . avion")
-        .nodeValue as number,
-      twoWheelerFootprint: AdemeEngine.evaluate("transport . deux roues")
-        .nodeValue as number,
-      gentleMobilityFootprint: AdemeEngine.evaluate(
-        "transport . mobilité douce",
-      ).nodeValue as number,
-      holidaysTransportFootprint: AdemeEngine.evaluate("transport . vacances")
-        .nodeValue as number,
-      publicTransportFootprint: AdemeEngine.evaluate(
+      carFootprint: this.evaluateRule("transport . voiture"),
+      boatFootprint: this.evaluateRule("transport . ferry"),
+      planeFootprint: this.evaluateRule("transport . avion"),
+      twoWheelerFootprint: this.evaluateRule("transport . deux roues"),
+      gentleMobilityFootprint: this.evaluateRule("transport . mobilité douce"),
+      holidaysTransportFootprint: this.evaluateRule("transport . vacances"),
+      publicTransportFootprint: this.evaluateRule(
         "transport . transports commun",
-      ).nodeValue as number,
-      trainFootprint: AdemeEngine.evaluate("transport . train")
-        .nodeValue as number,
+      ),
+      trainFootprint: this.evaluateRule("transport . train"),
     });
   };
 
   public computeFoodFootprint = () => {
     return new FoodFootprint({
-      drinksFootprint: AdemeEngine.evaluate("alimentation . boisson")
-        .nodeValue as number,
-      mealsFootprint: AdemeEngine.evaluate("alimentation . repas")
-        .nodeValue as number,
-      wasteFootprint: AdemeEngine.evaluate("alimentation . déchets")
-        .nodeValue as number,
+      drinksFootprint: this.evaluateRule("alimentation . boisson"),
+      mealsFootprint: this.evaluateRule("alimentation . repas"),
+      wasteFootprint: this.evaluateRule("alimentation . déchets"),
     });
   };
 
   public computeHousingFootprint = () => {
     return new HousingFootprint({
-      homeFootprint: AdemeEngine.evaluate("logement . construction")
-        .nodeValue as number,
+      homeFootprint: this.evaluateRule("logement . construction"),
       energyFootprint:
-        (AdemeEngine.evaluate("logement . électricité").nodeValue as number) +
-        (AdemeEngine.evaluate("logement . chauffage").nodeValue as number) +
-        (AdemeEngine.evaluate("logement . climatisation").nodeValue as number),
+        this.evaluateRule("logement . électricité") +
+        this.evaluateRule("logement . chauffage") +
+        this.evaluateRule("logement . climatisation"),
       leisureFootprint:
-        (AdemeEngine.evaluate("logement . vacances").nodeValue as number) +
-        (AdemeEngine.evaluate("logement . piscine").nodeValue as number) +
-        (AdemeEngine.evaluate("logement . extérieur").nodeValue as number),
+        this.evaluateRule("logement . vacances") +
+        this.evaluateRule("logement . piscine") +
+        this.evaluateRule("logement . extérieur"),
     });
   };
 
   public computeEverydayThingsFootprint = () => {
     return new EverydayThingsFootprint({
-      petFootprint: AdemeEngine.evaluate("divers . animaux domestiques")
-        .nodeValue as number,
-      furnitureFootprint: AdemeEngine.evaluate("divers . ameublement")
-        .nodeValue as number,
-      otherProductsFootprint: AdemeEngine.evaluate("divers . autres produits")
-        .nodeValue as number,
-      hobbiesFootprint: AdemeEngine.evaluate("divers . loisirs")
-        .nodeValue as number,
-      clothesFootprint: AdemeEngine.evaluate("divers . textile")
-        .nodeValue as number,
-      digitalFootprint: AdemeEngine.evaluate("divers . numérique")
-        .nodeValue as number,
-      consumableProductsFootprint: AdemeEngine.evaluate(
+      petFootprint: this.evaluateRule("divers . animaux domestiques"),
+      furnitureFootprint: this.evaluateRule("divers . ameublement"),
+      otherProductsFootprint: this.evaluateRule("divers . autres produits"),
+      hobbiesFootprint: this.evaluateRule("divers . loisirs"),
+      clothesFootprint: this.evaluateRule("divers . textile"),
+      digitalFootprint: this.evaluateRule("divers . numérique"),
+      consumableProductsFootprint: this.evaluateRule(
         "divers . produits consommables",
-      ).nodeValue as number,
-      tobaccoFootprint: AdemeEngine.evaluate("divers . tabac")
-        .nodeValue as number,
-      householdApplicancesFootprint: AdemeEngine.evaluate(
+      ),
+      tobaccoFootprint: this.evaluateRule("divers . tabac"),
+      householdApplicancesFootprint: this.evaluateRule(
         "divers . électroménager",
-      ).nodeValue as number,
+      ),
     });
   };
 
   public computeSocietalServicesFootprint = () => {
     return new SocietalServicesFootprint({
-      merchantServicesFootprint: AdemeEngine.evaluate(
+      merchantServicesFootprint: this.evaluateRule(
         "services sociétaux . services marchands",
-      ).nodeValue as number,
-      publicServicesFootprint: AdemeEngine.evaluate(
+      ),
+      publicServicesFootprint: this.evaluateRule(
         "services sociétaux . services publics",
-      ).nodeValue as number,
+      ),
     });
   };
 
@@ -196,5 +178,9 @@ export class AdemeComputeEngine implements ComputeEngine {
 
   public setProfile = (profile: Profile, keepPreviousSituation = false) => {
     return AdemeEngine.setSituation(profile, keepPreviousSituation);
+  };
+
+  private evaluateRule = (dottedName: DottedName): number => {
+    return (AdemeEngine.evaluate(dottedName).nodeValue as number) ?? 0;
   };
 }
