@@ -37,24 +37,27 @@ export class AdemeQuestion extends Question {
   }
 
   private getType(): Question["type"] {
-    if (this.rule.rawNode.mosaique) {
-      if (this.rule.rawNode.mosaique.type === "selection")
-        return "multi-select";
-      return "multi-number";
+    const rawNode = this.rule.rawNode;
+
+    if (rawNode.mosaique) {
+      return rawNode.mosaique.type === "selection"
+        ? "multi-select"
+        : "multi-number";
     }
 
-    if (
-      (this.rule.rawNode["unité"] === undefined &&
-        typeof AdemeEngine.evaluate(this.ruleKey).nodeValue !== "number") ||
-      ["présent", "propriétaire"].some((key) => this.ruleKey.includes(key))
-    ) {
-      if (this.rule.rawNode && this.rule.rawNode["une possibilité"]) {
-        return "select";
-      }
-      return "select-boolean";
+    if (rawNode["une possibilité"]) {
+      return "select";
     }
 
-    return "number";
+    const nodeValue = AdemeEngine.evaluate(this.ruleKey).nodeValue;
+    const defaultValue = rawNode["par défaut"];
+    const isBooleanRule =
+      rawNode["unité"] === undefined &&
+      (typeof nodeValue !== "number" ||
+        defaultValue === "oui" ||
+        defaultValue === "non");
+
+    return isBooleanRule ? "select-boolean" : "number";
   }
 
   private getIsApplicable(): boolean {
