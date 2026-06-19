@@ -9,6 +9,16 @@ export const EnergySectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
+        question={energyQuestions.electricityConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        affix="kWh"
+        labelFlex={1.1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
         question={energyQuestions.photovoltaicPanel}
         control={control}
         handleUpdate={updateHousingProfile}
@@ -34,13 +44,9 @@ export const EnergySectionContent = () => {
       />
       <ListItemQuestion
         divider
-        question={energyQuestions.electricityConsumption}
+        question={energyQuestions.individualOrCollectiveHeating}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="kWh"
-        labelFlex={1.1}
-        inputFlex={1}
-        step={100}
       />
       <ListItemQuestion
         divider
@@ -100,6 +106,16 @@ export const EnergySectionContent = () => {
         affix="stère(s)"
         labelFlex={1}
         inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodPelletsConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        affix="kWh"
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
       />
       <ListItemQuestion
         divider

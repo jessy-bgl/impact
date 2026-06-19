@@ -4,26 +4,17 @@ These questions exist in the @incubateur-ademe/nosgestesclimat model but
 are not referenced in the app. Review this list after a dependency upgrade
 to spot new questions that should potentially be added.
 
-Total: 33 missing questions (out of 235 in the model)
-  - 24 genuinely missing (candidates to add to the app)
+Total: 31 missing questions (out of 235 in the model)
+  - 22 genuinely missing (candidates to add to the app)
   - 9 aide/fallback alternatives (optional, shown when user can't answer the primary question)
 
 ════════════════════════════════════════════════════════════════════════
-## GENUINELY MISSING (24)
+## GENUINELY MISSING (22)
 
 Questions that exist in the model but have no corresponding screen in the app.
 These are the main candidates to consider when upgrading the dependency.
 
 ## TRANSPORT
-
-
-### transport . mobilité douce
-
-- Combien de kilomètres faites-vous à l'année avec votre trottinette électrique, gyropode, monocycle électrique, hoverboard...?
-  (transport . mobilité douce . autres véhicules à moteur . km)
-
-- Combien de kilomètres faites-vous à l'année avec votre Vélo à Assistance Électrique (VAE) ?
-  (transport . mobilité douce . vae . km)
 
 
 ### transport . voiture

@@ -15,6 +15,26 @@ export const OtherSectionContent = () => {
       />
       <ListItemQuestion
         divider
+        question={otherQuestions.gentleMobilityElectricBikeKmPerYear}
+        control={control}
+        handleUpdate={updateTransportProfile}
+        affix="km"
+        labelFlex={2}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={otherQuestions.gentleMobilitySmallVehicleKmPerYear}
+        control={control}
+        handleUpdate={updateTransportProfile}
+        affix="km"
+        labelFlex={2}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
         question={otherQuestions.holidaysTransport}
         control={control}
         handleUpdate={updateTransportProfile}

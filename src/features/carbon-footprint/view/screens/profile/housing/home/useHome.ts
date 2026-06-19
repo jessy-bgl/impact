@@ -8,10 +8,13 @@ import { UsecasesContext } from "@common/context/UsecasesContext";
 export const useHome = () => {
   const questionKeys: Record<string, keyof Profile> = {
     homeType: "logement . type",
+    homeProprietary: "logement . propriétaire",
     numberOfInhabitants: "logement . habitants",
     homeAge: "logement . âge",
     surfaceArea: "logement . surface",
     renovationWork: "logement . construction . rénovation . travaux",
+    renovationExtensionSize:
+      "logement . construction . rénovation . travaux . extension . taille",
     photovoltaicPanel: "logement . électricité . photovoltaique . présent",
     photovoltaicProduction:
       "logement . électricité . photovoltaique . production",

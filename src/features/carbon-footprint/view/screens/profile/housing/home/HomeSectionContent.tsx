@@ -15,6 +15,12 @@ export const HomeSectionContent = () => {
       />
       <ListItemQuestion
         divider
+        question={housingQuestions.homeProprietary}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
         question={housingQuestions.numberOfInhabitants}
         control={control}
         handleUpdate={updateHousingProfile}
@@ -44,6 +50,15 @@ export const HomeSectionContent = () => {
         question={housingQuestions.renovationWork}
         control={control}
         handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={housingQuestions.renovationExtensionSize}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        affix="m²"
+        labelFlex={1.5}
+        inputFlex={1}
       />
       <ValidateResponsesButton category="housing" subCategory="home" />
     </ListContentContainer>

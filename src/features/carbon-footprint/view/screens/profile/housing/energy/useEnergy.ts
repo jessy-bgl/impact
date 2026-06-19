@@ -7,12 +7,13 @@ import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useEnergy = () => {
   const questionKeys: Record<string, keyof Profile> = {
+    electricityConsumption: "logement . électricité . réseau . consommation",
     photovoltaicPanel: "logement . électricité . photovoltaique . présent",
     photovoltaicProduction:
       "logement . électricité . photovoltaique . production",
     photovoltaicPart:
       "logement . électricité . photovoltaique . part autoconsommation",
-    electricityConsumption: "logement . électricité . réseau . consommation",
+    individualOrCollectiveHeating: "logement . chauffage collectif",
     heatingEnergyType: "logement . chauffage",
     woodType: "logement . chauffage . bois . type",
     gasConsumption: "logement . chauffage . gaz . consommation",
@@ -22,6 +23,8 @@ export const useEnergy = () => {
     fuelOilConsumption: "logement . chauffage . fioul . consommation",
     woodLogsConsumption:
       "logement . chauffage . bois . type . bûches . consommation",
+    woodPelletsConsumption:
+      "logement . chauffage . bois . type . granulés . consommation",
     heatNetworkConsumption:
       "logement . chauffage . réseau de chaleur . consommation",
     bioGasContract: "logement . chauffage . gaz . biogaz",

@@ -8,6 +8,10 @@ import { UsecasesContext } from "@common/context/UsecasesContext";
 export const useOther = () => {
   const questionKeys: Record<string, keyof Profile> = {
     gentleMobility: "transport . mobilité douce",
+    gentleMobilitySmallVehicleKmPerYear:
+      "transport . mobilité douce . autres véhicules à moteur . km",
+    gentleMobilityElectricBikeKmPerYear:
+      "transport . mobilité douce . vae . km",
     holidaysTransport: "transport . vacances",
     kmPerYearByCamperVan: "transport . vacances . camping car . km",
     kmPerYearByCaravan: "transport . vacances . caravane . distance",
