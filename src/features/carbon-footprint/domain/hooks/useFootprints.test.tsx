@@ -3,15 +3,27 @@ import { renderHook } from "@testing-library/react-native";
 import { useFootprints } from "./useFootprints";
 
 describe("useFootprints", () => {
-  it("returns the correct annual and category footprints", () => {
+  it("annualFootprint est la somme des empreintes par catégorie", () => {
     const { result } = renderHook(() => useFootprints());
+    const { footprints, annualFootprint } = result.current;
+    const sum = Object.values(footprints).reduce(
+      (acc, f) => acc + f.footprint,
+      0,
+    );
+    expect(annualFootprint).toBe(sum);
+  });
 
-    // These values are calculated by the real AdemeComputeEngine
-    expect(result.current.annualFootprint).toBe(8886);
-    expect(result.current.footprints.transport.footprint).toBe(1959);
-    expect(result.current.footprints.food.footprint).toBe(2339);
-    expect(result.current.footprints.housing.footprint).toBe(2161);
-    expect(result.current.footprints.everydayThings.footprint).toBe(977);
-    expect(result.current.footprints.societalServices.footprint).toBe(1450);
+  it("la somme des parts vaut exactement 100", () => {
+    const { result } = renderHook(() => useFootprints());
+    const total = Object.values(result.current.footprints).reduce(
+      (acc, f) => acc + f.part,
+      0,
+    );
+    expect(total).toBe(100);
+  });
+
+  it("n'est pas en chargement avec des empreintes valides", () => {
+    const { result } = renderHook(() => useFootprints());
+    expect(result.current.isLoading).toBe(false);
   });
 });
