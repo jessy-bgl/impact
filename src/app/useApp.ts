@@ -29,7 +29,7 @@ export const useApp = () => {
           restoreNavigationState();
           // Sync profile with engine at startup is important in case
           // the engine has been updated
-          syncFootprintsProfileWithEngine();
+          syncFootprintsProfileWithEngine({ handleMigration: true });
         }
       } catch (e) {
         console.error(e); // TODO: envoyer l'erreur à un service de monitoring
