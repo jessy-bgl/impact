@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",
+    "types": ["jest"],
     "paths": {
       "@common/*": ["./src/common/*"],
       "@app/*": ["./src/app/*"],
