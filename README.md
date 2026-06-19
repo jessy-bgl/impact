@@ -54,3 +54,46 @@ Pour exécuter la version de production web en local, retirer la partie "/impact
 
 - mobile : `eas submit --platform android`
 - web : `npm run deploy:web`
+
+### Mise à jour du modèle de calcul ADEME (`@incubateur-ademe/nosgestesclimat`)
+
+#### 1. Mettre à jour la dépendance
+
+```bash
+npm install @incubateur-ademe/nosgestesclimat@latest
+```
+
+#### 2. Vérifier les règles de calcul cassées (erreur de compilation)
+
+```bash
+npm run typecheck
+```
+
+Les noms de règles utilisés dans `AdemeComputeEngine` sont typés contre `DottedName`. Si une règle a été renommée ou supprimée dans le modèle, TypeScript signale une erreur ici — corriger avant de continuer.
+
+#### 3. Vérifier les questions manquantes ou obsolètes
+
+```bash
+node scripts/find-missing-questions.mjs   # questions du modèle absentes de l'app
+node scripts/find-questions-to-remove.mjs # questions référencées dans l'app mais absentes du modèle
+```
+
+Consulter `questions-missing.txt` et `questions-to-remove.txt` pour décider des ajustements à apporter aux écrans de profil.
+
+#### 4. Vérifier les calculs (tests de régression)
+
+```bash
+npm test -- --testPathPattern=AdemeComputeEngine
+```
+
+Les snapshots par persona détectent tout changement de valeur calculée. Si des snapshots échouent et que les nouvelles valeurs sont attendues :
+
+```bash
+npm test -- --updateSnapshot
+```
+
+Inspecter le diff du fichier `.snap` avant de committer — une variation sur un facteur d'émission est normale, une catégorie entière qui tombe à 0 ne l'est pas. Voir [TESTS.md](TESTS.md) pour le détail de la stratégie de test.
+
+#### 5. Tester la migration du profil
+
+La migration des profils stockés est automatique au démarrage de l'app (`syncFootprintsProfileWithEngine`) : les clés supprimées du modèle et les valeurs devenues invalides (type changé, option renommée) sont purgées silencieusement. Vérifier manuellement que les écrans de profil affichent correctement les questions après la mise à jour.
