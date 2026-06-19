@@ -1,21 +1,31 @@
 import Icons from "@expo/vector-icons/MaterialCommunityIcons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigatorScreenParams } from "@react-navigation/native";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ComparatorNavigator } from "@app/ComparatorNavigator";
-import { EmissionsNavigator } from "@app/EmissionsNavigator";
+import {
+  EmissionsNavigator,
+  EmissionsStackParamList,
+} from "@app/EmissionsNavigator";
 import { MenuNavigator } from "@app/MenuNavigator";
 import { Actions } from "@app/pages/Actions";
 import { Intro } from "@app/pages/Intro";
 import { IntroActions } from "@app/pages/IntroActions";
-
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 
-const BottomTab = createBottomTabNavigator();
+export type AppTabParamList = {
+  Home: NavigatorScreenParams<EmissionsStackParamList>;
+  Actions: undefined;
+  Comparator: undefined;
+  Menu: undefined;
+};
+
+const BottomTab = createBottomTabNavigator<AppTabParamList>();
 
 const iconSize = 24;
 

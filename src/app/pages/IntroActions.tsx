@@ -1,4 +1,6 @@
+import { AppTabParamList } from "@app/AppNavigator";
 import { MaterialIcons } from "@expo/vector-icons";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { Image } from "expo-image";
 import React, { useContext } from "react";
@@ -12,7 +14,6 @@ import {
   useTheme,
 } from "react-native-paper";
 
-import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 import { getImageAsset } from "@common/utils/imageAssets";
@@ -20,7 +21,8 @@ import { getImageAsset } from "@common/utils/imageAssets";
 export const IntroActions: React.FC = () => {
   const { t } = useTranslation(["intro", "actions", "common"]);
 
-  const { navigate } = useNavigation<EmissionsNavigatorProp>();
+  const { navigate } =
+    useNavigation<BottomTabNavigationProp<AppTabParamList>>();
 
   const { colors } = useTheme();
 
@@ -252,7 +254,7 @@ export const IntroActions: React.FC = () => {
               }}
             >
               <TouchableRipple
-                onPress={() => navigate("Profile")}
+                onPress={() => navigate("Home", { screen: "Profile" })}
                 style={styles.submitButton}
               >
                 <Text numberOfLines={2} style={styles.submitButtonText}>
