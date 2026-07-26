@@ -18,6 +18,7 @@ export abstract class Question {
   isEngineDefaultValueUsed?: boolean;
   minValue?: number;
   maxValue?: number;
+  unit?: string;
   options?: Option[];
   subQuestions?: Question[];
 }

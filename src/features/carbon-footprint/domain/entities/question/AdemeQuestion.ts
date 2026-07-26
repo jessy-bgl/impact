@@ -30,6 +30,7 @@ export class AdemeQuestion extends Question {
     this.isInactive = rawNode.inactif === "oui";
     this.minValue = rawNode.plancher as number | undefined;
     this.maxValue = rawNode.plafond as number | undefined;
+    this.unit = this.getUnit();
     this.options = this.getOptions();
     this.subQuestions = this.getSubQuestions(profile);
     this.defaultValue = profile[ruleKey]?.toString() ?? this.getDefaultValue();
@@ -58,6 +59,20 @@ export class AdemeQuestion extends Question {
         defaultValue === "non");
 
     return isBooleanRule ? "select-boolean" : "number";
+  }
+
+  private getUnit(): string | undefined {
+    const unit = this.rule.rawNode["unité"];
+    if (unit) return unit;
+
+    // Some "estimated" consumption rules don't carry the unit themselves,
+    // but their "précise" sibling (same physical quantity) does.
+    try {
+      return AdemeEngine.getRule(`${this.ruleKey} précise` as keyof Profile)
+        .rawNode["unité"];
+    } catch {
+      return undefined;
+    }
   }
 
   private getIsApplicable(): boolean {
@@ -106,8 +121,10 @@ export class AdemeQuestion extends Question {
         const optionRule = AdemeEngine.getRule(optionKey);
         const optionParentKey = this.removeLastPartOfKey(optionKey);
         const optionParentRule = AdemeEngine.getRule(optionParentKey);
-        const title =
-          optionParentRule.title + " " + optionParentRule.rawNode["icônes"];
+        const icon = optionParentRule.rawNode["icônes"];
+        const title = icon
+          ? `${optionParentRule.title} ${icon}`
+          : optionParentRule.title;
         const newQuestion = new AdemeQuestion(
           profile,
           optionKey,

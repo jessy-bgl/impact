@@ -7,5 +7,26 @@
   "footprintKgPerYear": "kgCO2e/an",
   "comingSoon": "Bientôt disponible",
   "completed": "Complété",
-  "toComplete": "À compléter"
+  "toComplete": "À compléter",
+  "units": {
+    "kWh": "kWh",
+    "kg": "kg",
+    "kgCO2e": "kgCO2e",
+    "km": "km",
+    "h": "h",
+    "%": "%",
+    "m2": "m²",
+    "l": "litre(s)",
+    "stère": "stère(s)",
+    "climatiseur": "climatiseur(s)",
+    "bouteille": "bouteille(s)",
+    "nuit": "nuit(s)",
+    "h/jour": "h/jour",
+    "h/semaine": "h",
+    "km/semaine": "km",
+    "l/semaine": "litre(s)",
+    "paquet/semaine": "paquet(s)",
+    "l/centkm": "l/100km",
+    "kWh/centkm": "kWh/100km"
+  }
 }
