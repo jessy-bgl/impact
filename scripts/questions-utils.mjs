@@ -50,7 +50,9 @@ export function extractRuleNames(source) {
  * Relative paths are computed from `cwd`.
  */
 export function collectAppUsedKeysWithFiles(srcDir, cwd) {
-  const files = listFiles(srcDir, [".ts", ".tsx"]);
+  const files = listFiles(srcDir, [".ts", ".tsx"]).filter(
+    (f) => !/\.test\.tsx?$/.test(f),
+  );
   /** @type {Map<string, Set<string>>} */
   const keyToFiles = new Map();
   for (const file of files) {
