@@ -18,9 +18,6 @@ import { PERSISTENCE_KEY, useApp } from "@app/useApp";
 import "@common/translations/i18n";
 import "../../logger.config";
 
-// NB : plausible removed because of Android build error:
-// ReferenceError: Property 'history' doesn't exist, js engine: hermes
-
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
@@ -44,21 +41,6 @@ const App = () => {
             initialState={initialState}
             onStateChange={(state) => {
               AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
-
-              // const route = state?.routes[state.index];
-              // if (route === undefined) return;
-
-              // NB : plausible removed because of Android build error (cf. top of file)
-              // if (route.state && route.state.index !== undefined) {
-              //   const subroute = route.state.routes[route.state.index];
-              //   plausible.trackEvent("Navigation", {
-              //     props: { page: subroute.name },
-              //   });
-              // } else {
-              //   plausible.trackEvent("Navigation", {
-              //     props: { page: route.name },
-              //   });
-              // }
             }}
           >
             <GestureHandlerRootView style={styles.container}>
