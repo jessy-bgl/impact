@@ -42,6 +42,19 @@ function getMosaïqueChildKeys(parentKey, mosaïqueOptions, allRules) {
 }
 
 /**
+ * For a missing question that is a mosaique, return the child keys whose
+ * rules are already handled in the app. A non-empty result means the app
+ * covers this question indirectly through its children.
+ */
+function getChildrenInApp(key, rule, usedKeys, allRules) {
+  const mosaique = rule?.mosaique ?? rule?.["mosaïque"];
+  if (!mosaique?.options) return [];
+  return getMosaïqueChildKeys(key, mosaique.options, allRules).filter(
+    (childKey) => usedKeys.has(childKey),
+  );
+}
+
+/**
  * Expand the set of directly-used keys to also include all sub-questions
  * (mosaique children) whose parent is in the used set.
  * This mirrors what AdemeQuestion does at runtime.
@@ -83,7 +96,74 @@ function collectAideAlternatives(allRules) {
 }
 
 // ---------------------------------------------------------------------------
-// 2. Sort helper (shared between the two output files)
+// 2. CO2 impact detection
+// ---------------------------------------------------------------------------
+
+/**
+ * Namespaces whose rules compute action *potential savings*, not the current
+ * CO2 footprint. References from these rules don't count as "CO2 impact".
+ */
+const NON_CO2_PREFIXES = [
+  "actions .",
+  "utilisateur .",
+  "ui . organisations .",
+  "logement . installer photovoltaique",
+  "logement . mutualiser son logement",
+  "transport . voiture . boulot",
+];
+
+function isNonCO2Rule(ruleName) {
+  return NON_CO2_PREFIXES.some((prefix) => ruleName.startsWith(prefix));
+}
+
+/**
+ * Return true if the question at `questionKey` is referenced by at least one
+ * rule that contributes to the current CO2 footprint (not just actions).
+ *
+ * Handles both full-path references and publicodes relative-path references.
+ * In publicodes, a rule can reference a cousin using a suffix of the full path
+ * (e.g. "réseau . consommation précise" from within "logement . électricité"
+ * resolves to "logement . électricité . réseau . consommation précise").
+ *
+ * For each suffix length we restrict the search to rules that share the
+ * corresponding ancestor namespace, which prevents cross-domain false positives.
+ * Single-word suffixes without spaces are skipped as too generic.
+ */
+function questionAffectsCO2(questionKey, allRules) {
+  const parts = questionKey.split(" . ");
+
+  for (const [ruleName, ruleValue] of Object.entries(allRules)) {
+    if (ruleName === questionKey) continue;
+    if (!ruleValue) continue;
+    if (isNonCO2Rule(ruleName)) continue;
+
+    const ruleStr = JSON.stringify(ruleValue);
+
+    // Full-path match
+    if (ruleStr.includes(questionKey)) return true;
+
+    // Relative-path match: try progressively shorter suffixes.
+    // The referencing rule must share the ancestor namespace that corresponds
+    // to the removed prefix, so the relative path resolves correctly.
+    for (let i = 1; i < parts.length; i++) {
+      const suffix = parts.slice(i).join(" . ");
+      const ancestorNs = parts.slice(0, i).join(" . ");
+
+      // Skip bare single-word suffixes without spaces — too generic
+      // across an entire ancestor namespace ('présent', 'mode', 'type'…).
+      if (!suffix.includes(" ")) continue;
+
+      if (ancestorNs && !ruleName.startsWith(ancestorNs)) continue;
+
+      if (ruleStr.includes(suffix)) return true;
+    }
+  }
+
+  return false;
+}
+
+// ---------------------------------------------------------------------------
+// 3. Sort helper (shared between the two output files)
 // ---------------------------------------------------------------------------
 
 const CATEGORY_ORDER = [
@@ -114,7 +194,7 @@ function sortEntries(entries) {
 }
 
 // ---------------------------------------------------------------------------
-// 3. Render a list of entries into a formatted text block
+// 4. Render a list of entries into a formatted text block
 // ---------------------------------------------------------------------------
 
 function renderEntries(entries) {
@@ -122,7 +202,14 @@ function renderEntries(entries) {
   let currentCategory = "";
   let currentSubcategory = "";
 
-  for (const { dottedName, question, category, subcategory } of entries) {
+  for (const {
+    dottedName,
+    question,
+    category,
+    subcategory,
+    affectsCO2,
+    childrenInApp,
+  } of entries) {
     if (category !== currentCategory) {
       currentCategory = category;
       out += `\n## ${category.toUpperCase()}\n\n`;
@@ -134,14 +221,22 @@ function renderEntries(entries) {
     }
 
     out += `- ${question}\n`;
-    out += `  (${dottedName})\n\n`;
+    out += `  (${dottedName})\n`;
+    out += `  Impact CO2 : ${affectsCO2 ? "oui" : "non"}\n`;
+    if (childrenInApp?.length > 0) {
+      out += `  Question parente — enfants gérés dans l'app :\n`;
+      for (const child of childrenInApp) {
+        out += `    · ${child}\n`;
+      }
+    }
+    out += "\n";
   }
 
   return out;
 }
 
 // ---------------------------------------------------------------------------
-// 4. Main
+// 5. Main
 // ---------------------------------------------------------------------------
 
 async function extractQuestions() {
@@ -166,6 +261,7 @@ async function extractQuestions() {
         question: rule.question,
         category: dottedName.split(" . ")[0],
         subcategory: dottedName.split(" . ").slice(0, 2).join(" . "),
+        affectsCO2: questionAffectsCO2(dottedName, rules),
       })),
   );
 
@@ -189,9 +285,17 @@ async function extractQuestions() {
   }
 
   // --- Split into used / unused ---
-  const unusedEntries = allEntries.filter(
-    ({ dottedName }) => !usedKeys.has(dottedName),
-  );
+  const unusedEntries = allEntries
+    .filter(({ dottedName }) => !usedKeys.has(dottedName))
+    .map((entry) => ({
+      ...entry,
+      childrenInApp: getChildrenInApp(
+        entry.dottedName,
+        rules[entry.dottedName],
+        usedKeys,
+        rules,
+      ),
+    }));
   const usedEntries = allEntries.filter(({ dottedName }) =>
     usedKeys.has(dottedName),
   );

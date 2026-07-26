@@ -4,12 +4,12 @@ These questions exist in the @incubateur-ademe/nosgestesclimat model but
 are not referenced in the app. Review this list after a dependency upgrade
 to spot new questions that should potentially be added.
 
-Total: 31 missing questions (out of 235 in the model)
-  - 22 genuinely missing (candidates to add to the app)
+Total: 22 missing questions (out of 243 in the model)
+  - 13 genuinely missing (candidates to add to the app)
   - 9 aide/fallback alternatives (optional, shown when user can't answer the primary question)
 
 ════════════════════════════════════════════════════════════════════════
-## GENUINELY MISSING (22)
+## GENUINELY MISSING (13)
 
 Questions that exist in the model but have no corresponding screen in the app.
 These are the main candidates to consider when upgrading the dependency.
@@ -21,30 +21,39 @@ These are the main candidates to consider when upgrading the dependency.
 
 - Combien de personnes pourraient covoiturer avec vous ?
   (transport . voiture . boulot . covoiturage . nombre de covoitureurs)
+  Impact CO2 : non
 
 - A quelle distance de chez vous se situe votre travail ?
   (transport . voiture . boulot . distance . km aller)
+  Impact CO2 : non
 
 - Combien de jours par semaine prenez-vous votre voiture pour aller au travail ?
   (transport . voiture . boulot . jours travaillés en voiture)
+  Impact CO2 : non
 
 - Si vous deviez ne plus prendre votre voiture pour vous rendre au travail quel autre moyen de transport pourriez-vous utiliser ?
   (transport . voiture . boulot . sans voiture . type)
-
-- Votre travail est-il totalement ou en partie compatible avec le télétravail ?
-  (transport . voiture . boulot . télétravail . compatible)
+  Impact CO2 : non
 
 - Combien de jours de télétravail par semaine pourriez-vous faire ?
   (transport . voiture . boulot . télétravail . jours télétravaillés)
+  Impact CO2 : non
+
+- Votre travail est-il totalement ou en partie compatible avec le télétravail ?
+  (transport . voiture . boulot . télétravail compatible)
+  Impact CO2 : non
 
 - Combien êtes-vous dans la voiture pour vos trajets domicile-travail ?
   (transport . voiture . boulot . voyageurs)
+  Impact CO2 : non
 
 - Combien de km à l'année faites-vous sur autoroute (à peu près) ?
   (transport . voiture . limitation autoroute . km autoroute)
+  Impact CO2 : oui
 
 - Combien de fois par semaine prenez-vous la voiture pour moins de 5km ?
   (transport . voiture . voiture 5km . fréquence)
+  Impact CO2 : non
 
 
 ## LOGEMENT
@@ -52,78 +61,27 @@ These are the main candidates to consider when upgrading the dependency.
 
 ### logement . chauffage
 
-- De combien de degrés seriez-vous prêt à diminuer la température de votre logement ?
-  (logement . chauffage . baisse température . nombre degrés)
-
-- Quelle est la consommation annuelle de bois en granulés de votre foyer ?
-  (logement . chauffage . bois . type . granulés . consommation)
-
-
-### logement . chauffage collectif
-
-- Votre chauffage est-il collectif ou individuel ?
-  (logement . chauffage collectif)
-
-
-### logement . construction
-
-- Quelle est la taille de l'extension réalisée (en m²) ?
-  (logement . construction . rénovation . travaux . extension . taille)
+- Disposez-vous de sources d'énergie d'appoint ?
+  (logement . chauffage . appoint)
+  Impact CO2 : non
 
 
 ### logement . installer photovoltaique
 
 - Combien de panneaux pourriez-vous installer ?
   (logement . installer photovoltaique . nombre panneaux)
+  Impact CO2 : non
 
 - Où se situe votre logement en France ?
   (logement . installer photovoltaique . zone climatique)
+  Impact CO2 : non
 
 
 ### logement . nombre colocataires
 
 - Combien de colocataires pourriez-vous accueillir ?
   (logement . nombre colocataires)
-
-
-### logement . température
-
-- À quelle température chauffez-vous votre logement ?
-  (logement . température)
-
-
-## DIVERS
-
-
-### divers . textile
-
-- Vos derniers vêtements ont majoritairement été achetés :
-
-  (divers . textile . qualité)
-
-- Est-ce que vous vous séparez de ce que vous ne portez plus ?
-  (divers . textile . revente)
-
-- Pour quelle raison achetez-vous de nouveaux vêtements ?
-  (divers . textile . volume)
-
-
-## SERVICES SOCIÉTAUX
-
-
-### services sociétaux . question rhétorique
-
-- Nous attribuons l'empreinte des services publics (éducation, santé...) et marchands (télécom, assurance...) à chaque citoyenne et citoyen de façon égale. Cela représente autour de 1,5 tonnes de CO2e par personne.
-  (services sociétaux . question rhétorique)
-
-
-## FUTURECO-DATA
-
-
-### futureco-data . transport
-
-- Quel est le volume utile du bateau ?
-  (futureco-data . transport . ferry . volume utile)
+  Impact CO2 : non
 
 
 ════════════════════════════════════════════════════════════════════════
@@ -141,24 +99,31 @@ They are intentionally absent from the app as standalone questions.
 
 - Pas de facture ? Entrez vos dépenses annuelles approximatives
   (logement . chauffage . bois . type . bûches . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
 - Pas de facture ? Entrez vos dépenses annuelles approximatives
   (logement . chauffage . bois . type . granulés . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
 - Vous utilisez un format de bonbonne différent ? Entrez votre consommation annuelle en kg.
   (logement . chauffage . bouteille gaz . consommation estimée via le poids . saisie)
+  Impact CO2 : oui
 
 - Pas de facture ? Entrez vos dépenses approximatives par mois
   (logement . chauffage . citerne propane . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
 - Pas de facture ? Entrez vos dépenses approximatives par mois
   (logement . chauffage . fioul . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
 - Pas de facture ? Entrez vos dépenses approximatives par mois
   (logement . chauffage . gaz . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
 - Pas de facture ? Entrez vos dépenses approximatives par mois
   (logement . chauffage . réseau de chaleur . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
 
 ### logement . électricité
@@ -168,7 +133,9 @@ They are intentionally absent from the app as standalone questions.
 _(Sachez qu'en moyenne, 1 panneau = 400 Wc)_
 
   (logement . électricité . photovoltaique . production estimée via la puissance installée . saisie)
+  Impact CO2 : oui
 
 - Pas de facture ? Entrez vos dépenses approximatives par mois
   (logement . électricité . réseau . consommation estimée via le coût . saisie)
+  Impact CO2 : oui
 
