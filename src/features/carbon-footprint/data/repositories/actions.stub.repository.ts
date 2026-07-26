@@ -1,7 +1,7 @@
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import { ActionsRepository } from "@carbonFootprint/domain/repositories/actions.repository";
 
-export class ActionsInMemoryRepository implements ActionsRepository {
+export class ActionsStubRepository implements ActionsRepository {
   actions: Action[] = [];
 
   fetchActions(): Action[] {

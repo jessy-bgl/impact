@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
-import { ActionsInMemoryRepository } from "@carbonFootprint/data/repositories/actions.memory.repository";
 import { ActionsStoreRepository } from "@carbonFootprint/data/repositories/actions.store.repository";
+import { ActionsStubRepository } from "@carbonFootprint/data/repositories/actions.stub.repository";
 import { FootprintsStoreRepository } from "@carbonFootprint/data/repositories/footprints.store.repository";
 import { IntroStoreRepository } from "@carbonFootprint/data/repositories/intro.store.repository";
 import { ProfileStoreRepository } from "@carbonFootprint/data/repositories/profile.store.repository";
@@ -47,7 +47,7 @@ export const initFakeRepositories = () => ({
   computeEngine: new AdemeComputeEngine(),
   profileRepository: new ProfileStoreRepository(useAppStore),
   footprintsRepository: new FootprintsStoreRepository(useAppStore),
-  actionsRepository: new ActionsInMemoryRepository(),
+  actionsRepository: new ActionsStubRepository(),
   introRepository: new IntroStoreRepository(useAppStore),
   settingsRepository: new SettingsStoreRepository(useAppStore),
 });

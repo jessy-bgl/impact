@@ -5,15 +5,15 @@ import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 
 const engine = new AdemeComputeEngine();
 
-// Each setProfile call replaces the full situation, so tests are isolated by default.
-// The beforeEach ensures a clean state even if a test throws mid-way.
-beforeEach(() => {
-  engine.setProfile({});
-});
-
 describe("AdemeComputeEngine", () => {
-  describe("profil par défaut (moyenne française)", () => {
-    it("le bilan total est cohérent avec la moyenne française (~7-12 tCO2e)", () => {
+  // Each setProfile call replaces the full situation, so tests are isolated by default.
+  // The beforeEach ensures a clean state even if a test throws mid-way.
+  beforeEach(() => {
+    engine.setProfile({});
+  });
+
+  describe("default profile (French average)", () => {
+    it("total footprint is within the French average range (~7-12 tCO2e)", () => {
       const { transport, food, housing, everydayThings, societalServices } =
         engine.computeFootprints();
       const total =
@@ -26,7 +26,7 @@ describe("AdemeComputeEngine", () => {
       expect(total).toBeLessThan(12000);
     });
 
-    it("chaque catégorie contribue positivement au bilan", () => {
+    it("each category has a positive footprint", () => {
       const { transport, food, housing, everydayThings, societalServices } =
         engine.computeFootprints();
       expect(transport.annualFootprint).toBeGreaterThan(0);
@@ -37,37 +37,41 @@ describe("AdemeComputeEngine", () => {
     });
   });
 
-  describe("cohérence directionnelle par catégorie", () => {
+  describe("directional coherence by category", () => {
     describe("transport", () => {
-      it("augmenter les km en voiture augmente l'empreinte", () => {
-        engine.setProfile({ "transport . voiture . km": 0 } as Profile);
+      it("driving more km increases the footprint", () => {
+        engine.setProfile({
+          "transport . voiture . utilisateur": "'propriétaire'",
+          "transport . voiture . km": 0,
+        } as Profile);
         const low = engine.computeTransportFootprint().annualFootprint;
 
-        engine.setProfile({ "transport . voiture . km": 20000 } as Profile);
+        engine.setProfile({
+          "transport . voiture . utilisateur": "'propriétaire'",
+          "transport . voiture . km": 30000,
+        } as Profile);
         const high = engine.computeTransportFootprint().annualFootprint;
 
         expect(high).toBeGreaterThan(low);
       });
 
-      it("un vol long-courrier augmente l'empreinte", () => {
+      it("flying more frequently increases the footprint", () => {
         engine.setProfile({
-          "transport . avion . usager": "oui",
-          "transport . avion . long courrier . heures de vol": 0,
+          "transport . avion . usager": "'jamais'",
         } as Profile);
-        const noFlight = engine.computeTransportFootprint().annualFootprint;
+        const rarely = engine.computeTransportFootprint().annualFootprint;
 
         engine.setProfile({
-          "transport . avion . usager": "oui",
-          "transport . avion . long courrier . heures de vol": 20,
+          "transport . avion . usager": "'fréquemment'",
         } as Profile);
-        const withFlight = engine.computeTransportFootprint().annualFootprint;
+        const frequently = engine.computeTransportFootprint().annualFootprint;
 
-        expect(withFlight).toBeGreaterThan(noFlight);
+        expect(frequently).toBeGreaterThan(rarely);
       });
     });
 
-    describe("alimentation", () => {
-      it("consommer plus de viande rouge augmente l'empreinte", () => {
+    describe("food", () => {
+      it("eating more red meat increases the footprint", () => {
         engine.setProfile({
           "alimentation . plats . viande rouge . nombre": 0,
         } as Profile);
@@ -82,8 +86,8 @@ describe("AdemeComputeEngine", () => {
       });
     });
 
-    describe("logement", () => {
-      it("une surface habitable plus grande augmente l'empreinte", () => {
+    describe("housing", () => {
+      it("a larger home surface increases the footprint", () => {
         engine.setProfile({ "logement . surface": 20 } as Profile);
         const small = engine.computeHousingFootprint().annualFootprint;
 
@@ -93,9 +97,29 @@ describe("AdemeComputeEngine", () => {
         expect(large).toBeGreaterThan(small);
       });
     });
+
+    describe("everydayThings", () => {
+      it("more hours per day on the internet increases the footprint", () => {
+        engine.setProfile({
+          "divers . numérique . internet . durée journalière": 0,
+        } as Profile);
+        const low = engine.computeEverydayThingsFootprint().annualFootprint;
+
+        engine.setProfile({
+          "divers . numérique . internet . durée journalière": 10,
+        } as Profile);
+        const high = engine.computeEverydayThingsFootprint().annualFootprint;
+
+        expect(high).toBeGreaterThan(low);
+      });
+    });
+
+    // societalServices footprint is engine-determined and does not respond to
+    // profile inputs. Its positive contribution is verified in the default
+    // profile tests above.
   });
 
-  describe("régressions par persona", () => {
+  describe("persona regression snapshots", () => {
     // Snapshots are stored in __snapshots__/AdemeComputeEngine.test.ts.snap.
     // Run `npm test -- --updateSnapshot` after a model update to refresh them.
     Object.entries(personasData).forEach(([, persona]) => {

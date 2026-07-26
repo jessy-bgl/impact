@@ -23,9 +23,14 @@ describe("syncEngineWithStoredActions", () => {
   });
 
   describe("actions store is empty", () => {
-    it("should add actions to store", () => {
+    it("should populate the store with the engine's actions", () => {
+      const engineActions = repositories.computeEngine.getActions();
+
       syncEngineWithStoredActions();
-      expect(repositories.actionsRepository.actions.length).toBeGreaterThan(0);
+
+      expect(repositories.actionsRepository.actions.map((a) => a.id)).toEqual(
+        engineActions.map((a) => a.id),
+      );
     });
   });
 

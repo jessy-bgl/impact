@@ -1,35 +1,51 @@
-import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
-import { EvaluatedNode } from "publicodes";
-
-import { AdemeAction } from "@carbonFootprint/domain/entities/action/AdemeAction";
-import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
+import { ActionsStubRepository } from "@carbonFootprint/data/repositories/actions.stub.repository";
+import {
+  Action,
+  ActionState,
+} from "@carbonFootprint/domain/entities/action/Action";
 import { createUpdateActionState } from "@carbonFootprint/domain/usecases/actions/updateActionState";
-import { initFakeRepositories } from "@common/context/UsecasesContext";
 
-describe("update action state", () => {
-  let repositories: ReturnType<typeof initFakeRepositories>;
+class StubAction extends Action {
+  constructor(id: string) {
+    super({ id, label: "", description: "", category: "transport" });
+  }
+}
+
+describe("createUpdateActionState", () => {
+  let actionsRepository: ActionsStubRepository;
+  let updateActionState: ReturnType<
+    typeof createUpdateActionState
+  >["updateActionState"];
 
   beforeEach(() => {
-    repositories = initFakeRepositories();
+    actionsRepository = new ActionsStubRepository();
+    ({ updateActionState } = createUpdateActionState(actionsRepository));
   });
 
-  it("should update action state", () => {
-    // Arrange
-    const ruleKey: DottedName = "transport . voiture . réduire taille";
-    const ademeRule = AdemeEngine.getRule(ruleKey);
-    const ademeEvaluation = AdemeEngine.evaluate(ruleKey);
-    const action = new AdemeAction({
-      ...ademeRule,
-      ...ademeEvaluation,
-    } as NGCRuleNode & EvaluatedNode);
-    action.state = "notStarted";
-    repositories.actionsRepository.actions = [action];
-    const { updateActionState } = createUpdateActionState(
-      repositories.actionsRepository,
-    );
-    // Act
-    updateActionState(action.id, "inProgress");
-    // Assert
-    expect(action.state).toBe("inProgress");
+  it.each([
+    ["notStarted", "inProgress"],
+    ["inProgress", "skipped"],
+    ["skipped", "notStarted"],
+  ] as [ActionState, ActionState][])(
+    "transitions state from %s to %s",
+    (from, to) => {
+      const action = new StubAction("some.action");
+      action.state = from;
+      actionsRepository.actions = [action];
+
+      updateActionState("some.action", to);
+
+      expect(actionsRepository.actions[0].state).toBe(to);
+    },
+  );
+
+  it("does nothing when the action id does not exist", () => {
+    const action = new StubAction("some.action");
+    actionsRepository.actions = [action];
+
+    updateActionState("non-existent", "inProgress");
+
+    expect(action.state).toBe("notStarted");
+    expect(actionsRepository.actions).toHaveLength(1);
   });
 });
