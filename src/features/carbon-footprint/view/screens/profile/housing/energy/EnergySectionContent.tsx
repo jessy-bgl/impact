@@ -232,7 +232,6 @@ export const EnergySectionContent = () => {
       />
       <ListItemQuestion
         divider
-        forceDisplay
         question={energyQuestions.airConditioningUsage}
         control={control}
         handleUpdate={updateHousingProfile}

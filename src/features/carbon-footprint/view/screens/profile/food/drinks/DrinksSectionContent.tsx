@@ -31,7 +31,6 @@ export const DrinksSectionContent = () => {
       />
       <ListItemQuestion
         divider
-        forceDisplay
         question={drinksQuestions.bottleWaterConsumption}
         control={control}
         handleUpdate={updateFoodProfile}

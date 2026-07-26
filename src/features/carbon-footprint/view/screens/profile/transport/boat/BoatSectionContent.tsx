@@ -9,7 +9,6 @@ export const BoatSectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
-        forceDisplay
         question={boatQuestions.boatUsage}
         control={control}
         handleUpdate={updateTransportProfile}
