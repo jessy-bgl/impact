@@ -10,6 +10,7 @@ export const useProfileForm = (categoryQuestions: Record<string, Question>) => {
 
   const getDefaultValues = (): DefaultValues<FormValues> => {
     return Object.values(categoryQuestions).reduce((acc, question) => {
+      if (!question) return acc;
       if (question.subQuestions) {
         return {
           ...question.subQuestions.reduce((acc, subQuestion) => {
