@@ -19,6 +19,9 @@ const config: ExpoConfig = {
   icon: "./assets/icon.png",
   userInterfaceStyle: "dark",
   plugins: [
+    "expo-font",
+    "expo-image",
+    "expo-status-bar",
     [
       "expo-splash-screen",
       {
@@ -38,6 +41,7 @@ const config: ExpoConfig = {
   experiments: {
     tsconfigPaths: true,
     baseUrl: "/impact",
+    reactCompiler: true,
   },
   web: {
     bundler: "metro",
@@ -49,7 +53,6 @@ const config: ExpoConfig = {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#ffffff",
     },
-    edgeToEdgeEnabled: true,
   },
   ios: {
     bundleIdentifier: "com.impactech.impact",

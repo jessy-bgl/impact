@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
+import { KeyboardAwareScrollViewRef } from "react-native-keyboard-controller";
 
 export const useProfileScroll = () => {
   const [expandedId, setExpandedId] = useState<string | number>();
 
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<KeyboardAwareScrollViewRef>(null);
   const sectionRefs = useRef<{ [key: string]: View | null }>({});
 
   const resetExpandedSection = () => {
@@ -32,9 +33,13 @@ export const useProfileScroll = () => {
     }
   };
 
+  const registerSectionRef = (id: string, ref: View | null) => {
+    if (ref) sectionRefs.current[id] = ref;
+  };
+
   return {
     scrollViewRef,
-    sectionRefs,
+    registerSectionRef,
     expandedId,
     handleExpandProfileSection,
     resetExpandedSection,

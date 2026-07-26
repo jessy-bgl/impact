@@ -13,7 +13,7 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
     handleExpandProfileSection,
     resetExpandedSection,
     scrollViewRef,
-    sectionRefs,
+    registerSectionRef,
     expandedId,
   } = useProfileScroll();
 
@@ -22,7 +22,7 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
       <BottomSheetProvider>
         <ScrollProfileSectionContext.Provider
           value={{
-            sectionRefs,
+            registerSectionRef,
             resetExpandedSection,
           }}
         >

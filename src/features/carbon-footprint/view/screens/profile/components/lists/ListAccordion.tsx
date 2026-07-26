@@ -20,7 +20,7 @@ export const ListAccordion = ({
   completed,
   children,
 }: PropsWithChildren<Props>) => {
-  const { sectionRefs } = useScrollProfileSection();
+  const { registerSectionRef } = useScrollProfileSection();
 
   const { colors } = useTheme();
 
@@ -50,11 +50,7 @@ export const ListAccordion = ({
   );
 
   return (
-    <View
-      ref={(ref) => {
-        if (ref) sectionRefs.current![title] = ref;
-      }}
-    >
+    <View ref={(ref) => registerSectionRef(title, ref)}>
       <List.Accordion
         id={title}
         title={<ListTitle title={title} subtitle={subtitle} />}

@@ -1,8 +1,8 @@
-import { createContext, RefObject, useContext } from "react";
+import { createContext, useContext } from "react";
 import { View } from "react-native";
 
 interface ScrollProfileSectionContextType {
-  sectionRefs: RefObject<{ [key: string]: View | null }>;
+  registerSectionRef: (id: string, ref: View | null) => void;
   resetExpandedSection: () => void;
 }
 

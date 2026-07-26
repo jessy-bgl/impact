@@ -55,7 +55,7 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
     return () => setIsSyncing(false);
   }, [isFocused, syncFootprintsProfileWithEngine]);
 
-  const syncAnimation = useRef(new Animated.Value(0)).current;
+  const [syncAnimation] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
     if (isSyncing) {
