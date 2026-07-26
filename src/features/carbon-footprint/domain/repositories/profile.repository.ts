@@ -15,4 +15,13 @@ export interface ProfileRepository {
     subCategory: FootprintSubCategory,
     completed: boolean,
   ): void;
+  fetchProfileCompletionVersion(
+    category: FootprintCategory,
+    subCategory: FootprintSubCategory,
+  ): string | undefined;
+  updateProfileCompletionVersion(
+    category: FootprintCategory,
+    subCategory: FootprintSubCategory,
+    version: string,
+  ): void;
 }

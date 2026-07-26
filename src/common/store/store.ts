@@ -1,7 +1,9 @@
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import {
   EverydayThingsFootprintSubCategory,
+  FootprintCategory,
   FoodFootprintSubCategory,
+  FootprintSubCategory,
   Footprints,
   HousingFootprintSubCategory,
   SocietalServicesFootprintSubCategory,
@@ -28,6 +30,10 @@ export type AppStore = {
       everydayThings: Record<EverydayThingsFootprintSubCategory, boolean>;
       societalServices: Record<SocietalServicesFootprintSubCategory, boolean>;
     };
+    completionVersions: Record<
+      FootprintCategory,
+      Partial<Record<FootprintSubCategory, string>>
+    >;
   };
   footprints: Footprints;
   actions: Action[];

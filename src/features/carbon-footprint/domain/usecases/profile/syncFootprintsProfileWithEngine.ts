@@ -3,6 +3,10 @@ import { InteractionManager } from "react-native";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { ComputeEngine } from "@carbonFootprint/domain/entities/engine/ComputeEngine";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import {
+  computeProfileSectionVersion,
+  profileSections,
+} from "@carbonFootprint/domain/entities/profile/profileSections";
 import { FootprintsRepository } from "@carbonFootprint/domain/repositories/footprints.repository";
 import { ProfileRepository } from "@carbonFootprint/domain/repositories/profile.repository";
 
@@ -24,12 +28,12 @@ export const createSyncFootprintsProfileWithEngine = (
 
     if (handleMigration) {
       profile = migrateProfile(profile);
-      // Persist migrated profile if any keys were removed or changed
       for (const key of Object.keys(storedProfile) as (keyof Profile)[]) {
         if (!(key in profile)) {
           profileRepository.updateProfileKey(key, undefined);
         }
       }
+      resetCompletionForChangedSections(profile);
     }
 
     computeEngine.setProfile(profile);
@@ -51,6 +55,45 @@ export const createSyncFootprintsProfileWithEngine = (
     };
 
     updateStoredFootprints(footprints);
+  };
+
+  const resetCompletionForChangedSections = (
+    migratedProfile: Profile,
+  ): void => {
+    for (const section of Object.values(profileSections)) {
+      const currentVersion = computeProfileSectionVersion(section.questionKeys);
+      const storedVersion = profileRepository.fetchProfileCompletionVersion(
+        section.category,
+        section.subCategory,
+      );
+
+      let shouldReset: boolean;
+
+      if (storedVersion === undefined) {
+        // No version stored (user from before version tracking was added) —
+        // reset only if no answers exist for any of the section's current keys
+        const currentKeys = Object.values(
+          section.questionKeys,
+        ) as (keyof Profile)[];
+        shouldReset = !currentKeys.some((key) => key in migratedProfile);
+      } else {
+        shouldReset = storedVersion !== currentVersion;
+      }
+
+      if (shouldReset) {
+        profileRepository.updateProfileCompletion(
+          section.category,
+          section.subCategory,
+          false,
+        );
+      }
+
+      profileRepository.updateProfileCompletionVersion(
+        section.category,
+        section.subCategory,
+        currentVersion,
+      );
+    }
   };
 
   /**
@@ -75,8 +118,14 @@ export const createSyncFootprintsProfileWithEngine = (
           (option) => (option.startsWith("'") ? option : `'${option}'`),
         );
         if (!validOptions.includes(value as string)) continue;
-      } else if (typeof value === "string") {
-        // Question type changed from choice to numeric — string value is no longer valid
+      } else if (
+        typeof value === "string" &&
+        value !== "oui" &&
+        value !== "non"
+      ) {
+        // Question type changed from choice to numeric — leftover quoted
+        // string is no longer valid. "oui"/"non" are always valid publicodes
+        // booleans regardless of the current rule shape, so they're kept.
         continue;
       }
 

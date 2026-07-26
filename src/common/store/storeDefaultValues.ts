@@ -47,6 +47,13 @@ export const defaultAppStoreValues: AppStore = {
         merchantServices: true,
       },
     },
+    completionVersions: {
+      transport: {},
+      food: {},
+      housing: {},
+      everydayThings: {},
+      societalServices: {},
+    },
   },
   footprints: {
     transport: ademeComputeEngine.computeTransportFootprint(),

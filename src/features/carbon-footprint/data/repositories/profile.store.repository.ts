@@ -45,4 +45,33 @@ export class ProfileStoreRepository implements ProfileRepository {
       },
     }));
   }
+
+  fetchProfileCompletionVersion(
+    category: FootprintCategory,
+    subCategory: FootprintSubCategory,
+  ): string | undefined {
+    return this.store.getState().profile.completionVersions[category]?.[
+      subCategory
+    ];
+  }
+
+  updateProfileCompletionVersion(
+    category: FootprintCategory,
+    subCategory: FootprintSubCategory,
+    version: string,
+  ) {
+    this.store.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        completionVersions: {
+          ...state.profile.completionVersions,
+          [category]: {
+            ...state.profile.completionVersions[category],
+            [subCategory]: version,
+          },
+        },
+      },
+    }));
+  }
 }
