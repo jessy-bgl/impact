@@ -10,8 +10,31 @@ export const ClothesSectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
-        forceDisplay
-        question={clothesQuestions.newClothersPerYear}
+        question={clothesQuestions.clothes}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={clothesQuestions.clothesQuantity}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={clothesQuestions.clothesQuality}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={clothesQuestions.clothesResell}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={clothesQuestions.clothesRenewReason}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
       />

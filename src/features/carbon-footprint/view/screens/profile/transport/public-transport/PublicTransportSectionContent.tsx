@@ -13,7 +13,6 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.trainKmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={100}
@@ -29,7 +28,6 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.busHoursPerWeek}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="h"
         labelFlex={2}
         inputFlex={1}
       />
@@ -38,7 +36,6 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.coachKmPerWeek}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={10}
@@ -48,7 +45,6 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.metroHoursPerWeek}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="h"
         labelFlex={2}
         inputFlex={1}
       />

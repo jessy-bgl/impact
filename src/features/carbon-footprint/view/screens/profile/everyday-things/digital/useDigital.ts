@@ -1,14 +1,12 @@
 import { useContext } from "react";
 
+import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { useGetQuestions } from "@carbonFootprint/domain/hooks/useGetQuestions";
 import { useProfileForm } from "@carbonFootprint/domain/hooks/useProfileForm";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useDigital = () => {
-  const questionKeys = {
-    hoursPerDayOnInternet: "divers . numérique . internet . durée journalière",
-    digitalDevices: "divers . numérique . appareils",
-  } as const;
+  const { questionKeys } = profileSections.digital;
 
   const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 

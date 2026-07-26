@@ -14,6 +14,12 @@ export const FurnitureSectionContent = () => {
         control={control}
         handleUpdate={updateEverydayThingsProfile}
       />
+      <ListItemQuestion
+        divider
+        question={furnitureQuestions.preservation}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
       <ValidateResponsesButton
         category="everydayThings"
         subCategory="furniture"

@@ -13,13 +13,18 @@ export const DigitalSectionContent = () => {
         question={digitalQuestions.hoursPerDayOnInternet}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
-        affix="h/jour"
         labelFlex={1.5}
         inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={digitalQuestions.digitalDevices}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={digitalQuestions.renewMobile}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
       />

@@ -1,17 +1,12 @@
 import { useContext } from "react";
 
+import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { useGetQuestions } from "@carbonFootprint/domain/hooks/useGetQuestions";
 import { useProfileForm } from "@carbonFootprint/domain/hooks/useProfileForm";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useMeals = () => {
-  const questionKeys = {
-    meals: "alimentation . plats",
-    localProducts: "alimentation . local . consommation",
-    breakfastType: "alimentation . petit déjeuner . type",
-    milkType: "alimentation . type de lait",
-    seasonalProducts: "alimentation . de saison . consommation",
-  } as const;
+  const { questionKeys } = profileSections.meals;
 
   const { updateFoodProfile } = useContext(UsecasesContext);
 

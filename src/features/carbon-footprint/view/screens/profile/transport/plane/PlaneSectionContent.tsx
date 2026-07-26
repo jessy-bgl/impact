@@ -15,28 +15,17 @@ export const PlaneSectionContent = () => {
       />
       <ListItemQuestion
         divider
-        question={planeQuestions.hoursPerYearInShortHaul}
+        question={planeQuestions.annualFlights}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="h"
         labelFlex={1.5}
         inputFlex={1}
       />
       <ListItemQuestion
         divider
-        question={planeQuestions.hoursPerYearInMediumHaul}
+        question={planeQuestions.amortizedFlights}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="h"
-        labelFlex={1.5}
-        inputFlex={1}
-      />
-      <ListItemQuestion
-        divider
-        question={planeQuestions.hoursPerYearInLongHaul}
-        control={control}
-        handleUpdate={updateTransportProfile}
-        affix="h"
         labelFlex={1.5}
         inputFlex={1}
       />

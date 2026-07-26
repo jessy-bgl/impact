@@ -35,7 +35,7 @@ export const ListItemQuestion = ({
   forceDisplay,
   step,
 }: Props) => {
-  if (!question.isApplicable && !forceDisplay) return;
+  if (!question || (!question.isApplicable && !forceDisplay)) return;
 
   const handleUpdateAsync = (question: Question, value: string | number) =>
     setTimeout(() => handleUpdate(question, value));

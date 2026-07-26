@@ -12,7 +12,6 @@ export const CarSectionContent = () => {
         question={carQuestions.kmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={1.5}
         inputFlex={1}
         step={100}
@@ -54,18 +53,24 @@ export const CarSectionContent = () => {
         question={carQuestions.carFuelConsumption}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="l/100km"
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={carQuestions.carElectricityConsumption}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="kWh/100km"
-        labelFlex={1.5}
-        inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={carQuestions.carBatteryCapacity}
+        control={control}
+        handleUpdate={updateTransportProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={carQuestions.carHomeCharging}
+        control={control}
+        handleUpdate={updateTransportProfile}
       />
       <ValidateResponsesButton category="transport" subCategory="car" />
     </ListContentContainer>

@@ -17,7 +17,6 @@ export const LeisureSectionContent = () => {
         question={leisureQuestions.swimmingPoolSize}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="m²"
         labelFlex={2}
         inputFlex={1}
       />
@@ -50,7 +49,6 @@ export const LeisureSectionContent = () => {
         question={leisureQuestions.secondHomeSurface}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="m²"
         labelFlex={1.5}
         inputFlex={1}
       />
@@ -95,6 +93,14 @@ export const LeisureSectionContent = () => {
       <ListItemQuestion
         divider
         question={leisureQuestions.houseExchangeNightsPerYear}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={2}
+        inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={leisureQuestions.cruseNightsPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
         labelFlex={2}

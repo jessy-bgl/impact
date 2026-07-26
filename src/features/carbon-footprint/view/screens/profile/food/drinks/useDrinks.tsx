@@ -1,17 +1,12 @@
 import { useContext } from "react";
 
+import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { useGetQuestions } from "@carbonFootprint/domain/hooks/useGetQuestions";
 import { useProfileForm } from "@carbonFootprint/domain/hooks/useProfileForm";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useDrinks = () => {
-  const questionKeys = {
-    hotDrinks: "alimentation . boisson . chaude",
-    sodaConsumption: "alimentation . boisson . sucrées . litres",
-    alcoholConsumption: "alimentation . boisson . alcool . litres",
-    bottleWaterConsumption:
-      "alimentation . boisson . eau en bouteille . consommateur",
-  } as const;
+  const { questionKeys } = profileSections.drinks;
 
   const { updateFoodProfile } = useContext(UsecasesContext);
 

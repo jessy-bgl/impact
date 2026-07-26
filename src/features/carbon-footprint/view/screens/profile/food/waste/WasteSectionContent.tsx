@@ -15,7 +15,31 @@ export const WasteSectionContent = () => {
       />
       <ListItemQuestion
         divider
-        question={wasteQuestions.ecoGesture}
+        question={wasteQuestions.wasteInput}
+        control={control}
+        handleUpdate={updateFoodProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={wasteQuestions.foodWasteGestures}
+        control={control}
+        handleUpdate={updateFoodProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={wasteQuestions.buyInBulk}
+        control={control}
+        handleUpdate={updateFoodProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={wasteQuestions.composting}
+        control={control}
+        handleUpdate={updateFoodProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={wasteQuestions.stopAdvertising}
         control={control}
         handleUpdate={updateFoodProfile}
       />

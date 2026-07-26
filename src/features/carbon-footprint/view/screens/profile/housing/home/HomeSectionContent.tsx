@@ -32,7 +32,6 @@ export const HomeSectionContent = () => {
         question={housingQuestions.homeAge}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="an(s)"
         labelFlex={1.5}
         inputFlex={1}
       />
@@ -41,7 +40,6 @@ export const HomeSectionContent = () => {
         question={housingQuestions.surfaceArea}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="m²"
         labelFlex={1.5}
         inputFlex={1}
       />
@@ -51,12 +49,47 @@ export const HomeSectionContent = () => {
         control={control}
         handleUpdate={updateHousingProfile}
       />
+      {/* <ListItemQuestion
+        divider
+        question={housingQuestions.renovation}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      /> */}
+      {/* <ListItemQuestion
+        divider
+        question={housingQuestions.renovationExtension}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      /> */}
       <ListItemQuestion
         divider
         question={housingQuestions.renovationExtensionSize}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="m²"
+        labelFlex={1.5}
+        inputFlex={1}
+      />
+      {/* <ListItemQuestion
+        divider
+        question={housingQuestions.renovationHeating}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1.5}
+        inputFlex={1}
+      /> */}
+      {/* <ListItemQuestion
+        divider
+        question={housingQuestions.renovationIsolation}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1.5}
+        inputFlex={1}
+      /> */}
+      <ListItemQuestion
+        divider
+        question={housingQuestions.photovoltaicPanel}
+        control={control}
+        handleUpdate={updateHousingProfile}
         labelFlex={1.5}
         inputFlex={1}
       />

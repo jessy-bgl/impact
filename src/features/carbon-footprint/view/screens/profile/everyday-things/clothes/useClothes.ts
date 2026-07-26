@@ -1,14 +1,12 @@
 import { useContext } from "react";
 
-import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { useGetQuestions } from "@carbonFootprint/domain/hooks/useGetQuestions";
 import { useProfileForm } from "@carbonFootprint/domain/hooks/useProfileForm";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const useClothes = () => {
-  const questionKeys: Record<string, keyof Profile> = {
-    newClothersPerYear: "divers . textile . empreinte précise",
-  } as const;
+  const { questionKeys } = profileSections.clothes;
 
   const { updateEverydayThingsProfile } = useContext(UsecasesContext);
 

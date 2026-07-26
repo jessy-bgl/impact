@@ -19,7 +19,6 @@ export const BoatSectionContent = () => {
         question={boatQuestions.boatHoursPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="h"
         labelFlex={2}
         inputFlex={1}
       />

@@ -26,7 +26,6 @@ export const TwoWheelerSectionContent = () => {
         question={twoWheelerQuestions.kmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={1.5}
         inputFlex={1}
         step={100}

@@ -18,7 +18,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.gentleMobilityElectricBikeKmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={100}
@@ -28,7 +27,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.gentleMobilitySmallVehicleKmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={100}
@@ -44,7 +42,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.kmPerYearByCamperVan}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={100}
@@ -54,7 +51,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.kmPerYearByVan}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={100}
@@ -64,7 +60,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.kmPerYearByCaravan}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="km"
         labelFlex={2}
         inputFlex={1}
         step={100}
@@ -74,7 +69,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.camperVanFuelConsumption}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="l/100km"
         labelFlex={1.5}
         inputFlex={1}
       />
@@ -83,7 +77,6 @@ export const OtherSectionContent = () => {
         question={otherQuestions.vanFuelConsumption}
         control={control}
         handleUpdate={updateTransportProfile}
-        affix="l/100km"
         labelFlex={1.5}
         inputFlex={1}
       />

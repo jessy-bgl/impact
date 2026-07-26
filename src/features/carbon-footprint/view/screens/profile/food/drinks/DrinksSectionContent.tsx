@@ -18,7 +18,6 @@ export const DrinksSectionContent = () => {
         question={drinksQuestions.sodaConsumption}
         control={control}
         handleUpdate={updateFoodProfile}
-        affix="litre(s)"
         labelFlex={1.5}
         inputFlex={1}
       />
@@ -27,7 +26,6 @@ export const DrinksSectionContent = () => {
         question={drinksQuestions.alcoholConsumption}
         control={control}
         handleUpdate={updateFoodProfile}
-        affix="litre(s)"
         labelFlex={1.5}
         inputFlex={1}
       />

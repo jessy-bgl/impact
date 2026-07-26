@@ -9,48 +9,61 @@ export const EnergySectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
-        question={energyQuestions.electricityConsumption}
-        control={control}
-        handleUpdate={updateHousingProfile}
-        affix="kWh"
-        labelFlex={1.1}
-        inputFlex={1}
-        step={100}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.photovoltaicPanel}
+        question={energyQuestions.heatingMode}
         control={control}
         handleUpdate={updateHousingProfile}
       />
       <ListItemQuestion
         divider
-        question={energyQuestions.photovoltaicProduction}
-        control={control}
-        handleUpdate={updateHousingProfile}
-        affix="kWh"
-        labelFlex={1.1}
-        inputFlex={1}
-        step={100}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.photovoltaicPart}
-        control={control}
-        handleUpdate={updateHousingProfile}
-        affix="%"
-        labelFlex={2}
-        inputFlex={1}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.individualOrCollectiveHeating}
+        question={energyQuestions.preciseConsumptionInput}
         control={control}
         handleUpdate={updateHousingProfile}
       />
       <ListItemQuestion
         divider
-        question={energyQuestions.heatingEnergyType}
+        question={energyQuestions.consumptionFeeling}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.dpe}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.waterHeatingMode}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.heatingMain}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.waterHeatingMain}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.collectiveHeating}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.collectiveHeatingEcs}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.heating}
         control={control}
         handleUpdate={updateHousingProfile}
       />
@@ -60,12 +73,101 @@ export const EnergySectionContent = () => {
         control={control}
         handleUpdate={updateHousingProfile}
       />
+      {/* <ListItemQuestion
+        divider
+        question={energyQuestions.woodLogs}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodOpenFire}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodStoveLogs}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      /> */}
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodLogsConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodLogsPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+      />
+      {/* <ListItemQuestion
+        divider
+        question={energyQuestions.woodPellets}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodStovePellets}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      /> */}
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodPelletsConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.woodPelletsPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.heatNetworkConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.heatNetworkPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
+      />
       <ListItemQuestion
         divider
         question={energyQuestions.gasConsumption}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="kWh"
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.gasPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
         labelFlex={1}
         inputFlex={1}
         step={100}
@@ -83,47 +185,16 @@ export const EnergySectionContent = () => {
         question={energyQuestions.gasPropaneConsumption}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="kg"
         labelFlex={1.25}
         inputFlex={1}
         step={100}
       />
       <ListItemQuestion
         divider
-        question={energyQuestions.fuelOilConsumption}
+        question={energyQuestions.gasPropanePreciseConsumption}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="litre(s)"
-        labelFlex={1}
-        inputFlex={1}
-        step={100}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.woodLogsConsumption}
-        control={control}
-        handleUpdate={updateHousingProfile}
-        affix="stère(s)"
-        labelFlex={1}
-        inputFlex={1}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.woodPelletsConsumption}
-        control={control}
-        handleUpdate={updateHousingProfile}
-        affix="kWh"
-        labelFlex={1}
-        inputFlex={1}
-        step={100}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.heatNetworkConsumption}
-        control={control}
-        handleUpdate={updateHousingProfile}
-        affix="kWh"
-        labelFlex={1}
+        labelFlex={1.25}
         inputFlex={1}
         step={100}
       />
@@ -138,9 +209,26 @@ export const EnergySectionContent = () => {
         question={energyQuestions.bioGasPart}
         control={control}
         handleUpdate={updateHousingProfile}
-        affix="%"
         labelFlex={2}
         inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.fuelOilConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.fuelOilPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1}
+        inputFlex={1}
+        step={100}
       />
       <ListItemQuestion
         divider
@@ -156,6 +244,49 @@ export const EnergySectionContent = () => {
         handleUpdate={updateHousingProfile}
         labelFlex={2.5}
         inputFlex={1}
+      />
+      <ListItemQuestion
+        question={energyQuestions.photovoltaicProduction}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1.1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.photovoltaicPart}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={2}
+        inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.electricityConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1.1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.electricityPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1.1}
+        inputFlex={1}
+        step={100}
+      />
+      <ListItemQuestion
+        divider
+        question={energyQuestions.electricityNetworkPreciseConsumption}
+        control={control}
+        handleUpdate={updateHousingProfile}
+        labelFlex={1.1}
+        inputFlex={1}
+        step={100}
       />
       <ValidateResponsesButton category="housing" subCategory="energy" />
     </ListContentContainer>

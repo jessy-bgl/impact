@@ -13,7 +13,6 @@ export const TobaccoSectionContent = () => {
         question={tobaccoQuestions.tobaccoConsumption}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
-        affix="paquet(s)"
         labelFlex={1}
         inputFlex={1}
       />
