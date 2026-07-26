@@ -6,7 +6,6 @@ const pluginJest = require("eslint-plugin-jest");
 module.exports = defineConfig([
   expoConfig,
   eslintPluginPrettierRecommended,
-  { ignores: ["node_modules/", "web-build/", "dist/", "assets/"] },
   {
     files: ["**/*.spec.ts", "**/*.test.ts", "**/*.spec.tsx", "**/*.test.tsx"],
     plugins: { jest: pluginJest },
@@ -14,4 +13,5 @@ module.exports = defineConfig([
       globals: pluginJest.environments.globals.globals,
     },
   },
+  { ignores: ["node_modules/", "web-build/", "dist/", "assets/", "scripts/"] },
 ]);
