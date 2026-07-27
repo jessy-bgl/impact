@@ -1,9 +1,9 @@
-const { getDefaultConfig } = require("expo/metro-config");
+const { getPostHogExpoConfig } = require("posthog-react-native/metro");
 const {
   wrapWithReanimatedMetroConfig,
 } = require("react-native-reanimated/metro-config");
 
-const config = getDefaultConfig(__dirname);
+const config = getPostHogExpoConfig(__dirname);
 
 const { transformer, resolver } = config;
 

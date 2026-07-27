@@ -1,10 +1,14 @@
 import "@expo/metro-runtime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from "@react-navigation/native";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import "intl-pluralrules";
-import { useEffect } from "react";
+import { PostHogErrorBoundary, PostHogProvider } from "posthog-react-native";
+import { useEffect, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -12,12 +16,11 @@ import { PaperProvider } from "react-native-paper";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { AppNavigator } from "@app/AppNavigator";
+import { AppNavigator, AppTabParamList } from "@app/AppNavigator";
 import { useAppTheme } from "@app/AppTheme";
 import { PERSISTENCE_KEY, useApp } from "@app/useApp";
 import { posthog } from "@common/config/posthog";
 import "@common/translations/i18n";
-import { PostHogProvider } from "posthog-react-native";
 import "../../logger.config";
 
 SplashScreen.preventAutoHideAsync();
@@ -26,6 +29,18 @@ const App = () => {
   const { initialState, isReady } = useApp();
 
   const theme = useAppTheme();
+
+  // @react-navigation/native v7 no longer supports PostHog's automatic screen
+  // autocapture, so screen views are captured manually from the container.
+  const navigationRef = useNavigationContainerRef<AppTabParamList>();
+  const routeNameRef = useRef<string | undefined>(undefined);
+
+  const captureScreen = () => {
+    const routeName = navigationRef.getCurrentRoute()?.name;
+    if (routeName && routeName !== routeNameRef.current)
+      posthog.screen(routeName);
+    routeNameRef.current = routeName;
+  };
 
   useEffect(() => {
     if (isReady) SplashScreen.hide();
@@ -39,10 +54,13 @@ const App = () => {
       <PaperProvider theme={theme}>
         <KeyboardProvider>
           <NavigationContainer
+            ref={navigationRef}
             theme={theme}
             initialState={initialState}
+            onReady={captureScreen}
             onStateChange={(state) => {
               AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+              captureScreen();
             }}
           >
             <PostHogProvider
@@ -54,11 +72,13 @@ const App = () => {
                 maxElementsCaptured: 20,
               }}
             >
-              <GestureHandlerRootView style={styles.container}>
-                <View style={styles.content}>
-                  <AppNavigator />
-                </View>
-              </GestureHandlerRootView>
+              <PostHogErrorBoundary>
+                <GestureHandlerRootView style={styles.container}>
+                  <View style={styles.content}>
+                    <AppNavigator />
+                  </View>
+                </GestureHandlerRootView>
+              </PostHogErrorBoundary>
             </PostHogProvider>
           </NavigationContainer>
         </KeyboardProvider>

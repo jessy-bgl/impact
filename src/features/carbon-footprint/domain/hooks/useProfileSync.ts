@@ -11,6 +11,7 @@ import {
 import { Animated } from "react-native";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 type Props = {
@@ -44,7 +45,8 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
       try {
         await syncFootprintsProfileWithEngine();
       } catch (error) {
-        console.error("Syncing profile error:", error); // TODO: envoyer l'erreur à un service de monitoring
+        console.error("Syncing profile error:", error);
+        posthog.captureException(error);
       } finally {
         setIsSyncing(false);
       }

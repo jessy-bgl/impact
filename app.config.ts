@@ -38,6 +38,7 @@ const config: ExpoConfig = {
         assets: ["./assets/images"],
       },
     ],
+    "posthog-react-native/expo",
   ],
   assetBundlePatterns: ["**/*"],
   experiments: {
