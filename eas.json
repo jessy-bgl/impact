@@ -9,12 +9,14 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": { "POSTHOG_CLI_HOST": "https://eu.posthog.com" }
     },
     "production": {
       "distribution": "store",
       "autoIncrement": true,
-      "android": { "image": "latest" }
+      "android": { "image": "latest" },
+      "env": { "POSTHOG_CLI_HOST": "https://eu.posthog.com" }
     }
   },
   "submit": {

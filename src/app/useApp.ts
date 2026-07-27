@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, useEffect, useState } from "react";
 import { Linking, Platform } from "react-native";
 
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
 export const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
@@ -32,7 +33,8 @@ export const useApp = () => {
           syncFootprintsProfileWithEngine({ handleMigration: true });
         }
       } catch (e) {
-        console.error(e); // TODO: envoyer l'erreur à un service de monitoring
+        console.error(e);
+        posthog.captureException(e);
       } finally {
         setIsReady(true);
       }

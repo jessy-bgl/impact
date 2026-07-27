@@ -16,7 +16,7 @@
     "prepare": "husky",
     "test": "cross-env NODE_ENV=test jest",
     "test:cov": "cross-env NODE_ENV=test jest --coverage",
-    "build:web": "mkdir -p public && touch public/.nojekyll && expo export -p web && npx workbox-cli generateSW workbox-config.js",
+    "build:web": "mkdir -p public && touch public/.nojekyll && expo export -p web --source-maps && posthog-cli sourcemap process --directory dist --delete-after && npx workbox-cli generateSW workbox-config.js",
     "deploy:web": "gh-pages -t -d dist"
   },
   "dependencies": {
@@ -34,6 +34,7 @@
     "expo": "57",
     "expo-application": "~57.0.2",
     "expo-asset": "~57.0.7",
+    "expo-constants": "~57.0.7",
     "expo-dev-client": "~57.0.9",
     "expo-device": "^57.0.1",
     "expo-font": "~57.0.1",
@@ -74,6 +75,7 @@
   "devDependencies": {
     "@babel/core": "~7.29.0",
     "@expo/metro-runtime": "~57.0.7",
+    "@posthog/cli": "~0.9.1",
     "@testing-library/react-native": "14.0.1",
     "@types/jest": "~29.5.14",
     "@types/lodash": "4.17.24",

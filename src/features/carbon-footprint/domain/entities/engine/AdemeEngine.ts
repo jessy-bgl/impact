@@ -7,13 +7,15 @@ import {
 } from "@carbonFootprint/data/ademe-footprint-model";
 import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { posthog } from "@common/config/posthog";
 
 export abstract class AdemeEngine {
   public static getSituation = (): Profile => {
     try {
       return ademeFootprintModel.getSituation();
     } catch (e) {
-      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
+      console.error(e);
+      posthog.captureException(e);
       return {};
     }
   };
@@ -28,7 +30,8 @@ export abstract class AdemeEngine {
         keepPreviousSituation,
       });
     } catch (e) {
-      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
+      console.error(e);
+      posthog.captureException(e);
     }
   };
 
@@ -36,7 +39,8 @@ export abstract class AdemeEngine {
     try {
       return ademeFootprintModel.evaluate(rule);
     } catch (e) {
-      console.error(e); // TODO: envoyer l'erreur à un service de monitoring
+      console.error(e);
+      posthog.captureException(e);
       return {} as EvaluatedNode;
     }
   };
