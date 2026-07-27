@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 import { List, RadioButton, Text } from "react-native-paper";
 
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { ThemeMode } from "@common/store/store";
 import { useAppStore } from "@common/store/useStore";
@@ -26,7 +27,10 @@ export const ThemeSetting = () => {
         {t("menu:theme.description")}
       </Text>
       <RadioButton.Group
-        onValueChange={(value) => setTheme(value as ThemeMode)}
+        onValueChange={(value) => {
+          posthog.capture("theme_changed", { theme: value });
+          setTheme(value as ThemeMode);
+        }}
         value={theme}
       >
         {themeOptions.map((option) => (
@@ -38,7 +42,10 @@ export const ThemeSetting = () => {
                 ? t("menu:theme.autoDescription")
                 : undefined
             }
-            onPress={() => setTheme(option.value)}
+            onPress={() => {
+              posthog.capture("theme_changed", { theme: option.value });
+              setTheme(option.value);
+            }}
             style={{ paddingLeft: 16 }}
             left={() => (
               <RadioButton.Android

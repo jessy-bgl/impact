@@ -6,6 +6,7 @@ import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
+import { posthog } from "@common/config/posthog";
 import { useScrollProfileSection } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
@@ -45,6 +46,10 @@ export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
         compact
         mode="outlined"
         onPress={() => {
+          posthog.capture("profile_section_completed", {
+            category,
+            sub_category: subCategory,
+          });
           updateProfileCompletion(category, subCategory, true);
           resetExpandedSection();
         }}

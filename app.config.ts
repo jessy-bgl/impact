@@ -14,6 +14,8 @@ const config: ExpoConfig = {
   version: pkgVersion.version,
   extra: {
     eas: { projectId: "e2d24387-b1d5-4c95-b5a8-42f48c62af22" },
+    posthogProjectToken: process.env.POSTHOG_PROJECT_TOKEN,
+    posthogHost: process.env.POSTHOG_HOST || "https://eu.i.posthog.com",
   },
   orientation: "portrait",
   icon: "./assets/icon.png",

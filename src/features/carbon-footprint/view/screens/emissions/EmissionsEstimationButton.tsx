@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Button, useTheme } from "react-native-paper";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
+import { posthog } from "@common/config/posthog";
 
 export const EmissionsEstimationButton = () => {
   const { t } = useTranslation("emissions");
@@ -18,7 +19,10 @@ export const EmissionsEstimationButton = () => {
       contentStyle={{ height: 48 }}
       labelStyle={{ color: colors.primary, fontWeight: "bold" }}
       style={{ borderColor: colors.primary }}
-      onPress={() => navigate("Profile")}
+      onPress={() => {
+        posthog.capture("footprint_estimation_started");
+        navigate("Profile");
+      }}
     >
       {t("estimate")}
     </Button>

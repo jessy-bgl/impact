@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Linking, Platform, ScrollView, StyleSheet } from "react-native";
 import { Divider, List } from "react-native-paper";
 
+import { posthog } from "@common/config/posthog";
 import { MenuNavigationProp } from "@app/MenuNavigator";
 
 const INSTAGRAM_URL =
@@ -69,13 +70,21 @@ export const Menu = () => {
           title="Instagram"
           left={(props) => <List.Icon {...props} icon="instagram" />}
           right={(props) => <List.Icon {...props} icon="open-in-new" />}
-          onPress={() => Linking.openURL(INSTAGRAM_URL)}
+          onPress={() => {
+            posthog.capture("external_link_opened", {
+              destination: "instagram",
+            });
+            Linking.openURL(INSTAGRAM_URL);
+          }}
         />
         <List.Item
           title="GitHub"
           left={(props) => <List.Icon {...props} icon="github" />}
           right={(props) => <List.Icon {...props} icon="open-in-new" />}
-          onPress={() => Linking.openURL(GITHUB_URL)}
+          onPress={() => {
+            posthog.capture("external_link_opened", { destination: "github" });
+            Linking.openURL(GITHUB_URL);
+          }}
         />
         {Platform.OS === "android" && (
           <List.Item
@@ -83,7 +92,12 @@ export const Menu = () => {
             description={t("RateAppDescription")}
             left={(props) => <List.Icon {...props} icon="star" />}
             right={(props) => <List.Icon {...props} icon="open-in-new" />}
-            onPress={() => Linking.openURL(PLAY_STORE_URL)}
+            onPress={() => {
+              posthog.capture("external_link_opened", {
+                destination: "play_store",
+              });
+              Linking.openURL(PLAY_STORE_URL);
+            }}
           />
         )}
         <List.Item
@@ -91,7 +105,12 @@ export const Menu = () => {
           description={t("ContactDescription")}
           left={(props) => <List.Icon {...props} icon="email" />}
           right={(props) => <List.Icon {...props} icon="open-in-new" />}
-          onPress={() => Linking.openURL("mailto:impactech@proton.me")}
+          onPress={() => {
+            posthog.capture("external_link_opened", {
+              destination: "contact_email",
+            });
+            Linking.openURL("mailto:impactech@proton.me");
+          }}
         />
       </List.Section>
     </ScrollView>

@@ -6,6 +6,7 @@ import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { getImageAsset } from "@common/utils/imageAssets";
 
@@ -86,7 +87,10 @@ export const Intro = () => {
             <Button
               mode="contained"
               textColor={"#fff"}
-              onPress={() => setShouldShowAppIntro(false)}
+              onPress={() => {
+                posthog.capture("app_intro_dismissed");
+                setShouldShowAppIntro(false);
+              }}
             >
               {`${t("main.Understood")} !`}
             </Button>

@@ -15,7 +15,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AppNavigator } from "@app/AppNavigator";
 import { useAppTheme } from "@app/AppTheme";
 import { PERSISTENCE_KEY, useApp } from "@app/useApp";
+import { posthog } from "@common/config/posthog";
 import "@common/translations/i18n";
+import { PostHogProvider } from "posthog-react-native";
 import "../../logger.config";
 
 SplashScreen.preventAutoHideAsync();
@@ -43,11 +45,21 @@ const App = () => {
               AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
             }}
           >
-            <GestureHandlerRootView style={styles.container}>
-              <View style={styles.content}>
-                <AppNavigator />
-              </View>
-            </GestureHandlerRootView>
+            <PostHogProvider
+              client={posthog}
+              autocapture={{
+                captureScreens: false,
+                captureTouches: true,
+                propsToCapture: ["testID"],
+                maxElementsCaptured: 20,
+              }}
+            >
+              <GestureHandlerRootView style={styles.container}>
+                <View style={styles.content}>
+                  <AppNavigator />
+                </View>
+              </GestureHandlerRootView>
+            </PostHogProvider>
           </NavigationContainer>
         </KeyboardProvider>
       </PaperProvider>
