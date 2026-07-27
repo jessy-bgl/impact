@@ -17,11 +17,7 @@ export type Footprints = {
 };
 
 export type FootprintCategory =
-  | "transport"
-  | "housing"
-  | "food"
-  | "everydayThings"
-  | "societalServices";
+  "transport" | "housing" | "food" | "everydayThings" | "societalServices";
 
 export type TransportFootprintSubCategory =
   | "boat"
@@ -47,8 +43,7 @@ export type EverydayThingsFootprintSubCategory =
   | "tobacco";
 
 export type SocietalServicesFootprintSubCategory =
-  | "publicServices"
-  | "merchantServices";
+  "publicServices" | "merchantServices";
 
 export type FootprintSubCategory =
   | TransportFootprintSubCategory

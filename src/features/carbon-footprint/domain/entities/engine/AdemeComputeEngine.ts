@@ -95,8 +95,7 @@ export class AdemeComputeEngine implements ComputeEngine {
   private getActionNames = (): DottedName[] => {
     const actionsNode = AdemeEngine.getRules().actions;
     const formule = actionsNode.rawNode.formule as
-      | { somme?: DottedName[] }
-      | undefined;
+      { somme?: DottedName[] } | undefined;
     return formule?.somme ?? [];
   };
 

@@ -2,11 +2,7 @@ import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 
 export abstract class Question {
   type!:
-    | "number"
-    | "select"
-    | "select-boolean"
-    | "multi-select"
-    | "multi-number";
+    "number" | "select" | "select-boolean" | "multi-select" | "multi-number";
   label!: keyof Profile;
   title!: string;
   description?: string;
