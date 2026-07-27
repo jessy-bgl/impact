@@ -20,7 +20,7 @@
     "deploy:web": "gh-pages -t -d dist"
   },
   "dependencies": {
-    "@babel/plugin-proposal-export-namespace-from": "7.18.9",
+    "@babel/plugin-transform-export-namespace-from": "~7.29.7",
     "@expo/vector-icons": "~15.0.3",
     "@gorhom/bottom-sheet": "5.2.14",
     "@incubateur-ademe/nosgestesclimat": "4.13.1",
