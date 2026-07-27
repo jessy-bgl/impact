@@ -4,6 +4,7 @@ import { Animated, ScrollView } from "react-native";
 import { Icon, useTheme } from "react-native-paper";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
+import { posthog } from "@common/config/posthog";
 import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
 import { useProfileSync } from "@carbonFootprint/domain/hooks/useProfileSync";
 import { ProfileCategoryCard } from "@carbonFootprint/view/screens/profile/ProfileCategoryCard";
@@ -57,31 +58,50 @@ export const Profile = () => {
       <ProfileCategoryCard
         title={t("Transport")}
         footprintCategory={transportFootprint}
-        onClick={() => navigate("TransportProfile")}
+        onClick={() => {
+          posthog.capture("profile_category_opened", { category: "transport" });
+          navigate("TransportProfile");
+        }}
         completion={profileCompletion.transport}
       />
       <ProfileCategoryCard
         title={t("Housing")}
         footprintCategory={housingFootprint}
-        onClick={() => navigate("HousingProfile")}
+        onClick={() => {
+          posthog.capture("profile_category_opened", { category: "housing" });
+          navigate("HousingProfile");
+        }}
         completion={profileCompletion.housing}
       />
       <ProfileCategoryCard
         title={t("Food")}
         footprintCategory={foodFootprint}
-        onClick={() => navigate("FoodProfile")}
+        onClick={() => {
+          posthog.capture("profile_category_opened", { category: "food" });
+          navigate("FoodProfile");
+        }}
         completion={profileCompletion.food}
       />
       <ProfileCategoryCard
         title={t("EverydayThings")}
         footprintCategory={everydayThingsFootprint}
-        onClick={() => navigate("EverydayThingsProfile")}
+        onClick={() => {
+          posthog.capture("profile_category_opened", {
+            category: "everydayThings",
+          });
+          navigate("EverydayThingsProfile");
+        }}
         completion={profileCompletion.everydayThings}
       />
       <ProfileCategoryCard
         title={t("SocietalServices")}
         footprintCategory={societalServicesFootprint}
-        onClick={() => navigate("SocietalServicesProfile")}
+        onClick={() => {
+          posthog.capture("profile_category_opened", {
+            category: "societalServices",
+          });
+          navigate("SocietalServicesProfile");
+        }}
         completion={profileCompletion.societalServices}
       />
     </ScrollView>

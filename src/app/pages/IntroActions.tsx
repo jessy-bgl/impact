@@ -14,6 +14,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 import { getImageAsset } from "@common/utils/imageAssets";
@@ -254,7 +255,10 @@ export const IntroActions: React.FC = () => {
               }}
             >
               <TouchableRipple
-                onPress={() => navigate("Home", { screen: "Profile" })}
+                onPress={() => {
+                  posthog.capture("complete_profile_tapped");
+                  navigate("Home", { screen: "Profile" });
+                }}
                 style={styles.submitButton}
               >
                 <Text numberOfLines={2} style={styles.submitButtonText}>
@@ -270,7 +274,10 @@ export const IntroActions: React.FC = () => {
             }}
           >
             <TouchableRipple
-              onPress={() => setShouldShowActionsIntro(false)}
+              onPress={() => {
+                posthog.capture("actions_intro_dismissed");
+                setShouldShowActionsIntro(false);
+              }}
               style={styles.submitButton}
             >
               <Text numberOfLines={2} style={styles.submitButtonText}>

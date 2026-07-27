@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { Button, ButtonProps, Card, Icon, useTheme } from "react-native-paper";
 
 import { ActionState } from "@carbonFootprint/domain/entities/action/Action";
+import { posthog } from "@common/config/posthog";
 
 type Props = {
   actionState: ActionState;
@@ -20,11 +21,20 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
   if (actionState === "notStarted")
     return (
       <Card.Actions>
-        <Button onPress={() => updateState("skipped")} style={buttonStyle}>
+        <Button
+          onPress={() => {
+            posthog.capture("action_skipped");
+            updateState("skipped");
+          }}
+          style={buttonStyle}
+        >
           <IconView icon="cancel" />
         </Button>
         <Button
-          onPress={() => updateState("inProgress")}
+          onPress={() => {
+            posthog.capture("action_started");
+            updateState("inProgress");
+          }}
           style={{
             ...buttonStyle,
             borderColor: colors.primary,
@@ -39,7 +49,13 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
   if (actionState === "inProgress")
     return (
       <Card.Actions>
-        <Button onPress={() => updateState("notStarted")} style={buttonStyle}>
+        <Button
+          onPress={() => {
+            posthog.capture("action_reset", { previous_state: "inProgress" });
+            updateState("notStarted");
+          }}
+          style={buttonStyle}
+        >
           <IconView icon="close" />
         </Button>
       </Card.Actions>
@@ -48,7 +64,13 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
   if (actionState === "skipped")
     return (
       <Card.Actions>
-        <Button onPress={() => updateState("notStarted")} style={buttonStyle}>
+        <Button
+          onPress={() => {
+            posthog.capture("action_reset", { previous_state: "skipped" });
+            updateState("notStarted");
+          }}
+          style={buttonStyle}
+        >
           <IconView icon="restore" />
         </Button>
       </Card.Actions>

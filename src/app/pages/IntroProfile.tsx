@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Card, Icon, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { getImageAsset } from "@common/utils/imageAssets";
 
@@ -104,7 +105,10 @@ export const IntroProfile = () => {
 
         <Button
           mode="contained"
-          onPress={() => setShouldShowProfileIntro(false)}
+          onPress={() => {
+            posthog.capture("profile_intro_dismissed");
+            setShouldShowProfileIntro(false);
+          }}
           style={{ margin: "auto" }}
         >
           {t("profile.dismissProfileIntro")}
