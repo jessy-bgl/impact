@@ -9,7 +9,8 @@
       "@app/*": ["./src/app/*"],
       "@assets/*": ["./assets/*"],
       "@carbonFootprint/*": ["./src/features/carbon-footprint/*"],
-      "@settings/*": ["./src/features/settings/*"]
+      "@settings/*": ["./src/features/settings/*"],
+      "@consent/*": ["./src/features/consent/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

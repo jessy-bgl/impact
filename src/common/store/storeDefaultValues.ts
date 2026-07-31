@@ -63,4 +63,9 @@ export const defaultAppStoreValues: AppStore = {
     societalServices: ademeComputeEngine.computeSocietalServicesFootprint(),
   },
   actions: [],
+  analyticsConsent: {
+    state: "unset",
+    decidedAt: null,
+    policyVersion: null,
+  },
 };

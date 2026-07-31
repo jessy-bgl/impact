@@ -15,7 +15,9 @@ export abstract class AdemeEngine {
       return ademeFootprintModel.getSituation();
     } catch (e) {
       console.error(e);
-      posthog.captureException(e);
+      // Never forward the raw Publicodes error: it can embed the user's
+      // footprint answers in its message. See docs/gdpr-compliance.md §3.
+      posthog.captureException(new Error("ademe_engine_get_situation_failed"));
       return {};
     }
   };
@@ -31,7 +33,7 @@ export abstract class AdemeEngine {
       });
     } catch (e) {
       console.error(e);
-      posthog.captureException(e);
+      posthog.captureException(new Error("ademe_engine_set_situation_failed"));
     }
   };
 
@@ -40,7 +42,10 @@ export abstract class AdemeEngine {
       return ademeFootprintModel.evaluate(rule);
     } catch (e) {
       console.error(e);
-      posthog.captureException(e);
+      posthog.captureException(
+        new Error("ademe_engine_evaluation_failed"),
+        typeof rule === "string" ? { rule } : {},
+      );
       return {} as EvaluatedNode;
     }
   };

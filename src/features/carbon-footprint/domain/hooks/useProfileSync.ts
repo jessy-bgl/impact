@@ -46,7 +46,9 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
         await syncFootprintsProfileWithEngine();
       } catch (error) {
         console.error("Syncing profile error:", error);
-        posthog.captureException(error);
+        // Never forward the raw error: it can embed the user's footprint
+        // answers. See docs/gdpr-compliance.md §3.
+        posthog.captureException(new Error("profile_sync_failed"));
       } finally {
         setIsSyncing(false);
       }

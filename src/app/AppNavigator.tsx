@@ -13,7 +13,6 @@ import {
 } from "@app/EmissionsNavigator";
 import { MenuNavigator } from "@app/MenuNavigator";
 import { Actions } from "@app/pages/Actions";
-import { Intro } from "@app/pages/Intro";
 import { IntroActions } from "@app/pages/IntroActions";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
@@ -30,14 +29,6 @@ const BottomTab = createBottomTabNavigator<AppTabParamList>();
 const iconSize = 24;
 
 export const AppNavigator = () => {
-  const shouldShowAppIntro = useAppStore((state) => state.shouldShowIntro.app);
-
-  if (shouldShowAppIntro) return <Intro />;
-
-  return <BottomTabNavigator />;
-};
-
-const BottomTabNavigator = () => {
   const { t } = useTranslation("pages");
 
   const shouldShowActionsIntro = useAppStore(
