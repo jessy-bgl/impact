@@ -30,6 +30,13 @@
 - **UI Components**: react-native-paper for Material Design components and icons
 - **Tests**: Jest + React Testing Library, use fake repositories for unit tests
 
+## Privacy
+
+- **Footprint answer values must never be sent as PostHog event properties.** Food, diet, housing and transport answers can support inferences about religion or health, which are GDPR Art 9 special categories requiring explicit consent and a much higher compliance bar than this app currently has. Category and sub-category _names_ (e.g. `"food"`) are fine; answer _values_ (e.g. `{ diet: "vegan" }`) are not. See `docs/gdpr-compliance.md` §3.
+- **No analytics capture before consent is granted.** `analyticsConsent.state` in the store
+  gates this — see `src/features/consent`. Do not call `posthog.capture()`, `.screen()`, or
+  mount `PostHogProvider` outside of that gate.
+
 ## Architecture
 
 - **Pattern**: Clean Architecture - isolate business logic from UI
