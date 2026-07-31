@@ -21,8 +21,16 @@ import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/u
 import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/updateProfile";
 import { isTestMode } from "@common/constants";
 import { useAppStore } from "@common/store/useStore";
+import { ConsentStoreRepository } from "@consent/data/repositories/consent.store.repository";
+import { ConsentStubRepository } from "@consent/data/repositories/consent.stub.repository";
+import { ConsentRepository } from "@consent/domain/repositories/consent.repository";
+import { createGrantAnalyticsConsent } from "@consent/domain/usecases/grantAnalyticsConsent";
+import { createRevokeAnalyticsConsent } from "@consent/domain/usecases/revokeAnalyticsConsent";
+import { AppDataStoreRepository } from "@settings/data/repositories/appData.store.repository";
 import { SettingsStoreRepository } from "@settings/data/repositories/settings.store.repository";
+import { AppDataRepository } from "@settings/domain/repositories/appData.repository";
 import { SettingsRepository } from "@settings/domain/repositories/settings.repository";
+import { createClearLocalData } from "@settings/domain/usecases/clearLocalData";
 import { createSetTheme } from "@settings/domain/usecases/setTheme";
 
 export interface Repositories {
@@ -32,6 +40,8 @@ export interface Repositories {
   actionsRepository: ActionsRepository;
   introRepository: IntroRepository;
   settingsRepository: SettingsRepository;
+  consentRepository: ConsentRepository;
+  appDataRepository: AppDataRepository;
 }
 
 const initRealRepositories = () => ({
@@ -41,6 +51,8 @@ const initRealRepositories = () => ({
   actionsRepository: new ActionsStoreRepository(useAppStore),
   introRepository: new IntroStoreRepository(useAppStore),
   settingsRepository: new SettingsStoreRepository(useAppStore),
+  consentRepository: new ConsentStoreRepository(useAppStore),
+  appDataRepository: new AppDataStoreRepository(useAppStore),
 });
 
 export const initFakeRepositories = () => ({
@@ -50,6 +62,8 @@ export const initFakeRepositories = () => ({
   actionsRepository: new ActionsStubRepository(),
   introRepository: new IntroStoreRepository(useAppStore),
   settingsRepository: new SettingsStoreRepository(useAppStore),
+  consentRepository: new ConsentStubRepository(),
+  appDataRepository: new AppDataStoreRepository(useAppStore),
 });
 
 const repositories: Repositories = isTestMode
@@ -64,6 +78,8 @@ const initUsecases = (repositories: Repositories) => {
     actionsRepository,
     introRepository,
     settingsRepository,
+    consentRepository,
+    appDataRepository,
   } = repositories;
 
   return {
@@ -84,6 +100,9 @@ const initUsecases = (repositories: Repositories) => {
     ...createUpdateFootprint(footprintsRepository),
     ...createUpdateShowIntro(introRepository),
     ...createSetTheme(settingsRepository),
+    ...createGrantAnalyticsConsent(consentRepository),
+    ...createRevokeAnalyticsConsent(consentRepository),
+    ...createClearLocalData(appDataRepository),
   };
 };
 

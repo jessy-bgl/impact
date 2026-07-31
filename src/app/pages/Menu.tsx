@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Linking, Platform, ScrollView, StyleSheet } from "react-native";
 import { Divider, List } from "react-native-paper";
 
-import { posthog } from "@common/config/posthog";
 import { MenuNavigationProp } from "@app/MenuNavigator";
+import { posthog } from "@common/config/posthog";
 
 const INSTAGRAM_URL =
   "https://www.instagram.com/impact_app_?igsh=MWp0aWE2MW43enFodg==";

@@ -16,7 +16,31 @@
   },
   "dataPolicy": {
     "title": "Respect de la vie privée",
-    "description": "Impact a été conçue pour fonctionner sans compte utilisateur et sans collecte de données personnelles.",
-    "privacyPolicy": "Politique de confidentialité"
+    "description": "Impact fonctionne sans compte utilisateur. Vos réponses restent sur votre appareil. Avec votre accord, des statistiques d'usage anonymisées et des rapports d'erreur sont envoyés à PostHog pour améliorer l'application.",
+    "privacyPolicy": "Lire la politique de confidentialité",
+    "dataActionsTitle": "Vos données",
+    "dataActionsDescription": "Vos réponses, émissions et actions sont stockées uniquement sur cet appareil.",
+    "clearLocalData": "Effacer mes données locales",
+    "clearLocalDataTitle": "Effacer mes données locales ?",
+    "clearLocalDataConfirmation": "Vos réponses, émissions et actions enregistrées seront définitivement supprimées de cet appareil. Cette action est irréversible.",
+    "clearLocalDataCancel": "Annuler",
+    "clearLocalDataConfirm": "Effacer"
+  },
+  "consent": {
+    "title": "Confidentialité",
+    "explanation": "Impact fonctionne sans compte utilisateur. Vos réponses au questionnaire restent sur votre appareil et ne sont jamais envoyées.",
+    "explanationDetail": "Avec votre accord, l'application envoie à PostHog des statistiques d'usage anonymisées (écrans consultés, fonctionnalités utilisées) et des rapports d'erreur, pour nous aider à l'améliorer. Vous pouvez changer d'avis à tout moment depuis les Paramètres.",
+    "readMore": "Lire la politique de confidentialité complète",
+    "accept": "Accepter",
+    "refuse": "Refuser",
+    "toggleTitle": "Statistiques d'usage",
+    "toggleDescriptionGranted": "Anonymisées, désactivables à tout moment.",
+    "toggleDescriptionDenied": "Désactivées.",
+    "enabled": "Activé",
+    "disabled": "Désactivé",
+    "identifierTitle": "Identifiant anonyme",
+    "identifierDescriptionGranted": "Associé à vos statistiques d'usage.",
+    "identifierDescriptionDenied": "Aucun identifiant tant que les statistiques d'usage sont désactivées.",
+    "copyIdentifier": "Copier l'identifiant"
   }
 }

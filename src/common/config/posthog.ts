@@ -19,22 +19,67 @@ if (__DEV__ && !isPostHogConfigured) {
   );
 }
 
+// $exception properties can carry a raw error message, which — for the catch
+// sites in AdemeEngine.ts/useProfileSync.ts — is now always a static message
+// (see those files). This is a backstop for exception sources we don't
+// control (native crashes, unhandled promise rejections) that might still
+// carry dynamic content.
+const MAX_EXCEPTION_MESSAGE_LENGTH = 200;
+
 export const posthog = new PostHog(projectToken || "placeholder_key", {
   host,
   disabled: !isPostHogConfigured,
-  captureAppLifecycleEvents: true,
+  // No capture of any kind before the user has made a consent choice — see
+  // src/features/consent. Flipped on by posthog.optIn() from
+  // grantAnalyticsConsent, off again via optOut() from
+  // revokeAnalyticsConsent.
+  defaultOptIn: false,
+  disableGeoip: true,
+  personProfiles: "never",
+  enableSessionReplay: false,
+  // Off, not just unused: leaving this on fires an automatic capture() call
+  // during client init, before consent is known — see
+  // docs/gdpr-compliance.md §2.1 for why that matters.
+  captureAppLifecycleEvents: false,
   errorTracking: {
     autocapture: {
       uncaughtExceptions: true,
       unhandledRejections: true,
     },
   },
+  before_send: (event) => {
+    if (!event || event.event !== "$exception") return event;
+    const exceptionList = event.properties?.$exception_list;
+    if (!Array.isArray(exceptionList)) return event;
+    return {
+      ...event,
+      properties: {
+        ...event.properties,
+        $exception_list: exceptionList.map((exception) => {
+          if (typeof exception !== "object" || exception === null)
+            return exception;
+          const value = (exception as { value?: unknown }).value;
+          if (
+            typeof value !== "string" ||
+            value.length <= MAX_EXCEPTION_MESSAGE_LENGTH
+          )
+            return exception;
+          return {
+            ...exception,
+            value: `${value.slice(0, MAX_EXCEPTION_MESSAGE_LENGTH)}…`,
+          };
+        }),
+      },
+    };
+  },
   flushAt: 20,
   flushInterval: 10000,
   maxBatchSize: 100,
   maxQueueSize: 1000,
-  preloadFeatureFlags: true,
-  sendFeatureFlagEvent: true,
+  // Unused — no feature flags exist in this app — and preloading one also
+  // triggers a network request at init, before consent is known.
+  preloadFeatureFlags: false,
+  sendFeatureFlagEvent: false,
   featureFlagsRequestTimeoutMs: 10000,
   requestTimeout: 10000,
   fetchRetryCount: 3,

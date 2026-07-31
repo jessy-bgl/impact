@@ -1,8 +1,8 @@
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import {
   EverydayThingsFootprintSubCategory,
-  FootprintCategory,
   FoodFootprintSubCategory,
+  FootprintCategory,
   FootprintSubCategory,
   Footprints,
   HousingFootprintSubCategory,
@@ -11,6 +11,7 @@ import {
 } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { defaultAppStoreValues } from "@common/store/storeDefaultValues";
+import { AnalyticsConsent } from "@consent/domain/entities/Consent";
 
 export type ThemeMode = "light" | "dark" | "auto";
 
@@ -37,6 +38,7 @@ export type AppStore = {
   };
   footprints: Footprints;
   actions: Action[];
+  analyticsConsent: AnalyticsConsent;
 };
 
 export const defaultAppStore = (): AppStore => defaultAppStoreValues;
