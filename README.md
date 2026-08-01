@@ -35,12 +35,12 @@ Commande pour regénérer les fichiers android et iOS en fonction de la configur
 
 ### Run
 
-- web : `npm run web`
-- android : `npm run android`
+- web : `npm run web` ou `npx expo start --web`
+- android : `npm run android` ou `npx expo run:android`
 
 ### Build - internal
 
-- mobile - local : `npx expo run:android` ou `eas build --platform android --profile production --local`
+- mobile - local : `eas build --platform android --profile production --local`
 - mobile - EAS : `eas build --platform android --profile preview`
 
 ### Build - production
