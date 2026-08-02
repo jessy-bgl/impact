@@ -10,11 +10,13 @@
     },
     "preview": {
       "distribution": "internal",
+      "environment": "preview",
       "env": { "POSTHOG_CLI_HOST": "https://eu.posthog.com" }
     },
     "production": {
       "distribution": "store",
       "autoIncrement": true,
+      "environment": "production",
       "android": { "image": "latest" },
       "env": { "POSTHOG_CLI_HOST": "https://eu.posthog.com" }
     }
