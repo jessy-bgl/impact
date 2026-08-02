@@ -38,7 +38,17 @@ const config: ExpoConfig = {
         assets: ["./assets/images"],
       },
     ],
-    "posthog-react-native/expo",
+    [
+      "posthog-react-native/expo",
+      {
+        uploadNativeSymbols: true,
+        // Rebuilding an unchanged JS bundle under a new versionCode yields the
+        // same chunk id, so the symbol set already exists in PostHog and the
+        // upload 400s (release_id_mismatch, then content_hash_mismatch),
+        // failing the Gradle build. Skip those instead of failing.
+        skipOnConflict: true,
+      },
+    ],
   ],
   assetBundlePatterns: ["**/*"],
   experiments: {

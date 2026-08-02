@@ -45,6 +45,7 @@ export const posthog = new PostHog(projectToken || "placeholder_key", {
     autocapture: {
       uncaughtExceptions: true,
       unhandledRejections: true,
+      nativeCrashes: true,
     },
   },
   before_send: (event) => {

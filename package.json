@@ -24,6 +24,7 @@
     "@expo/vector-icons": "~15.0.3",
     "@gorhom/bottom-sheet": "5.2.14",
     "@incubateur-ademe/nosgestesclimat": "4.13.1",
+    "@posthog/react-native-plugin": "2.2.3",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "7.18.14",
     "@react-navigation/drawer": "7.13.5",
