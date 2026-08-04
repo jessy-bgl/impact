@@ -42,7 +42,7 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
             </KeyboardAwareScrollView>
           </List.AccordionGroup>
         </ScrollProfileSectionContext.Provider>
-        <CustomBottomSheet style={{}} />
+        <CustomBottomSheet />
       </BottomSheetProvider>
     </BottomSheetModalProvider>
   );

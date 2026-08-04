@@ -5,16 +5,11 @@ import {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { useCallback } from "react";
-import { ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
 
-type Props = {
-  style?: ViewStyle;
-};
-
-export const CustomBottomSheet = ({ style }: Props) => {
+export const CustomBottomSheet = () => {
   const { bottomSheetRef, bottomSheetContent, dismiss } =
     useCustomBottomSheetModal();
 
@@ -32,11 +27,6 @@ export const CustomBottomSheet = ({ style }: Props) => {
       ref={bottomSheetRef}
       onChange={handleSheetChanges}
       enableOverDrag={false}
-      style={{
-        ...style,
-        alignItems: "center",
-        marginHorizontal: "auto",
-      }}
       backgroundStyle={{
         backgroundColor: colors.surfaceVariant,
       }}
