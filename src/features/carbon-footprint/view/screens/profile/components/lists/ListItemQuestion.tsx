@@ -20,7 +20,6 @@ type Props = {
   affix?: string;
   step?: number;
   style?: ViewStyle;
-  forceDisplay?: boolean; // NB: correctif pour certaines questions
 };
 
 export const ListItemQuestion = ({
@@ -32,10 +31,9 @@ export const ListItemQuestion = ({
   affix,
   inputFlex,
   labelFlex,
-  forceDisplay,
   step,
 }: Props) => {
-  if (!question || (!question.isApplicable && !forceDisplay)) return;
+  if (!question || !question.isApplicable) return;
 
   const handleUpdateAsync = (question: Question, value: string | number) =>
     setTimeout(() => handleUpdate(question, value));
@@ -99,11 +97,7 @@ export const ListItemQuestion = ({
 
   return (
     <>
-      {divider && (
-        <ListItemQuestionDivider
-          hidden={!question.isApplicable && !forceDisplay}
-        />
-      )}
+      {divider && <ListItemQuestionDivider hidden={!question.isApplicable} />}
       {item}
     </>
   );

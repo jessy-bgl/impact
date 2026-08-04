@@ -10,7 +10,6 @@ export const TwoWheelerSectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
-        forceDisplay
         question={twoWheelerQuestions.twoWheelerUsage}
         control={control}
         handleUpdate={updateTransportProfile}

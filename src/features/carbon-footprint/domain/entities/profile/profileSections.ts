@@ -50,8 +50,8 @@ export const profileSections = {
     twoWheelerUsage: "transport . deux roues . usager",
   }),
   publicTransport: defineSection("transport", "publicTransport", {
-    trainKmPerYear: "transport . train . km",
     publicTransportUsage: "transport . transports commun",
+    trainKmPerYear: "transport . train . km",
     busHoursPerWeek: "transport . transports commun . bus . heures par semaine",
     coachKmPerWeek: "transport . transports commun . car . km par semaine",
     metroHoursPerWeek:
@@ -96,13 +96,13 @@ export const profileSections = {
   }),
   energy: defineSection("housing", "energy", {
     heatingMode: "logement . chauffage . mode",
+    heatingMain: "logement . chauffage . principal",
     preciseConsumptionInput:
       "logement . chauffage . saisie précision consommation",
     consumptionFeeling:
       "logement . chauffage . précision consommation . ressenti",
     dpe: "logement . chauffage . précision consommation . saisie DPE",
     waterHeatingMode: "logement . chauffage . mode . pas de chauffage . ecs",
-    heatingMain: "logement . chauffage . principal",
     waterHeatingMain: "logement . chauffage . principal . ecs",
     collectiveHeating: "logement . chauffage . collectif",
     collectiveHeatingEcs: "logement . chauffage . collectif . ecs",
@@ -193,8 +193,10 @@ export const profileSections = {
     seasonalProducts: "alimentation . de saison . consommation",
   }),
   waste: defineSection("food", "waste", {
-    wasteInput: "alimentation . déchets . gestes . saisie",
     wasteQuantity: "alimentation . déchets . quantité jetée",
+    // the following question is disabled because this is redundant
+    // with the other questions
+    // wasteInput: "alimentation . déchets . gestes . saisie",
     foodWasteGestures:
       "alimentation . déchets . gestes . gaspillage alimentaire . présent",
     buyInBulk: "alimentation . déchets . gestes . acheter en vrac . présent",

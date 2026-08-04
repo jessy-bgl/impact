@@ -22,6 +22,12 @@ export const ClothesSectionContent = () => {
       />
       <ListItemQuestion
         divider
+        question={clothesQuestions.clothesRenewReason}
+        control={control}
+        handleUpdate={updateEverydayThingsProfile}
+      />
+      <ListItemQuestion
+        divider
         question={clothesQuestions.clothesQuality}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
@@ -29,12 +35,6 @@ export const ClothesSectionContent = () => {
       <ListItemQuestion
         divider
         question={clothesQuestions.clothesResell}
-        control={control}
-        handleUpdate={updateEverydayThingsProfile}
-      />
-      <ListItemQuestion
-        divider
-        question={clothesQuestions.clothesRenewReason}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
       />

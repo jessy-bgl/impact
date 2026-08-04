@@ -14,6 +14,7 @@ export const LeisureSectionContent = () => {
         handleUpdate={updateHousingProfile}
       />
       <ListItemQuestion
+        divider
         question={leisureQuestions.swimmingPoolSize}
         control={control}
         handleUpdate={updateHousingProfile}
@@ -21,7 +22,7 @@ export const LeisureSectionContent = () => {
         inputFlex={1}
       />
       <ListItemQuestion
-        divider={leisureQuestions.swimmingPoolSize.isApplicable}
+        divider={leisureQuestions.swimmingPoolType.isApplicable}
         question={leisureQuestions.outdoorEquipment}
         control={control}
         handleUpdate={updateHousingProfile}

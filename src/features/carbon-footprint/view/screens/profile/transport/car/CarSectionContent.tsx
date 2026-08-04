@@ -9,6 +9,12 @@ export const CarSectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
+        question={carQuestions.regularUsageOfSameCar}
+        control={control}
+        handleUpdate={updateTransportProfile}
+      />
+      <ListItemQuestion
+        divider
         question={carQuestions.kmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
@@ -23,12 +29,6 @@ export const CarSectionContent = () => {
         handleUpdate={updateTransportProfile}
         labelFlex={3}
         inputFlex={1}
-      />
-      <ListItemQuestion
-        divider
-        question={carQuestions.regularUsageOfSameCar}
-        control={control}
-        handleUpdate={updateTransportProfile}
       />
       <ListItemQuestion
         divider

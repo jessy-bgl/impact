@@ -15,6 +15,12 @@ export const EnergySectionContent = () => {
       />
       <ListItemQuestion
         divider
+        question={energyQuestions.heatingMain}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
+        divider
         question={energyQuestions.preciseConsumptionInput}
         control={control}
         handleUpdate={updateHousingProfile}
@@ -34,12 +40,6 @@ export const EnergySectionContent = () => {
       <ListItemQuestion
         divider
         question={energyQuestions.waterHeatingMode}
-        control={control}
-        handleUpdate={updateHousingProfile}
-      />
-      <ListItemQuestion
-        divider
-        question={energyQuestions.heatingMain}
         control={control}
         handleUpdate={updateHousingProfile}
       />

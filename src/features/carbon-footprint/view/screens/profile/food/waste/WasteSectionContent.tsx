@@ -15,12 +15,6 @@ export const WasteSectionContent = () => {
       />
       <ListItemQuestion
         divider
-        question={wasteQuestions.wasteInput}
-        control={control}
-        handleUpdate={updateFoodProfile}
-      />
-      <ListItemQuestion
-        divider
         question={wasteQuestions.foodWasteGestures}
         control={control}
         handleUpdate={updateFoodProfile}

@@ -1,4 +1,5 @@
 import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
+import { PublicodesExpression } from "publicodes";
 
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
@@ -76,12 +77,26 @@ export class AdemeQuestion extends Question {
   }
 
   private getIsApplicable(): boolean {
-    let isApplicable = AdemeEngine.evaluate({
-      "est applicable": this.rule,
-    }).nodeValue;
+    let isApplicable = AdemeEngine.evaluate(
+      this.getApplicabilityExpression(),
+    ).nodeValue;
     if (isApplicable === undefined) isApplicable = true;
     const isActive = this.rule.rawNode.inactif !== "oui";
     return (isApplicable as boolean) && isActive;
+  }
+
+  // Publicodes treats a "oui / non" rule as an applicability flag: answering
+  // "non" sets its value to null, which makes "est applicable" false and would
+  // hide the question right after the user answered it. Neutralizing the
+  // answer to "oui" keeps only the parent chain as the display condition.
+  private getApplicabilityExpression(): PublicodesExpression {
+    if (this.type !== "select-boolean") return { "est applicable": this.rule };
+    return {
+      "est applicable": {
+        valeur: this.ruleKey,
+        contexte: { [this.ruleKey]: "oui" },
+      },
+    };
   }
 
   private getOptions(): Question["options"] | undefined {

@@ -10,18 +10,18 @@ export const PublicTransportSectionContent = () => {
   return (
     <ListContentContainer>
       <ListItemQuestion
+        question={publicTransportQuestions.publicTransportUsage}
+        control={control}
+        handleUpdate={updateTransportProfile}
+      />
+      <ListItemQuestion
+        divider
         question={publicTransportQuestions.trainKmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
         labelFlex={2}
         inputFlex={1}
         step={100}
-      />
-      <ListItemQuestion
-        divider
-        question={publicTransportQuestions.publicTransportUsage}
-        control={control}
-        handleUpdate={updateTransportProfile}
       />
       <ListItemQuestion
         divider
