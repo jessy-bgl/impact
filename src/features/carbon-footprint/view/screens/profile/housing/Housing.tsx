@@ -8,7 +8,7 @@ import { LeisureSection } from "@carbonFootprint/view/screens/profile/housing/le
 
 export const HousingProfile = () => {
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+    <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
       <ListAccordionGroup>
         <HomeSection />
         <Divider />

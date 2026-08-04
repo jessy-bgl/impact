@@ -8,7 +8,7 @@ import { WasteSection } from "@carbonFootprint/view/screens/profile/food/waste/W
 
 export const FoodProfile = () => {
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+    <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
       <ListAccordionGroup>
         <MealsSection />
         <Divider />

@@ -11,7 +11,7 @@ import { TwoWheelerSection } from "@carbonFootprint/view/screens/profile/transpo
 
 export const TransportProfile = () => {
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+    <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
       <ListAccordionGroup>
         <CarSection />
         <Divider />

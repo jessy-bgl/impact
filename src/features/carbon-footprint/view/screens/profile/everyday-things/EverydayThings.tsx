@@ -12,7 +12,7 @@ import { TobaccoSection } from "@carbonFootprint/view/screens/profile/everyday-t
 
 export const EverydayThingsProfile = () => {
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+    <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
       <ListAccordionGroup>
         <PetsSection />
         <Divider />

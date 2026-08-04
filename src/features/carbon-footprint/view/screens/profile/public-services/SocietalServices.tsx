@@ -25,7 +25,7 @@ export const SocietalServicesProfile = () => {
   );
 
   return (
-    <SafeAreaView edges={["bottom", "left", "right"]} style={{ flex: 1 }}>
+    <SafeAreaView edges={["left", "right"]} style={{ flex: 1 }}>
       <ScrollView
         contentContainerStyle={{
           gap: 10,
