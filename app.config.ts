@@ -1,17 +1,16 @@
 import { ExpoConfig } from "expo/config";
-import { coerce } from "semver";
 import "ts-node/register";
 
 import pkg from "./package.json";
 
-const pkgVersion = coerce(pkg.version)!;
+const pkgVersion = pkg.version;
 
 const config: ExpoConfig = {
   owner: "jessy-bgl",
   githubUrl: "https://github.com/jessy-bgl/impact",
   name: "Impact",
   slug: "impact",
-  version: pkgVersion.version,
+  version: pkgVersion,
   extra: {
     eas: { projectId: "e2d24387-b1d5-4c95-b5a8-42f48c62af22" },
     posthogProjectToken: process.env.POSTHOG_PROJECT_TOKEN,

@@ -1,5 +1,4 @@
 import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
-import _ from "lodash";
 import { EvaluatedNode } from "publicodes";
 
 import { NGCRulesNodes } from "@carbonFootprint/data/ademe-footprint-model";
@@ -74,10 +73,12 @@ export class AdemeComputeEngine implements ComputeEngine {
         });
     // TODO : filter irrelevant actions ?
     // sort actions by impact
-    actionEvaluatedNodes = _.sortBy(
-      actionEvaluatedNodes,
-      (action) => -1 * (AdemeEngine.getNumericValue(action) ?? 1),
+    actionEvaluatedNodes = [...actionEvaluatedNodes].sort(
+      (a, b) =>
+        (AdemeEngine.getNumericValue(b) ?? 1) -
+        (AdemeEngine.getNumericValue(a) ?? 1),
     );
+
     // filter disabled actions
     const rules = AdemeEngine.getRules();
     actionEvaluatedNodes = actionEvaluatedNodes.filter((action) => {
