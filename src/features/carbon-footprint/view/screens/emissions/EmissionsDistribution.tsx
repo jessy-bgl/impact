@@ -4,8 +4,10 @@ import { PieChart } from "react-native-gifted-charts";
 import { Text, useTheme } from "react-native-paper";
 
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { Skeleton } from "moti/skeleton";
 
 const pieWidthAndHeight = 250;
+const innerRadius = pieWidthAndHeight / 3.5;
 
 type Props = {
   isLoading: boolean;
@@ -22,7 +24,7 @@ export const EmissionsDistribution = ({
 
   const footprintByCategories = Object.values(footprints);
 
-  const { colors } = useTheme();
+  const { colors, dark } = useTheme();
 
   return (
     <View
@@ -30,30 +32,45 @@ export const EmissionsDistribution = ({
         width: pieWidthAndHeight,
         height: pieWidthAndHeight,
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <PieChart
-        donut
-        showText
-        innerRadius={pieWidthAndHeight / 3.5}
-        innerCircleColor={colors.background}
-        data={
-          isLoading
-            ? []
-            : footprintByCategories.map(({ icon, footprint, color }) => {
-                return {
-                  text: icon,
-                  value: footprint,
-                  color,
-                };
-              })
-        }
-        centerLabelComponent={() => (
-          <Text variant="titleLarge" style={{ textAlign: "center" }}>
-            {`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
-          </Text>
-        )}
-      />
+      {isLoading ? (
+        <>
+          <Skeleton
+            colorMode={dark ? "dark" : "light"}
+            radius="round"
+            width={pieWidthAndHeight}
+            height={pieWidthAndHeight}
+          />
+          <View
+            style={{
+              position: "absolute",
+              width: innerRadius * 2,
+              height: innerRadius * 2,
+              borderRadius: innerRadius,
+              backgroundColor: colors.background,
+            }}
+          />
+        </>
+      ) : (
+        <PieChart
+          donut
+          showText
+          innerRadius={innerRadius}
+          innerCircleColor={colors.background}
+          data={footprintByCategories.map(({ icon, footprint, color }) => ({
+            text: icon,
+            value: footprint,
+            color,
+          }))}
+          centerLabelComponent={() => (
+            <Text variant="titleLarge" style={{ textAlign: "center" }}>
+              {`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
+            </Text>
+          )}
+        />
+      )}
     </View>
   );
 };
