@@ -11,7 +11,11 @@ const host =
 const isPostHogConfigured =
   !!projectToken && projectToken !== "phc_your_project_token_here";
 
-if (__DEV__ && !isPostHogConfigured) {
+// Tests never configure a project token — the client is disabled there anyway,
+// so the warning would only be noise in the jest output.
+const isTestEnv = process.env.NODE_ENV === "test";
+
+if (__DEV__ && !isTestEnv && !isPostHogConfigured) {
   console.error(
     "POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, " +
       "this causes events to be silently missed. " +

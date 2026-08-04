@@ -1,5 +1,3 @@
-import { InteractionManager } from "react-native";
-
 import { FootprintsStubRepository } from "@carbonFootprint/data/repositories/footprints.stub.repository";
 import { ProfileStubRepository } from "@carbonFootprint/data/repositories/profile.stub.repository";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
@@ -18,19 +16,6 @@ const fakeSelectRule = (options: string[]) => ({
 });
 const fakeNumericRule = () => ({ rawNode: { question: "stub question" } });
 
-const mockInteractionManagerSync = () => {
-  jest
-    .spyOn(InteractionManager, "runAfterInteractions")
-    .mockImplementation((callback) => {
-      if (typeof callback === "function") callback();
-      return {
-        cancel: jest.fn(),
-        then: jest.fn(),
-        done: jest.fn(),
-      } as ReturnType<typeof InteractionManager.runAfterInteractions>;
-    });
-};
-
 describe("syncFootprintsProfileWithEngine", () => {
   let profileStub: ProfileStubRepository;
   let footprintsStub: FootprintsStubRepository;
@@ -40,8 +25,6 @@ describe("syncFootprintsProfileWithEngine", () => {
   >["syncFootprintsProfileWithEngine"];
 
   beforeEach(() => {
-    mockInteractionManagerSync();
-
     profileStub = new ProfileStubRepository();
     footprintsStub = new FootprintsStubRepository();
     engineStub = new ComputeEngineStub();

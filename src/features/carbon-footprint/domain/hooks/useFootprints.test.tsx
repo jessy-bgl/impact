@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-native";
+import { act, renderHook } from "@testing-library/react-native";
 
 import { defaultAppStore } from "@common/store/store";
 import { zustandAppStore } from "@common/store/store.zustand";
@@ -6,8 +6,10 @@ import { zustandAppStore } from "@common/store/store.zustand";
 import { useFootprints } from "./useFootprints";
 
 describe("useFootprints", () => {
-  afterEach(() => {
-    zustandAppStore.setState(defaultAppStore());
+  afterEach(async () => {
+    await act(async () => {
+      zustandAppStore.setState(defaultAppStore());
+    });
   });
 
   it("annualFootprint is the sum of category footprints", async () => {
@@ -36,14 +38,16 @@ describe("useFootprints", () => {
 
   it("is loading when a footprint value is NaN", async () => {
     const stored = zustandAppStore.getState();
-    zustandAppStore.setState({
-      footprints: {
-        ...stored.footprints,
-        transport: {
-          ...stored.footprints.transport,
-          annualFootprint: NaN,
-        } as unknown as typeof stored.footprints.transport,
-      },
+    await act(async () => {
+      zustandAppStore.setState({
+        footprints: {
+          ...stored.footprints,
+          transport: {
+            ...stored.footprints.transport,
+            annualFootprint: NaN,
+          } as unknown as typeof stored.footprints.transport,
+        },
+      });
     });
 
     const { result } = await renderHook(() => useFootprints());

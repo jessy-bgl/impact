@@ -1,5 +1,3 @@
-import { InteractionManager } from "react-native";
-
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { ComputeEngine } from "@carbonFootprint/domain/entities/engine/ComputeEngine";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
@@ -18,10 +16,8 @@ export const createSyncFootprintsProfileWithEngine = (
   const syncFootprintsProfileWithEngine = async ({
     handleMigration = false,
   }: { handleMigration?: boolean } = {}): Promise<void> => {
-    // Wait for interactions to complete before starting heavy computation
-    await new Promise<void>((resolve) => {
-      InteractionManager.runAfterInteractions(() => resolve());
-    });
+    // Wait for the UI to go idle before starting heavy computation
+    await waitForIdle();
 
     const storedProfile = profileRepository.fetchAdemeProfile();
     let profile = structuredClone(storedProfile);
@@ -134,6 +130,13 @@ export const createSyncFootprintsProfileWithEngine = (
 
     return migratedProfile;
   };
+
+  const waitForIdle = (): Promise<void> =>
+    new Promise<void>((resolve) => {
+      if (typeof requestIdleCallback === "function")
+        requestIdleCallback(() => resolve());
+      else setTimeout(() => resolve(), 0);
+    });
 
   const computeWithDelay = <T>(computation: () => T): Promise<T> => {
     return new Promise((resolve) => {
