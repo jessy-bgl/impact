@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { List } from "react-native-paper";
 
-import { ListTitle } from "@carbonFootprint/view/screens/profile/components/lists/ListTitle";
+import { ListAccordion } from "@carbonFootprint/view/screens/profile/components/lists/ListAccordion";
+import { OtherProductsSectionContent } from "@carbonFootprint/view/screens/profile/everyday-things/other-products/OtherProductsSectionContent";
 import { useAppStore } from "@common/store/useStore";
 
 /**
@@ -17,16 +17,13 @@ export const OtherProductsSection = () => {
   );
 
   return (
-    <List.Item
-      title={
-        <ListTitle
-          title={t("emissions:everydayThings.other")}
-          subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
-        />
-      }
-      description={t("everydayThings:otherProducts.description")}
-      descriptionNumberOfLines={5}
-      left={(props) => <List.Icon {...props} icon="dots-horizontal-circle" />}
-    />
+    <ListAccordion
+      title={t("emissions:everydayThings.other")}
+      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      icon="dots-horizontal-circle"
+      completed
+    >
+      <OtherProductsSectionContent />
+    </ListAccordion>
   );
 };
