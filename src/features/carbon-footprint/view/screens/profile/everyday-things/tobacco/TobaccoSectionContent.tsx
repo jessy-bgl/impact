@@ -13,8 +13,6 @@ export const TobaccoSectionContent = () => {
         question={tobaccoQuestions.tobaccoConsumption}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
-        labelFlex={1}
-        inputFlex={1}
       />
       <ValidateResponsesButton
         category="everydayThings"

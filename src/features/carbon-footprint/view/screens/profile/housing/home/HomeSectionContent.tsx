@@ -24,24 +24,18 @@ export const HomeSectionContent = () => {
         question={housingQuestions.numberOfInhabitants}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={housingQuestions.homeAge}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={housingQuestions.surfaceArea}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
@@ -66,32 +60,24 @@ export const HomeSectionContent = () => {
         question={housingQuestions.renovationExtensionSize}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       {/* <ListItemQuestion
         divider
         question={housingQuestions.renovationHeating}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       /> */}
       {/* <ListItemQuestion
         divider
         question={housingQuestions.renovationIsolation}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       /> */}
       <ListItemQuestion
         divider
         question={housingQuestions.photovoltaicPanel}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ValidateResponsesButton category="housing" subCategory="home" />
     </ListContentContainer>

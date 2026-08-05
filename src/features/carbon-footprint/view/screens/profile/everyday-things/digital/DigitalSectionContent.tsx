@@ -13,8 +13,6 @@ export const DigitalSectionContent = () => {
         question={digitalQuestions.hoursPerDayOnInternet}
         control={control}
         handleUpdate={updateEverydayThingsProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider

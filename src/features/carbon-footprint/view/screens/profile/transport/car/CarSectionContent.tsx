@@ -18,8 +18,6 @@ export const CarSectionContent = () => {
         question={carQuestions.kmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={1.5}
-        inputFlex={1}
         step={100}
       />
       <ListItemQuestion
@@ -27,8 +25,6 @@ export const CarSectionContent = () => {
         question={carQuestions.averagePassengers}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={3}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider

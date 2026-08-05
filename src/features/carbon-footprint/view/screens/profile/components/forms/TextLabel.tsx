@@ -1,4 +1,4 @@
-import { StyleProp, TextStyle, TouchableOpacity, View } from "react-native";
+import { StyleProp, TouchableOpacity, View, ViewStyle } from "react-native";
 import { Icon, Text, useTheme } from "react-native-paper";
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
@@ -6,7 +6,7 @@ import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
 
 type Props = {
   question: Question;
-  style?: StyleProp<TextStyle>;
+  style?: StyleProp<ViewStyle>;
 };
 
 export const TextLabel = ({ question, style }: Props) => {
@@ -26,14 +26,11 @@ export const TextLabel = ({ question, style }: Props) => {
 
   return (
     <TouchableOpacity
-      style={{ flexDirection: "row", alignItems: "center" }}
+      style={[{ flexDirection: "row", alignItems: "center" }, style]}
       onPress={question.description ? handlePress : undefined}
       disabled={!question.description}
     >
-      <Text
-        variant="labelLarge"
-        style={{ ...(style as TextStyle), flexShrink: 1 }}
-      >
+      <Text variant="labelLarge" style={{ flexShrink: 1 }}>
         {question.title}
       </Text>
       {question.description && (

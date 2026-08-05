@@ -18,16 +18,12 @@ export const PlaneSectionContent = () => {
         question={planeQuestions.annualFlights}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={planeQuestions.amortizedFlights}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ValidateResponsesButton category="transport" subCategory="plane" />
     </ListContentContainer>

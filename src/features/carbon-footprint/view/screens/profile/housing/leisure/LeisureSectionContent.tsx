@@ -18,8 +18,6 @@ export const LeisureSectionContent = () => {
         question={leisureQuestions.swimmingPoolSize}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider={leisureQuestions.swimmingPoolType.isApplicable}
@@ -50,8 +48,6 @@ export const LeisureSectionContent = () => {
         question={leisureQuestions.secondHomeSurface}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
@@ -64,48 +60,36 @@ export const LeisureSectionContent = () => {
         question={leisureQuestions.hotelNightsPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={leisureQuestions.campingNightPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={leisureQuestions.youthHostelNightsPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={leisureQuestions.rentalNightsPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={leisureQuestions.houseExchangeNightsPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={leisureQuestions.cruseNightsPerYear}
         control={control}
         handleUpdate={updateHousingProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ValidateResponsesButton category="housing" subCategory="leisure" />
     </ListContentContainer>

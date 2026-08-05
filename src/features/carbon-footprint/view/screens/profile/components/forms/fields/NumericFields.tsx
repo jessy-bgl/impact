@@ -9,6 +9,7 @@ import { resolveUnitAffix } from "@carbonFootprint/view/screens/profile/componen
 import { NumericInput } from "@carbonFootprint/view/screens/profile/components/forms/inputs/NumericInput";
 import { TextLabel } from "@carbonFootprint/view/screens/profile/components/forms/TextLabel";
 import { RowContainer } from "@carbonFootprint/view/screens/profile/components/RowContainer";
+import { useIsWideLayout } from "@carbonFootprint/view/screens/profile/components/useIsWideLayout";
 import { FormValues } from "@carbonFootprint/view/screens/profile/types";
 
 type Props = {
@@ -25,17 +26,12 @@ export const NumericFields = ({
   question,
   control,
   style,
-  affix,
   handleUpdate,
-  labelFlex,
-  inputFlex,
 }: Props) => {
   const { t } = useTranslation("common");
-  const { width } = useWindowDimensions();
-  const widthLimit = 450;
-  const isWidthLimitReached = width > widthLimit;
+  const isWideLayout = useIsWideLayout();
 
-  const ContainerView = isWidthLimitReached ? RowContainer : ColumnContainer;
+  const ContainerView = isWideLayout ? RowContainer : ColumnContainer;
 
   return (
     <ColumnContainer style={style}>
@@ -48,7 +44,7 @@ export const NumericFields = ({
             <ContainerView key={subQuestion.label}>
               <TextLabel
                 question={subQuestion}
-                style={isWidthLimitReached ? { flex: labelFlex ?? 1 } : {}}
+                style={isWideLayout ? { flex: 1 } : {}}
               />
               <Controller<FormValues>
                 name={subQuestion.label}
@@ -64,12 +60,6 @@ export const NumericFields = ({
                     }}
                     onChangeText={onChange}
                     value={value}
-                    maxWidth={250}
-                    style={
-                      isWidthLimitReached
-                        ? { flex: inputFlex ?? 2, textAlign: "center" }
-                        : { textAlign: "center" }
-                    }
                   />
                 )}
               />

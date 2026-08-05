@@ -15,9 +15,6 @@ type Props = {
   control: Control<FormValues, any>;
   handleUpdate: (question: Question, value: string | number) => void;
   divider?: boolean;
-  labelFlex?: number;
-  inputFlex?: number;
-  affix?: string;
   step?: number;
   style?: ViewStyle;
 };
@@ -28,9 +25,6 @@ export const ListItemQuestion = ({
   control,
   handleUpdate,
   divider = false,
-  affix,
-  inputFlex,
-  labelFlex,
   step,
 }: Props) => {
   if (!question || !question.isApplicable) return;
@@ -46,7 +40,6 @@ export const ListItemQuestion = ({
         control={control}
         question={question}
         handleUpdate={handleUpdateAsync}
-        affix={affix}
         style={style}
         step={step}
       />
@@ -67,8 +60,6 @@ export const ListItemQuestion = ({
         question={question}
         handleUpdate={handleUpdateAsync}
         style={style}
-        inputFlex={inputFlex}
-        labelFlex={labelFlex}
       />
     );
   } else if (question.type === "multi-select") {
@@ -78,8 +69,6 @@ export const ListItemQuestion = ({
         question={question}
         handleUpdate={handleUpdateAsync}
         style={style}
-        inputFlex={inputFlex}
-        labelFlex={labelFlex}
       />
     );
   } else if (question.type === "multi-number") {
@@ -89,8 +78,6 @@ export const ListItemQuestion = ({
         question={question}
         handleUpdate={handleUpdateAsync}
         style={style}
-        inputFlex={inputFlex}
-        labelFlex={labelFlex}
       />
     );
   }

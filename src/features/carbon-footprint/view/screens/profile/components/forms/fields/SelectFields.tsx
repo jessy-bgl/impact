@@ -12,8 +12,6 @@ type Props = {
   control: Control<FormValues, any>;
   handleUpdate: (question: Question, value: string | number) => void;
   style?: ViewStyle;
-  labelFlex?: number;
-  inputFlex?: number;
 };
 
 export const SelectFields = ({
@@ -21,8 +19,6 @@ export const SelectFields = ({
   control,
   style,
   handleUpdate,
-  labelFlex,
-  inputFlex,
 }: Props) => {
   if (!question.subQuestions) return;
 
@@ -55,27 +51,4 @@ export const SelectFields = ({
         ))}
     </ColumnContainer>
   );
-
-  // return (
-  //   <ColumnContainer style={style}>
-  //     <TextLabel question={question} style={{ flex: labelFlex }} />
-  //     <Controller<FormValues>
-  //       name={question.label}
-  //       control={control}
-  //       render={({ field: { onChange, value } }) => (
-  //         <SelectSegmented
-  //           question={question}
-  //           direction={question.options?.length === 2 ? "row" : "column"}
-  //           style={{ flex: inputFlex }}
-  //           options={question.options!}
-  //           value={value}
-  //           onValueChange={(newValue: string) => {
-  //             onChange(newValue);
-  //             handleUpdate(question, newValue);
-  //           }}
-  //         />
-  //       )}
-  //     />
-  //   </ColumnContainer>
-  // );
 };

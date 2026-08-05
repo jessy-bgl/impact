@@ -18,16 +18,12 @@ export const DrinksSectionContent = () => {
         question={drinksQuestions.sodaConsumption}
         control={control}
         handleUpdate={updateFoodProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={drinksQuestions.alcoholConsumption}
         control={control}
         handleUpdate={updateFoodProfile}
-        labelFlex={1.5}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
