@@ -17,7 +17,6 @@
     "car": "Voiture",
     "twoWheeler": "Deux-roues",
     "plane": "Avion",
-    "boat": "Bateau",
     "public": "Transports en commun",
     "other": "Divers"
   },
@@ -39,7 +38,6 @@
     "digital": "Numérique",
     "hobbies": "Loisirs",
     "tobacco": "Tabac",
-    "consumableProducts": "Produits consommables",
-    "otherProducts": "Autres"
+    "other": "Autres produits et consommables"
   }
 }

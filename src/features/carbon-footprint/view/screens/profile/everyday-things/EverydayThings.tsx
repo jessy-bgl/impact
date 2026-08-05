@@ -7,6 +7,7 @@ import { DigitalSection } from "@carbonFootprint/view/screens/profile/everyday-t
 import { FurnitureSection } from "@carbonFootprint/view/screens/profile/everyday-things/furniture/FurnitureSection";
 import { HobbiesSection } from "@carbonFootprint/view/screens/profile/everyday-things/hobbies/HobbiesSection";
 import { HouseholdAppliancesSection } from "@carbonFootprint/view/screens/profile/everyday-things/household-appliances/HouseholdAppliancesSection";
+import { OtherProductsSection } from "@carbonFootprint/view/screens/profile/everyday-things/other-products/OtherProductsSection";
 import { PetsSection } from "@carbonFootprint/view/screens/profile/everyday-things/pets/PetsSection";
 import { TobaccoSection } from "@carbonFootprint/view/screens/profile/everyday-things/tobacco/TobaccoSection";
 
@@ -27,6 +28,8 @@ export const EverydayThingsProfile = () => {
         <FurnitureSection />
         <Divider />
         <TobaccoSection />
+        <Divider />
+        <OtherProductsSection />
       </ListAccordionGroup>
     </SafeAreaView>
   );

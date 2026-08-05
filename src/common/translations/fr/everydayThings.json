@@ -113,14 +113,6 @@
       "otherSport": "Autres (tir, escalade...) 🏹"
     }
   },
-  "consumableProducts": {
-    "title": "Comment estimeriez-vous votre consommation par mois de produits d'hygiène (savon, maquillage...) et d'entretien (lessive, produits ménagers...) ?",
-    "consumptionFrequencies": {
-      "low": "Faible (1 ou 2 produits)",
-      "medium": "Normale (environ 5 produits)",
-      "high": "Elevée (environ 10 produits)"
-    }
-  },
   "tobacco": {
     "title": "Quelle est votre consommation par semaine de tabac ?",
     "consumptionFrequencies": {
@@ -131,11 +123,6 @@
     }
   },
   "otherProducts": {
-    "title": "Le test ne capte encore toutes vos consommations, comment estimeriez-vous votre niveau de dépenses en produits neufs (décoration d'intérieur, bricolage, jeux, loisirs créatifs, outils, etc.) ?",
-    "spendingLevels": {
-      "low": "Moins de 50€ / mois",
-      "medium": "Environ 80€ / mois",
-      "high": "Plus de 120€ / mois"
-    }
+    "description": "Produits d'hygiène et d'entretien, vaisselle, décoration, bricolage, réparations… Estimés à partir de vos autres réponses : aucune question dédiée n'existe dans le modèle de l'ADEME."
   }
 }
