@@ -2,7 +2,9 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   listContentContainer: {
-    padding: 15,
+    paddingInline: 15,
+    paddingBottom: 15,
+    paddingTop: 5,
   },
   rowContainer: {
     flexDirection: "row",
