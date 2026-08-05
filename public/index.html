@@ -18,7 +18,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>Impact</title>
     <link rel="apple-touch-icon" sizes="180x180" href="icon192.png" />
-    <link rel="manifest" href="/impact/manifest.json" />
     <link rel="canonical" href="https://jessy-bgl.github.io/impact/" />
     <style>
       /**
@@ -69,21 +68,51 @@
       }*/
     </style>
     <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", () => {
-          navigator.serviceWorker
-            .register("/impact/sw.js", { scope: "/impact/" })
-            .then((registration) => {
-              console.log(
-                "Service Worker registered with scope:",
-                registration.scope,
-              );
-            })
-            .catch((error) => {
-              console.error("Service Worker registration failed:", error);
-            });
-        });
-      }
+      // manifest.json and sw.js are only emitted by `build:web` (into dist/),
+      // so on the dev server (`expo start --web`) these paths 404 and Metro's
+      // SPA fallback returns index.html instead. Probe content-type before
+      // wiring them up to avoid noisy console errors in dev; no-op in prod.
+      (() => {
+        const base = "/impact";
+
+        fetch(`${base}/manifest.json`)
+          .then((res) => {
+            if (res.ok && res.headers.get("content-type")?.includes("json")) {
+              const link = document.createElement("link");
+              link.rel = "manifest";
+              link.href = `${base}/manifest.json`;
+              document.head.appendChild(link);
+            }
+          })
+          .catch(() => {});
+
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", () => {
+            fetch(`${base}/sw.js`)
+              .then((res) => {
+                if (
+                  res.ok &&
+                  res.headers.get("content-type")?.includes("javascript")
+                ) {
+                  return navigator.serviceWorker.register(`${base}/sw.js`, {
+                    scope: `${base}/`,
+                  });
+                }
+              })
+              .then((registration) => {
+                if (registration) {
+                  console.log(
+                    "Service Worker registered with scope:",
+                    registration.scope,
+                  );
+                }
+              })
+              .catch((error) => {
+                console.error("Service Worker registration failed:", error);
+              });
+          });
+        }
+      })();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/ios-pwa-splash@1.0.0/cdn.min.js"></script>
     <script>
