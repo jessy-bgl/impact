@@ -5,8 +5,6 @@ type Props = {
   carFootprint?: number;
   twoWheelerFootprint?: number;
   planeFootprint?: number;
-  boatFootprint?: number;
-  trainFootprint?: number;
   holidaysTransportFootprint?: number;
   publicTransportFootprint?: number;
   gentleMobilityFootprint?: number;
@@ -16,8 +14,6 @@ export class TransportFootprint implements WithAnnualFootprint {
   carFootprint: number;
   twoWheelerFootprint: number;
   planeFootprint: number;
-  boatFootprint: number;
-  trainFootprint: number;
   publicTransportFootprint: number;
   holidaysTransportFootprint: number;
   gentleMobilityFootprint: number;
@@ -26,8 +22,6 @@ export class TransportFootprint implements WithAnnualFootprint {
     carFootprint,
     twoWheelerFootprint,
     planeFootprint,
-    boatFootprint,
-    trainFootprint,
     publicTransportFootprint,
     holidaysTransportFootprint,
     gentleMobilityFootprint,
@@ -35,8 +29,6 @@ export class TransportFootprint implements WithAnnualFootprint {
     this.carFootprint = roundFootprint(carFootprint) ?? 0;
     this.twoWheelerFootprint = roundFootprint(twoWheelerFootprint) ?? 0;
     this.planeFootprint = roundFootprint(planeFootprint) ?? 0;
-    this.boatFootprint = roundFootprint(boatFootprint) ?? 0;
-    this.trainFootprint = roundFootprint(trainFootprint) ?? 0;
     this.publicTransportFootprint =
       roundFootprint(publicTransportFootprint) ?? 0;
     this.holidaysTransportFootprint =
@@ -49,8 +41,6 @@ export class TransportFootprint implements WithAnnualFootprint {
       this.carFootprint +
         this.twoWheelerFootprint +
         this.planeFootprint +
-        this.boatFootprint +
-        this.trainFootprint +
         this.publicTransportFootprint +
         this.holidaysTransportFootprint +
         this.gentleMobilityFootprint,

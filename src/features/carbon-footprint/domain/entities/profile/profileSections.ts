@@ -25,10 +25,6 @@ export const profileSections = {
     annualFlights: "transport . avion . vols annuels",
     amortizedFlights: "transport . avion . vols amortis",
   }),
-  boat: defineSection("transport", "boat", {
-    boatUsage: "transport . ferry . usager",
-    boatHoursPerYear: "transport . ferry . heures",
-  }),
   car: defineSection("transport", "car", {
     kmPerYear: "transport . voiture . km",
     averagePassengers: "transport . voiture . voyageurs",
@@ -56,6 +52,7 @@ export const profileSections = {
     coachKmPerWeek: "transport . transports commun . car . km par semaine",
     metroHoursPerWeek:
       "transport . transports commun . métro ou tram . heures par semaine",
+    boatHoursPerYear: "transport . ferry . heures",
   }),
   otherTransport: defineSection("transport", "otherTransport", {
     gentleMobility: "transport . mobilité douce",

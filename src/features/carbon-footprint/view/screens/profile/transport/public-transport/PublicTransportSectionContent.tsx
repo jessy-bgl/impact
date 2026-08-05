@@ -19,8 +19,6 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.trainKmPerYear}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={2}
-        inputFlex={1}
         step={100}
       />
       <ListItemQuestion
@@ -28,16 +26,12 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.busHoursPerWeek}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={2}
-        inputFlex={1}
       />
       <ListItemQuestion
         divider
         question={publicTransportQuestions.coachKmPerWeek}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={2}
-        inputFlex={1}
         step={10}
       />
       <ListItemQuestion
@@ -45,8 +39,12 @@ export const PublicTransportSectionContent = () => {
         question={publicTransportQuestions.metroHoursPerWeek}
         control={control}
         handleUpdate={updateTransportProfile}
-        labelFlex={2}
-        inputFlex={1}
+      />
+      <ListItemQuestion
+        divider
+        question={publicTransportQuestions.boatHoursPerYear}
+        control={control}
+        handleUpdate={updateTransportProfile}
       />
       <ValidateResponsesButton
         category="transport"

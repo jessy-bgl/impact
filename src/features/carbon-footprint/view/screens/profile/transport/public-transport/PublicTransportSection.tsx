@@ -8,9 +8,7 @@ export const PublicTransportSection = () => {
   const { t } = useTranslation(["transport", "emissions", "common"]);
 
   const annualFootprint = useAppStore(
-    (store) =>
-      store.footprints.transport.publicTransportFootprint +
-      store.footprints.transport.trainFootprint,
+    (store) => store.footprints.transport.publicTransportFootprint,
   );
 
   const isCompleted = useAppStore(

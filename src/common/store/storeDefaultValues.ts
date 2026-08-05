@@ -14,7 +14,6 @@ export const defaultAppStoreValues: AppStore = {
     ademe: {},
     completion: {
       transport: {
-        boat: false,
         car: false,
         otherTransport: false,
         plane: false,
@@ -33,12 +32,10 @@ export const defaultAppStoreValues: AppStore = {
       },
       everydayThings: {
         clothes: false,
-        consumableProducts: false,
         digital: false,
         furniture: false,
         hobbies: false,
         householdAppliances: false,
-        otherProducts: false,
         pets: false,
         tobacco: false,
       },

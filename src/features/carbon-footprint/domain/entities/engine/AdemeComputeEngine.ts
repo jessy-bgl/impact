@@ -103,15 +103,14 @@ export class AdemeComputeEngine implements ComputeEngine {
   public computeTransportFootprint = () => {
     return new TransportFootprint({
       carFootprint: this.evaluateRule("transport . voiture"),
-      boatFootprint: this.evaluateRule("transport . ferry"),
-      planeFootprint: this.evaluateRule("transport . avion"),
       twoWheelerFootprint: this.evaluateRule("transport . deux roues"),
-      gentleMobilityFootprint: this.evaluateRule("transport . mobilité douce"),
+      planeFootprint: this.evaluateRule("transport . avion"),
+      publicTransportFootprint:
+        this.evaluateRule("transport . transports commun") +
+        this.evaluateRule("transport . ferry") +
+        this.evaluateRule("transport . train"),
       holidaysTransportFootprint: this.evaluateRule("transport . vacances"),
-      publicTransportFootprint: this.evaluateRule(
-        "transport . transports commun",
-      ),
-      trainFootprint: this.evaluateRule("transport . train"),
+      gentleMobilityFootprint: this.evaluateRule("transport . mobilité douce"),
     });
   };
 
@@ -141,17 +140,16 @@ export class AdemeComputeEngine implements ComputeEngine {
     return new EverydayThingsFootprint({
       petFootprint: this.evaluateRule("divers . animaux domestiques"),
       furnitureFootprint: this.evaluateRule("divers . ameublement"),
-      otherProductsFootprint: this.evaluateRule("divers . autres produits"),
       hobbiesFootprint: this.evaluateRule("divers . loisirs"),
       clothesFootprint: this.evaluateRule("divers . textile"),
       digitalFootprint: this.evaluateRule("divers . numérique"),
-      consumableProductsFootprint: this.evaluateRule(
-        "divers . produits consommables",
-      ),
       tobaccoFootprint: this.evaluateRule("divers . tabac"),
       householdApplicancesFootprint: this.evaluateRule(
         "divers . électroménager",
       ),
+      otherProductsFootprint:
+        this.evaluateRule("divers . autres produits") +
+        this.evaluateRule("divers . produits consommables"),
     });
   };
 
