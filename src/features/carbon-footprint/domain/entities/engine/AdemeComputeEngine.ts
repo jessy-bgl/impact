@@ -11,6 +11,7 @@ import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodF
 import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { AdemeQuestion } from "@carbonFootprint/domain/entities/question/AdemeQuestion";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
@@ -53,6 +54,10 @@ export class AdemeComputeEngine implements ComputeEngine {
       }
       return acc;
     }, {} as NGCRulesNodes);
+  };
+
+  public getCategory = (questionKey: keyof Profile): FootprintCategory => {
+    return AdemeEngine.getCategory(questionKey);
   };
 
   public getActions = (): Action[] => {

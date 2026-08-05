@@ -113,10 +113,6 @@ describe("AdemeComputeEngine", () => {
         expect(high).toBeGreaterThan(low);
       });
     });
-
-    // societalServices footprint is engine-determined and does not respond to
-    // profile inputs. Its positive contribution is verified in the default
-    // profile tests above.
   });
 
   describe("persona regression snapshots", () => {

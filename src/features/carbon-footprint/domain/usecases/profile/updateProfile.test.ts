@@ -12,6 +12,31 @@ import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/up
 const makeQuestion = (label: keyof Profile): Question =>
   ({ label }) as Question;
 
+const makeMosaicOption = (
+  label: keyof Profile,
+  { defaultValue = "", isInactive = false } = {},
+): Question =>
+  ({
+    label,
+    type: "select-boolean",
+    isApplicable: true,
+    isInactive,
+    defaultValue,
+  }) as Question;
+
+const makeMosaicQuestion = (
+  label: keyof Profile,
+  subQuestions: Question[],
+  { isApplicable = true } = {},
+): Question =>
+  ({
+    label,
+    type: "multi-select",
+    isApplicable,
+    isInactive: false,
+    subQuestions,
+  }) as Question;
+
 describe("createUpdateProfile", () => {
   let computeEngine: ComputeEngineStub;
   let profileRepository: ProfileStubRepository;
@@ -132,6 +157,118 @@ describe("createUpdateProfile", () => {
         expect(getStoredFootprint()).toBe(getExpectedFootprint());
       },
     );
+  });
+
+  describe("initMosaicAnswers", () => {
+    const publicTransport = () =>
+      makeMosaicQuestion("transport . transports commun", [
+        makeMosaicOption("transport . transports commun . bus . présent"),
+        makeMosaicOption("transport . transports commun . car . présent"),
+      ]);
+
+    it("persists 'non' for every unanswered option without an engine default", () => {
+      updateProfile.initMosaicAnswers([publicTransport()]);
+
+      expect(
+        profileRepository.profile[
+          "transport . transports commun . bus . présent"
+        ],
+      ).toBe("non");
+      expect(
+        profileRepository.profile[
+          "transport . transports commun . car . présent"
+        ],
+      ).toBe("non");
+    });
+
+    it("adds the answers to the engine situation without dropping the previous one", () => {
+      updateProfile.initMosaicAnswers([publicTransport()]);
+
+      expect(computeEngine.lastProfile).toEqual({
+        "transport . transports commun . bus . présent": "non",
+        "transport . transports commun . car . présent": "non",
+      });
+      expect(computeEngine.lastKeepPreviousValues).toBe(true);
+    });
+
+    it("recomputes the footprint of every touched category", () => {
+      updateProfile.initMosaicAnswers([
+        publicTransport(),
+        makeMosaicQuestion("logement . vacances", [
+          makeMosaicOption("logement . vacances . hotel . présent"),
+        ]),
+      ]);
+
+      expect(footprintsRepository.transport).toBe(
+        computeEngine.transportFootprint,
+      );
+      expect(footprintsRepository.housing).toBe(computeEngine.housingFootprint);
+      expect(footprintsRepository.food).toBeUndefined();
+    });
+
+    it("keeps answers already given by the user", () => {
+      profileRepository.setTestProfileKey(
+        "transport . transports commun . bus . présent",
+        "oui",
+      );
+
+      updateProfile.initMosaicAnswers([publicTransport()]);
+
+      expect(
+        profileRepository.profile[
+          "transport . transports commun . bus . présent"
+        ],
+      ).toBe("oui");
+    });
+
+    it("leaves options carrying an engine default untouched", () => {
+      updateProfile.initMosaicAnswers([
+        makeMosaicQuestion("logement . construction . travaux de rénovation", [
+          makeMosaicOption(
+            "logement . construction . rénovation . travaux . rénovation . présent",
+            { defaultValue: "oui" },
+          ),
+        ]),
+      ]);
+
+      expect(profileRepository.profile).toEqual({});
+      expect(computeEngine.lastProfile).toBeNull();
+    });
+
+    it("ignores inactive options", () => {
+      updateProfile.initMosaicAnswers([
+        makeMosaicQuestion("transport . vacances", [
+          makeMosaicOption(
+            "transport . vacances . bateau plaisance . propriétaire",
+            { isInactive: true },
+          ),
+        ]),
+      ]);
+
+      expect(profileRepository.profile).toEqual({});
+    });
+
+    it("ignores non-applicable mosaics and non-mosaic questions", () => {
+      updateProfile.initMosaicAnswers([
+        makeMosaicQuestion(
+          "transport . transports commun",
+          [makeMosaicOption("transport . transports commun . bus . présent")],
+          { isApplicable: false },
+        ),
+        makeQuestion("transport . voiture . km"),
+      ]);
+
+      expect(profileRepository.profile).toEqual({});
+    });
+
+    it("writes nothing when every option is already answered", () => {
+      updateProfile.initMosaicAnswers([publicTransport()]);
+      computeEngine.lastProfile = null;
+
+      updateProfile.initMosaicAnswers([publicTransport()]);
+
+      expect(computeEngine.lastProfile).toBeNull();
+    });
   });
 
   describe("updateProfileCompletion", () => {

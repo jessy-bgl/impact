@@ -26,6 +26,19 @@ export class ProfileStoreRepository implements ProfileRepository {
     }));
   }
 
+  updateProfileKeys(values: Profile) {
+    this.store.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        ademe: {
+          ...state.profile.ademe,
+          ...values,
+        },
+      },
+    }));
+  }
+
   updateProfileCompletion(
     category: FootprintCategory,
     subCategory: FootprintSubCategory,

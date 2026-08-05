@@ -3,6 +3,7 @@ import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
+import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import {
   computeProfileSectionVersion,
   profileSections,
@@ -21,20 +22,17 @@ export const createUpdateProfile = (
     value: string | number,
   ) => {
     _updateProfile(question, value);
-    const footprint = computeEngine.computeTransportFootprint();
-    footprintsRepository.updateTransportFootprint(footprint);
+    _recomputeCategoryFootprint("transport");
   };
 
   const updateFoodProfile = (question: Question, value: string | number) => {
     _updateProfile(question, value);
-    const footprint = computeEngine.computeFoodFootprint();
-    footprintsRepository.updateFoodFootprint(footprint);
+    _recomputeCategoryFootprint("food");
   };
 
   const updateHousingProfile = (question: Question, value: string | number) => {
     _updateProfile(question, value);
-    const footprint = computeEngine.computeHousingFootprint();
-    footprintsRepository.updateHousingFootprint(footprint);
+    _recomputeCategoryFootprint("housing");
   };
 
   const updateEverydayThingsProfile = (
@@ -42,8 +40,66 @@ export const createUpdateProfile = (
     value: string | number,
   ) => {
     _updateProfile(question, value);
-    const footprint = computeEngine.computeEverydayThingsFootprint();
-    footprintsRepository.updateEverydayThingsFootprint(footprint);
+    _recomputeCategoryFootprint("everydayThings");
+  };
+
+  /**
+   * Mosaic options left undefined are neither "oui" nor "non" for the engine,
+   * so `non applicable si "<option> = non"` follow-ups stay wrongly visible and
+   * the footprint falls back to the French average. Persist "non" for unchecked
+   * options to match the checkbox state; options with an engine default are
+   * left alone since the engine already resolves them.
+   */
+  const initMosaicAnswers = (questions: Question[]) => {
+    const profile = profileRepository.fetchAdemeProfile();
+    const answers: Profile = {};
+
+    for (const question of questions) {
+      if (!question?.isApplicable || question.type !== "multi-select") continue;
+
+      for (const subQuestion of question.subQuestions ?? []) {
+        if (subQuestion.isInactive) continue;
+        if (subQuestion.defaultValue) continue;
+        if (profile[subQuestion.label] !== undefined) continue;
+        answers[subQuestion.label] = "non";
+      }
+    }
+
+    const answeredKeys = Object.keys(answers) as (keyof Profile)[];
+    if (answeredKeys.length === 0) return;
+
+    computeEngine.setProfile(answers, true);
+    profileRepository.updateProfileKeys(answers);
+
+    const categories = new Set(
+      answeredKeys.map((key) => computeEngine.getCategory(key)),
+    );
+    categories.forEach(_recomputeCategoryFootprint);
+  };
+
+  const _recomputeCategoryFootprint = (category: FootprintCategory) => {
+    switch (category) {
+      case "transport":
+        return footprintsRepository.updateTransportFootprint(
+          computeEngine.computeTransportFootprint(),
+        );
+      case "food":
+        return footprintsRepository.updateFoodFootprint(
+          computeEngine.computeFoodFootprint(),
+        );
+      case "housing":
+        return footprintsRepository.updateHousingFootprint(
+          computeEngine.computeHousingFootprint(),
+        );
+      case "everydayThings":
+        return footprintsRepository.updateEverydayThingsFootprint(
+          computeEngine.computeEverydayThingsFootprint(),
+        );
+      case "societalServices":
+        return footprintsRepository.updateSocietalServicesFootprint(
+          computeEngine.computeSocietalServicesFootprint(),
+        );
+    }
   };
 
   const _updateProfile = (question: Question, value: string | number): void => {
@@ -86,6 +142,7 @@ export const createUpdateProfile = (
   };
 
   return {
+    initMosaicAnswers,
     updateTransportProfile,
     updateFoodProfile,
     updateHousingProfile,
