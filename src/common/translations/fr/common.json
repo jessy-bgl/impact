@@ -21,11 +21,13 @@
     "climatiseur": "climatiseur(s)",
     "bouteille": "bouteille(s)",
     "nuit": "nuit(s)",
-    "h/jour": "h/jour",
+    "h/jour": "h",
     "h/semaine": "h",
     "km/semaine": "km",
     "l/semaine": "litre(s)",
     "paquet/semaine": "paquet(s)",
+    "repas/semaine": "repas",
+    "tasse/jour": "tasse(s)",
     "l/centkm": "l/100km",
     "kWh/centkm": "kWh/100km"
   }

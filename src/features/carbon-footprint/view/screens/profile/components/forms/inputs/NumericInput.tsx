@@ -3,6 +3,7 @@ import { useCallback, useRef } from "react";
 import { TextStyle } from "react-native";
 import {
   Button,
+  Text,
   TextInput,
   TextInputProps,
   useTheme,
@@ -10,12 +11,17 @@ import {
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
+const MAX_INLINE_UNIT_CHARS = 10;
+const MIN_VALUE_WIDTH = 56;
+const AFFIX_WIDTH_PER_CHAR = 8;
+
 type Props = TextInputProps & {
   question: Question;
   onValueChange: (value: string) => void;
   positive?: boolean;
   step?: number;
   maxWidth?: number;
+  unit?: string;
 };
 
 export const NumericInput = ({
@@ -24,6 +30,7 @@ export const NumericInput = ({
   positive = true,
   step = 1,
   maxWidth = 310,
+  unit,
   ...props
 }: Props) => {
   const { colors } = useTheme();
@@ -50,6 +57,13 @@ export const NumericInput = ({
   const textColor = question.isEngineDefaultValueUsed
     ? colors.onSurfaceDisabled
     : undefined;
+
+  const isUnitInline = !unit || unit.length <= MAX_INLINE_UNIT_CHARS;
+  const inlineUnit = isUnitInline ? unit : undefined;
+  const externalUnit = isUnitInline ? undefined : unit;
+  const inputMinWidth =
+    MIN_VALUE_WIDTH +
+    (inlineUnit ? inlineUnit.length * AFFIX_WIDTH_PER_CHAR : 0);
 
   const isDecreaseDisabled =
     min !== undefined && value !== undefined && Number(value) <= min;
@@ -84,69 +98,87 @@ export const NumericInput = ({
     <View
       style={{
         ...(props.style as TextStyle),
-        flexDirection: "row",
-        gap: 10,
+        gap: 4,
         maxWidth: maxWidth,
         alignSelf: "center",
       }}
     >
-      <Button
-        mode="outlined"
-        disabled={isDecreaseDisabled}
-        onPress={handleDecrement}
-        textColor={colors.tertiary}
-        labelStyle={{ marginHorizontal: 0 }}
-        style={{
-          flex: 0,
-          borderColor: isDecreaseDisabled ? undefined : colors.tertiary,
-          alignSelf: "center",
-        }}
-      >
-        {`-${step}`}
-      </Button>
-      <TextInput
-        {...props}
-        keyboardType="numeric"
-        dense={dense}
-        mode={mode}
-        onChangeText={(text) => {
-          if (!props.onChangeText) return;
-          const isNumber = /^\d*\.?\d*$/.test(text);
-          if (!isNumber) return;
-          if (positive && text.includes("-")) return;
-          props.onChangeText(text);
-          debouncedValueChange(text);
-        }}
-        onEndEditing={(e) => {
-          const enteredValue = e.nativeEvent.text;
-          if (debounceRef.current) {
-            clearTimeout(debounceRef.current);
+      <View style={{ flexDirection: "row", gap: 10 }}>
+        <Button
+          mode="outlined"
+          disabled={isDecreaseDisabled}
+          onPress={handleDecrement}
+          textColor={colors.tertiary}
+          labelStyle={{ marginHorizontal: 0 }}
+          style={{
+            flex: 0,
+            borderColor: isDecreaseDisabled ? undefined : colors.tertiary,
+            alignSelf: "center",
+          }}
+        >
+          {`-${step}`}
+        </Button>
+        <TextInput
+          {...props}
+          right={
+            inlineUnit && (
+              <TextInput.Affix text={inlineUnit} textStyle={{ fontSize: 14 }} />
+            )
           }
-          if (props.onChangeText !== undefined) {
-            if (enteredValue === "")
-              props.onChangeText(min !== undefined ? min.toString() : "0");
-            else if (min !== undefined && Number(enteredValue) < min)
-              props.onChangeText(min.toString());
-          }
-          onValueChange(enteredValue);
-        }}
-        textColor={textColor}
-        style={{ ...(props.style as TextStyle), flex: 1 }}
-      />
-      <Button
-        mode="outlined"
-        disabled={isIncreaseDisabled}
-        onPress={handleIncrement}
-        textColor={colors.secondary}
-        labelStyle={{ marginHorizontal: 0 }}
-        style={{
-          flex: 0,
-          borderColor: isIncreaseDisabled ? undefined : colors.secondary,
-          alignSelf: "center",
-        }}
-      >
-        {`+${step}`}
-      </Button>
+          keyboardType="numeric"
+          dense={dense}
+          mode={mode}
+          onChangeText={(text) => {
+            if (!props.onChangeText) return;
+            const isNumber = /^\d*\.?\d*$/.test(text);
+            if (!isNumber) return;
+            if (positive && text.includes("-")) return;
+            props.onChangeText(text);
+            debouncedValueChange(text);
+          }}
+          onEndEditing={(e) => {
+            const enteredValue = e.nativeEvent.text;
+            if (debounceRef.current) {
+              clearTimeout(debounceRef.current);
+            }
+            if (props.onChangeText !== undefined) {
+              if (enteredValue === "")
+                props.onChangeText(min !== undefined ? min.toString() : "0");
+              else if (min !== undefined && Number(enteredValue) < min)
+                props.onChangeText(min.toString());
+            }
+            onValueChange(enteredValue);
+          }}
+          textColor={textColor}
+          style={{
+            ...(props.style as TextStyle),
+            flex: 1,
+            minWidth: inputMinWidth,
+          }}
+        />
+        <Button
+          mode="outlined"
+          disabled={isIncreaseDisabled}
+          onPress={handleIncrement}
+          textColor={colors.secondary}
+          labelStyle={{ marginHorizontal: 0 }}
+          style={{
+            flex: 0,
+            borderColor: isIncreaseDisabled ? undefined : colors.secondary,
+            alignSelf: "center",
+          }}
+        >
+          {`+${step}`}
+        </Button>
+      </View>
+      {externalUnit && (
+        <Text
+          variant="bodySmall"
+          style={{ alignSelf: "center", color: colors.onSurfaceVariant }}
+        >
+          {externalUnit}
+        </Text>
+      )}
     </View>
   );
 };

@@ -1,7 +1,6 @@
 import { Control, Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useWindowDimensions, ViewStyle } from "react-native";
-import { TextInput } from "react-native-paper";
+import { ViewStyle } from "react-native";
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 import { ColumnContainer } from "@carbonFootprint/view/screens/profile/components/ColumnContainer";
@@ -16,10 +15,7 @@ type Props = {
   question: Question;
   control: Control<FormValues, any>;
   handleUpdate: (question: Question, value: string | number) => void;
-  affix?: string;
   style?: ViewStyle;
-  labelFlex?: number;
-  inputFlex?: number;
 };
 
 export const NumericFields = ({
@@ -35,11 +31,11 @@ export const NumericFields = ({
 
   return (
     <ColumnContainer style={style}>
-      <TextLabel question={question} style={{ flex: labelFlex }} />
+      <TextLabel question={question} />
       {question.subQuestions
         ?.filter((subQuestion) => !subQuestion.isInactive)
         .map((subQuestion) => {
-          const resolvedAffix = affix ?? resolveUnitAffix(t, subQuestion.unit);
+          const unit = resolveUnitAffix(t, subQuestion.unit);
           return (
             <ContainerView key={subQuestion.label}>
               <TextLabel
@@ -52,9 +48,7 @@ export const NumericFields = ({
                 render={({ field: { onChange, value } }) => (
                   <NumericInput
                     question={subQuestion}
-                    right={
-                      resolvedAffix && <TextInput.Affix text={resolvedAffix} />
-                    }
+                    unit={unit}
                     onValueChange={(value: string) => {
                       handleUpdate(subQuestion, Number(value));
                     }}
