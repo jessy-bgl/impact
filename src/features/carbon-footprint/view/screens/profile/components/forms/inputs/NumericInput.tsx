@@ -99,6 +99,7 @@ export const NumericInput = ({
       style={{
         ...(props.style as TextStyle),
         gap: 4,
+        width: "100%",
         maxWidth: maxWidth,
         alignSelf: "center",
       }}
