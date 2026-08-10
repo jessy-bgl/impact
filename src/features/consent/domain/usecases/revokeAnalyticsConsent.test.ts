@@ -34,15 +34,14 @@ describe("revokeAnalyticsConsent", () => {
     expect(consent.decidedAt).not.toBeNull();
   });
 
-  describe("when consent was previously granted", () => {
-    it("should switch the state back to denied", () => {
-      grantAnalyticsConsent();
+  // The default state is "unset", so revoking after a grant is a distinct path.
+  it("should switch the state back to denied when consent was granted", () => {
+    grantAnalyticsConsent();
 
-      revokeAnalyticsConsent();
+    revokeAnalyticsConsent();
 
-      expect(repositories.consentRepository.getAnalyticsConsent().state).toBe(
-        "denied",
-      );
-    });
+    expect(repositories.consentRepository.getAnalyticsConsent().state).toBe(
+      "denied",
+    );
   });
 });

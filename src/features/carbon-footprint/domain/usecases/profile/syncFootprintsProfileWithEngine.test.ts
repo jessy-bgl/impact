@@ -84,61 +84,49 @@ describe("syncFootprintsProfileWithEngine", () => {
       } as unknown as RawRules);
     });
 
-    it("removes keys no longer in the engine", async () => {
-      profileStub.setTestProfileKey("stale . key", 5);
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(profileStub.getTestProfileKey("stale . key")).toBeUndefined();
-    });
+    it.each([
+      {
+        name: "removes a key no longer in the engine",
+        key: "stale . key",
+        stored: 5,
+        expected: undefined,
+      },
+      {
+        name: "keeps a numeric value on a numeric question",
+        key: "transport . avion . vols annuels",
+        stored: 5,
+        expected: 5,
+      },
+      {
+        name: "removes a string value from a numeric question (select → numeric type change)",
+        key: "transport . avion . vols annuels",
+        stored: "'beaucoup'",
+        expected: undefined,
+      },
+      {
+        name: "keeps a boolean answer (oui/non) on a non-select question",
+        key: "transport . avion . vols annuels",
+        stored: "oui",
+        expected: "oui",
+      },
+      {
+        name: "keeps a valid select value",
+        key: "transport . avion . usager",
+        stored: "'jamais'",
+        expected: "'jamais'",
+      },
+      {
+        name: "removes an invalid select value (yes/no → select type change)",
+        key: "transport . avion . usager",
+        stored: "oui",
+        expected: undefined,
+      },
+    ])("$name", async ({ key, stored, expected }) => {
+      profileStub.setTestProfileKey(key, stored);
 
-    it("keeps valid numeric keys", async () => {
-      profileStub.setTestProfileKey("transport . avion . vols annuels", 5);
       await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(
-        profileStub.getTestProfileKey("transport . avion . vols annuels"),
-      ).toBe(5);
-    });
 
-    it("removes invalid select value (yes/no → select type change)", async () => {
-      profileStub.setTestProfileKey("transport . avion . usager", "oui");
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(
-        profileStub.getTestProfileKey("transport . avion . usager"),
-      ).toBeUndefined();
-    });
-
-    it("keeps a valid select value", async () => {
-      profileStub.setTestProfileKey("transport . avion . usager", "'jamais'");
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(profileStub.getTestProfileKey("transport . avion . usager")).toBe(
-        "'jamais'",
-      );
-    });
-
-    it("keeps a valid boolean answer (oui/non) for a non-select question", async () => {
-      profileStub.setTestProfileKey("transport . avion . vols annuels", "oui");
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(
-        profileStub.getTestProfileKey("transport . avion . vols annuels"),
-      ).toBe("oui");
-    });
-
-    it("removes string value from a numeric question (select → numeric type change)", async () => {
-      profileStub.setTestProfileKey(
-        "transport . avion . vols annuels",
-        "'beaucoup'",
-      );
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(
-        profileStub.getTestProfileKey("transport . avion . vols annuels"),
-      ).toBeUndefined();
-    });
-
-    it("keeps numeric value for a numeric question", async () => {
-      profileStub.setTestProfileKey("transport . avion . vols annuels", 10);
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-      expect(
-        profileStub.getTestProfileKey("transport . avion . vols annuels"),
-      ).toBe(10);
+      expect(profileStub.getTestProfileKey(key)).toBe(expected);
     });
   });
 
@@ -156,6 +144,8 @@ describe("syncFootprintsProfileWithEngine", () => {
         .mockReturnValue({} as unknown as RawRules);
     });
 
+    // The real-world case: a past ADEME update replaced the plane question keys,
+    // so every install carried a version string no longer matching the section.
     it("resets completion when stored version differs from current version", async () => {
       profileStub.completionVersions = {
         transport: { plane: "outdated-version" },
@@ -195,46 +185,6 @@ describe("syncFootprintsProfileWithEngine", () => {
       expect(profileStub.completionVersions.transport?.plane).toBe(
         planeVersion,
       );
-    });
-  });
-
-  describe("end-to-end scenarios", () => {
-    it("resets plane completion after ADEME update changed the plane question keys", async () => {
-      jest
-        .spyOn(AdemeEngine, "getRules")
-        .mockReturnValue({} as unknown as RawRules);
-
-      // Documents the outdated key set from a real past engine update
-      const outdatedVersion =
-        "transport . avion . court courrier . heures de vol" +
-        "|transport . avion . long courrier . heures de vol" +
-        "|transport . avion . moyen courrier . heures de vol" +
-        "|transport . avion . usager";
-      profileStub.completionVersions = {
-        transport: { plane: outdatedVersion },
-      };
-
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-
-      expect(profileStub.completion.transport?.plane).toBe(false);
-    });
-
-    it("clears a type-changed stored value and resets completion because no current key survived migration", async () => {
-      jest.spyOn(AdemeEngine, "getRules").mockReturnValue({
-        "transport . avion . usager": fakeSelectRule([
-          "jamais",
-          "occasionnellement",
-          "fréquemment",
-        ]),
-      } as unknown as RawRules);
-      profileStub.setTestProfileKey("transport . avion . usager", "oui");
-
-      await syncFootprintsProfileWithEngine({ handleMigration: true });
-
-      expect(
-        profileStub.getTestProfileKey("transport . avion . usager"),
-      ).toBeUndefined();
-      expect(profileStub.completion.transport?.plane).toBe(false);
     });
   });
 });

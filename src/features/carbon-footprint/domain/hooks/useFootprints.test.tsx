@@ -12,28 +12,17 @@ describe("useFootprints", () => {
     });
   });
 
-  it("annualFootprint is the sum of category footprints", async () => {
+  it("splits valid footprints into a total and parts adding up to 100", async () => {
     const { result } = await renderHook(() => useFootprints());
-    const { footprints, annualFootprint } = result.current;
-    const sum = Object.values(footprints).reduce(
-      (acc, f) => acc + f.footprint,
-      0,
-    );
-    expect(annualFootprint).toBe(sum);
-  });
+    const { footprints, annualFootprint, isLoading } = result.current;
 
-  it("category parts sum to exactly 100", async () => {
-    const { result } = await renderHook(() => useFootprints());
-    const total = Object.values(result.current.footprints).reduce(
-      (acc, f) => acc + f.part,
-      0,
-    );
-    expect(total).toBe(100);
-  });
+    const sum = (
+      pick: (f: (typeof footprints)[keyof typeof footprints]) => number,
+    ) => Object.values(footprints).reduce((acc, f) => acc + pick(f), 0);
 
-  it("is not loading when footprints are valid", async () => {
-    const { result } = await renderHook(() => useFootprints());
-    expect(result.current.isLoading).toBe(false);
+    expect(annualFootprint).toBe(sum((f) => f.footprint));
+    expect(sum((f) => f.part)).toBe(100);
+    expect(isLoading).toBe(false);
   });
 
   it("is loading when a footprint value is NaN", async () => {

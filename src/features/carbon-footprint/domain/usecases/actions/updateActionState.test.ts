@@ -1,15 +1,7 @@
 import { ActionsStubRepository } from "@carbonFootprint/data/repositories/actions.stub.repository";
-import {
-  Action,
-  ActionState,
-} from "@carbonFootprint/domain/entities/action/Action";
+import { ActionState } from "@carbonFootprint/domain/entities/action/Action";
+import { ActionStub } from "@carbonFootprint/domain/entities/action/Action.stub";
 import { createUpdateActionState } from "@carbonFootprint/domain/usecases/actions/updateActionState";
-
-class StubAction extends Action {
-  constructor(id: string) {
-    super({ id, label: "", description: "", category: "transport" });
-  }
-}
 
 describe("createUpdateActionState", () => {
   let actionsRepository: ActionsStubRepository;
@@ -29,7 +21,7 @@ describe("createUpdateActionState", () => {
   ] as [ActionState, ActionState][])(
     "transitions state from %s to %s",
     (from, to) => {
-      const action = new StubAction("some.action");
+      const action = new ActionStub("some.action");
       action.state = from;
       actionsRepository.actions = [action];
 
@@ -40,7 +32,7 @@ describe("createUpdateActionState", () => {
   );
 
   it("does nothing when the action id does not exist", () => {
-    const action = new StubAction("some.action");
+    const action = new ActionStub("some.action");
     actionsRepository.actions = [action];
 
     updateActionState("non-existent", "inProgress");

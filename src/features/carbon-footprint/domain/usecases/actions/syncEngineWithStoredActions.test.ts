@@ -1,13 +1,7 @@
-import { Action } from "@carbonFootprint/domain/entities/action/Action";
+import { ActionStub } from "@carbonFootprint/domain/entities/action/Action.stub";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
 import { initFakeRepositories } from "@common/context/UsecasesContext";
-
-class StubAction extends Action {
-  constructor(id: string) {
-    super({ id, label: "", description: "", category: "transport" });
-  }
-}
 
 describe("syncEngineWithStoredActions", () => {
   let repositories: ReturnType<typeof initFakeRepositories>;
@@ -87,7 +81,7 @@ describe("syncEngineWithStoredActions", () => {
 
     it("should remove stale actions no longer returned by the engine", () => {
       const staleId = "actions . fake . obsolete";
-      repositories.actionsRepository.actions.push(new StubAction(staleId));
+      repositories.actionsRepository.actions.push(new ActionStub(staleId));
 
       syncEngineWithStoredActions();
 
