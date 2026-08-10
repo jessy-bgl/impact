@@ -4,6 +4,7 @@ import { EvaluatedNode } from "publicodes";
 import { NGCRulesNodes } from "@carbonFootprint/data/ademe-footprint-model";
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import { AdemeAction } from "@carbonFootprint/domain/entities/action/AdemeAction";
+import { ademeCategoryRules } from "@carbonFootprint/domain/entities/engine/ademeCategoryRules";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { ComputeEngine } from "@carbonFootprint/domain/entities/engine/ComputeEngine";
 import { EverydayThingsFootprint } from "@carbonFootprint/domain/entities/footprints/EverydayThingsFootprint";
@@ -106,66 +107,54 @@ export class AdemeComputeEngine implements ComputeEngine {
   };
 
   public computeTransportFootprint = () => {
+    const rules = ademeCategoryRules.transport;
     return new TransportFootprint({
-      carFootprint: this.evaluateRule("transport . voiture"),
-      twoWheelerFootprint: this.evaluateRule("transport . deux roues"),
-      planeFootprint: this.evaluateRule("transport . avion"),
-      publicTransportFootprint:
-        this.evaluateRule("transport . transports commun") +
-        this.evaluateRule("transport . ferry") +
-        this.evaluateRule("transport . train"),
-      holidaysTransportFootprint: this.evaluateRule("transport . vacances"),
-      gentleMobilityFootprint: this.evaluateRule("transport . mobilité douce"),
+      carFootprint: this.sumRules(rules.car),
+      twoWheelerFootprint: this.sumRules(rules.twoWheeler),
+      planeFootprint: this.sumRules(rules.plane),
+      publicTransportFootprint: this.sumRules(rules.publicTransport),
+      holidaysTransportFootprint: this.sumRules(rules.holidaysTransport),
+      gentleMobilityFootprint: this.sumRules(rules.gentleMobility),
     });
   };
 
   public computeFoodFootprint = () => {
+    const rules = ademeCategoryRules.food;
     return new FoodFootprint({
-      drinksFootprint: this.evaluateRule("alimentation . boisson"),
-      mealsFootprint: this.evaluateRule("alimentation . repas"),
-      wasteFootprint: this.evaluateRule("alimentation . déchets"),
+      drinksFootprint: this.sumRules(rules.drinks),
+      mealsFootprint: this.sumRules(rules.meals),
+      wasteFootprint: this.sumRules(rules.waste),
     });
   };
 
   public computeHousingFootprint = () => {
+    const rules = ademeCategoryRules.housing;
     return new HousingFootprint({
-      homeFootprint: this.evaluateRule("logement . construction"),
-      energyFootprint:
-        this.evaluateRule("logement . électricité") +
-        this.evaluateRule("logement . chauffage") +
-        this.evaluateRule("logement . climatisation"),
-      leisureFootprint:
-        this.evaluateRule("logement . vacances") +
-        this.evaluateRule("logement . piscine") +
-        this.evaluateRule("logement . extérieur"),
+      homeFootprint: this.sumRules(rules.home),
+      energyFootprint: this.sumRules(rules.energy),
+      leisureFootprint: this.sumRules(rules.leisure),
     });
   };
 
   public computeEverydayThingsFootprint = () => {
+    const rules = ademeCategoryRules.everydayThings;
     return new EverydayThingsFootprint({
-      petFootprint: this.evaluateRule("divers . animaux domestiques"),
-      furnitureFootprint: this.evaluateRule("divers . ameublement"),
-      hobbiesFootprint: this.evaluateRule("divers . loisirs"),
-      clothesFootprint: this.evaluateRule("divers . textile"),
-      digitalFootprint: this.evaluateRule("divers . numérique"),
-      tobaccoFootprint: this.evaluateRule("divers . tabac"),
-      householdApplicancesFootprint: this.evaluateRule(
-        "divers . électroménager",
-      ),
-      otherProductsFootprint:
-        this.evaluateRule("divers . autres produits") +
-        this.evaluateRule("divers . produits consommables"),
+      petFootprint: this.sumRules(rules.pet),
+      furnitureFootprint: this.sumRules(rules.furniture),
+      hobbiesFootprint: this.sumRules(rules.hobbies),
+      clothesFootprint: this.sumRules(rules.clothes),
+      digitalFootprint: this.sumRules(rules.digital),
+      tobaccoFootprint: this.sumRules(rules.tobacco),
+      householdApplicancesFootprint: this.sumRules(rules.householdAppliances),
+      otherProductsFootprint: this.sumRules(rules.otherProducts),
     });
   };
 
   public computeSocietalServicesFootprint = () => {
+    const rules = ademeCategoryRules.societalServices;
     return new SocietalServicesFootprint({
-      merchantServicesFootprint: this.evaluateRule(
-        "services sociétaux . services marchands",
-      ),
-      publicServicesFootprint: this.evaluateRule(
-        "services sociétaux . services publics",
-      ),
+      merchantServicesFootprint: this.sumRules(rules.merchantServices),
+      publicServicesFootprint: this.sumRules(rules.publicServices),
     });
   };
 
@@ -181,6 +170,13 @@ export class AdemeComputeEngine implements ComputeEngine {
 
   public setProfile = (profile: Profile, keepPreviousSituation = false) => {
     return AdemeEngine.setSituation(profile, keepPreviousSituation);
+  };
+
+  private sumRules = (dottedNames: readonly DottedName[]): number => {
+    return dottedNames.reduce(
+      (total, dottedName) => total + this.evaluateRule(dottedName),
+      0,
+    );
   };
 
   private evaluateRule = (dottedName: DottedName): number => {
