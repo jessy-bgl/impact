@@ -10,7 +10,6 @@ export interface ProfileRepository {
     key: keyof Profile,
     value: string | number | undefined,
   ): void;
-  updateProfileKeys(values: Profile): void;
   updateProfileCompletion(
     category: FootprintCategory,
     subCategory: FootprintSubCategory,

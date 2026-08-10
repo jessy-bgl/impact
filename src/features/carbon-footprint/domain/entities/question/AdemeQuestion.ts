@@ -51,15 +51,14 @@ export class AdemeQuestion extends Question {
       return "select";
     }
 
-    const nodeValue = AdemeEngine.evaluate(this.ruleKey).nodeValue;
-    const defaultValue = rawNode["par défaut"];
-    const isBooleanRule =
-      rawNode["unité"] === undefined &&
-      (typeof nodeValue !== "number" ||
-        defaultValue === "oui" ||
-        defaultValue === "non");
+    if (rawNode["unité"] !== undefined) return "number";
 
-    return isBooleanRule ? "select-boolean" : "number";
+    const defaultValue = rawNode["par défaut"];
+    if (defaultValue === "oui" || defaultValue === "non")
+      return "select-boolean";
+
+    const nodeValue = AdemeEngine.evaluate(this.ruleKey).nodeValue;
+    return typeof nodeValue !== "number" ? "select-boolean" : "number";
   }
 
   private getUnit(): string | undefined {
@@ -155,6 +154,15 @@ export class AdemeQuestion extends Question {
   }
 
   private getDefaultValue(): string {
+    // Evaluating `par défaut` on a yes/no rule defaulting to "non" returns null,
+    // not false: "non" makes the rule itself non applicable. Reading the literal
+    // keeps the option selected in the UI — and skips an evaluation.
+    if (this.type === "select-boolean") {
+      const declaredDefault = this.rule.rawNode["par défaut"];
+      if (declaredDefault === "oui" || declaredDefault === "non")
+        return declaredDefault;
+    }
+
     let defaultValue = AdemeEngine.evaluate({
       "par défaut": this.rule,
     }).nodeValue;

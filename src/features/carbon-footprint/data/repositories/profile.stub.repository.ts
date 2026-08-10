@@ -25,10 +25,6 @@ export class ProfileStubRepository implements ProfileRepository {
     this.profile = { ...this.profile, [key]: value };
   }
 
-  updateProfileKeys(values: Profile): void {
-    this.profile = { ...this.profile, ...values };
-  }
-
   updateProfileCompletion(
     category: FootprintCategory,
     subCategory: FootprintSubCategory,

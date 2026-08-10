@@ -12,31 +12,6 @@ import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/up
 const makeQuestion = (label: keyof Profile): Question =>
   ({ label }) as Question;
 
-const makeMosaicOption = (
-  label: keyof Profile,
-  { defaultValue = "", isInactive = false } = {},
-): Question =>
-  ({
-    label,
-    type: "select-boolean",
-    isApplicable: true,
-    isInactive,
-    defaultValue,
-  }) as Question;
-
-const makeMosaicQuestion = (
-  label: keyof Profile,
-  subQuestions: Question[],
-  { isApplicable = true } = {},
-): Question =>
-  ({
-    label,
-    type: "multi-select",
-    isApplicable,
-    isInactive: false,
-    subQuestions,
-  }) as Question;
-
 describe("createUpdateProfile", () => {
   let computeEngine: ComputeEngineStub;
   let profileRepository: ProfileStubRepository;
@@ -57,218 +32,66 @@ describe("createUpdateProfile", () => {
 
   // Quoting logic is shared across all update methods; testing via updateTransportProfile is sufficient.
   describe("value quoting", () => {
-    const question = makeQuestion("transport . voiture . gabarit");
+    const key = "transport . voiture . gabarit";
 
-    it("wraps plain strings with single quotes", () => {
-      updateProfile.updateTransportProfile(question, "berline");
+    it.each([
+      {
+        name: "wraps a plain string with single quotes",
+        answer: "berline",
+        stored: "'berline'",
+      },
+      {
+        name: "does not double-wrap a string already quoted",
+        answer: "'berline'",
+        stored: "'berline'",
+      },
+      { name: "does not wrap 'oui'", answer: "oui", stored: "oui" },
+      { name: "does not wrap 'non'", answer: "non", stored: "non" },
+      { name: "passes a number as-is", answer: 15000, stored: 15000 },
+    ])("$name", ({ answer, stored }) => {
+      updateProfile.updateTransportProfile(makeQuestion(key), answer);
 
-      expect(computeEngine.lastProfile).toEqual({
-        "transport . voiture . gabarit": "'berline'",
-      });
-      expect(profileRepository.profile["transport . voiture . gabarit"]).toBe(
-        "'berline'",
-      );
+      expect(computeEngine.lastProfile).toEqual({ [key]: stored });
+      expect(profileRepository.profile[key]).toBe(stored);
     });
+  });
 
-    it("does not wrap 'oui'", () => {
-      updateProfile.updateTransportProfile(question, "oui");
+  it("adds the answer to the engine situation without dropping the previous ones", () => {
+    updateProfile.updateTransportProfile(
+      makeQuestion("transport . voiture . km"),
+      15000,
+    );
 
-      expect(computeEngine.lastProfile).toEqual({
-        "transport . voiture . gabarit": "oui",
-      });
-    });
-
-    it("does not wrap 'non'", () => {
-      updateProfile.updateTransportProfile(question, "non");
-
-      expect(computeEngine.lastProfile).toEqual({
-        "transport . voiture . gabarit": "non",
-      });
-    });
-
-    it("does not double-wrap strings already starting with a single quote", () => {
-      updateProfile.updateTransportProfile(question, "'berline'");
-
-      expect(computeEngine.lastProfile).toEqual({
-        "transport . voiture . gabarit": "'berline'",
-      });
-    });
-
-    it("passes number values as-is without transformation", () => {
-      updateProfile.updateTransportProfile(question, 15000);
-
-      expect(computeEngine.lastProfile).toEqual({
-        "transport . voiture . gabarit": 15000,
-      });
-      expect(profileRepository.profile["transport . voiture . gabarit"]).toBe(
-        15000,
-      );
-    });
+    expect(computeEngine.lastKeepCurrentValues).toBe(true);
   });
 
   // societalServices has no update method — its footprint is determined solely by the engine.
   describe("category update methods", () => {
     it.each([
-      {
-        label: "transport",
-        act: () =>
-          updateProfile.updateTransportProfile(
-            makeQuestion("transport . voiture . km"),
-            10000,
-          ),
-        getStoredFootprint: () => footprintsRepository.transport,
-        getExpectedFootprint: () => computeEngine.transportFootprint,
-      },
-      {
-        label: "food",
-        act: () =>
-          updateProfile.updateFoodProfile(
-            makeQuestion("alimentation . plats"),
-            3,
-          ),
-        getStoredFootprint: () => footprintsRepository.food,
-        getExpectedFootprint: () => computeEngine.foodFootprint,
-      },
-      {
-        label: "housing",
-        act: () =>
-          updateProfile.updateHousingProfile(
-            makeQuestion("logement . type"),
-            "appartement",
-          ),
-        getStoredFootprint: () => footprintsRepository.housing,
-        getExpectedFootprint: () => computeEngine.housingFootprint,
-      },
-      {
-        label: "everydayThings",
-        act: () =>
-          updateProfile.updateEverydayThingsProfile(
-            makeQuestion("divers . textile . empreinte précise"),
-            5,
-          ),
-        getStoredFootprint: () => footprintsRepository.everydayThings,
-        getExpectedFootprint: () => computeEngine.everydayThingsFootprint,
-      },
-    ])(
-      "$label: recomputes footprint via engine and persists it",
-      ({ act, getStoredFootprint, getExpectedFootprint }) => {
-        act();
+      [
+        "transport",
+        "updateTransportProfile",
+        "transport . voiture . km",
+        10000,
+      ],
+      ["food", "updateFoodProfile", "alimentation . plats", 3],
+      ["housing", "updateHousingProfile", "logement . type", "appartement"],
+      [
+        "everydayThings",
+        "updateEverydayThingsProfile",
+        "divers . textile . empreinte précise",
+        5,
+      ],
+    ] as const)(
+      "%s: recomputes the footprint via the engine and persists it",
+      (category, method, key, answer) => {
+        updateProfile[method](makeQuestion(key), answer);
 
-        expect(getStoredFootprint()).toBe(getExpectedFootprint());
+        expect(footprintsRepository[category]).toBe(
+          computeEngine[`${category}Footprint`],
+        );
       },
     );
-  });
-
-  describe("initMosaicAnswers", () => {
-    const publicTransport = () =>
-      makeMosaicQuestion("transport . transports commun", [
-        makeMosaicOption("transport . transports commun . bus . présent"),
-        makeMosaicOption("transport . transports commun . car . présent"),
-      ]);
-
-    it("persists 'non' for every unanswered option without an engine default", () => {
-      updateProfile.initMosaicAnswers([publicTransport()]);
-
-      expect(
-        profileRepository.profile[
-          "transport . transports commun . bus . présent"
-        ],
-      ).toBe("non");
-      expect(
-        profileRepository.profile[
-          "transport . transports commun . car . présent"
-        ],
-      ).toBe("non");
-    });
-
-    it("adds the answers to the engine situation without dropping the previous one", () => {
-      updateProfile.initMosaicAnswers([publicTransport()]);
-
-      expect(computeEngine.lastProfile).toEqual({
-        "transport . transports commun . bus . présent": "non",
-        "transport . transports commun . car . présent": "non",
-      });
-      expect(computeEngine.lastKeepPreviousValues).toBe(true);
-    });
-
-    it("recomputes the footprint of every touched category", () => {
-      updateProfile.initMosaicAnswers([
-        publicTransport(),
-        makeMosaicQuestion("logement . vacances", [
-          makeMosaicOption("logement . vacances . hotel . présent"),
-        ]),
-      ]);
-
-      expect(footprintsRepository.transport).toBe(
-        computeEngine.transportFootprint,
-      );
-      expect(footprintsRepository.housing).toBe(computeEngine.housingFootprint);
-      expect(footprintsRepository.food).toBeUndefined();
-    });
-
-    it("keeps answers already given by the user", () => {
-      profileRepository.setTestProfileKey(
-        "transport . transports commun . bus . présent",
-        "oui",
-      );
-
-      updateProfile.initMosaicAnswers([publicTransport()]);
-
-      expect(
-        profileRepository.profile[
-          "transport . transports commun . bus . présent"
-        ],
-      ).toBe("oui");
-    });
-
-    it("leaves options carrying an engine default untouched", () => {
-      updateProfile.initMosaicAnswers([
-        makeMosaicQuestion("logement . construction . travaux de rénovation", [
-          makeMosaicOption(
-            "logement . construction . rénovation . travaux . rénovation . présent",
-            { defaultValue: "oui" },
-          ),
-        ]),
-      ]);
-
-      expect(profileRepository.profile).toEqual({});
-      expect(computeEngine.lastProfile).toBeNull();
-    });
-
-    it("ignores inactive options", () => {
-      updateProfile.initMosaicAnswers([
-        makeMosaicQuestion("transport . vacances", [
-          makeMosaicOption(
-            "transport . vacances . bateau plaisance . propriétaire",
-            { isInactive: true },
-          ),
-        ]),
-      ]);
-
-      expect(profileRepository.profile).toEqual({});
-    });
-
-    it("ignores non-applicable mosaics and non-mosaic questions", () => {
-      updateProfile.initMosaicAnswers([
-        makeMosaicQuestion(
-          "transport . transports commun",
-          [makeMosaicOption("transport . transports commun . bus . présent")],
-          { isApplicable: false },
-        ),
-        makeQuestion("transport . voiture . km"),
-      ]);
-
-      expect(profileRepository.profile).toEqual({});
-    });
-
-    it("writes nothing when every option is already answered", () => {
-      updateProfile.initMosaicAnswers([publicTransport()]);
-      computeEngine.lastProfile = null;
-
-      updateProfile.initMosaicAnswers([publicTransport()]);
-
-      expect(computeEngine.lastProfile).toBeNull();
-    });
   });
 
   describe("updateProfileCompletion", () => {
@@ -283,27 +106,19 @@ describe("createUpdateProfile", () => {
       },
     );
 
-    it("saves the section version when completed and section is known", () => {
-      updateProfile.updateProfileCompletion("transport", "plane", true);
+    it.each([
+      ["transport", "plane"],
+      ["food", "meals"],
+    ] as const)(
+      "saves the version of the %s . %s section when completed",
+      (category, section) => {
+        updateProfile.updateProfileCompletion(category, section, true);
 
-      const expectedVersion = computeProfileSectionVersion(
-        profileSections.plane.questionKeys,
-      );
-      expect(profileRepository.completionVersions["transport"]?.["plane"]).toBe(
-        expectedVersion,
-      );
-    });
-
-    it("saves the correct version for a different section", () => {
-      updateProfile.updateProfileCompletion("food", "meals", true);
-
-      const expectedVersion = computeProfileSectionVersion(
-        profileSections.meals.questionKeys,
-      );
-      expect(profileRepository.completionVersions["food"]?.["meals"]).toBe(
-        expectedVersion,
-      );
-    });
+        expect(profileRepository.completionVersions[category]?.[section]).toBe(
+          computeProfileSectionVersion(profileSections[section].questionKeys),
+        );
+      },
+    );
 
     it("does not save a version when completed=false", () => {
       updateProfile.updateProfileCompletion("transport", "plane", false);

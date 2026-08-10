@@ -1,9 +1,65 @@
+import { DottedName } from "@incubateur-ademe/nosgestesclimat";
+import AdemeModel from "@incubateur-ademe/nosgestesclimat/public/co2-model.FR-lang.fr.json";
 import personasData from "@incubateur-ademe/nosgestesclimat/public/personas-fr.json";
 
 import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
+import {
+  ademeCategoryRoots,
+  ademeCategoryRules,
+} from "@carbonFootprint/domain/entities/engine/ademeCategoryRules";
+import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
+import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
 const engine = new AdemeComputeEngine();
+
+const profiles: [string, Profile][] = [
+  // The fresh install: no answer at all, so the model's own defaults apply.
+  ["default profile", {}],
+  // One ADEME persona ships an empty situation — it is the default profile
+  // under another name, already covered above.
+  ...Object.values(personasData)
+    .filter((persona) => Object.keys(persona.situation).length > 0)
+    .map(
+      (persona) =>
+        [persona.nom, persona.situation as Profile] as [string, Profile],
+    ),
+];
+
+const categories = Object.keys(ademeCategoryRoots) as FootprintCategory[];
+
+/**
+ * The sub-rules the engine actually reads for a category, relative to its NGC
+ * root — derived from `ademeCategoryRules` so there is nothing to keep in sync
+ * by hand. The NGC categories are plain `somme` rules, so this must match the
+ * `somme` exactly: an uncovered sub-rule is silently dropped from the total
+ * footprint, even when no persona gives it a non-zero value.
+ */
+const coveredSubRules = (category: FootprintCategory): string[] =>
+  Object.values(ademeCategoryRules[category])
+    .flat()
+    .map((dottedName) =>
+      dottedName.slice(`${ademeCategoryRoots[category]} . `.length),
+    );
+
+const model = AdemeModel as unknown as Record<
+  string,
+  { formule?: { somme?: string[] } }
+>;
+
+const evaluateRule = (dottedName: DottedName): number =>
+  (AdemeEngine.evaluate(dottedName).nodeValue as number) ?? 0;
+
+type CoherenceCase = {
+  name: string;
+  key: string;
+  low: string | number;
+  high: string | number;
+  otherAnswers?: Profile;
+  compute: () => number;
+};
 
 describe("AdemeComputeEngine", () => {
   // Each setProfile call replaces the full situation, so tests are isolated by default.
@@ -12,125 +68,136 @@ describe("AdemeComputeEngine", () => {
     engine.setProfile({});
   });
 
-  describe("default profile (French average)", () => {
-    it("total footprint is within the French average range (~7-12 tCO2e)", () => {
-      const { transport, food, housing, everydayThings, societalServices } =
-        engine.computeFootprints();
-      const total =
-        transport.annualFootprint +
-        food.annualFootprint +
-        housing.annualFootprint +
-        everydayThings.annualFootprint +
-        societalServices.annualFootprint;
-      expect(total).toBeGreaterThan(7000);
-      expect(total).toBeLessThan(12000);
-    });
+  // The reason `ademe-model-patch` exists: a yes/no question the model gives
+  // no default for renders with neither option selected, and leaves its
+  // follow-ups visible. Walking every section catches the case wherever an
+  // ADEME release introduces it.
+  it("gives every yes/no question a selected option", () => {
+    const questionKeys = Object.values(profileSections).flatMap(
+      (section) => Object.values(section.questionKeys) as (keyof Profile)[],
+    );
 
-    it("each category has a positive footprint", () => {
-      const { transport, food, housing, everydayThings, societalServices } =
-        engine.computeFootprints();
-      expect(transport.annualFootprint).toBeGreaterThan(0);
-      expect(food.annualFootprint).toBeGreaterThan(0);
-      expect(housing.annualFootprint).toBeGreaterThan(0);
-      expect(everydayThings.annualFootprint).toBeGreaterThan(0);
-      expect(societalServices.annualFootprint).toBeGreaterThan(0);
+    const withoutValue: (keyof Profile)[] = [];
+    const visit = (question: Question) => {
+      if (!question?.isApplicable || question.isInactive) return;
+      if (question.subQuestions) {
+        question.subQuestions.forEach(visit);
+        return;
+      }
+      if (question.type === "select-boolean" && !question.defaultValue)
+        withoutValue.push(question.label);
+    };
+    Object.values(engine.getQuestions({}, questionKeys)).forEach(visit);
+
+    expect(withoutValue).toEqual([]);
+  });
+
+  describe("directional coherence", () => {
+    it.each<CoherenceCase>([
+      {
+        name: "driving more km increases the transport footprint",
+        key: "transport . voiture . km",
+        low: 0,
+        high: 30000,
+        otherAnswers: {
+          "transport . voiture . utilisateur": "'propriétaire'",
+        } as Profile,
+        compute: () => engine.computeTransportFootprint().annualFootprint,
+      },
+      {
+        name: "flying more frequently increases the transport footprint",
+        key: "transport . avion . usager",
+        low: "'jamais'",
+        high: "'fréquemment'",
+        compute: () => engine.computeTransportFootprint().annualFootprint,
+      },
+      {
+        name: "eating more red meat increases the food footprint",
+        key: "alimentation . plats . viande rouge . nombre",
+        low: 0,
+        high: 7,
+        compute: () => engine.computeFoodFootprint().annualFootprint,
+      },
+      {
+        name: "a larger home surface increases the housing footprint",
+        key: "logement . surface",
+        low: 20,
+        high: 150,
+        compute: () => engine.computeHousingFootprint().annualFootprint,
+      },
+      {
+        name: "more hours per day on the internet increases the everydayThings footprint",
+        key: "divers . numérique . internet . durée journalière",
+        low: 0,
+        high: 10,
+        compute: () => engine.computeEverydayThingsFootprint().annualFootprint,
+      },
+    ])("$name", ({ key, low, high, otherAnswers, compute }) => {
+      engine.setProfile({ ...otherAnswers, [key]: low } as Profile);
+      const lowFootprint = compute();
+
+      engine.setProfile({ ...otherAnswers, [key]: high } as Profile);
+
+      expect(compute()).toBeGreaterThan(lowFootprint);
     });
   });
 
-  describe("directional coherence by category", () => {
-    describe("transport", () => {
-      it("driving more km increases the footprint", () => {
-        engine.setProfile({
-          "transport . voiture . utilisateur": "'propriétaire'",
-          "transport . voiture . km": 0,
-        } as Profile);
-        const low = engine.computeTransportFootprint().annualFootprint;
-
-        engine.setProfile({
-          "transport . voiture . utilisateur": "'propriétaire'",
-          "transport . voiture . km": 30000,
-        } as Profile);
-        const high = engine.computeTransportFootprint().annualFootprint;
-
-        expect(high).toBeGreaterThan(low);
-      });
-
-      it("flying more frequently increases the footprint", () => {
-        engine.setProfile({
-          "transport . avion . usager": "'jamais'",
-        } as Profile);
-        const rarely = engine.computeTransportFootprint().annualFootprint;
-
-        engine.setProfile({
-          "transport . avion . usager": "'fréquemment'",
-        } as Profile);
-        const frequently = engine.computeTransportFootprint().annualFootprint;
-
-        expect(frequently).toBeGreaterThan(rarely);
-      });
-    });
-
-    describe("food", () => {
-      it("eating more red meat increases the footprint", () => {
-        engine.setProfile({
-          "alimentation . plats . viande rouge . nombre": 0,
-        } as Profile);
-        const withoutMeat = engine.computeFoodFootprint().annualFootprint;
-
-        engine.setProfile({
-          "alimentation . plats . viande rouge . nombre": 7,
-        } as Profile);
-        const withMeat = engine.computeFoodFootprint().annualFootprint;
-
-        expect(withMeat).toBeGreaterThan(withoutMeat);
-      });
-    });
-
-    describe("housing", () => {
-      it("a larger home surface increases the footprint", () => {
-        engine.setProfile({ "logement . surface": 20 } as Profile);
-        const small = engine.computeHousingFootprint().annualFootprint;
-
-        engine.setProfile({ "logement . surface": 150 } as Profile);
-        const large = engine.computeHousingFootprint().annualFootprint;
-
-        expect(large).toBeGreaterThan(small);
-      });
-    });
-
-    describe("everydayThings", () => {
-      it("more hours per day on the internet increases the footprint", () => {
-        engine.setProfile({
-          "divers . numérique . internet . durée journalière": 0,
-        } as Profile);
-        const low = engine.computeEverydayThingsFootprint().annualFootprint;
-
-        engine.setProfile({
-          "divers . numérique . internet . durée journalière": 10,
-        } as Profile);
-        const high = engine.computeEverydayThingsFootprint().annualFootprint;
-
-        expect(high).toBeGreaterThan(low);
-      });
-    });
-  });
-
-  describe("persona regression snapshots", () => {
+  describe("footprint regression snapshots", () => {
     // Snapshots are stored in __snapshots__/AdemeComputeEngine.test.ts.snap.
     // Run `npm test -- --updateSnapshot` after a model update to refresh them.
-    Object.entries(personasData).forEach(([, persona]) => {
-      it(persona.nom, () => {
-        engine.setProfile(persona.situation as Profile);
-        expect({
-          transport: engine.computeTransportFootprint().annualFootprint,
-          food: engine.computeFoodFootprint().annualFootprint,
-          housing: engine.computeHousingFootprint().annualFootprint,
-          everydayThings:
-            engine.computeEverydayThingsFootprint().annualFootprint,
-          societalServices:
-            engine.computeSocietalServicesFootprint().annualFootprint,
-        }).toMatchSnapshot();
-      });
+    it.each(profiles)("%s", (_, profile) => {
+      engine.setProfile(profile);
+      expect({
+        transport: engine.computeTransportFootprint().annualFootprint,
+        food: engine.computeFoodFootprint().annualFootprint,
+        housing: engine.computeHousingFootprint().annualFootprint,
+        everydayThings: engine.computeEverydayThingsFootprint().annualFootprint,
+        societalServices:
+          engine.computeSocietalServicesFootprint().annualFootprint,
+      }).toMatchSnapshot();
+    });
+  });
+
+  describe("NGC sub-rule coverage", () => {
+    it("computes every NGC top-level category", () => {
+      // Without this, a sixth category added to `bilan` would be dropped from the
+      // total footprint while every per-category assertion below still passes.
+      expect([...(model.bilan?.formule?.somme ?? [])].sort()).toEqual(
+        Object.values(ademeCategoryRoots).sort(),
+      );
+    });
+
+    // If this fails, the NGC model added/renamed/removed a sub-rule: update the
+    // matching compute*Footprint method and `ademeCategoryRules`.
+    it.each(categories)("reads every NGC sub-rule of %s", (category) => {
+      const ngcSubRules = model[ademeCategoryRoots[category]]?.formule?.somme;
+      // A category that is no longer a plain `somme` also invalidates the
+      // value-equality assertions below.
+      expect(ngcSubRules).toBeDefined();
+      expect([...ngcSubRules!].sort()).toEqual(
+        coveredSubRules(category).sort(),
+      );
+    });
+
+    it.each(categories)(
+      "%s footprint equals the NGC category value",
+      (category) => {
+        const computed = engine.computeFootprints()[category].annualFootprint;
+        const expected = evaluateRule(ademeCategoryRoots[category]);
+
+        // Each sub-footprint is rounded before being summed, so allow a small
+        // drift. A missing sub-rule is orders of magnitude bigger.
+        expect(Math.abs(computed - expected)).toBeLessThan(10);
+      },
+    );
+
+    it("total footprint equals the NGC `bilan` value", () => {
+      const computed = Object.values(engine.computeFootprints()).reduce(
+        (total, footprint) => total + footprint.annualFootprint,
+        0,
+      );
+
+      expect(Math.abs(computed - evaluateRule("bilan"))).toBeLessThan(50);
     });
   });
 });

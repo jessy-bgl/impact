@@ -1,56 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AdemeComputeEngine persona regression snapshots Anne Claire 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Anne Claire 1`] = `
 {
   "everydayThings": 830,
-  "food": 1305,
+  "food": 1262,
   "housing": 1880,
   "societalServices": 1399,
-  "transport": 5413,
+  "transport": 5351,
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Corentin 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Corentin 1`] = `
 {
   "everydayThings": 1128,
   "food": 1207,
   "housing": 1065,
   "societalServices": 1399,
-  "transport": 408,
+  "transport": 396,
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Gérard 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Gérard 1`] = `
 {
-  "everydayThings": 1619,
+  "everydayThings": 1586,
   "food": 3557,
   "housing": 1933,
   "societalServices": 1399,
-  "transport": 5091,
+  "transport": 4996,
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Jessica 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Jessica 1`] = `
 {
   "everydayThings": 2208,
   "food": 2394,
   "housing": 1002,
   "societalServices": 1399,
-  "transport": 1665,
+  "transport": 1653,
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Marie 1`] = `
-{
-  "everydayThings": 1166,
-  "food": 2045,
-  "housing": 1659,
-  "societalServices": 1399,
-  "transport": 1998,
-}
-`;
-
-exports[`AdemeComputeEngine persona regression snapshots Mehdi 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Mehdi 1`] = `
 {
   "everydayThings": 1601,
   "food": 2928,
@@ -60,19 +50,19 @@ exports[`AdemeComputeEngine persona regression snapshots Mehdi 1`] = `
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Nolan 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Nolan 1`] = `
 {
   "everydayThings": 1557,
   "food": 2960,
   "housing": 1020,
   "societalServices": 1399,
-  "transport": 885,
+  "transport": 840,
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Sandy 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Sandy 1`] = `
 {
-  "everydayThings": 1148,
+  "everydayThings": 1087,
   "food": 3072,
   "housing": 1162,
   "societalServices": 1399,
@@ -80,22 +70,32 @@ exports[`AdemeComputeEngine persona regression snapshots Sandy 1`] = `
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Sylviane 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Sylviane 1`] = `
 {
   "everydayThings": 2067,
   "food": 1772,
   "housing": 9542,
   "societalServices": 1399,
-  "transport": 867,
+  "transport": 856,
 }
 `;
 
-exports[`AdemeComputeEngine persona regression snapshots Yoram 1`] = `
+exports[`AdemeComputeEngine footprint regression snapshots Yoram 1`] = `
 {
   "everydayThings": 451,
   "food": 620,
   "housing": 491,
   "societalServices": 1399,
   "transport": 54,
+}
+`;
+
+exports[`AdemeComputeEngine footprint regression snapshots default profile 1`] = `
+{
+  "everydayThings": 1072,
+  "food": 2002,
+  "housing": 1506,
+  "societalServices": 1399,
+  "transport": 1891,
 }
 `;

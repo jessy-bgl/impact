@@ -2,8 +2,10 @@ import { NGCRuleNode, NGCRules } from "@incubateur-ademe/nosgestesclimat";
 import AdemeModel from "@incubateur-ademe/nosgestesclimat/public/co2-model.FR-lang.fr.json";
 import PublicodesEngine from "publicodes";
 
+import { applyDefaultBooleanAnswers } from "@carbonFootprint/data/ademe-model-patch";
+
 export const ademeFootprintModel = new PublicodesEngine(
-  AdemeModel as unknown as NGCRules,
+  applyDefaultBooleanAnswers(AdemeModel as unknown as NGCRules),
   {
     strict: {
       situation: false,
