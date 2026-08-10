@@ -1,7 +1,5 @@
 # Tests
 
-13 fichiers, 96 tests.
-
 ## Principes
 
 - **Moteur et modèle** : intégration contre le vrai modèle ADEME. C'est ce qui rend `npm update @incubateur-ademe/nosgestesclimat` sûr — une release qui change un calcul ou une règle échoue avec le diff exact.
