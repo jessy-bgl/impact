@@ -5,7 +5,7 @@ import { FurnitureSectionContent } from "@carbonFootprint/view/screens/profile/e
 import { useAppStore } from "@common/store/useStore";
 
 export const FurnitureSection = () => {
-  const { t } = useTranslation(["everydayThings", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.everydayThings.furnitureFootprint,

@@ -5,7 +5,7 @@ import { WasteSectionContent } from "@carbonFootprint/view/screens/profile/food/
 import { useAppStore } from "@common/store/useStore";
 
 export const WasteSection = () => {
-  const { t } = useTranslation(["food", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.food.wasteFootprint,

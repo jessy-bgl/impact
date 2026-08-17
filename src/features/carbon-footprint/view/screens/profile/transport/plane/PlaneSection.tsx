@@ -5,7 +5,7 @@ import { PlaneSectionContent } from "@carbonFootprint/view/screens/profile/trans
 import { useAppStore } from "@common/store/useStore";
 
 export const PlaneSection = () => {
-  const { t } = useTranslation(["transport", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.transport.planeFootprint,

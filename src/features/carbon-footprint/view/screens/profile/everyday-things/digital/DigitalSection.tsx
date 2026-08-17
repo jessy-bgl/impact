@@ -5,7 +5,7 @@ import { DigitalSectionContent } from "@carbonFootprint/view/screens/profile/eve
 import { useAppStore } from "@common/store/useStore";
 
 export const DigitalSection = () => {
-  const { t } = useTranslation(["everydayThings", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.everydayThings.digitalFootprint,

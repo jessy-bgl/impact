@@ -5,7 +5,7 @@ import { TwoWheelerSectionContent } from "@carbonFootprint/view/screens/profile/
 import { useAppStore } from "@common/store/useStore";
 
 export const TwoWheelerSection = () => {
-  const { t } = useTranslation(["transport", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.transport.twoWheelerFootprint,

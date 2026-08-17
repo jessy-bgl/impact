@@ -10,7 +10,7 @@ import { useAppStore } from "@common/store/useStore";
  * screen add up to the category total shown on the profile home.
  */
 export const OtherProductsSection = () => {
-  const { t } = useTranslation(["everydayThings", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.everydayThings.otherProductsFootprint,

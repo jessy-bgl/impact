@@ -5,7 +5,7 @@ import { HomeSectionContent } from "@carbonFootprint/view/screens/profile/housin
 import { useAppStore } from "@common/store/useStore";
 
 export const HomeSection = () => {
-  const { t } = useTranslation(["housing", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.housing.homeFootprint,

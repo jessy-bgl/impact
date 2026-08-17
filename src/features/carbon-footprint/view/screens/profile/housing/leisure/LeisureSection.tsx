@@ -5,7 +5,7 @@ import { LeisureSectionContent } from "@carbonFootprint/view/screens/profile/hou
 import { useAppStore } from "@common/store/useStore";
 
 export const LeisureSection = () => {
-  const { t } = useTranslation(["housing", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const annualFootprint = useAppStore(
     (store) => store.footprints.housing.leisureFootprint,
