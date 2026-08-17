@@ -3,6 +3,7 @@ import {
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { ProfileCompletion } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { ProfileRepository } from "@carbonFootprint/domain/repositories/profile.repository";
 import { useAppStore } from "@common/store/useStore";
 
@@ -11,6 +12,10 @@ export class ProfileStoreRepository implements ProfileRepository {
 
   fetchAdemeProfile(): Profile {
     return this.store.getState().profile.ademe;
+  }
+
+  fetchProfileCompletion(): ProfileCompletion {
+    return this.store.getState().profile.completion;
   }
 
   updateProfileKey(key: keyof Profile, value: string | number | undefined) {

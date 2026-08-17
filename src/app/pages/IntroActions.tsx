@@ -14,6 +14,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
+import { isProfileCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
@@ -31,9 +32,7 @@ export const IntroActions: React.FC = () => {
 
   const profileCompletion = useAppStore((state) => state.profile.completion);
 
-  const isProfileComplete = Object.values(profileCompletion).every((category) =>
-    Object.values(category).every(Boolean),
-  );
+  const isProfileComplete = isProfileCompleted(profileCompletion);
 
   const styles = StyleSheet.create({
     mainContainer: {

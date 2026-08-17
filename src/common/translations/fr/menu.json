@@ -29,7 +29,7 @@
   "consent": {
     "title": "Confidentialité",
     "explanation": "Impact fonctionne sans compte utilisateur. Vos réponses au questionnaire restent sur votre appareil et ne sont jamais envoyées.",
-    "explanationDetail": "Avec votre accord, l'application envoie à PostHog des statistiques d'usage anonymisées (écrans consultés, fonctionnalités utilisées) et des rapports d'erreur, pour nous aider à l'améliorer. Vous pouvez changer d'avis à tout moment depuis les Paramètres.",
+    "explanationDetail": "Avec votre accord, l'application envoie à PostHog des statistiques d'usage anonymisées (écrans consultés, fonctionnalités utilisées) et des rapports d'erreur à des fins d'améliorations. Vous pouvez changer d'avis à tout moment depuis les Paramètres.",
     "readMore": "Lire la politique de confidentialité complète",
     "accept": "Accepter",
     "refuse": "Refuser",

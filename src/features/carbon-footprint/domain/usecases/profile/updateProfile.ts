@@ -3,6 +3,7 @@ import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
+import { isProfileCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import {
   computeProfileSectionVersion,
   profileSections,
@@ -86,11 +87,19 @@ export const createUpdateProfile = (
     profileRepository.updateProfileKey(question.label, value);
   };
 
-  const updateProfileCompletion = (
-    category: FootprintCategory,
-    subCategory: FootprintSubCategory,
-    completed: boolean,
-  ) => {
+  const updateProfileCompletion = ({
+    category,
+    subCategory,
+    completed,
+  }: {
+    category: FootprintCategory;
+    subCategory: FootprintSubCategory;
+    completed: boolean;
+  }): { profileJustCompleted: boolean } => {
+    const wasProfileCompleted = isProfileCompleted(
+      profileRepository.fetchProfileCompletion(),
+    );
+
     profileRepository.updateProfileCompletion(category, subCategory, completed);
     if (completed) {
       const section = Object.values(profileSections).find(
@@ -104,6 +113,12 @@ export const createUpdateProfile = (
         );
       }
     }
+
+    const profileJustCompleted =
+      !wasProfileCompleted &&
+      isProfileCompleted(profileRepository.fetchProfileCompletion());
+
+    return { profileJustCompleted };
   };
 
   return {

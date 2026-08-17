@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { useAppStore } from "@common/store/useStore";
 import { Skeleton } from "moti/skeleton";
 
@@ -28,9 +29,10 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
       {Object.values(footprints)
         .sort((a, b) => b.footprint - a.footprint)
         .map((emissionsCategory) => {
-          const isCompleted = Object.values(
-            profileCompletion[emissionsCategory.category],
-          ).every(Boolean);
+          const isCompleted = isCategoryCompleted(
+            profileCompletion,
+            emissionsCategory.category,
+          );
           if (isLoading)
             return (
               <DataTable.Row key={emissionsCategory.category}>

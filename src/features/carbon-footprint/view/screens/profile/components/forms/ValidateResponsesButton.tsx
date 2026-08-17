@@ -6,8 +6,9 @@ import {
   FootprintCategory,
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
-import { posthog } from "@common/config/posthog";
+import { useProfileCompletionCelebration } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebrationContext";
 import { useScrollProfileSection } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
+import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 
@@ -17,11 +18,13 @@ type Props = {
 };
 
 export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
-  const { t } = useTranslation(["transport", "emissions", "common"]);
+  const { t } = useTranslation(["emissions", "common"]);
 
   const { colors } = useTheme();
 
   const { resetExpandedSection } = useScrollProfileSection();
+
+  const { celebrate } = useProfileCompletionCelebration();
 
   const { updateProfileCompletion } = useContext(UsecasesContext);
 
@@ -50,8 +53,13 @@ export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
             category,
             sub_category: subCategory,
           });
-          updateProfileCompletion(category, subCategory, true);
+          const { profileJustCompleted } = updateProfileCompletion({
+            category,
+            subCategory,
+            completed: true,
+          });
           resetExpandedSection();
+          if (profileJustCompleted) celebrate();
         }}
         style={{ padding: 0, margin: "auto" }}
         icon="check"

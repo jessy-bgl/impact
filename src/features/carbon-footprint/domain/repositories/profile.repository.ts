@@ -3,9 +3,11 @@ import {
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { ProfileCompletion } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 
 export interface ProfileRepository {
   fetchAdemeProfile(): Profile;
+  fetchProfileCompletion(): ProfileCompletion;
   updateProfileKey(
     key: keyof Profile,
     value: string | number | undefined,

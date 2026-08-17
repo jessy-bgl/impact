@@ -4,6 +4,7 @@ import { Animated, ScrollView } from "react-native";
 import { Icon, useTheme } from "react-native-paper";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
+import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { posthog } from "@common/config/posthog";
 import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
 import { useProfileSync } from "@carbonFootprint/domain/hooks/useProfileSync";
@@ -62,7 +63,7 @@ export const Profile = () => {
           posthog.capture("profile_category_opened", { category: "transport" });
           navigate("TransportProfile");
         }}
-        completion={profileCompletion.transport}
+        isCompleted={isCategoryCompleted(profileCompletion, "transport")}
       />
       <ProfileCategoryCard
         title={t("Housing")}
@@ -71,7 +72,7 @@ export const Profile = () => {
           posthog.capture("profile_category_opened", { category: "housing" });
           navigate("HousingProfile");
         }}
-        completion={profileCompletion.housing}
+        isCompleted={isCategoryCompleted(profileCompletion, "housing")}
       />
       <ProfileCategoryCard
         title={t("Food")}
@@ -80,7 +81,7 @@ export const Profile = () => {
           posthog.capture("profile_category_opened", { category: "food" });
           navigate("FoodProfile");
         }}
-        completion={profileCompletion.food}
+        isCompleted={isCategoryCompleted(profileCompletion, "food")}
       />
       <ProfileCategoryCard
         title={t("EverydayThings")}
@@ -91,7 +92,7 @@ export const Profile = () => {
           });
           navigate("EverydayThingsProfile");
         }}
-        completion={profileCompletion.everydayThings}
+        isCompleted={isCategoryCompleted(profileCompletion, "everydayThings")}
       />
       <ProfileCategoryCard
         title={t("SocietalServices")}
@@ -102,7 +103,7 @@ export const Profile = () => {
           });
           navigate("SocietalServicesProfile");
         }}
-        completion={profileCompletion.societalServices}
+        isCompleted={isCategoryCompleted(profileCompletion, "societalServices")}
       />
     </ScrollView>
   );

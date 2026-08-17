@@ -142,4 +142,60 @@ describe("createUpdateProfile", () => {
       ).toBeUndefined();
     });
   });
+
+  describe("profileJustCompleted", () => {
+    const allSections = Object.values(profileSections);
+
+    const completeAllSectionsExceptLast = () => {
+      allSections
+        .slice(0, -1)
+        .forEach(({ category, subCategory }) =>
+          updateProfile.updateProfileCompletion(category, subCategory, true),
+        );
+
+      return allSections[allSections.length - 1];
+    };
+
+    it("is false while at least one section is left to validate", () => {
+      const results = allSections
+        .slice(0, -1)
+        .map(({ category, subCategory }) =>
+          updateProfile.updateProfileCompletion(category, subCategory, true),
+        );
+
+      expect(
+        results.every(({ profileJustCompleted }) => !profileJustCompleted),
+      ).toBe(true);
+    });
+
+    it("is true when validating the very last section", () => {
+      const { category, subCategory } = completeAllSectionsExceptLast();
+
+      expect(
+        updateProfile.updateProfileCompletion(category, subCategory, true)
+          .profileJustCompleted,
+      ).toBe(true);
+    });
+
+    it("is false when re-validating a section of an already complete profile", () => {
+      const { category, subCategory } = completeAllSectionsExceptLast();
+      updateProfile.updateProfileCompletion(category, subCategory, true);
+
+      expect(
+        updateProfile.updateProfileCompletion(category, subCategory, true)
+          .profileJustCompleted,
+      ).toBe(false);
+    });
+
+    it("is true again after a section has been invalidated and re-validated", () => {
+      const { category, subCategory } = completeAllSectionsExceptLast();
+      updateProfile.updateProfileCompletion(category, subCategory, true);
+      updateProfile.updateProfileCompletion(category, subCategory, false);
+
+      expect(
+        updateProfile.updateProfileCompletion(category, subCategory, true)
+          .profileJustCompleted,
+      ).toBe(true);
+    });
+  });
 });

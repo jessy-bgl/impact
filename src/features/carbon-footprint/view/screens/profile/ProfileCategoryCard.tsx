@@ -10,22 +10,20 @@ type Props = {
   title: string;
   footprintCategory: FootprintCategoryViewModel;
   onClick: () => void;
-  completion: Record<string, boolean>;
+  isCompleted: boolean;
 };
 
 export const ProfileCategoryCard = ({
   title,
   footprintCategory,
   onClick,
-  completion,
+  isCompleted,
 }: Props) => {
   const { t } = useTranslation("common");
 
   const { colors } = useTheme();
 
   const { image, footprint, color, materialIcon } = footprintCategory;
-
-  const isCompleted = Object.values(completion).every(Boolean);
 
   return (
     <Card style={{ width: "100%", maxWidth: 500 }} onPress={onClick}>

@@ -6,6 +6,14 @@
   "annualFootprint": "Émissions annuelles",
   "part": "Proportion",
   "validateResponses": "Valider mes réponses",
+  "profileCompleted": {
+    "title": "Bravo, ton bilan carbone est complet !",
+    "subtitle": "Tu as répondu à toutes les catégories : ton estimation reflète désormais tes habitudes.",
+    "actionsEncouragement": "Prochaine étape : découvre les actions qui réduisent le plus ton impact.",
+    "seeMyImpact": "Voir la répartition de mon impact",
+    "discoverActions": "Découvrir mes actions",
+    "close": "Fermer"
+  },
   "categories": {
     "transport": "Transports",
     "housing": "Logement",

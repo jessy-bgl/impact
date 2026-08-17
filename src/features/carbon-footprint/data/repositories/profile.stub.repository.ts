@@ -3,19 +3,22 @@ import {
   FootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { ProfileCompletion } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { ProfileRepository } from "@carbonFootprint/domain/repositories/profile.repository";
 
 export class ProfileStubRepository implements ProfileRepository {
   profile: Profile = {};
-  completion: Partial<
-    Record<FootprintCategory, Partial<Record<FootprintSubCategory, boolean>>>
-  > = {};
+  completion: ProfileCompletion = {};
   completionVersions: Partial<
     Record<FootprintCategory, Partial<Record<FootprintSubCategory, string>>>
   > = {};
 
   fetchAdemeProfile(): Profile {
     return this.profile;
+  }
+
+  fetchProfileCompletion(): ProfileCompletion {
+    return this.completion;
   }
 
   updateProfileKey(
