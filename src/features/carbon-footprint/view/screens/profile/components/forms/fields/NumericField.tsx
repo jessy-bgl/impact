@@ -5,6 +5,7 @@ import { ViewStyle } from "react-native";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 import { ColumnContainer } from "@carbonFootprint/view/screens/profile/components/ColumnContainer";
 import { resolveUnitAffix } from "@carbonFootprint/view/screens/profile/components/forms/fields/resolveUnitAffix";
+import { parseDecimal } from "@carbonFootprint/view/screens/profile/components/forms/inputs/decimalInput";
 import { NumericInput } from "@carbonFootprint/view/screens/profile/components/forms/inputs/NumericInput";
 import { TextLabel } from "@carbonFootprint/view/screens/profile/components/forms/TextLabel";
 import { FormValues } from "@carbonFootprint/view/screens/profile/types";
@@ -39,7 +40,7 @@ export const NumericField = ({
               question={question}
               unit={unit}
               onValueChange={(value: string) =>
-                handleUpdate(question, Number(value))
+                handleUpdate(question, parseDecimal(value))
               }
               onChangeText={onChange}
               value={value}

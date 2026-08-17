@@ -1,5 +1,5 @@
 import { View } from "moti";
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import { TextStyle } from "react-native";
 import {
   Button,
@@ -10,6 +10,14 @@ import {
 } from "react-native-paper";
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
+import {
+  clampToRange,
+  isDecimalInput,
+  normalizeDecimal,
+  parseDecimal,
+  roundDecimal,
+  stripTrailingSeparator,
+} from "@carbonFootprint/view/screens/profile/components/forms/inputs/decimalInput";
 
 const MAX_INLINE_UNIT_CHARS = 10;
 const MIN_VALUE_WIDTH = 56;
@@ -34,15 +42,6 @@ export const NumericInput = ({
   ...props
 }: Props) => {
   const { colors } = useTheme();
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const debouncedValueChange = useCallback(
-    (value: string) => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(() => onValueChange(value), 1000);
-    },
-    [onValueChange],
-  );
 
   const dense = props.dense ?? true;
   const mode = props.mode ?? "outlined";
@@ -54,6 +53,12 @@ export const NumericInput = ({
         : undefined;
   const max = question.maxValue;
   const value = props.value;
+
+  const committedValueRef = useRef<string>("");
+
+  const toCommittableValue = (text: string | number | undefined) =>
+    clampToRange(stripTrailingSeparator(normalizeDecimal(text)), { min, max });
+
   const textColor = question.isEngineDefaultValueUsed
     ? colors.onSurfaceDisabled
     : undefined;
@@ -66,30 +71,32 @@ export const NumericInput = ({
     (inlineUnit ? inlineUnit.length * AFFIX_WIDTH_PER_CHAR : 0);
 
   const isDecreaseDisabled =
-    min !== undefined && value !== undefined && Number(value) <= min;
+    min !== undefined && value !== undefined && parseDecimal(value) <= min;
   const isIncreaseDisabled =
-    max !== undefined && value !== undefined && Number(value) >= max;
+    max !== undefined && value !== undefined && parseDecimal(value) >= max;
 
   const handleIncrement = () => {
     if (props.onChangeText && value !== undefined) {
-      const currentValue = Number(value);
+      const currentValue = parseDecimal(value);
       if (max === undefined || (max !== undefined && currentValue < max)) {
-        let newValue = Math.round(currentValue + step);
+        let newValue = roundDecimal(currentValue + step);
         if (max !== undefined && newValue > max) newValue = max;
-        props.onChangeText(newValue.toString());
-        onValueChange(newValue.toString());
+        committedValueRef.current = newValue.toString();
+        props.onChangeText(committedValueRef.current);
+        onValueChange(committedValueRef.current);
       }
     }
   };
 
   const handleDecrement = () => {
     if (props.onChangeText && value !== undefined) {
-      const currentValue = Number(value);
+      const currentValue = parseDecimal(value);
       if (min === undefined || (min !== undefined && currentValue > min)) {
-        let newValue = Math.round(currentValue - step);
+        let newValue = roundDecimal(currentValue - step);
         if (min !== undefined && newValue < min) newValue = min;
-        props.onChangeText(newValue.toString());
-        onValueChange(newValue.toString());
+        committedValueRef.current = newValue.toString();
+        props.onChangeText(committedValueRef.current);
+        onValueChange(committedValueRef.current);
       }
     }
   };
@@ -126,29 +133,29 @@ export const NumericInput = ({
               <TextInput.Affix text={inlineUnit} textStyle={{ fontSize: 14 }} />
             )
           }
-          keyboardType="numeric"
+          inputMode="decimal"
           dense={dense}
           mode={mode}
           onChangeText={(text) => {
             if (!props.onChangeText) return;
-            const isNumber = /^\d*\.?\d*$/.test(text);
-            if (!isNumber) return;
+            if (!isDecimalInput(text)) return;
             if (positive && text.includes("-")) return;
             props.onChangeText(text);
-            debouncedValueChange(text);
           }}
-          onEndEditing={(e) => {
-            const enteredValue = e.nativeEvent.text;
-            if (debounceRef.current) {
-              clearTimeout(debounceRef.current);
+          onFocus={(e) => {
+            committedValueRef.current = toCommittableValue(value);
+            props.onFocus?.(e);
+          }}
+          onBlur={(e) => {
+            const committedValue = toCommittableValue(value);
+
+            if (committedValue !== normalizeDecimal(value))
+              props.onChangeText?.(committedValue);
+            if (committedValue !== committedValueRef.current) {
+              committedValueRef.current = committedValue;
+              onValueChange(committedValue);
             }
-            if (props.onChangeText !== undefined) {
-              if (enteredValue === "")
-                props.onChangeText(min !== undefined ? min.toString() : "0");
-              else if (min !== undefined && Number(enteredValue) < min)
-                props.onChangeText(min.toString());
-            }
-            onValueChange(enteredValue);
+            props.onBlur?.(e);
           }}
           textColor={textColor}
           style={{
