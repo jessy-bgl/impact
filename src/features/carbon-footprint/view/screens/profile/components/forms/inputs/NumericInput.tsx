@@ -136,6 +136,9 @@ export const NumericInput = ({
           inputMode="decimal"
           dense={dense}
           mode={mode}
+          selectTextOnFocus={
+            props.selectTextOnFocus ?? question.isEngineDefaultValueUsed
+          }
           onChangeText={(text) => {
             if (!props.onChangeText) return;
             if (!isDecimalInput(text)) return;
