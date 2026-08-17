@@ -191,15 +191,15 @@ export const profileSections = {
   }),
   waste: defineSection("food", "waste", {
     wasteQuantity: "alimentation . déchets . quantité jetée",
-    // the following question is disabled because this is redundant
-    // with the other questions
-    // wasteInput: "alimentation . déchets . gestes . saisie",
-    foodWasteGestures:
-      "alimentation . déchets . gestes . gaspillage alimentaire . présent",
-    buyInBulk: "alimentation . déchets . gestes . acheter en vrac . présent",
-    composting:
-      "alimentation . déchets . gestes . compostage biodéchets . présent",
-    stopAdvertising: "alimentation . déchets . gestes . stop pub . présent",
+    wasteInput: "alimentation . déchets . gestes . saisie",
+    // the following questions are disabled because this is redundant
+    // with the question above which already includes them
+    // foodWasteGestures:
+    //   "alimentation . déchets . gestes . gaspillage alimentaire . présent",
+    // buyInBulk: "alimentation . déchets . gestes . acheter en vrac . présent",
+    // composting:
+    //   "alimentation . déchets . gestes . compostage biodéchets . présent",
+    // stopAdvertising: "alimentation . déchets . gestes . stop pub . présent",
   }),
 
   // Everyday things
