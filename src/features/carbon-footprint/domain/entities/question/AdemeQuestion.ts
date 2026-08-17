@@ -13,7 +13,7 @@ export class AdemeQuestion extends Question {
     profile: Profile,
     ruleKey: keyof Profile,
     rule: NGCRuleNode,
-    title?: string,
+    overrides?: { title?: string; description?: string },
   ) {
     super();
 
@@ -23,8 +23,8 @@ export class AdemeQuestion extends Question {
     this.label = ruleKey;
     this.type = this.getType();
     const rawNode = rule.rawNode;
-    this.title = title ?? rawNode.question ?? "";
-    this.description = rawNode.description;
+    this.title = overrides?.title ?? rawNode.question ?? "";
+    this.description = rawNode.description ?? overrides?.description;
     this.note = rawNode.note;
     this.warning = rawNode.avertissement;
     this.isApplicable = this.getIsApplicable();
@@ -139,12 +139,13 @@ export class AdemeQuestion extends Question {
         const title = icon
           ? `${optionParentRule.title} ${icon}`
           : optionParentRule.title;
-        const newQuestion = new AdemeQuestion(
-          profile,
-          optionKey,
-          optionRule,
+        // A mosaic option answers on its leaf rule ("… . nombre", "… . présent"),
+        // which carries no description: the explanation of what the option covers
+        // ("Repas sans produits animaux.") lives on its parent, like the title.
+        const newQuestion = new AdemeQuestion(profile, optionKey, optionRule, {
           title,
-        );
+          description: optionParentRule.rawNode.description,
+        });
         subQuestions.push(newQuestion);
       } catch {
         // ignore unknown questions
