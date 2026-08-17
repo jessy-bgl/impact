@@ -3,15 +3,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { LightTheme } from "@app/AppTheme";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { getImageAsset } from "@common/utils/imageAssets";
 
-export const Intro = () => {
-  const { colors } = useTheme();
+const GRADIENT_COLORS = ["#FFFFFF", "#d8F9d9"] as const;
 
+/**
+ * The intro illustration is a GIF with a baked-in white background, so this
+ * screen keeps the light palette even when the device is in dark mode.
+ */
+const colors = LightTheme.colors;
+
+export const Intro = () => {
   const { t } = useTranslation("intro");
 
   const { setShouldShowAppIntro } = useContext(UsecasesContext);
@@ -20,10 +27,7 @@ export const Intro = () => {
   const imageSize = Math.min(deviceWidth / 1.7, 300);
 
   return (
-    <LinearGradient
-      colors={["#FFFFFF", "#d8F9d9"]}
-      style={styles.linearGradient}
-    >
+    <LinearGradient colors={GRADIENT_COLORS} style={styles.linearGradient}>
       <ScrollView>
         <SafeAreaView style={styles.mainContainer}>
           <View style={styles.textContainer}>
@@ -36,7 +40,7 @@ export const Intro = () => {
             <Text
               variant="titleMedium"
               style={{
-                color: colors.inverseOnSurface,
+                color: colors.onSurface,
                 textAlign: "center",
                 marginTop: 10,
               }}
@@ -51,10 +55,7 @@ export const Intro = () => {
                 alignSelf: "center",
               }}
             />
-            <Text
-              variant="titleMedium"
-              style={{ color: colors.inverseOnSurface }}
-            >
+            <Text variant="titleMedium" style={{ color: colors.onSurface }}>
               {`${t("main.With")} ${t("main.Impact")}, `}
               <Text style={{ color: colors.primary, fontWeight: "bold" }}>
                 {`${t("main.evaluate")} `}
@@ -69,23 +70,17 @@ export const Intro = () => {
               </Text>
               {`${t("main.their")} ${t("main.impact")} ${t("main.with")} ${t("main.concreteActions")}.`}
             </Text>
-            <Text
-              variant="titleMedium"
-              style={{ color: colors.inverseOnSurface }}
-            >
+            <Text variant="titleMedium" style={{ color: colors.onSurface }}>
               {t("main.instructions")}
             </Text>
-            <Text
-              variant="titleSmall"
-              style={{ color: colors.inverseOnSurface }}
-            >
+            <Text variant="titleSmall" style={{ color: colors.onSurface }}>
               {`*${t("main.simulatorInfo")}`}
             </Text>
           </View>
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              textColor={"#fff"}
+              textColor={colors.onPrimary}
               onPress={() => setShouldShowAppIntro(false)}
             >
               {`${t("main.Understood")} !`}
