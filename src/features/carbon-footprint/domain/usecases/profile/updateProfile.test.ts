@@ -98,7 +98,11 @@ describe("createUpdateProfile", () => {
     it.each([true, false])(
       "always stores completion with completed=%s",
       (completed) => {
-        updateProfile.updateProfileCompletion("transport", "plane", completed);
+        updateProfile.updateProfileCompletion({
+          category: "transport",
+          subCategory: "plane",
+          completed,
+        });
 
         expect(profileRepository.completion["transport"]?.["plane"]).toBe(
           completed,
@@ -112,7 +116,11 @@ describe("createUpdateProfile", () => {
     ] as const)(
       "saves the version of the %s . %s section when completed",
       (category, section) => {
-        updateProfile.updateProfileCompletion(category, section, true);
+        updateProfile.updateProfileCompletion({
+          category,
+          subCategory: section,
+          completed: true,
+        });
 
         expect(profileRepository.completionVersions[category]?.[section]).toBe(
           computeProfileSectionVersion(profileSections[section].questionKeys),
@@ -121,7 +129,11 @@ describe("createUpdateProfile", () => {
     );
 
     it("does not save a version when completed=false", () => {
-      updateProfile.updateProfileCompletion("transport", "plane", false);
+      updateProfile.updateProfileCompletion({
+        category: "transport",
+        subCategory: "plane",
+        completed: false,
+      });
 
       expect(
         profileRepository.completionVersions["transport"]?.["plane"],
@@ -129,11 +141,11 @@ describe("createUpdateProfile", () => {
     });
 
     it("does not save a version when the section is not in profileSections", () => {
-      updateProfile.updateProfileCompletion(
-        "societalServices",
-        "publicServices",
-        true,
-      );
+      updateProfile.updateProfileCompletion({
+        category: "societalServices",
+        subCategory: "publicServices",
+        completed: true,
+      });
 
       expect(
         profileRepository.completionVersions["societalServices"]?.[
@@ -147,11 +159,13 @@ describe("createUpdateProfile", () => {
     const allSections = Object.values(profileSections);
 
     const completeAllSectionsExceptLast = () => {
-      allSections
-        .slice(0, -1)
-        .forEach(({ category, subCategory }) =>
-          updateProfile.updateProfileCompletion(category, subCategory, true),
-        );
+      allSections.slice(0, -1).forEach(({ category, subCategory }) =>
+        updateProfile.updateProfileCompletion({
+          category,
+          subCategory,
+          completed: true,
+        }),
+      );
 
       return allSections[allSections.length - 1];
     };
@@ -160,7 +174,11 @@ describe("createUpdateProfile", () => {
       const results = allSections
         .slice(0, -1)
         .map(({ category, subCategory }) =>
-          updateProfile.updateProfileCompletion(category, subCategory, true),
+          updateProfile.updateProfileCompletion({
+            category,
+            subCategory,
+            completed: true,
+          }),
         );
 
       expect(
@@ -172,29 +190,50 @@ describe("createUpdateProfile", () => {
       const { category, subCategory } = completeAllSectionsExceptLast();
 
       expect(
-        updateProfile.updateProfileCompletion(category, subCategory, true)
-          .profileJustCompleted,
+        updateProfile.updateProfileCompletion({
+          category,
+          subCategory,
+          completed: true,
+        }).profileJustCompleted,
       ).toBe(true);
     });
 
     it("is false when re-validating a section of an already complete profile", () => {
       const { category, subCategory } = completeAllSectionsExceptLast();
-      updateProfile.updateProfileCompletion(category, subCategory, true);
+      updateProfile.updateProfileCompletion({
+        category,
+        subCategory,
+        completed: true,
+      });
 
       expect(
-        updateProfile.updateProfileCompletion(category, subCategory, true)
-          .profileJustCompleted,
+        updateProfile.updateProfileCompletion({
+          category,
+          subCategory,
+          completed: true,
+        }).profileJustCompleted,
       ).toBe(false);
     });
 
     it("is true again after a section has been invalidated and re-validated", () => {
       const { category, subCategory } = completeAllSectionsExceptLast();
-      updateProfile.updateProfileCompletion(category, subCategory, true);
-      updateProfile.updateProfileCompletion(category, subCategory, false);
+      updateProfile.updateProfileCompletion({
+        category,
+        subCategory,
+        completed: true,
+      });
+      updateProfile.updateProfileCompletion({
+        category,
+        subCategory,
+        completed: false,
+      });
 
       expect(
-        updateProfile.updateProfileCompletion(category, subCategory, true)
-          .profileJustCompleted,
+        updateProfile.updateProfileCompletion({
+          category,
+          subCategory,
+          completed: true,
+        }).profileJustCompleted,
       ).toBe(true);
     });
   });
