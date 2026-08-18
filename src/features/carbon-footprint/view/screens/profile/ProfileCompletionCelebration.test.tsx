@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { ProfileCompletionCelebration } from "@carbonFootprint/view/screens/profile/components/ProfileCompletionCelebration";
+import { ProfileCompletionCelebration } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebration";
 import emissions from "@common/translations/fr/emissions.json";
 
 import "@common/translations/i18n";
@@ -76,6 +76,17 @@ describe("ProfileCompletionCelebration", () => {
     ).toBeOnTheScreen();
     expect(
       screen.getByText(emissions.profileCompleted.discoverActions),
+    ).toBeOnTheScreen();
+  });
+
+  it("compares the footprint to the French average", async () => {
+    await renderCelebration();
+
+    expect(
+      screen.getByText(emissions.profileCompleted.frenchAverage.average),
+    ).toBeOnTheScreen();
+    expect(
+      screen.getByText(emissions.profileCompleted.frenchAverage.source),
     ).toBeOnTheScreen();
   });
 

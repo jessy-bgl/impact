@@ -10,9 +10,18 @@
     "title": "Bravo, ton bilan carbone est complet !",
     "subtitle": "Tu as répondu à toutes les catégories : ton estimation reflète désormais tes habitudes.",
     "actionsEncouragement": "Prochaine étape : découvre les actions qui réduisent le plus ton impact.",
-    "seeMyImpact": "Voir la répartition de mon impact",
+    "seeMyImpact": "Voir la répartition",
     "discoverActions": "Découvrir mes actions",
-    "close": "Fermer"
+    "close": "Fermer",
+    "frenchAverage": {
+      "title": "Comparaison à la moyenne française",
+      "mine": "Mon empreinte",
+      "average": "Moyenne française",
+      "above": "Mon empreinte est {{percentage}} % au-dessus de la moyenne française.",
+      "below": "Mon empreinte est {{percentage}} % en dessous de la moyenne française.",
+      "equal": "Mon empreinte est au niveau de la moyenne française.",
+      "source": "Source : SDES, empreinte carbone moyenne par Français."
+    }
   },
   "categories": {
     "transport": "Transports",

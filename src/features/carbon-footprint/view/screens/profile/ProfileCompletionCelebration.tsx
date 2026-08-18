@@ -19,6 +19,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AppTabParamList } from "@app/AppNavigator";
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { useFootprints } from "@carbonFootprint/domain/hooks/useFootprints";
+import { useFrenchAverageFootprint } from "@carbonFootprint/domain/hooks/useFrenchAverageFootprint";
+import { FrenchAverageComparison } from "@carbonFootprint/view/screens/profile/FrenchAverageComparison";
 import { posthog } from "@common/config/posthog";
 
 const GRADIENT_COLORS: Record<"light" | "dark", [string, string]> = {
@@ -39,6 +41,8 @@ export const ProfileCompletionCelebration = ({ visible, onDismiss }: Props) => {
   const navigation = useNavigation<EmissionsNavigatorProp>();
 
   const { annualFootprint } = useFootprints();
+
+  const frenchAverageFootprint = useFrenchAverageFootprint();
 
   useEffect(() => {
     if (visible) posthog.capture("profile_completed");
@@ -103,18 +107,17 @@ export const ProfileCompletionCelebration = ({ visible, onDismiss }: Props) => {
                 transition={{ type: "timing", duration: 400, delay: 150 }}
                 style={styles.textContainer}
               >
-                <Text
-                  variant="headlineSmall"
-                  style={{ ...styles.centeredText, color: colors.primary }}
-                >
-                  {t("profileCompleted.title")}
-                </Text>
-                <Text variant="displaySmall" style={styles.centeredText}>
-                  {`${(annualFootprint / 1000).toFixed(2)} tCO2e/${t("year")}`}
-                </Text>
+                <FrenchAverageComparison
+                  myFootprint={annualFootprint}
+                  averageFootprint={frenchAverageFootprint}
+                />
                 <Text
                   variant="bodyLarge"
-                  style={{ ...styles.centeredText, color: colors.onSurface }}
+                  style={{
+                    ...styles.centeredText,
+                    color: colors.onSurface,
+                    marginTop: 16,
+                  }}
                 >
                   {t("profileCompleted.subtitle")}
                 </Text>

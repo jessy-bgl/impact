@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AdemeComputeEngine French average footprint matches its regression snapshot 1`] = `8520`;
+
 exports[`AdemeComputeEngine footprint regression snapshots Anne Claire 1`] = `
 {
   "everydayThings": 830,

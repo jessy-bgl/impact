@@ -2,11 +2,14 @@ import { DottedName } from "@incubateur-ademe/nosgestesclimat";
 import AdemeModel from "@incubateur-ademe/nosgestesclimat/public/co2-model.FR-lang.fr.json";
 import personasData from "@incubateur-ademe/nosgestesclimat/public/personas-fr.json";
 
-import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
 import {
   ademeCategoryRoots,
   ademeCategoryRules,
 } from "@carbonFootprint/domain/entities/engine/ademeCategoryRules";
+import {
+  AdemeComputeEngine,
+  ademeFrenchAverageRule,
+} from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
@@ -198,6 +201,29 @@ describe("AdemeComputeEngine", () => {
       );
 
       expect(Math.abs(computed - evaluateRule("bilan"))).toBeLessThan(50);
+    });
+  });
+
+  describe("French average footprint", () => {
+    it("equals the sum of the NGC sub-rules of its root", () => {
+      // The guard that makes reading the root safe: a third term added by NGC
+      // is still covered, a renamed or removed root fails loudly.
+      const subRules = (model[ademeFrenchAverageRule]?.formule?.somme ??
+        []) as DottedName[];
+      expect(subRules.length).toBeGreaterThan(0);
+
+      const expected = subRules.reduce(
+        (total, rule) => total + evaluateRule(rule),
+        0,
+      );
+
+      expect(
+        Math.abs(engine.computeFrenchAverageFootprint() - expected),
+      ).toBeLessThan(1);
+    });
+
+    it("matches its regression snapshot", () => {
+      expect(engine.computeFrenchAverageFootprint()).toMatchSnapshot();
     });
   });
 });

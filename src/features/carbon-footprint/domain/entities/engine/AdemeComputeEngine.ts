@@ -13,9 +13,13 @@ import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/Ho
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
 import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { roundFootprint } from "@carbonFootprint/domain/entities/footprints/utils";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { AdemeQuestion } from "@carbonFootprint/domain/entities/question/AdemeQuestion";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
+
+export const ademeFrenchAverageRule =
+  "empreinte SDES" as const satisfies DottedName;
 
 export class AdemeComputeEngine implements ComputeEngine {
   /**
@@ -167,6 +171,9 @@ export class AdemeComputeEngine implements ComputeEngine {
       societalServices: this.computeSocietalServicesFootprint(),
     };
   };
+
+  public computeFrenchAverageFootprint = (): number =>
+    roundFootprint(this.evaluateRule(ademeFrenchAverageRule)) ?? 0;
 
   public setProfile = (profile: Profile, keepPreviousSituation = false) => {
     return AdemeEngine.setSituation(profile, keepPreviousSituation);

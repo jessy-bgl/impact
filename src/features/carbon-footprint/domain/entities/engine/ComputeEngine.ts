@@ -20,5 +20,6 @@ export interface ComputeEngine {
   computeEverydayThingsFootprint: () => EverydayThingsFootprint;
   computeSocietalServicesFootprint: () => SocietalServicesFootprint;
   computeFootprints: () => Footprints;
+  computeFrenchAverageFootprint: () => number;
   setProfile: (profile: Profile, keepCurrentValues?: boolean) => void;
 }

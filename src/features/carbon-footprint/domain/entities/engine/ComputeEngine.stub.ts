@@ -13,6 +13,7 @@ export class ComputeEngineStub implements ComputeEngine {
   lastProfile: Profile | null = null;
   lastKeepCurrentValues: boolean | undefined = undefined;
   questions: Partial<Record<keyof Profile, Question>> = {};
+  frenchAverageFootprint = 0;
 
   readonly transportFootprint = new TransportFootprint({});
   readonly foodFootprint = new FoodFootprint({});
@@ -43,6 +44,10 @@ export class ComputeEngineStub implements ComputeEngine {
 
   computeSocietalServicesFootprint(): SocietalServicesFootprint {
     return this.societalServicesFootprint;
+  }
+
+  computeFrenchAverageFootprint(): number {
+    return this.frenchAverageFootprint;
   }
 
   computeFootprints(): Footprints {

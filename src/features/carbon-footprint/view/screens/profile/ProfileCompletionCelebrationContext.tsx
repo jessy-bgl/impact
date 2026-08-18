@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { ProfileCompletionCelebration } from "@carbonFootprint/view/screens/profile/components/ProfileCompletionCelebration";
+import { ProfileCompletionCelebration } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebration";
 
 interface ProfileCompletionCelebrationContextType {
   celebrate: () => void;

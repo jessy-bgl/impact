@@ -14,6 +14,7 @@ import { ProfileRepository } from "@carbonFootprint/domain/repositories/profile.
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
 import { createUpdateActionState } from "@carbonFootprint/domain/usecases/actions/updateActionState";
 import { createComputeAnnualFootprint } from "@carbonFootprint/domain/usecases/footprints/computeAnnualFootprint";
+import { createComputeFrenchAverageFootprint } from "@carbonFootprint/domain/usecases/footprints/computeFrenchAverageFootprint";
 import { createUpdateFootprint } from "@carbonFootprint/domain/usecases/footprints/updateFootprint";
 import { createUpdateShowIntro } from "@carbonFootprint/domain/usecases/intro/updateShowIntro";
 import { createFetchQuestions } from "@carbonFootprint/domain/usecases/profile/fetchQuestions";
@@ -97,6 +98,7 @@ const initUsecases = (repositories: Repositories) => {
       footprintsRepository,
     ),
     ...createComputeAnnualFootprint(),
+    ...createComputeFrenchAverageFootprint(computeEngine),
     ...createUpdateFootprint(footprintsRepository),
     ...createUpdateShowIntro(introRepository),
     ...createSetTheme(settingsRepository),
