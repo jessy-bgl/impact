@@ -8,10 +8,10 @@
   "validateResponses": "Valider mes réponses",
   "profileCompleted": {
     "title": "Bravo, ton bilan carbone est complet !",
-    "subtitle": "Tu as répondu à toutes les catégories : ton estimation reflète désormais tes habitudes.",
+    "subtitle": "Tu as répondu à toutes les catégories. Ton estimation reflète désormais tes habitudes.",
     "actionsEncouragement": "Prochaine étape : découvre les actions qui réduisent le plus ton impact.",
     "seeMyImpact": "Voir la répartition",
-    "discoverActions": "Découvrir mes actions",
+    "discoverActions": "Découvrir les actions",
     "close": "Fermer",
     "frenchAverage": {
       "title": "Comparaison à la moyenne française",
