@@ -151,10 +151,12 @@ export const NumericInput = ({
           }}
           onBlur={(e) => {
             const committedValue = toCommittableValue(value);
-
             if (committedValue !== normalizeDecimal(value))
               props.onChangeText?.(committedValue);
-            if (committedValue !== committedValueRef.current) {
+            if (
+              question.isEngineDefaultValueUsed ||
+              committedValue !== committedValueRef.current
+            ) {
               committedValueRef.current = committedValue;
               onValueChange(committedValue);
             }
