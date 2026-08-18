@@ -107,6 +107,12 @@ export const ProfileCompletionCelebration = ({ visible, onDismiss }: Props) => {
                 transition={{ type: "timing", duration: 400, delay: 150 }}
                 style={styles.textContainer}
               >
+                <Text
+                  variant="headlineSmall"
+                  style={{ ...styles.centeredText, color: colors.onSurface }}
+                >
+                  {t("profileCompleted.title")}
+                </Text>
                 <FrenchAverageComparison
                   myFootprint={annualFootprint}
                   averageFootprint={frenchAverageFootprint}
