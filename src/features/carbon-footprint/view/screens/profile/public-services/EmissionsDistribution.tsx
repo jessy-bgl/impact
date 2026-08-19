@@ -1,7 +1,7 @@
 import { Platform, useWindowDimensions, View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 
-import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 
 type Props = {
   publicServices: FootprintCategoryViewModel;

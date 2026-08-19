@@ -4,7 +4,7 @@ import { useContext, useMemo } from "react";
 import {
   FootprintCategoryViewModel,
   FootprintViewModels,
-} from "@carbonFootprint/domain/entities/FootprintViewModel";
+} from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 

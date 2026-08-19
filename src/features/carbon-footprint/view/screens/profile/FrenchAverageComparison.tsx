@@ -5,7 +5,7 @@ import { Text, useTheme } from "react-native-paper";
 import {
   FrenchAverageComparison as Comparison,
   FrenchAverageComparisonViewModel,
-} from "@carbonFootprint/domain/entities/FrenchAverageComparisonViewModel";
+} from "@carbonFootprint/domain/entities/footprints/FrenchAverageComparisonViewModel";
 
 type Props = {
   myFootprint: number;

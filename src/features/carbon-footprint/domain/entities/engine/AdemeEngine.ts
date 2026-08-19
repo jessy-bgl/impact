@@ -6,7 +6,7 @@ import {
   NGCRulesNodes,
 } from "@carbonFootprint/data/ademe-footprint-model";
 import { ademeCategoryRoots } from "@carbonFootprint/domain/entities/engine/ademeCategoryRules";
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { posthog } from "@common/config/posthog";
 

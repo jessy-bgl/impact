@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Avatar, Card, Icon, Text, useTheme } from "react-native-paper";
 
-import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { getImageAsset } from "@common/utils/imageAssets";
 
 type Props = {

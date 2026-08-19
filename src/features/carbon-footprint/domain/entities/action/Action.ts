@@ -1,4 +1,4 @@
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 
 export type ActionState = "notStarted" | "inProgress" | "skipped";
 

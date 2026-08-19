@@ -2,7 +2,7 @@ import { ComputeEngine } from "@carbonFootprint/domain/entities/engine/ComputeEn
 import {
   FootprintCategory,
   FootprintSubCategory,
-} from "@carbonFootprint/domain/entities/footprints/types";
+} from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { isProfileCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import {
   computeProfileSectionVersion,

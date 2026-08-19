@@ -3,7 +3,7 @@ import { ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { SocietalServicesEmissionsDistribution } from "@carbonFootprint/view/screens/profile/public-services/EmissionsDistribution";
 import { useAppStore } from "@common/store/useStore";
 

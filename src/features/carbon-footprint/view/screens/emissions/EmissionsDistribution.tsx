@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { Text, useTheme } from "react-native-paper";
 
-import { FootprintViewModels } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { Skeleton } from "moti/skeleton";
 
 const pieWidthAndHeight = 250;

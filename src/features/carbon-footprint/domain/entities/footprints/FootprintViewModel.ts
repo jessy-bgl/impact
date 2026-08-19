@@ -1,6 +1,6 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { ImageAssets } from "@common/utils/imageAssets";
 
 export type FootprintViewModels = Record<

@@ -1,4 +1,4 @@
-import { Footprints } from "@carbonFootprint/domain/entities/footprints/types";
+import { Footprints } from "@carbonFootprint/domain/entities/footprints/Footprints";
 
 export const createComputeAnnualFootprint = () => {
   const computeAnnualFootprint = (footprints: Footprints): number => {

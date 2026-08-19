@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
-import { FootprintViewModels } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { useAppStore } from "@common/store/useStore";
 import { Skeleton } from "moti/skeleton";

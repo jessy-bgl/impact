@@ -1,7 +1,7 @@
 import { Card } from "react-native-paper";
 
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
-import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/FootprintViewModel";
+import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 
 type Props = {
   action: Action;

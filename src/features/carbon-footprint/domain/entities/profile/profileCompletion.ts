@@ -1,7 +1,7 @@
 import {
   FootprintCategory,
   FootprintSubCategory,
-} from "@carbonFootprint/domain/entities/footprints/types";
+} from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 
 export type ProfileCompletion = Partial<

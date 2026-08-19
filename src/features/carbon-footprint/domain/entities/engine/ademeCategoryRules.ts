@@ -1,6 +1,6 @@
 import { DottedName } from "@incubateur-ademe/nosgestesclimat";
 
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 
 /**
  * The NGC rule each footprint category is rooted at. NGC keys every question and

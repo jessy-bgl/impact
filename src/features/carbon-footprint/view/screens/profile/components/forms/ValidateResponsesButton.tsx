@@ -5,7 +5,7 @@ import { Button, Divider, useTheme } from "react-native-paper";
 import {
   FootprintCategory,
   FootprintSubCategory,
-} from "@carbonFootprint/domain/entities/footprints/types";
+} from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { useProfileCompletionCelebration } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebrationContext";
 import { useScrollProfileSection } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
 import { posthog } from "@common/config/posthog";

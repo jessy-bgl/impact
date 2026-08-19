@@ -19,6 +19,23 @@ export type Footprints = {
 export type FootprintCategory =
   "transport" | "housing" | "food" | "everydayThings" | "societalServices";
 
+/**
+ * Declaration order of the categories, as a `Record` so that adding one to the
+ * union stops compiling here instead of silently dropping it from everything
+ * that iterates the categories.
+ */
+const footprintCategoryOrder: Record<FootprintCategory, null> = {
+  transport: null,
+  food: null,
+  housing: null,
+  everydayThings: null,
+  societalServices: null,
+};
+
+export const footprintCategories = Object.keys(
+  footprintCategoryOrder,
+) as FootprintCategory[];
+
 export type TransportFootprintSubCategory =
   "car" | "otherTransport" | "plane" | "publicTransport" | "twoWheeler";
 

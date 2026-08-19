@@ -11,7 +11,7 @@ import {
   ademeFrenchAverageRule,
 } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";

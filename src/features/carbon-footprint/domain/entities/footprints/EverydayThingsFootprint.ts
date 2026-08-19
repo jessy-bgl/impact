@@ -1,4 +1,4 @@
-import { WithAnnualFootprint } from "@carbonFootprint/domain/entities/footprints/types";
+import { WithAnnualFootprint } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { roundFootprint } from "@carbonFootprint/domain/entities/footprints/utils";
 
 type Props = {

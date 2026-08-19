@@ -1,4 +1,4 @@
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import {
   ProfileCompletion,
   completableSubCategories,

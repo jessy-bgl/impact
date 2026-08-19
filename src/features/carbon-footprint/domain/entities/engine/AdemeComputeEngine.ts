@@ -9,10 +9,10 @@ import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine
 import { ComputeEngine } from "@carbonFootprint/domain/entities/engine/ComputeEngine";
 import { EverydayThingsFootprint } from "@carbonFootprint/domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodFootprint";
+import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/types";
 import { roundFootprint } from "@carbonFootprint/domain/entities/footprints/utils";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { AdemeQuestion } from "@carbonFootprint/domain/entities/question/AdemeQuestion";
