@@ -8,7 +8,7 @@ import {
   HousingFootprintSubCategory,
   SocietalServicesFootprintSubCategory,
   TransportFootprintSubCategory,
-} from "@carbonFootprint/domain/entities/footprints/types";
+} from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { defaultAppStoreValues } from "@common/store/storeDefaultValues";
 import { AnalyticsConsent } from "@consent/domain/entities/Consent";
