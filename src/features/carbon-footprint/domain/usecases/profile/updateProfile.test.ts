@@ -1,5 +1,8 @@
 import { FootprintsStubRepository } from "@carbonFootprint/data/repositories/footprints.stub.repository";
+import { FootprintsHistoryStubRepository } from "@carbonFootprint/data/repositories/footprintsHistory.stub.repository";
 import { ProfileStubRepository } from "@carbonFootprint/data/repositories/profile.stub.repository";
+import { createRecordFootprintsSnapshot } from "@carbonFootprint/domain/usecases/history/recordFootprintsSnapshot";
+import { ClockStub } from "@common/data/clock.stub";
 import { ComputeEngineStub } from "@carbonFootprint/domain/entities/engine/ComputeEngine.stub";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import {
@@ -27,6 +30,12 @@ describe("createUpdateProfile", () => {
       computeEngine,
       profileRepository,
       footprintsRepository,
+      createRecordFootprintsSnapshot(
+        new ClockStub(),
+        profileRepository,
+        footprintsRepository,
+        new FootprintsHistoryStubRepository(),
+      ).recordFootprintsSnapshot,
     );
   });
 

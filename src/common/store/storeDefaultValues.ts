@@ -59,6 +59,7 @@ export const defaultAppStoreValues: AppStore = {
     everydayThings: ademeComputeEngine.computeEverydayThingsFootprint(),
     societalServices: ademeComputeEngine.computeSocietalServicesFootprint(),
   },
+  footprintsHistory: [],
   actions: [],
   analyticsConsent: {
     state: "unset",

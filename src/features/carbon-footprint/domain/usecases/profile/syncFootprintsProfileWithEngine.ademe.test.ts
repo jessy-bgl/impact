@@ -1,5 +1,8 @@
 import { FootprintsStubRepository } from "@carbonFootprint/data/repositories/footprints.stub.repository";
+import { FootprintsHistoryStubRepository } from "@carbonFootprint/data/repositories/footprintsHistory.stub.repository";
 import { ProfileStubRepository } from "@carbonFootprint/data/repositories/profile.stub.repository";
+import { createRecordFootprintsSnapshot } from "@carbonFootprint/domain/usecases/history/recordFootprintsSnapshot";
+import { ClockStub } from "@common/data/clock.stub";
 import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
 import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/usecases/profile/syncFootprintsProfileWithEngine";
 
@@ -27,6 +30,12 @@ describe("syncFootprintsProfileWithEngine with the ADEME engine", () => {
         computeEngine,
         profileRepository,
         footprintsRepository,
+        createRecordFootprintsSnapshot(
+          new ClockStub(),
+          profileRepository,
+          footprintsRepository,
+          new FootprintsHistoryStubRepository(),
+        ).recordFootprintsSnapshot,
       ));
 
     // The ADEME engine holds its situation statically: clear what a previous

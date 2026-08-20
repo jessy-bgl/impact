@@ -16,6 +16,7 @@ export const createUpdateProfile = (
   computeEngine: ComputeEngine,
   profileRepository: ProfileRepository,
   footprintsRepository: FootprintsRepository,
+  recordFootprintsSnapshot: () => void,
 ) => {
   const updateTransportProfile = (
     question: Question,
@@ -46,26 +47,33 @@ export const createUpdateProfile = (
   const _recomputeCategoryFootprint = (category: FootprintCategory) => {
     switch (category) {
       case "transport":
-        return footprintsRepository.updateTransportFootprint(
+        footprintsRepository.updateTransportFootprint(
           computeEngine.computeTransportFootprint(),
         );
+        break;
       case "food":
-        return footprintsRepository.updateFoodFootprint(
+        footprintsRepository.updateFoodFootprint(
           computeEngine.computeFoodFootprint(),
         );
+        break;
       case "housing":
-        return footprintsRepository.updateHousingFootprint(
+        footprintsRepository.updateHousingFootprint(
           computeEngine.computeHousingFootprint(),
         );
+        break;
       case "everydayThings":
-        return footprintsRepository.updateEverydayThingsFootprint(
+        footprintsRepository.updateEverydayThingsFootprint(
           computeEngine.computeEverydayThingsFootprint(),
         );
+        break;
       case "societalServices":
-        return footprintsRepository.updateSocietalServicesFootprint(
+        footprintsRepository.updateSocietalServicesFootprint(
           computeEngine.computeSocietalServicesFootprint(),
         );
+        break;
     }
+
+    recordFootprintsSnapshot();
   };
 
   const _updateProfile = (question: Question, value: string | number): void => {
@@ -117,6 +125,10 @@ export const createUpdateProfile = (
     const profileJustCompleted =
       !wasProfileCompleted &&
       isProfileCompleted(profileRepository.fetchProfileCompletion());
+
+    // The very first snapshot can only be taken here: validating the last
+    // section completes the profile, and no footprint recompute follows it.
+    recordFootprintsSnapshot();
 
     return { profileJustCompleted };
   };

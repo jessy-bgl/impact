@@ -23,6 +23,30 @@
       "source": "Source : SDES, empreinte carbone moyenne par Français."
     }
   },
+  "tabs": {
+    "distribution": "Répartition",
+    "history": "Historique"
+  },
+  "history": {
+    "title": "Évolution de mes émissions",
+    "allFilter": "Tout",
+    "perYear": "tCO2e/an",
+    "since": "depuis le {{date}}",
+    "stable": "Stable",
+    "breakdownTitle": "Répartition au {{date}}",
+    "selectPoint": "Voir la répartition au {{date}}",
+    "backToCurrentDate": "Revenir à la date actuelle",
+    "selectHint": "Touche un point pour voir la répartition à cette date.",
+    "incompleteProfile": {
+      "title": "Le suivi démarre avec ton bilan",
+      "subtitle": "Complète toutes les catégories de ton profil : à partir de là, chaque changement sera enregistré et tu pourras suivre ton évolution.",
+      "cta": "Compléter mon profil"
+    },
+    "singleSnapshot": {
+      "title": "Premier relevé enregistré",
+      "subtitle": "Reviens après avoir modifié ton profil : il faut au moins deux relevés pour tracer une évolution."
+    }
+  },
   "categories": {
     "transport": "Transports",
     "housing": "Logement",

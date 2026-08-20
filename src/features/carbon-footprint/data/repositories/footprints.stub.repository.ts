@@ -1,16 +1,29 @@
 import { EverydayThingsFootprint } from "@carbonFootprint/domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodFootprint";
+import { Footprints } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
 import { FootprintsRepository } from "@carbonFootprint/domain/repositories/footprints.repository";
 
 export class FootprintsStubRepository implements FootprintsRepository {
-  transport?: TransportFootprint;
-  food?: FoodFootprint;
-  housing?: HousingFootprint;
-  everydayThings?: EverydayThingsFootprint;
-  societalServices?: SocietalServicesFootprint;
+  transport: TransportFootprint = new TransportFootprint({});
+  food: FoodFootprint = new FoodFootprint({});
+  housing: HousingFootprint = new HousingFootprint({});
+  everydayThings: EverydayThingsFootprint = new EverydayThingsFootprint({});
+  societalServices: SocietalServicesFootprint = new SocietalServicesFootprint(
+    {},
+  );
+
+  fetchFootprints(): Footprints {
+    return {
+      transport: this.transport,
+      food: this.food,
+      housing: this.housing,
+      everydayThings: this.everydayThings,
+      societalServices: this.societalServices,
+    };
+  }
 
   updateTransportFootprint(footprint: TransportFootprint): void {
     this.transport = footprint;
