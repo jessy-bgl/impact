@@ -33,6 +33,11 @@ export const isProfileCompleted = (completion: ProfileCompletion): boolean =>
     (category) => isCategoryCompleted(completion, category),
   );
 
+export const isProfileStarted = (completion: ProfileCompletion): boolean =>
+  Object.values(completion).some((subCategories) =>
+    Object.values(subCategories ?? {}).some((completed) => completed === true),
+  );
+
 export const isCategoryCompleted = (
   completion: ProfileCompletion,
   category: FootprintCategory,

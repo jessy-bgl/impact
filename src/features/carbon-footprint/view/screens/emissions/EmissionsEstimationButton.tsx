@@ -4,6 +4,8 @@ import { Button, useTheme } from "react-native-paper";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { posthog } from "@common/config/posthog";
+import { isProfileStarted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
+import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
 
 export const EmissionsEstimationButton = () => {
   const { t } = useTranslation("emissions");
@@ -11,6 +13,10 @@ export const EmissionsEstimationButton = () => {
   const { colors } = useTheme();
 
   const { navigate } = useNavigation<EmissionsNavigatorProp>();
+
+  const { profileCompletion } = useProfile();
+
+  const started = isProfileStarted(profileCompletion);
 
   return (
     <Button
@@ -24,7 +30,7 @@ export const EmissionsEstimationButton = () => {
         navigate("Profile");
       }}
     >
-      {t("estimate")}
+      {t(started ? "resumeEstimate" : "estimate")}
     </Button>
   );
 };
