@@ -37,7 +37,7 @@ export const SelectRadio = ({ question, value, onValueChange }: Props) => {
             }}
           >
             <Text style={{ flex: 1 }}>{option.label}</Text>
-            <RadioButton value={option.value} color={color} />
+            <RadioButton.Android value={option.value} color={color} />
           </View>
         );
       })}
