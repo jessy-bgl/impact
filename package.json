@@ -16,7 +16,7 @@
     "prepare": "husky",
     "test": "cross-env NODE_ENV=test jest",
     "test:cov": "cross-env NODE_ENV=test jest --coverage",
-    "build:web": "mkdir -p public && touch public/.nojekyll && expo export -p web --source-maps && posthog-cli sourcemap process --directory dist --delete-after && npx workbox-cli generateSW workbox-config.js",
+    "build:web": "mkdir -p public && touch public/.nojekyll && cross-env EXPO_WEB_EXPORT=1 expo export -p web --source-maps && posthog-cli sourcemap process --directory dist --delete-after && npx workbox-cli generateSW workbox-config.js",
     "deploy:web": "gh-pages -t -d dist"
   },
   "dependencies": {
