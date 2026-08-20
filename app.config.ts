@@ -24,7 +24,7 @@ const config: ExpoConfig = {
   },
   orientation: "portrait",
   icon: "./assets/icon.png",
-  userInterfaceStyle: "dark",
+  userInterfaceStyle: "automatic",
   plugins: [
     "expo-font",
     "expo-image",
