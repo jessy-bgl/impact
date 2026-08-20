@@ -40,6 +40,7 @@ export const ComparatorForMobile = ({ type }: Props) => {
         onLoadEnd={() => setTimeout(() => setIsLoading(false), 500)}
         originWhitelist={["*"]}
         source={{
+          baseUrl: "https://impactco2.fr",
           html: `
           <!DOCTYPE html>
           <html>
