@@ -5,10 +5,13 @@ import {
   InputAccessoryView,
   Platform,
   TextInput as RNTextInput,
+  View as RNView,
+  StyleSheet,
   TextStyle,
 } from "react-native";
 import {
   Button,
+  IconButton,
   Text,
   TextInput,
   TextInputProps,
@@ -212,10 +215,30 @@ export const NumericInput = ({
         </Text>
       )}
       {hasAccessoryView && (
-        <InputAccessoryView nativeID={accessoryViewID}>
-          <Button mode="text" onPress={() => inputRef.current?.blur()}>
-            {t("validate")} ✅
-          </Button>
+        <InputAccessoryView
+          nativeID={accessoryViewID}
+          backgroundColor={colors.elevation.level2}
+        >
+          <RNView
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              borderTopWidth: StyleSheet.hairlineWidth,
+              borderTopColor: colors.outlineVariant,
+              paddingHorizontal: 8,
+            }}
+          >
+            <IconButton
+              icon="check"
+              mode="contained"
+              size={20}
+              containerColor={colors.primary}
+              iconColor={colors.onPrimary}
+              accessibilityLabel={t("validate")}
+              onPress={() => inputRef.current?.blur()}
+            />
+          </RNView>
         </InputAccessoryView>
       )}
     </View>
