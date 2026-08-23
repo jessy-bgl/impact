@@ -44,7 +44,7 @@ export const ComparatorForMobile = ({ type }: Props) => {
           opacity: isLoading ? 0 : 1,
         }}
         showsVerticalScrollIndicator={false}
-        onLoadEnd={() => setTimeout(() => setIsLoading(false), 500)}
+        onLoadEnd={() => setIsLoading(false)}
         webviewDebuggingEnabled={__DEV__}
         source={{
           uri: buildAdemeComparatorUrl(type, dark ? "night" : "default"),
