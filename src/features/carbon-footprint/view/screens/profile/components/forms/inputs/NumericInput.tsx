@@ -1,6 +1,12 @@
 import { View } from "moti";
-import { useRef } from "react";
-import { TextStyle } from "react-native";
+import { useId, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  InputAccessoryView,
+  Platform,
+  TextInput as RNTextInput,
+  TextStyle,
+} from "react-native";
 import {
   Button,
   Text,
@@ -42,6 +48,7 @@ export const NumericInput = ({
   ...props
 }: Props) => {
   const { colors } = useTheme();
+  const { t } = useTranslation("common");
 
   const dense = props.dense ?? true;
   const mode = props.mode ?? "outlined";
@@ -55,6 +62,16 @@ export const NumericInput = ({
   const value = props.value;
 
   const committedValueRef = useRef<string>("");
+  const inputRef = useRef<RNTextInput>(null);
+
+  // iOS numeric keypads have no return key, so the only way to offer an
+  // explicit "validate" affordance (which Android gets for free through the
+  // IME action button) is a keyboard accessory bar.
+  const generatedAccessoryViewID = useId();
+  const accessoryViewID =
+    props.inputAccessoryViewID ?? generatedAccessoryViewID;
+  const hasAccessoryView =
+    Platform.OS === "ios" && props.inputAccessoryViewID === undefined;
 
   const toCommittableValue = (text: string | number | undefined) =>
     clampToRange(stripTrailingSeparator(normalizeDecimal(text)), { min, max });
@@ -128,6 +145,8 @@ export const NumericInput = ({
         </Button>
         <TextInput
           {...props}
+          ref={inputRef}
+          inputAccessoryViewID={hasAccessoryView ? accessoryViewID : undefined}
           right={
             inlineUnit && (
               <TextInput.Affix text={inlineUnit} textStyle={{ fontSize: 14 }} />
@@ -191,6 +210,13 @@ export const NumericInput = ({
         >
           {externalUnit}
         </Text>
+      )}
+      {hasAccessoryView && (
+        <InputAccessoryView nativeID={accessoryViewID}>
+          <Button mode="text" onPress={() => inputRef.current?.blur()}>
+            {t("validate")} ✅
+          </Button>
+        </InputAccessoryView>
       )}
     </View>
   );
