@@ -1,10 +1,14 @@
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { useState } from "react";
+import { StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 import WebView from "react-native-webview";
 
-import { AdemeComparatorType } from "@carbonFootprint/domain/entities/comparator/AdemeComparator";
+import {
+  AdemeComparatorType,
+  buildAdemeComparatorUrl,
+} from "@carbonFootprint/domain/entities/comparator/AdemeComparator";
 
 type Props = {
   type: AdemeComparatorType;
@@ -20,7 +24,10 @@ export const ComparatorForMobile = ({ type }: Props) => {
       {isLoading && (
         <MotiView
           animate={{ backgroundColor: colors.surface }}
-          style={{ paddingTop: 25, paddingLeft: 18, paddingRight: 18 }}
+          style={[
+            StyleSheet.absoluteFill,
+            { paddingTop: 25, paddingLeft: 18, paddingRight: 18, zIndex: 1 },
+          ]}
         >
           <Skeleton
             colorMode={dark ? "dark" : "light"}
@@ -32,23 +39,15 @@ export const ComparatorForMobile = ({ type }: Props) => {
 
       <WebView
         style={{
+          flex: 1,
           backgroundColor: colors.background,
-          display: isLoading ? "none" : "flex",
+          opacity: isLoading ? 0 : 1,
         }}
-        scalesPageToFit={false}
         showsVerticalScrollIndicator={false}
         onLoadEnd={() => setTimeout(() => setIsLoading(false), 500)}
-        originWhitelist={["*"]}
+        webviewDebuggingEnabled={__DEV__}
         source={{
-          baseUrl: "https://impactco2.fr",
-          html: `
-          <!DOCTYPE html>
-          <html>
-            <body>
-              <script name="impact-co2" src="https://impactco2.fr/iframe.js" data-type=${type} data-search="?theme=${dark ? "night" : "default"}"></script>
-            </body>
-          </html>
-        `,
+          uri: buildAdemeComparatorUrl(type, dark ? "night" : "default"),
         }}
       />
     </>
