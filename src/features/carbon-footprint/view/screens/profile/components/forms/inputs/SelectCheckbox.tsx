@@ -34,7 +34,7 @@ export const SelectCheckbox = ({ question, value, ...props }: Props) => {
         pointerEvents="none"
         importantForAccessibility="no-hide-descendants"
       >
-        <Checkbox status={props.status} color={color} />
+        <Checkbox.Android status={props.status} color={color} />
       </View>
     </TouchableOpacity>
   );
