@@ -1,7 +1,7 @@
 import { MotiView } from "moti";
 import { Skeleton } from "moti/skeleton";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import WebView from "react-native-webview";
 
@@ -37,19 +37,27 @@ export const ComparatorForMobile = ({ type }: Props) => {
         </MotiView>
       )}
 
-      <WebView
+      <View
         style={{
           flex: 1,
+          paddingHorizontal: 18,
           backgroundColor: colors.background,
-          opacity: isLoading ? 0 : 1,
         }}
-        showsVerticalScrollIndicator={false}
-        onLoadEnd={() => setTimeout(() => setIsLoading(false), 500)}
-        webviewDebuggingEnabled={__DEV__}
-        source={{
-          uri: buildAdemeComparatorUrl(type, dark ? "night" : "default"),
-        }}
-      />
+      >
+        <WebView
+          style={{
+            flex: 1,
+            backgroundColor: colors.background,
+            opacity: isLoading ? 0 : 1,
+          }}
+          showsVerticalScrollIndicator={false}
+          onLoadEnd={() => setTimeout(() => setIsLoading(false), 500)}
+          webviewDebuggingEnabled={__DEV__}
+          source={{
+            uri: buildAdemeComparatorUrl(type, dark ? "night" : "default"),
+          }}
+        />
+      </View>
     </>
   );
 };
