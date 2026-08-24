@@ -89,9 +89,7 @@
             "headlines": {
               "en": "Impact"
             },
-            "headlineLanguages": [
-              "en"
-            ],
+            "headlineLanguages": ["en"],
             "currentHeadlineLang": "en",
             "headlineFont": "'DM Serif Display', sans-serif",
             "headlineSize": 200,
@@ -118,9 +116,7 @@
             "subheadlines": {
               "en": "Mon empreinte carbone"
             },
-            "subheadlineLanguages": [
-              "en"
-            ],
+            "subheadlineLanguages": ["en"],
             "currentSubheadlineLang": "en",
             "subheadlineFont": "'DM Sans', sans-serif",
             "subheadlineSize": 130,
@@ -204,9 +200,7 @@
             "headlines": {
               "en": "Mes émissions"
             },
-            "headlineLanguages": [
-              "en"
-            ],
+            "headlineLanguages": ["en"],
             "currentHeadlineLang": "en",
             "headlineFont": "'DM Sans', sans-serif",
             "headlineSize": 150,
@@ -233,9 +227,7 @@
             "subheadlines": {
               "en": "par catégories"
             },
-            "subheadlineLanguages": [
-              "en"
-            ],
+            "subheadlineLanguages": ["en"],
             "currentSubheadlineLang": "en",
             "subheadlineFont": "'DM Sans', sans-serif",
             "subheadlineSize": 130,
@@ -319,9 +311,7 @@
             "headlines": {
               "en": "Mes émissions"
             },
-            "headlineLanguages": [
-              "en"
-            ],
+            "headlineLanguages": ["en"],
             "currentHeadlineLang": "en",
             "headlineFont": "'DM Sans', sans-serif",
             "headlineSize": 150,
@@ -348,9 +338,7 @@
             "subheadlines": {
               "en": "par catégories"
             },
-            "subheadlineLanguages": [
-              "en"
-            ],
+            "subheadlineLanguages": ["en"],
             "currentSubheadlineLang": "en",
             "subheadlineFont": "'DM Sans', sans-serif",
             "subheadlineSize": 130,
@@ -434,9 +422,7 @@
             "headlines": {
               "en": "Actions"
             },
-            "headlineLanguages": [
-              "en"
-            ],
+            "headlineLanguages": ["en"],
             "currentHeadlineLang": "en",
             "headlineFont": "'DM Sans', sans-serif",
             "headlineSize": 150,
@@ -463,9 +449,7 @@
             "subheadlines": {
               "en": "personnalisées"
             },
-            "subheadlineLanguages": [
-              "en"
-            ],
+            "subheadlineLanguages": ["en"],
             "currentSubheadlineLang": "en",
             "subheadlineFont": "'DM Sans', sans-serif",
             "subheadlineSize": 130,
@@ -549,9 +533,7 @@
             "headlines": {
               "en": "Ordres de grandeur"
             },
-            "headlineLanguages": [
-              "en"
-            ],
+            "headlineLanguages": ["en"],
             "currentHeadlineLang": "en",
             "headlineFont": "'DM Sans', sans-serif",
             "headlineSize": 150,
@@ -578,9 +560,7 @@
             "subheadlines": {
               "en": "impactco2.fr"
             },
-            "subheadlineLanguages": [
-              "en"
-            ],
+            "subheadlineLanguages": ["en"],
             "currentSubheadlineLang": "en",
             "subheadlineFont": "'DM Sans', sans-serif",
             "subheadlineSize": 130,
@@ -601,9 +581,7 @@
       "customWidth": 1320,
       "customHeight": 2868,
       "currentLanguage": "en",
-      "projectLanguages": [
-        "en"
-      ],
+      "projectLanguages": ["en"],
       "defaults": {
         "background": {
           "type": "gradient",
@@ -656,9 +634,7 @@
           "headlines": {
             "en": ""
           },
-          "headlineLanguages": [
-            "en"
-          ],
+          "headlineLanguages": ["en"],
           "currentHeadlineLang": "en",
           "headlineFont": "-apple-system, BlinkMacSystemFont, 'SF Pro Display'",
           "headlineSize": 100,
@@ -685,9 +661,7 @@
           "subheadlines": {
             "en": ""
           },
-          "subheadlineLanguages": [
-            "en"
-          ],
+          "subheadlineLanguages": ["en"],
           "currentSubheadlineLang": "en",
           "subheadlineFont": "-apple-system, BlinkMacSystemFont, 'SF Pro Display'",
           "subheadlineSize": 50,
