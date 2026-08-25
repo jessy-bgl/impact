@@ -4,7 +4,9 @@ import {
   completableSubCategories,
   isCategoryCompleted,
   isProfileCompleted,
+  isProfileStarted,
 } from "@carbonFootprint/domain/entities/profile/profileCompletion";
+import { defaultAppStoreValues } from "@common/store/storeDefaultValues";
 
 const completeEverything = (): ProfileCompletion =>
   (Object.keys(completableSubCategories) as FootprintCategory[]).reduce(
@@ -97,6 +99,36 @@ describe("profileCompletion", () => {
 
     it("is true when every answerable sub-category is validated", () => {
       expect(isProfileCompleted(completeEverything())).toBe(true);
+    });
+  });
+
+  describe("isProfileStarted", () => {
+    it("is false when nothing has been validated", () => {
+      expect(isProfileStarted({})).toBe(false);
+    });
+
+    it("is false for an untouched profile", () => {
+      expect(isProfileStarted(defaultAppStoreValues.profile.completion)).toBe(
+        false,
+      );
+    });
+
+    it.each(categoriesWithSections)(
+      "is true once a sub-category of %s is validated",
+      (category) => {
+        const [firstSubCategory] = completableSubCategories[category];
+
+        expect(
+          isProfileStarted({
+            ...defaultAppStoreValues.profile.completion,
+            [category]: { [firstSubCategory]: true },
+          }),
+        ).toBe(true);
+      },
+    );
+
+    it("is true when everything is validated", () => {
+      expect(isProfileStarted(completeEverything())).toBe(true);
     });
   });
 });

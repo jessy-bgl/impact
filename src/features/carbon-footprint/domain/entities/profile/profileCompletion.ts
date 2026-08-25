@@ -34,8 +34,11 @@ export const isProfileCompleted = (completion: ProfileCompletion): boolean =>
   );
 
 export const isProfileStarted = (completion: ProfileCompletion): boolean =>
-  Object.values(completion).some((subCategories) =>
-    Object.values(subCategories ?? {}).some((completed) => completed === true),
+  (Object.keys(completableSubCategories) as FootprintCategory[]).some(
+    (category) =>
+      completableSubCategories[category].some(
+        (subCategory) => completion[category]?.[subCategory] === true,
+      ),
   );
 
 export const isCategoryCompleted = (
