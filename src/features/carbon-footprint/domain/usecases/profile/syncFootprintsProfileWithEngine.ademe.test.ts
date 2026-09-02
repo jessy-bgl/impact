@@ -9,6 +9,10 @@ import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/u
 // ones the user never opened — without the sync writing a single answer.
 // The footprint values themselves are pinned by the engine's `default profile`
 // snapshot; what matters here is what the sync does with them.
+// Snapshot recording is not what these tests are about; it has its own suite in
+// `usecases/history/recordFootprintsSnapshot.test.ts`.
+const recordFootprintsSnapshot = () => {};
+
 describe("syncFootprintsProfileWithEngine with the ADEME engine", () => {
   let computeEngine: AdemeComputeEngine;
   let profileRepository: ProfileStubRepository;
@@ -27,6 +31,7 @@ describe("syncFootprintsProfileWithEngine with the ADEME engine", () => {
         computeEngine,
         profileRepository,
         footprintsRepository,
+        recordFootprintsSnapshot,
       ));
 
     // The ADEME engine holds its situation statically: clear what a previous

@@ -1,4 +1,10 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import React, {
   createContext,
   ReactNode,
@@ -7,6 +13,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useTheme } from "react-native-paper";
 
 type BottomSheetContent = ReactNode;
 
@@ -46,9 +53,53 @@ export const BottomSheetProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <BottomSheetContext.Provider value={value}>
-      {children}
-    </BottomSheetContext.Provider>
+    <BottomSheetModalProvider>
+      <BottomSheetContext.Provider value={value}>
+        {children}
+        <CustomBottomSheet />
+      </BottomSheetContext.Provider>
+    </BottomSheetModalProvider>
+  );
+};
+
+const CustomBottomSheet = () => {
+  const { bottomSheetRef, bottomSheetContent, dismiss } =
+    useCustomBottomSheetModal();
+
+  const { colors } = useTheme();
+
+  const handleSheetChanges = useCallback(
+    (index: number) => {
+      if (index === -1) dismiss();
+    },
+    [dismiss],
+  );
+
+  return (
+    <BottomSheetModal
+      ref={bottomSheetRef}
+      onChange={handleSheetChanges}
+      enableOverDrag={false}
+      backgroundStyle={{
+        backgroundColor: colors.surfaceVariant,
+      }}
+      handleIndicatorStyle={{
+        backgroundColor: colors.onSurfaceVariant,
+      }}
+      backdropComponent={(props: BottomSheetBackdropProps) => (
+        <BottomSheetBackdrop {...props} disappearsOnIndex={-1} />
+      )}
+    >
+      <BottomSheetView
+        style={{
+          paddingInline: 20,
+          paddingTop: 10,
+          paddingBottom: 20,
+        }}
+      >
+        {bottomSheetContent}
+      </BottomSheetView>
+    </BottomSheetModal>
   );
 };
 

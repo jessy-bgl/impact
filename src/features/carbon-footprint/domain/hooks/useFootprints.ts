@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useMemo } from "react";
 
-import {
-  FootprintCategoryViewModel,
-  FootprintViewModels,
-} from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { mapFootprintCategories } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 
@@ -18,30 +16,12 @@ export const useFootprints = () => {
     [storedFootprints],
   );
 
-  let footprints: FootprintViewModels = {
-    transport: FootprintCategoryViewModel.forTransport(
-      storedFootprints.transport.annualFootprint,
-      annualFootprint,
+  const footprints = FootprintCategoryViewModel.forCategories(
+    mapFootprintCategories(
+      (category) => storedFootprints[category].annualFootprint,
     ),
-    food: FootprintCategoryViewModel.forFood(
-      storedFootprints.food.annualFootprint,
-      annualFootprint,
-    ),
-    housing: FootprintCategoryViewModel.forHousing(
-      storedFootprints.housing.annualFootprint,
-      annualFootprint,
-    ),
-    everydayThings: FootprintCategoryViewModel.forEverydayThings(
-      storedFootprints.everydayThings.annualFootprint,
-      annualFootprint,
-    ),
-    societalServices: FootprintCategoryViewModel.forSocietalServices(
-      storedFootprints.societalServices.annualFootprint,
-      annualFootprint,
-    ),
-  };
-
-  footprints = FootprintCategoryViewModel.distributeParts(footprints);
+    annualFootprint,
+  );
 
   const isLoading = isNaN(annualFootprint);
 

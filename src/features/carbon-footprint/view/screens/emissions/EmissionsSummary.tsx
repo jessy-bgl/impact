@@ -6,7 +6,7 @@ import { EmissionsDistribution } from "@carbonFootprint/view/screens/emissions/E
 import { EmissionsEstimationButton } from "@carbonFootprint/view/screens/emissions/EmissionsEstimationButton";
 import { EmissionsTitle } from "@carbonFootprint/view/screens/emissions/EmissionsTitle";
 
-export const Emissions = () => {
+export const EmissionsSummary = () => {
   const { isLoading, footprints, annualFootprint } = useFootprints();
 
   return (

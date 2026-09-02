@@ -9,6 +9,7 @@ import {
   SocietalServicesFootprintSubCategory,
   TransportFootprintSubCategory,
 } from "@carbonFootprint/domain/entities/footprints/Footprints";
+import { FootprintsHistory } from "@carbonFootprint/domain/entities/history/FootprintSnapshot";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { defaultAppStoreValues } from "@common/store/storeDefaultValues";
 import { AnalyticsConsent } from "@consent/domain/entities/Consent";
@@ -37,6 +38,7 @@ export type AppStore = {
     >;
   };
   footprints: Footprints;
+  footprintsHistory: FootprintsHistory;
   actions: Action[];
   analyticsConsent: AnalyticsConsent;
 };

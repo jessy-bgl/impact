@@ -12,6 +12,10 @@ import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/up
 const makeQuestion = (label: keyof Profile): Question =>
   ({ label }) as Question;
 
+// Snapshot recording is not what these tests are about; it has its own suite in
+// `usecases/history/recordFootprintsSnapshot.test.ts`.
+const recordFootprintsSnapshot = () => {};
+
 describe("createUpdateProfile", () => {
   let computeEngine: ComputeEngineStub;
   let profileRepository: ProfileStubRepository;
@@ -27,6 +31,7 @@ describe("createUpdateProfile", () => {
       computeEngine,
       profileRepository,
       footprintsRepository,
+      recordFootprintsSnapshot,
     );
   });
 

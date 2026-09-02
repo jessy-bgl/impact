@@ -12,6 +12,7 @@ export const createSyncFootprintsProfileWithEngine = (
   computeEngine: ComputeEngine,
   profileRepository: ProfileRepository,
   footprintsRepository: FootprintsRepository,
+  recordFootprintsSnapshot: () => void,
 ) => {
   const syncFootprintsProfileWithEngine = async ({
     handleMigration = false,
@@ -160,6 +161,10 @@ export const createSyncFootprintsProfileWithEngine = (
     footprintsRepository.updateSocietalServicesFootprint(
       footprints.societalServices,
     );
+
+    // Covers the NGC model being updated: the engine can move a footprint
+    // without the user answering anything.
+    recordFootprintsSnapshot();
   };
 
   return { syncFootprintsProfileWithEngine };

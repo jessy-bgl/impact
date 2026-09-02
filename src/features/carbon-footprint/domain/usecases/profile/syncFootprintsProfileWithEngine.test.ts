@@ -16,6 +16,10 @@ const fakeSelectRule = (options: string[]) => ({
 });
 const fakeNumericRule = () => ({ rawNode: { question: "stub question" } });
 
+// Snapshot recording is not what these tests are about; it has its own suite in
+// `usecases/history/recordFootprintsSnapshot.test.ts`.
+const recordFootprintsSnapshot = () => {};
+
 describe("syncFootprintsProfileWithEngine", () => {
   let profileStub: ProfileStubRepository;
   let footprintsStub: FootprintsStubRepository;
@@ -34,6 +38,7 @@ describe("syncFootprintsProfileWithEngine", () => {
         engineStub,
         profileStub,
         footprintsStub,
+        recordFootprintsSnapshot,
       ));
   });
 

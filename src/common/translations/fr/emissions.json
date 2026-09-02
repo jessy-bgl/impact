@@ -1,5 +1,5 @@
 {
-  "impactDistributionTitle": "Répartition de mon impact par catégories",
+  "impactDistributionTitle": "Mes émissions par catégories",
   "estimate": "Estimer mon impact carbone",
   "resumeEstimate": "Compléter mon bilan carbone",
   "updateEstimate": "Mettre à jour mon bilan carbone",
@@ -23,6 +23,31 @@
       "below": "Mon empreinte est {{percentage}} % en dessous de la moyenne française.",
       "equal": "Mon empreinte est au niveau de la moyenne française.",
       "source": "Source : SDES, empreinte carbone moyenne par Français."
+    }
+  },
+  "tabs": {
+    "distribution": "Répartition",
+    "history": "Historique"
+  },
+  "history": {
+    "title": "Évolution de mes émissions",
+    "allFilter": "Total",
+    "filterTitle": "Filtrer par catégorie",
+    "filterA11y": "Filtrer : {{filter}}",
+    "perYear": "tCO2e/an",
+    "since": "depuis le {{date}}",
+    "stable": "Stable",
+    "comparedToCurrent": "par rapport à aujourd'hui",
+    "selectPoint": "Voir le détail au {{date}}",
+    "backToCurrentDate": "Revenir à la date actuelle",
+    "selectHint": "Touche un point pour voir le détail à cette date.",
+    "incompleteProfile": {
+      "title": "Complète ton profil pour démarrer le suivi",
+      "subtitle": "Ton bilan carbone sera enregistré automatiquement dès que toutes les catégories seront remplies. Chaque modification de tes réponses ajoutera ensuite un relevé et tracera l'évolution de tes émissions."
+    },
+    "singleSnapshot": {
+      "title": "Premier relevé enregistré",
+      "subtitle": "Reviens après avoir actualisé ton profil : il faut au moins deux relevés pour tracer une évolution."
     }
   },
   "categories": {
