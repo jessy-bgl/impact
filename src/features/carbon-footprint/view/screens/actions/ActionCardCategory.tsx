@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Ref, useState } from "react";
 import { View } from "react-native";
 import { IconButton, useTheme } from "react-native-paper";
 
@@ -10,9 +10,14 @@ import { InfoModalState } from "@carbonFootprint/view/screens/profile/types";
 type Props = {
   action: Action;
   footprintViewModel: FootprintCategoryViewModel;
+  tourRef?: Ref<View>;
 };
 
-export const ActionCardCategory = ({ action, footprintViewModel }: Props) => {
+export const ActionCardCategory = ({
+  action,
+  footprintViewModel,
+  tourRef,
+}: Props) => {
   const { colors, roundness } = useTheme();
 
   const [modal, setModal] = useState<InfoModalState>({ show: false });
@@ -27,6 +32,8 @@ export const ActionCardCategory = ({ action, footprintViewModel }: Props) => {
       )}
 
       <View
+        ref={tourRef}
+        collapsable={false}
         style={{
           position: "absolute",
           bottom: 0,
