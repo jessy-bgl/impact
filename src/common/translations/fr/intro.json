@@ -18,38 +18,73 @@
     "concreteActions": "des actions concrètes",
     "instructions": "Pour te donner un aperçu instantané, le simulateur* contient déjà des valeurs par défaut. Tu peux les modifier à tout moment pour obtenir des résultats personnalisés.",
     "simulatorInfo": "Le simulateur est basé sur les données de l'ADEME",
-    "Understood": "Compris"
+    "Understood": "Compris !"
   },
   "profile": {
-    "find": "Retrouve ici des",
-    "questions": " questions",
-    "toEstimate": " qui permettront d'estimer ton",
-    "carbonImpact": " impact carbone",
-    "byCategory": " par catégorie",
-    "categoriesExplained": "Chaque grande catégorie est composée de plusieurs sous-catégories.",
-    "categoryExample": "Prenons l'exemple de la sous-catégorie « voiture » qui fait partie de la catégorie « transports » :",
-    "questionsInfoButton": "Les questions marquées d'une petite icône d'information peuvent être sélectionnées pour obtenir plus de détails.",
-    "questionsAutoSave": "Tes réponses sont sauvegardées automatiquement.",
-    "questionsDefaultValues": "Si une réponse est affichée en gris, c'est qu'une valeur par défaut a été pré-remplie. Si elle est en blanc, cela signifie que tu l'as modifiée.",
-    "questionsCompletion": "Quand tu as terminé une catégorie, n'oublie pas de valider tes réponses.",
-    "beforeSubmitWarning": "Tu pourras toujours modifier tes réponses plus tard. La validation permet simplement à l'application de suivre ta progression, d'activer le suivi de ton empreinte carbone dans le temps et de te proposer des actions pertinentes pour réduire ton impact 🌱.",
-    "dismissProfileIntro": "J'accède aux questions"
+    "tour": {
+      "categoryCard": {
+        "title": "Ton empreinte par catégorie",
+        "body": "Chaque section affiche l'empreinte annuelle estimée d'une catégorie et ta progression."
+      },
+      "openCategory": {
+        "title": "À toi de jouer !",
+        "body": "Ouvre « {{label}} » pour commencer à affiner ton estimation."
+      },
+      "sectionHeader": {
+        "title": "Un thème à la fois",
+        "body": "Chaque catégorie est découpée en thèmes. Ouvre « {{label}} » pour découvrir les questions associées."
+      },
+      "defaultValue": {
+        "title": "Questionnaire",
+        "body": "Chaque réponse est sauvegardée automatiquement. Certaines d'entre elles sont pré-remplies avec des valeurs moyennes."
+      },
+      "infoIcon": {
+        "title": "Un doute sur une question ?",
+        "body": "Touche une question suivie de l'icône ⓘ pour avoir des explications détaillées."
+      },
+      "validateButton": {
+        "title": "Valide et continue 🌱",
+        "body": "Quand tu as fini, valide tes réponses et passe au thème suivant. Ta progression est sauvegardée et tu pourras toujours revenir modifier tes réponses."
+      }
+    }
   },
   "actions": {
-    "find": "Retrouve ici des",
-    "customizedActions": " actions personnalisées",
-    "helping": " qui t'aideront à",
-    "reduceYourImpact": " réduire ton impact",
-    "navigationDescription": "Les actions sont réparties dans trois listes :",
-    "availableTab": "Toutes les actions disponibles, filtrées selon ton profil et triées par émissions de CO2 économisées.",
-    "inProgressTab": "Actions que tu as sélectionnées et que tu es en train d'accomplir.",
-    "dismissedTab": "Actions que tu as écartées et ne souhaites plus voir dans la liste des actions disponibles.",
-    "exampleTitle": "Exemple d'action",
-    "carbonSavings": "Économies de CO2 si tu réalises cette action.",
-    "category": "Catégorie de l'action. Tu peux appuyer dessus pour avoir plus d'informations sur l'action.",
-    "buttons": "Boutons pour sélectionner ou écarter l'action.",
-    "beforeSubmitWarning": "Tu peux accéder aux actions à tout moment, mais tu dois compléter ton profil dans le menu Émissions pour que les actions proposées soient pertinentes.",
-    "completeProfile": "Je complète mon profil",
-    "dismissActionsIntro": "J'accède aux actions"
+    "tour": {
+      "intro": {
+        "title": "Passe à l'action 🌱",
+        "body": "Retrouve ici des actions personnalisées pour réduire ton impact, triées selon les émissions de CO2 qu'elles te feraient économiser."
+      },
+      "savings": {
+        "title": "Ce que tu économises",
+        "body": "La part de l'empreinte de la catégorie et la quantité de CO2 évitées chaque année si tu réalises cette action."
+      },
+      "category": {
+        "title": "Envie d'en savoir plus ?",
+        "body": "Touche l'icône de la catégorie pour découvrir le détail de l'action."
+      },
+      "buttons": {
+        "title": "À toi de choisir",
+        "body": "Coche l'action pour la démarrer, ou écarte-la si elle ne te correspond pas. Tu pourras toujours changer d'avis."
+      },
+      "tabs": {
+        "title": "Tes listes d'actions",
+        "body": "Retrouve les actions que tu as démarrées dans l'onglet « En cours », et celles que tu as écartées dans l'onglet « Écartées »."
+      },
+      "completeProfile": {
+        "title": "Des actions sur mesure",
+        "body": "Pour que les actions proposées soient pertinentes, complète ton profil depuis la page « {{label}} »."
+      }
+    }
+  },
+  "tour": {
+    "nav": {
+      "next": "Suivant",
+      "previous": "Précédent",
+      "finish": "C'est parti !",
+      "progress": "Étape {{current}} sur {{total}}",
+      "close": "Quitter la visite guidée",
+      "help": "Revoir la visite guidée",
+      "actionHint": "Touche la zone éclairée"
+    }
   }
 }
