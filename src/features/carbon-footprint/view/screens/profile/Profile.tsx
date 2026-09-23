@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
+import { useLayoutEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Animated, ScrollView } from "react-native";
+import { Animated, ScrollView, View } from "react-native";
 import { Icon, useTheme } from "react-native-paper";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
@@ -9,11 +10,13 @@ import { posthog } from "@common/config/posthog";
 import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
 import { useProfileSync } from "@carbonFootprint/domain/hooks/useProfileSync";
 import { ProfileCategoryCard } from "@carbonFootprint/view/screens/profile/ProfileCategoryCard";
+import { ProfileTourHelpButton } from "@carbonFootprint/view/tour/ProfileTourHelpButton";
+import { useTourScrollContainer } from "@common/tour/useTourScrollContainer";
 
 export const Profile = () => {
   const { t } = useTranslation("pages");
 
-  const { navigate } = useNavigation<EmissionsNavigatorProp>();
+  const { navigate, setOptions } = useNavigation<EmissionsNavigatorProp>();
 
   const { colors } = useTheme();
 
@@ -26,28 +29,48 @@ export const Profile = () => {
     societalServicesFootprint,
   } = useProfile();
 
-  const renderSyncIcon = (animatedValue: Animated.Value) => (
-    <Animated.View
-      style={{
-        marginRight: 15,
-        transform: [
-          {
-            rotate: animatedValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: ["0deg", "360deg"],
-            }),
-          },
-        ],
-      }}
-    >
-      <Icon source="sync" size={24} color={colors.onSurfaceDisabled} />
-    </Animated.View>
+  const { isSyncing, syncAnimation } = useProfileSync();
+
+  useLayoutEffect(
+    () =>
+      setOptions({
+        headerRight: () => (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {isSyncing && (
+              <Animated.View
+                style={{
+                  transform: [
+                    {
+                      rotate: syncAnimation.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ["0deg", "360deg"],
+                      }),
+                    },
+                  ],
+                }}
+              >
+                <Icon
+                  source="sync"
+                  size={24}
+                  color={colors.onSurfaceDisabled}
+                />
+              </Animated.View>
+            )}
+            <ProfileTourHelpButton />
+          </View>
+        ),
+      }),
+    [setOptions, isSyncing, syncAnimation, colors.onSurfaceDisabled],
   );
 
-  useProfileSync({ renderSyncIcon });
+  // The tour may start after the user scrolled down: let it bring the
+  // spotlighted card back into view.
+  const scrollViewRef = useRef<ScrollView>(null);
+  useTourScrollContainer(scrollViewRef);
 
   return (
     <ScrollView
+      ref={scrollViewRef}
       contentContainerStyle={{
         flexDirection: "column",
         alignItems: "center",

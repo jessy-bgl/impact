@@ -1,32 +1,17 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import {
-  JSX,
-  useCallback,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useIsFocused } from "@react-navigation/native";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Animated } from "react-native";
 
-import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 
-type Props = {
-  renderSyncIcon: (animatedValue: Animated.Value) => JSX.Element;
-};
-
-export const useProfileSync = ({ renderSyncIcon }: Props) => {
+export const useProfileSync = () => {
   const { syncFootprintsProfileWithEngine } = useContext(UsecasesContext);
 
   const isFocused = useIsFocused();
   const hasInitiallyFocused = useRef(false);
 
   const [isSyncing, setIsSyncing] = useState(false);
-
-  const { setOptions } = useNavigation<EmissionsNavigatorProp>();
 
   // Sync profile with engine is required here when returning from other screens
   // because some footprint categories are linked together. For example,
@@ -76,13 +61,5 @@ export const useProfileSync = ({ renderSyncIcon }: Props) => {
     }
   }, [isSyncing, syncAnimation]);
 
-  const renderSyncingIconCallback = useCallback(() => {
-    if (!isSyncing) return undefined;
-    return renderSyncIcon(syncAnimation);
-  }, [isSyncing, renderSyncIcon, syncAnimation]);
-
-  useLayoutEffect(
-    () => setOptions({ headerRight: renderSyncingIconCallback }),
-    [setOptions, renderSyncingIconCallback],
-  );
+  return { isSyncing, syncAnimation };
 };

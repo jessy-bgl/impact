@@ -1,10 +1,12 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { View } from "react-native";
 import { Icon, List, useTheme } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
+import { PROFILE_TOUR_TARGETS } from "@carbonFootprint/domain/entities/tour/profileTour";
 import { ListTitle } from "@carbonFootprint/view/screens/profile/components/lists/ListTitle";
 import { useScrollProfileSection } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
+import { useTourTarget } from "@common/tour/useTourTarget";
 
 type Props = {
   title: string;
@@ -23,6 +25,23 @@ export const ListAccordion = ({
   const { registerSectionRef } = useScrollProfileSection();
 
   const { colors } = useTheme();
+
+  // Anchored on the section's own view, not on the accordion title: Paper
+  // renders that title inside a <Text>, where a View cannot be measured.
+  // The tour collapses every section for this step, so the view is exactly
+  // the header row while it is spotlighted.
+  const sectionTourRef = useTourTarget(PROFILE_TOUR_TARGETS.sectionHeader, {
+    label: title,
+  });
+
+  const registerSection = useCallback(
+    (ref: View | null) => {
+      registerSectionRef(title, ref);
+      return sectionTourRef(ref);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [title, sectionTourRef],
+  );
 
   const renderIcon = (props: any) => (
     <View style={{ position: "relative" }}>
@@ -50,7 +69,7 @@ export const ListAccordion = ({
   );
 
   return (
-    <View ref={(ref) => registerSectionRef(title, ref)}>
+    <View ref={registerSection} collapsable={false}>
       <List.Accordion
         id={title}
         title={<ListTitle title={title} subtitle={subtitle} />}

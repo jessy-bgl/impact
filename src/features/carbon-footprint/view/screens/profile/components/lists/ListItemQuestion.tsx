@@ -1,7 +1,8 @@
 import { Control } from "react-hook-form";
-import { ViewStyle } from "react-native";
+import { View, ViewStyle } from "react-native";
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
+import { PROFILE_TOUR_TARGETS } from "@carbonFootprint/domain/entities/tour/profileTour";
 import { NumericField } from "@carbonFootprint/view/screens/profile/components/forms/fields/NumericField";
 import { NumericFields } from "@carbonFootprint/view/screens/profile/components/forms/fields/NumericFields";
 import { SelectBooleanField } from "@carbonFootprint/view/screens/profile/components/forms/fields/SelectBooleanField";
@@ -9,6 +10,7 @@ import { SelectField } from "@carbonFootprint/view/screens/profile/components/fo
 import { SelectFields } from "@carbonFootprint/view/screens/profile/components/forms/fields/SelectFields";
 import { ListItemQuestionDivider } from "@carbonFootprint/view/screens/profile/components/lists/ListItemQuestionDivider";
 import { FormValues } from "@carbonFootprint/view/screens/profile/types";
+import { useTourTarget } from "@common/tour/useTourTarget";
 
 type Props = {
   question: Question;
@@ -27,6 +29,12 @@ export const ListItemQuestion = ({
   divider = false,
   step,
 }: Props) => {
+  // Spotlighted by the guided tour, which explains that a greyed-out answer is
+  // an engine default the user has not touched yet.
+  const defaultValueTourRef = useTourTarget(PROFILE_TOUR_TARGETS.defaultValue, {
+    enabled: Boolean(question?.isEngineDefaultValueUsed),
+  });
+
   if (!question || !question.isApplicable) return;
 
   const handleUpdateAsync = (question: Question, value: string | number) =>
@@ -85,7 +93,9 @@ export const ListItemQuestion = ({
   return (
     <>
       {divider && <ListItemQuestionDivider hidden={!question.isApplicable} />}
-      {item}
+      <View ref={defaultValueTourRef} collapsable={false}>
+        {item}
+      </View>
     </>
   );
 };
