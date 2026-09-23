@@ -28,6 +28,7 @@ import { ConsentStoreRepository } from "@consent/data/repositories/consent.store
 import { ConsentStubRepository } from "@consent/data/repositories/consent.stub.repository";
 import { AnalyticsRepository } from "@consent/domain/repositories/analytics.repository";
 import { ConsentRepository } from "@consent/domain/repositories/consent.repository";
+import { createCaptureAnalyticsEvent } from "@consent/domain/usecases/captureAnalyticsEvent";
 import { createGrantAnalyticsConsent } from "@consent/domain/usecases/grantAnalyticsConsent";
 import { createRevokeAnalyticsConsent } from "@consent/domain/usecases/revokeAnalyticsConsent";
 import { AppDataStoreRepository } from "@settings/data/repositories/appData.store.repository";
@@ -111,6 +112,7 @@ const initUsecases = (repositories: Repositories) => {
     ...createSetTheme(settingsRepository),
     ...createGrantAnalyticsConsent(consentRepository, analyticsRepository),
     ...createRevokeAnalyticsConsent(consentRepository, analyticsRepository),
+    ...createCaptureAnalyticsEvent(consentRepository, analyticsRepository),
     ...createClearLocalData(appDataRepository),
   };
 };
