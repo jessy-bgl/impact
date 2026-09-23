@@ -10,6 +10,7 @@ describe("grantAnalyticsConsent", () => {
     repositories = initFakeRepositories();
     ({ grantAnalyticsConsent } = createGrantAnalyticsConsent(
       repositories.consentRepository,
+      repositories.analyticsRepository,
     ));
   });
 
@@ -27,5 +28,11 @@ describe("grantAnalyticsConsent", () => {
     const consent = repositories.consentRepository.getAnalyticsConsent();
     expect(consent.policyVersion).toBe(CURRENT_PRIVACY_POLICY_VERSION);
     expect(consent.decidedAt).not.toBeNull();
+  });
+
+  it("should opt in to analytics", () => {
+    grantAnalyticsConsent();
+
+    expect(repositories.analyticsRepository.isOptedIn).toBe(true);
   });
 });

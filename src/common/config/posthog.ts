@@ -34,9 +34,8 @@ export const posthog = new PostHog(projectToken || "placeholder_key", {
   host,
   disabled: !isPostHogConfigured,
   // No capture of any kind before the user has made a consent choice — see
-  // src/features/consent. Flipped on by posthog.optIn() from
-  // grantAnalyticsConsent, off again via optOut() from
-  // revokeAnalyticsConsent.
+  // src/features/consent. Flipped on by grantAnalyticsConsent, off again by
+  // revokeAnalyticsConsent, both through AnalyticsPostHogRepository.
   defaultOptIn: false,
   disableGeoip: true,
   personProfiles: "never",

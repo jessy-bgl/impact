@@ -1,11 +1,17 @@
-import { posthog } from "@common/config/posthog";
 import { CURRENT_PRIVACY_POLICY_VERSION } from "@consent/domain/entities/Consent";
+import { AnalyticsRepository } from "@consent/domain/repositories/analytics.repository";
 import { ConsentRepository } from "@consent/domain/repositories/consent.repository";
 
-export const createGrantAnalyticsConsent = (repository: ConsentRepository) => {
+export const createGrantAnalyticsConsent = (
+  consentRepository: ConsentRepository,
+  analyticsRepository: AnalyticsRepository,
+) => {
   const grantAnalyticsConsent = () => {
-    repository.setAnalyticsConsent("granted", CURRENT_PRIVACY_POLICY_VERSION);
-    posthog.optIn();
+    consentRepository.setAnalyticsConsent(
+      "granted",
+      CURRENT_PRIVACY_POLICY_VERSION,
+    );
+    analyticsRepository.optIn();
   };
 
   return { grantAnalyticsConsent };

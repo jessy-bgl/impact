@@ -12,9 +12,11 @@ describe("revokeAnalyticsConsent", () => {
     repositories = initFakeRepositories();
     ({ grantAnalyticsConsent } = createGrantAnalyticsConsent(
       repositories.consentRepository,
+      repositories.analyticsRepository,
     ));
     ({ revokeAnalyticsConsent } = createRevokeAnalyticsConsent(
       repositories.consentRepository,
+      repositories.analyticsRepository,
     ));
   });
 
@@ -43,5 +45,19 @@ describe("revokeAnalyticsConsent", () => {
     expect(repositories.consentRepository.getAnalyticsConsent().state).toBe(
       "denied",
     );
+  });
+
+  it("should opt out of analytics after a grant", () => {
+    grantAnalyticsConsent();
+
+    revokeAnalyticsConsent();
+
+    expect(repositories.analyticsRepository.isOptedIn).toBe(false);
+  });
+
+  it("should discard the stored analytics identifier", () => {
+    revokeAnalyticsConsent();
+
+    expect(repositories.analyticsRepository.resetCount).toBe(1);
   });
 });
