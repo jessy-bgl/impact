@@ -20,8 +20,11 @@ import { AppNavigator, AppTabParamList } from "@app/AppNavigator";
 import { useAppTheme } from "@app/AppTheme";
 import { Intro } from "@app/pages/Intro";
 import { PERSISTENCE_KEY, useApp } from "@app/useApp";
+import { ActionsTourProvider } from "@carbonFootprint/view/tour/ActionsTourProvider";
+import { ProfileTourProvider } from "@carbonFootprint/view/tour/ProfileTourProvider";
 import { posthog } from "@common/config/posthog";
 import { useAppStore } from "@common/store/useStore";
+import { setCurrentScreen } from "@common/tour/currentScreen";
 import "@common/translations/i18n";
 import { ConsentScreen } from "@consent/view/screens/ConsentScreen";
 import "../../logger.config";
@@ -39,15 +42,18 @@ const App = () => {
 
   const shouldShowAppIntro = useAppStore((state) => state.shouldShowIntro.app);
 
-  // @react-navigation/native v7 no longer supports PostHog's automatic screen
-  // autocapture, so screen views are captured manually from the container.
-  // No-op unless consent is granted.
   const navigationRef = useNavigationContainerRef<AppTabParamList>();
   const routeNameRef = useRef<string | undefined>(undefined);
 
-  const captureScreen = () => {
-    if (analyticsConsentState !== "granted") return;
+  // Follows the route on display. It drives the guided tours, which keep
+  // working when analytics are refused. @react-navigation/native v7 no longer
+  // supports PostHog's automatic screen autocapture, so screen views are also
+  // captured here, only once consent is granted.
+  const handleScreenChange = () => {
     const routeName = navigationRef.getCurrentRoute()?.name;
+    setCurrentScreen(routeName);
+
+    if (analyticsConsentState !== "granted") return;
     if (routeName && routeName !== routeNameRef.current)
       posthog.screen(routeName);
     routeNameRef.current = routeName;
@@ -96,13 +102,15 @@ const App = () => {
             ref={navigationRef}
             theme={theme}
             initialState={initialState}
-            onReady={captureScreen}
+            onReady={handleScreenChange}
             onStateChange={(state) => {
               AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
-              captureScreen();
+              handleScreenChange();
             }}
           >
-            {content}
+            <ProfileTourProvider>
+              <ActionsTourProvider>{content}</ActionsTourProvider>
+            </ProfileTourProvider>
           </NavigationContainer>
         </KeyboardProvider>
       </PaperProvider>

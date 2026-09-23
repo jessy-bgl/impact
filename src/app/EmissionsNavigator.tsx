@@ -1,14 +1,10 @@
 import {
-  StackHeaderRightProps,
   StackNavigationProp,
   createStackNavigator,
 } from "@react-navigation/stack";
-import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { IconButton } from "react-native-paper";
 
 import { Emissions } from "@app/pages/Emissions";
-import { IntroProfile } from "@app/pages/IntroProfile";
 import { Profile } from "@app/pages/Profile";
 
 import { EverydayThingsProfile } from "@carbonFootprint/view/screens/profile/everyday-things/EverydayThings";
@@ -16,8 +12,7 @@ import { FoodProfile } from "@carbonFootprint/view/screens/profile/food/Food";
 import { HousingProfile } from "@carbonFootprint/view/screens/profile/housing/Housing";
 import { SocietalServicesProfile } from "@carbonFootprint/view/screens/profile/public-services/SocietalServices";
 import { TransportProfile } from "@carbonFootprint/view/screens/profile/transport/Transport";
-import { UsecasesContext } from "@common/context/UsecasesContext";
-import { useAppStore } from "@common/store/useStore";
+import { ProfileTourHelpButton } from "@carbonFootprint/view/tour/ProfileTourHelpButton";
 
 const EmissionsStack = createStackNavigator();
 
@@ -34,25 +29,10 @@ export type EmissionsStackParamList = {
 export type EmissionsNavigatorProp =
   StackNavigationProp<EmissionsStackParamList>;
 
-const iconSize = 24;
+const renderProfileHelpIcon = () => <ProfileTourHelpButton />;
 
 export const EmissionsNavigator = () => {
   const { t } = useTranslation("pages");
-
-  const shouldShowProfileIntro = useAppStore(
-    (state) => state.shouldShowIntro.profile,
-  );
-
-  const { setShouldShowProfileIntro } = useContext(UsecasesContext);
-
-  const renderProfileHelpIcon = (props: StackHeaderRightProps) => (
-    <IconButton
-      {...props}
-      icon="help-circle"
-      size={iconSize}
-      onPress={() => setShouldShowProfileIntro(!shouldShowProfileIntro)}
-    />
-  );
 
   return (
     <EmissionsStack.Navigator
@@ -67,11 +47,12 @@ export const EmissionsNavigator = () => {
       <EmissionsStack.Screen
         name="Profile"
         component={Profile}
+        // The screen sets its own header right side, next to its sync icon.
         options={{ title: t("Profile") }}
       />
       <EmissionsStack.Screen
         name="TransportProfile"
-        component={shouldShowProfileIntro ? IntroProfile : TransportProfile}
+        component={TransportProfile}
         options={{
           title: t("Transport"),
           headerRight: renderProfileHelpIcon,
@@ -79,7 +60,7 @@ export const EmissionsNavigator = () => {
       />
       <EmissionsStack.Screen
         name="FoodProfile"
-        component={shouldShowProfileIntro ? IntroProfile : FoodProfile}
+        component={FoodProfile}
         options={{
           title: t("Food"),
           headerRight: renderProfileHelpIcon,
@@ -87,7 +68,7 @@ export const EmissionsNavigator = () => {
       />
       <EmissionsStack.Screen
         name="HousingProfile"
-        component={shouldShowProfileIntro ? IntroProfile : HousingProfile}
+        component={HousingProfile}
         options={{
           title: t("Housing"),
           headerRight: renderProfileHelpIcon,
@@ -95,9 +76,7 @@ export const EmissionsNavigator = () => {
       />
       <EmissionsStack.Screen
         name="EverydayThingsProfile"
-        component={
-          shouldShowProfileIntro ? IntroProfile : EverydayThingsProfile
-        }
+        component={EverydayThingsProfile}
         options={{
           title: t("EverydayThings"),
           headerRight: renderProfileHelpIcon,

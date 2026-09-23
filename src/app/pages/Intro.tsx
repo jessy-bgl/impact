@@ -83,7 +83,7 @@ export const Intro = () => {
               textColor={colors.onPrimary}
               onPress={() => setShouldShowAppIntro(false)}
             >
-              {`${t("main.Understood")} !`}
+              {t("main.Understood")}
             </Button>
           </View>
         </SafeAreaView>

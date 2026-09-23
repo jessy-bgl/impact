@@ -5,8 +5,6 @@ export const ImageAssets = {
   food: require("@assets/images/food.png"),
   goods: require("@assets/images/goods.png"),
   house: require("@assets/images/house.png"),
-  intro_actions: require("@assets/images/intro_actions.png"),
-  intro_profile: require("@assets/images/intro_profile.png"),
   public_services: require("@assets/images/public_services.png"),
   transport: require("@assets/images/transport.png"),
   ademe: require("@assets/images/ademe.jpg"),
