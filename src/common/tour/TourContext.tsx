@@ -162,6 +162,8 @@ export const TourProvider = ({
   const scrollContainers = useRef<TourScrollContainer[]>([]);
   const stepsViewed = useRef(0);
   const viewedIds = useRef(new Set<string>());
+  // Set while an auto-scroll brings the target to its predicted place.
+  const pollPausedUntil = useRef(0);
 
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
 
@@ -409,12 +411,16 @@ export const TourProvider = ({
         );
         if (!hasTriedScrolling && container) {
           hasTriedScrolling = true;
-          const scrolled = await container
+          const predicted = await container
             .ensureVisible(entry.node)
-            .catch(() => false);
+            .catch(() => null);
           if (cancelled) return;
-          if (scrolled) {
-            timer = setTimeout(attempt, SCROLL_SETTLE_MS);
+          if (predicted) {
+            // Spotlight where the target will rest, so both move together
+            // instead of the spotlight waiting for the scroll to end. The
+            // re-measure poll holds off until then, and fixes any drift.
+            pollPausedUntil.current = Date.now() + SCROLL_SETTLE_MS;
+            setMeasured({ stepId, rect: predicted, label: entry.label });
             return;
           }
         }
@@ -480,7 +486,12 @@ export const TourProvider = ({
       timer = setTimeout(poll, delay);
     };
 
-    timer = setTimeout(poll, delay);
+    // Measuring mid-scroll would drag the spotlight back toward the scrolling
+    // target, restarting its glide at every poll.
+    timer = setTimeout(
+      poll,
+      Math.max(delay, pollPausedUntil.current - Date.now()),
+    );
 
     return () => {
       cancelled = true;

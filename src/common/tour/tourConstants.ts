@@ -13,7 +13,10 @@ export const MAX_MEASURE_ATTEMPTS_OPTIONAL = 4;
 /** How long `measureInWindow` gets to call back before the node counts as unmeasurable. */
 export const MEASURE_CALLBACK_TIMEOUT_MS = 100;
 
-/** Time left to an animated scroll before the target is measured again. */
+/**
+ * Time left to an animated scroll before the target is measured again. The
+ * spotlight does not wait for it: it shows the predicted position meanwhile.
+ */
 export const SCROLL_SETTLE_MS = 400;
 
 /** Re-measure period while a step is visible, to follow scroll and layout shifts. */

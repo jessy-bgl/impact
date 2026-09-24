@@ -1,4 +1,5 @@
 import {
+  act,
   render,
   screen,
   userEvent,
@@ -16,6 +17,8 @@ import {
 import {
   MAX_MEASURE_ATTEMPTS,
   MAX_MEASURE_ATTEMPTS_OPTIONAL,
+  REMEASURE_POLL_MS,
+  SCROLL_SETTLE_MS,
 } from "@common/tour/tourConstants";
 import {
   MeasurableNode,
@@ -32,6 +35,8 @@ const HUB = "Hub";
 const DETAIL = "Detail";
 
 const MEASURED_RECT: TargetRect = { x: 10, y: 20, width: 100, height: 40 };
+/** Where a scroll container announces the target will rest. */
+const PREDICTED_RECT: TargetRect = { ...MEASURED_RECT, y: 300 };
 
 const steps: TourStep[] = [
   { id: "intro", screens: [HUB], i18nKey: "intro" },
@@ -102,7 +107,7 @@ class StubScrollContainer implements TourScrollContainer {
 
   ensureVisible = async () => {
     this.calls += 1;
-    return this.calls <= this.scrollsNeeded;
+    return this.calls <= this.scrollsNeeded ? PREDICTED_RECT : null;
   };
 }
 
@@ -219,6 +224,7 @@ const statusText = () => screen.getByTestId("status").props.children;
 const stepIdText = () => screen.getByTestId("stepId").props.children;
 const canGoBackText = () => screen.getByTestId("canGoBack").props.children;
 const progressText = () => screen.getByTestId("progress").props.children;
+const rectText = () => screen.getByTestId("rect").props.children;
 
 const press = (testID: string) => userEvent.press(screen.getByTestId(testID));
 
@@ -314,7 +320,7 @@ describe("TourProvider", () => {
     expect(statusText()).toBe("measuring");
   });
 
-  it("scrolls an off-screen target into view before showing its step", async () => {
+  it("spotlights where the scroll brings the target, without waiting for it to settle", async () => {
     measurer.measurable.add("cardTarget");
     const scrollContainer = new StubScrollContainer(1);
     await renderTour({
@@ -331,7 +337,37 @@ describe("TourProvider", () => {
 
     await waitFor(() => expect(statusText()).toBe("visible"));
     expect(scrollContainer.calls).toBe(1);
-    expect(measurer.calls.length).toBeGreaterThanOrEqual(2);
+    expect(rectText()).toBe(`${PREDICTED_RECT.x},${PREDICTED_RECT.y}`);
+  });
+
+  it("re-measures the target only once the scroll has settled", async () => {
+    measurer.measurable.add("cardTarget");
+    const scrollContainer = new StubScrollContainer(1);
+    await renderTour({
+      children: (
+        <>
+          <StubScrollView container={scrollContainer} />
+          <StubTarget targetId="cardTarget" />
+        </>
+      ),
+    });
+
+    await press("start");
+    await press("next");
+    await waitFor(() => expect(statusText()).toBe("visible"));
+
+    // Past a regular poll, but before the scroll settles.
+    await act(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(resolve, (REMEASURE_POLL_MS + SCROLL_SETTLE_MS) / 2),
+        ),
+    );
+    expect(rectText()).toBe(`${PREDICTED_RECT.x},${PREDICTED_RECT.y}`);
+
+    await waitFor(() =>
+      expect(rectText()).toBe(`${MEASURED_RECT.x},${MEASURED_RECT.y}`),
+    );
   });
 
   it("leaves alone the scroll container of a screen not on display", async () => {
