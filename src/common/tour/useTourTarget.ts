@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 import { useTourRegistry } from "@common/tour/TourContext";
 import { MeasurableNode } from "@common/tour/types";
@@ -24,10 +24,25 @@ export const useTourTarget = (
 ) => {
   const { registerTarget } = useTourRegistry();
 
+  // react-native-web merges refs and drops the cleanup a ref callback returns:
+  // it calls the callback with null on detach instead. Without this, a node
+  // unmounted on web (a collapsed section) would stay registered, and be the
+  // one the tour tries, and fails, to measure.
+  const unregisterRef = useRef<(() => void) | undefined>(undefined);
+
   return useCallback(
     (node: MeasurableNode | null) => {
+      unregisterRef.current?.();
+      unregisterRef.current = undefined;
       if (!enabled || !node) return;
-      return registerTarget(id, node, label);
+
+      const unregister = registerTarget(id, node, label);
+      unregisterRef.current = unregister;
+      return () => {
+        if (unregisterRef.current !== unregister) return;
+        unregisterRef.current = undefined;
+        unregister();
+      };
     },
     [id, enabled, label, registerTarget],
   );
