@@ -26,6 +26,7 @@ import {
 } from "@common/tour/types";
 import { useTourStepAvailability } from "@common/tour/useTourStepAvailability";
 import { useTourStepEffect } from "@common/tour/useTourStepEffect";
+import { useTourTarget } from "@common/tour/useTourTarget";
 
 const HUB = "Hub";
 const DETAIL = "Detail";
@@ -118,6 +119,29 @@ const StubTarget = ({
     () => registerTarget(targetId, { targetId } as StubNode, label),
     [targetId, label, registerTarget],
   );
+
+  return null;
+};
+
+/**
+ * Attaches `node` the way react-native-web does: it drops the cleanup a ref
+ * callback returns, and calls the callback with null on detach instead.
+ */
+const WebStyleTarget = ({
+  targetId,
+  node,
+}: {
+  targetId: string;
+  node: StubNode;
+}) => {
+  const ref = useTourTarget(targetId);
+
+  useEffect(() => {
+    ref(node);
+    return () => {
+      ref(null);
+    };
+  }, [ref, node]);
 
   return null;
 };
@@ -350,6 +374,26 @@ describe("TourProvider", () => {
 
     await waitFor(() => expect(statusText()).toBe("visible"));
     expect(scrollContainer.calls).toBe(2);
+  });
+
+  it("forgets a target detached with a null ref, as react-native-web does", async () => {
+    measurer.measurable.add("mounted");
+    const detachedNode = { targetId: "detached" } as StubNode;
+    const mountedNode = { targetId: "mounted" } as StubNode;
+    const { update } = await renderTour({
+      children: <WebStyleTarget targetId="cardTarget" node={detachedNode} />,
+    });
+    await update(HUB);
+    await update(
+      HUB,
+      <WebStyleTarget targetId="cardTarget" node={mountedNode} />,
+    );
+
+    await press("start");
+    await press("next");
+
+    await waitFor(() => expect(statusText()).toBe("visible"));
+    expect(measurer.calls).not.toContain("detached");
   });
 
   it("skips a step whose target never shows up", async () => {
