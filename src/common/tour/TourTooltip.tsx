@@ -1,5 +1,5 @@
 import { Ref } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { LayoutChangeEvent, Platform, StyleSheet, View } from "react-native";
 import {
   Button,
   Icon,
@@ -67,6 +67,8 @@ export const TourTooltip = ({
           ref={titleRef}
           accessible
           accessibilityRole="header"
+          // Lets the web build focus the title without adding a tab stop.
+          tabIndex={Platform.OS === "web" ? -1 : undefined}
           style={styles.title}
         >
           <Text variant="titleMedium">{title}</Text>
