@@ -1,5 +1,6 @@
 import { EverydayThingsFootprint } from "@carbonFootprint/domain/entities/footprints/EverydayThingsFootprint";
 import { FoodFootprint } from "@carbonFootprint/domain/entities/footprints/FoodFootprint";
+import { Footprints } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { HousingFootprint } from "@carbonFootprint/domain/entities/footprints/HousingFootprint";
 import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
@@ -8,6 +9,10 @@ import { useAppStore } from "@common/store/useStore";
 
 export class FootprintsStoreRepository implements FootprintsRepository {
   constructor(private store: typeof useAppStore) {}
+
+  fetchFootprints(): Footprints {
+    return this.store.getState().footprints;
+  }
 
   updateTransportFootprint(footprint: TransportFootprint) {
     this.store.setState((state) => ({

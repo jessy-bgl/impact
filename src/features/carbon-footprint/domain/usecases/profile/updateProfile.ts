@@ -16,6 +16,7 @@ export const createUpdateProfile = (
   computeEngine: ComputeEngine,
   profileRepository: ProfileRepository,
   footprintsRepository: FootprintsRepository,
+  recordFootprintsSnapshot: () => void,
 ) => {
   const updateTransportProfile = (
     question: Question,
@@ -43,29 +44,32 @@ export const createUpdateProfile = (
     _recomputeCategoryFootprint("everydayThings");
   };
 
+  const recomputes: Record<FootprintCategory, () => void> = {
+    transport: () =>
+      footprintsRepository.updateTransportFootprint(
+        computeEngine.computeTransportFootprint(),
+      ),
+    food: () =>
+      footprintsRepository.updateFoodFootprint(
+        computeEngine.computeFoodFootprint(),
+      ),
+    housing: () =>
+      footprintsRepository.updateHousingFootprint(
+        computeEngine.computeHousingFootprint(),
+      ),
+    everydayThings: () =>
+      footprintsRepository.updateEverydayThingsFootprint(
+        computeEngine.computeEverydayThingsFootprint(),
+      ),
+    societalServices: () =>
+      footprintsRepository.updateSocietalServicesFootprint(
+        computeEngine.computeSocietalServicesFootprint(),
+      ),
+  };
+
   const _recomputeCategoryFootprint = (category: FootprintCategory) => {
-    switch (category) {
-      case "transport":
-        return footprintsRepository.updateTransportFootprint(
-          computeEngine.computeTransportFootprint(),
-        );
-      case "food":
-        return footprintsRepository.updateFoodFootprint(
-          computeEngine.computeFoodFootprint(),
-        );
-      case "housing":
-        return footprintsRepository.updateHousingFootprint(
-          computeEngine.computeHousingFootprint(),
-        );
-      case "everydayThings":
-        return footprintsRepository.updateEverydayThingsFootprint(
-          computeEngine.computeEverydayThingsFootprint(),
-        );
-      case "societalServices":
-        return footprintsRepository.updateSocietalServicesFootprint(
-          computeEngine.computeSocietalServicesFootprint(),
-        );
-    }
+    recomputes[category]();
+    recordFootprintsSnapshot();
   };
 
   const _updateProfile = (question: Question, value: string | number): void => {
@@ -117,6 +121,10 @@ export const createUpdateProfile = (
     const profileJustCompleted =
       !wasProfileCompleted &&
       isProfileCompleted(profileRepository.fetchProfileCompletion());
+
+    // The very first snapshot can only be taken here: validating the last
+    // section completes the profile, and no footprint recompute follows it.
+    recordFootprintsSnapshot();
 
     return { profileJustCompleted };
   };

@@ -1,13 +1,18 @@
 import { FootprintsStubRepository } from "@carbonFootprint/data/repositories/footprints.stub.repository";
+import { FootprintsHistoryStubRepository } from "@carbonFootprint/data/repositories/footprintsHistory.stub.repository";
 import { ProfileStubRepository } from "@carbonFootprint/data/repositories/profile.stub.repository";
 import { ComputeEngineStub } from "@carbonFootprint/domain/entities/engine/ComputeEngine.stub";
+import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
+import { toDayKey } from "@carbonFootprint/domain/entities/history/FootprintSnapshot";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import {
   computeProfileSectionVersion,
   profileSections,
 } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
+import { createRecordFootprintsSnapshot } from "@carbonFootprint/domain/usecases/history/recordFootprintsSnapshot";
 import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/updateProfile";
+import { ClockStub } from "@common/data/clock.stub";
 
 const makeQuestion = (label: keyof Profile): Question =>
   ({ label }) as Question;
@@ -16,17 +21,31 @@ describe("createUpdateProfile", () => {
   let computeEngine: ComputeEngineStub;
   let profileRepository: ProfileStubRepository;
   let footprintsRepository: FootprintsStubRepository;
+  let historyRepository: FootprintsHistoryStubRepository;
+  let clock: ClockStub;
   let updateProfile: ReturnType<typeof createUpdateProfile>;
 
   beforeEach(() => {
     computeEngine = new ComputeEngineStub();
     profileRepository = new ProfileStubRepository();
     footprintsRepository = new FootprintsStubRepository();
+    historyRepository = new FootprintsHistoryStubRepository();
+    clock = new ClockStub();
+
+    // The real recorder: its own rules are covered by its suite, what matters
+    // here is that these usecases call it at the right moments.
+    const { recordFootprintsSnapshot } = createRecordFootprintsSnapshot(
+      clock,
+      profileRepository,
+      footprintsRepository,
+      historyRepository,
+    );
 
     updateProfile = createUpdateProfile(
       computeEngine,
       profileRepository,
       footprintsRepository,
+      recordFootprintsSnapshot,
     );
   });
 
@@ -235,6 +254,56 @@ describe("createUpdateProfile", () => {
           completed: true,
         }).profileJustCompleted,
       ).toBe(true);
+    });
+  });
+
+  describe("snapshot recording", () => {
+    const completeProfile = () =>
+      Object.values(profileSections).forEach(({ category, subCategory }) =>
+        updateProfile.updateProfileCompletion({
+          category,
+          subCategory,
+          completed: true,
+        }),
+      );
+
+    const recordedTransport = () =>
+      historyRepository.history.map(({ date, footprints }) => ({
+        date,
+        transport: footprints.transport,
+      }));
+
+    beforeEach(() => {
+      footprintsRepository.updateTransportFootprint(
+        new TransportFootprint({ carFootprint: 3100 }),
+      );
+    });
+
+    it("records the first snapshot when the last section completes the profile", () => {
+      completeProfile();
+
+      expect(recordedTransport()).toEqual([
+        { date: toDayKey(clock.now()), transport: 3100 },
+      ]);
+    });
+
+    it("records a snapshot when an answer moves a footprint of a complete profile", () => {
+      completeProfile();
+      const firstDay = toDayKey(clock.now());
+      clock.current = new Date("2026-03-13T10:00:00");
+
+      updateProfile.updateTransportProfile(
+        makeQuestion("transport . voiture . km"),
+        0,
+      );
+
+      expect(recordedTransport()).toEqual([
+        { date: firstDay, transport: 3100 },
+        {
+          date: toDayKey(clock.now()),
+          transport: computeEngine.transportFootprint.annualFootprint,
+        },
+      ]);
     });
   });
 });

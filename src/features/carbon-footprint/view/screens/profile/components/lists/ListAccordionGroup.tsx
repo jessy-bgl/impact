@@ -1,11 +1,9 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PropsWithChildren } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { List } from "react-native-paper";
 
 import { useProfileScroll } from "@carbonFootprint/domain/hooks/useProfileScroll";
 import { PROFILE_TOUR_STEP_IDS } from "@carbonFootprint/domain/entities/tour/profileTour";
-import { CustomBottomSheet } from "@carbonFootprint/view/components/BottomSheet";
 import { ProfileCompletionCelebrationProvider } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebrationContext";
 import { ScrollProfileSectionContext } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
 import { BottomSheetProvider } from "@common/context/BottomSheetContext";
@@ -37,34 +35,31 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <BottomSheetModalProvider>
-      <BottomSheetProvider>
-        <ScrollProfileSectionContext.Provider
-          value={{
-            registerSectionRef,
-            resetExpandedSection,
-          }}
-        >
-          <ProfileCompletionCelebrationProvider>
-            <List.AccordionGroup
-              expandedId={expandedId}
-              onAccordionPress={handleAccordionPress}
+    <BottomSheetProvider>
+      <ScrollProfileSectionContext.Provider
+        value={{
+          registerSectionRef,
+          resetExpandedSection,
+        }}
+      >
+        <ProfileCompletionCelebrationProvider>
+          <List.AccordionGroup
+            expandedId={expandedId}
+            onAccordionPress={handleAccordionPress}
+          >
+            <KeyboardAwareScrollView
+              ref={scrollViewRef}
+              style={{
+                // NB: fixed height is necessary to make scrollTo() and BottomSheet work properly
+                height: 0,
+              }}
+              bottomOffset={15}
             >
-              <KeyboardAwareScrollView
-                ref={scrollViewRef}
-                style={{
-                  // NB: fixed height is necessary to make scrollTo() and BottomSheet work properly
-                  height: 0,
-                }}
-                bottomOffset={15}
-              >
-                {children}
-              </KeyboardAwareScrollView>
-            </List.AccordionGroup>
-          </ProfileCompletionCelebrationProvider>
-        </ScrollProfileSectionContext.Provider>
-        <CustomBottomSheet />
-      </BottomSheetProvider>
-    </BottomSheetModalProvider>
+              {children}
+            </KeyboardAwareScrollView>
+          </List.AccordionGroup>
+        </ProfileCompletionCelebrationProvider>
+      </ScrollProfileSectionContext.Provider>
+    </BottomSheetProvider>
   );
 };

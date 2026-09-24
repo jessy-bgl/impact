@@ -36,6 +36,18 @@ export const footprintCategories = Object.keys(
   footprintCategoryOrder,
 ) as FootprintCategory[];
 
+/**
+ * Builds a value per category, in declaration order. The single place that
+ * turns "one thing per category" into a `Record`, so no caller has to spell the
+ * five categories out — or cast `Object.fromEntries` back into shape.
+ */
+export const mapFootprintCategories = <T>(
+  build: (category: FootprintCategory) => T,
+): Record<FootprintCategory, T> =>
+  Object.fromEntries(
+    footprintCategories.map((category) => [category, build(category)]),
+  ) as Record<FootprintCategory, T>;
+
 export type TransportFootprintSubCategory =
   "car" | "otherTransport" | "plane" | "publicTransport" | "twoWheeler";
 

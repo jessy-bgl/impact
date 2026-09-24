@@ -1,4 +1,5 @@
 import { FootprintsStubRepository } from "@carbonFootprint/data/repositories/footprints.stub.repository";
+import { FootprintsHistoryStubRepository } from "@carbonFootprint/data/repositories/footprintsHistory.stub.repository";
 import { ProfileStubRepository } from "@carbonFootprint/data/repositories/profile.stub.repository";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { ComputeEngineStub } from "@carbonFootprint/domain/entities/engine/ComputeEngine.stub";
@@ -7,7 +8,9 @@ import {
   computeProfileSectionVersion,
   profileSections,
 } from "@carbonFootprint/domain/entities/profile/profileSections";
+import { createRecordFootprintsSnapshot } from "@carbonFootprint/domain/usecases/history/recordFootprintsSnapshot";
 import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/usecases/profile/syncFootprintsProfileWithEngine";
+import { ClockStub } from "@common/data/clock.stub";
 
 type RawRules = ReturnType<typeof AdemeEngine.getRules>;
 
@@ -20,6 +23,7 @@ describe("syncFootprintsProfileWithEngine", () => {
   let profileStub: ProfileStubRepository;
   let footprintsStub: FootprintsStubRepository;
   let engineStub: ComputeEngineStub;
+  let historyStub: FootprintsHistoryStubRepository;
   let syncFootprintsProfileWithEngine: ReturnType<
     typeof createSyncFootprintsProfileWithEngine
   >["syncFootprintsProfileWithEngine"];
@@ -28,12 +32,23 @@ describe("syncFootprintsProfileWithEngine", () => {
     profileStub = new ProfileStubRepository();
     footprintsStub = new FootprintsStubRepository();
     engineStub = new ComputeEngineStub();
+    historyStub = new FootprintsHistoryStubRepository();
+
+    // The real recorder: its own rules are covered by its suite, what matters
+    // here is that the sync calls it once the footprints are stored.
+    const { recordFootprintsSnapshot } = createRecordFootprintsSnapshot(
+      new ClockStub(),
+      profileStub,
+      footprintsStub,
+      historyStub,
+    );
 
     ({ syncFootprintsProfileWithEngine } =
       createSyncFootprintsProfileWithEngine(
         engineStub,
         profileStub,
         footprintsStub,
+        recordFootprintsSnapshot,
       ));
   });
 
@@ -60,6 +75,19 @@ describe("syncFootprintsProfileWithEngine", () => {
       );
       expect(footprintsStub.societalServices).toBe(
         engineStub.societalServicesFootprint,
+      );
+    });
+
+    it("records a snapshot of the computed footprints for a complete profile", async () => {
+      Object.values(profileSections).forEach(({ category, subCategory }) =>
+        profileStub.updateProfileCompletion(category, subCategory, true),
+      );
+
+      await syncFootprintsProfileWithEngine();
+
+      expect(historyStub.history).toHaveLength(1);
+      expect(historyStub.history[0].footprints.transport).toBe(
+        engineStub.transportFootprint.annualFootprint,
       );
     });
 
