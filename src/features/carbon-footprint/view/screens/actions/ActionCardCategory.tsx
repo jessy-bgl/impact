@@ -1,11 +1,10 @@
-import { Ref, useState } from "react";
+import { Ref } from "react";
 import { View } from "react-native";
-import { IconButton, useTheme } from "react-native-paper";
+import { IconButton, Text, useTheme } from "react-native-paper";
 
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
-import { InfoModal } from "@carbonFootprint/view/components/InfoModal";
-import { InfoModalState } from "@carbonFootprint/view/screens/profile/types";
+import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
 
 type Props = {
   action: Action;
@@ -20,46 +19,32 @@ export const ActionCardCategory = ({
 }: Props) => {
   const { colors, roundness } = useTheme();
 
-  const [modal, setModal] = useState<InfoModalState>({ show: false });
+  const { present } = useCustomBottomSheetModal();
 
   return (
-    <>
-      {modal.show && (
-        <InfoModal
-          content={modal.content}
-          hide={() => setModal({ show: false })}
-        />
-      )}
-
-      <View
-        ref={tourRef}
-        collapsable={false}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          backgroundColor: footprintViewModel.color,
-          borderTopRightRadius: roundness,
-          borderBottomLeftRadius: roundness,
-          width: 50,
-          height: 50,
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 1,
-        }}
-      >
-        <IconButton
-          icon={footprintViewModel.materialIcon}
-          size={25}
-          iconColor={colors.surfaceVariant}
-          onPress={() => {
-            setModal({
-              show: true,
-              content: action.description,
-            });
-          }}
-        />
-      </View>
-    </>
+    <View
+      ref={tourRef}
+      collapsable={false}
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        backgroundColor: footprintViewModel.color,
+        borderTopRightRadius: roundness,
+        borderBottomLeftRadius: roundness,
+        width: 50,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1,
+      }}
+    >
+      <IconButton
+        icon={footprintViewModel.materialIcon}
+        size={25}
+        iconColor={colors.surfaceVariant}
+        onPress={() => present(<Text>{action.description}</Text>)}
+      />
+    </View>
   );
 };

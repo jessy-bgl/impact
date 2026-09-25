@@ -2,12 +2,16 @@ import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetModal,
-  BottomSheetView,
+  BottomSheetModalProvider,
+  BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import { useCallback } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { useTheme } from "react-native-paper";
 
-import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
+import {
+  BottomSheetProvider,
+  useCustomBottomSheetModal,
+} from "@common/context/BottomSheetContext";
 
 export const CustomBottomSheet = () => {
   const { bottomSheetRef, bottomSheetContent, dismiss } =
@@ -37,15 +41,29 @@ export const CustomBottomSheet = () => {
         <BottomSheetBackdrop {...props} disappearsOnIndex={-1} />
       )}
     >
-      <BottomSheetView
-        style={{
+      {/* Scrolls when a long description is taller than the screen */}
+      <BottomSheetScrollView
+        contentContainerStyle={{
           paddingInline: 20,
           paddingTop: 10,
           paddingBottom: 20,
         }}
       >
         {bottomSheetContent}
-      </BottomSheetView>
+      </BottomSheetScrollView>
     </BottomSheetModal>
   );
 };
+
+/**
+ * Lets the screen's descendants open the bottom sheet with
+ * `useCustomBottomSheetModal().present()`.
+ */
+export const BottomSheetHost = ({ children }: PropsWithChildren) => (
+  <BottomSheetModalProvider>
+    <BottomSheetProvider>
+      {children}
+      <CustomBottomSheet />
+    </BottomSheetProvider>
+  </BottomSheetModalProvider>
+);

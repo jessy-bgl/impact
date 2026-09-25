@@ -15,6 +15,7 @@ import {
   ACTIONS_TOUR_TARGETS,
 } from "@carbonFootprint/domain/entities/tour/actionsTour";
 import { useActions } from "@carbonFootprint/domain/hooks/useActions";
+import { BottomSheetHost } from "@carbonFootprint/view/components/BottomSheet";
 import { ActionsList } from "@carbonFootprint/view/screens/actions/ActionsList";
 import { useAppStore } from "@common/store/useStore";
 import { useTourStepAvailability } from "@common/tour/useTourStepAvailability";
@@ -65,72 +66,74 @@ export const Actions = () => {
   useCardTourStepsAvailability(isLoading, hasAvailableAction);
 
   return (
-    <Tab.Navigator tabBar={renderTabBar}>
-      <Tab.Screen
-        name={ACTIONS_TOUR_SCREEN}
-        options={{
-          title: t("actionsList"),
-          tabBarBadge: isLoading
-            ? undefined
-            : () => <ActionsTabBadge state="notStarted" />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="apps" color={color} size={20} />
-          ),
-        }}
-      >
-        {() => (
-          <ActionsList
-            state="notStarted"
-            isLoading={isLoading}
-            updateActionState={updateActionState}
-          />
-        )}
-      </Tab.Screen>
-      <Tab.Screen
-        name="inProgressActions"
-        options={{
-          title: t("actionsInProgress"),
-          tabBarBadge: isLoading
-            ? undefined
-            : () => <ActionsTabBadge state="inProgress" />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="sync" color={color} size={20} />
-          ),
-        }}
-      >
-        {() => (
-          <ActionsList
-            state="inProgress"
-            isLoading={isLoading}
-            updateActionState={updateActionState}
-          />
-        )}
-      </Tab.Screen>
-      <Tab.Screen
-        name="skippedActions"
-        options={{
-          title: t("actionsSkipped"),
-          tabBarBadge: isLoading
-            ? undefined
-            : () => <ActionsTabBadge state="skipped" />,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons
-              name="remove-circle-outline"
-              color={color}
-              size={20}
+    <BottomSheetHost>
+      <Tab.Navigator tabBar={renderTabBar}>
+        <Tab.Screen
+          name={ACTIONS_TOUR_SCREEN}
+          options={{
+            title: t("actionsList"),
+            tabBarBadge: isLoading
+              ? undefined
+              : () => <ActionsTabBadge state="notStarted" />,
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="apps" color={color} size={20} />
+            ),
+          }}
+        >
+          {() => (
+            <ActionsList
+              state="notStarted"
+              isLoading={isLoading}
+              updateActionState={updateActionState}
             />
-          ),
-        }}
-      >
-        {() => (
-          <ActionsList
-            state="skipped"
-            isLoading={isLoading}
-            updateActionState={updateActionState}
-          />
-        )}
-      </Tab.Screen>
-    </Tab.Navigator>
+          )}
+        </Tab.Screen>
+        <Tab.Screen
+          name="inProgressActions"
+          options={{
+            title: t("actionsInProgress"),
+            tabBarBadge: isLoading
+              ? undefined
+              : () => <ActionsTabBadge state="inProgress" />,
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons name="sync" color={color} size={20} />
+            ),
+          }}
+        >
+          {() => (
+            <ActionsList
+              state="inProgress"
+              isLoading={isLoading}
+              updateActionState={updateActionState}
+            />
+          )}
+        </Tab.Screen>
+        <Tab.Screen
+          name="skippedActions"
+          options={{
+            title: t("actionsSkipped"),
+            tabBarBadge: isLoading
+              ? undefined
+              : () => <ActionsTabBadge state="skipped" />,
+            tabBarIcon: ({ color }) => (
+              <MaterialIcons
+                name="remove-circle-outline"
+                color={color}
+                size={20}
+              />
+            ),
+          }}
+        >
+          {() => (
+            <ActionsList
+              state="skipped"
+              isLoading={isLoading}
+              updateActionState={updateActionState}
+            />
+          )}
+        </Tab.Screen>
+      </Tab.Navigator>
+    </BottomSheetHost>
   );
 };
 
