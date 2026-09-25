@@ -134,11 +134,8 @@ describe("TourOverlay", () => {
   it("holds the card back while the next target is being located", async () => {
     await renderOverlay({ rect: null, pending: true });
 
-    expect(screen.getByText(step.title)).not.toBeVisible();
-
-    await userEvent.press(screen.getByText(nav.next));
-
-    expect(recorder.presses).toEqual([]);
+    expect(screen.queryByText(step.title)).not.toBeOnTheScreen();
+    expect(screen.queryByText(nav.next)).not.toBeOnTheScreen();
   });
 
   it("lets taps reach the element the user must act on", async () => {
@@ -148,7 +145,7 @@ describe("TourOverlay", () => {
     expect(screen.getAllByTestId("tour-blocker")).toHaveLength(4);
   });
 
-  it("stops taps through the previous hole while the next target is being located", async () => {
+  it("drops the previous hole and blocks every tap while the next target is being located", async () => {
     await renderOverlay({ interactive: true });
 
     await screen.rerender(
@@ -171,7 +168,9 @@ describe("TourOverlay", () => {
       />,
     );
 
-    expect(screen.getAllByTestId("tour-blocker")).toHaveLength(5);
+    // One blocker over the whole screen, no hole left to tap through.
+    expect(screen.getAllByTestId("tour-blocker")).toHaveLength(1);
+    expect(screen.queryByText(step.title)).not.toBeOnTheScreen();
   });
 
   it("still explains the step when there is nothing to spotlight", async () => {

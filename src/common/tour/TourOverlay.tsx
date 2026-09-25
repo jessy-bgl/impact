@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Animated,
@@ -12,21 +12,19 @@ import {
 import { Portal, useTheme } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { isSameRect } from "@common/tour/geometry";
 import {
   computeDimRects,
   computeHole,
   computeHoleRadius,
 } from "@common/tour/spotlightRects";
 import { computeTooltipLayout } from "@common/tour/tooltipLayout";
+import { TourSpotlight } from "@common/tour/TourSpotlight";
 import { TourTooltip, TourTooltipLabels } from "@common/tour/TourTooltip";
 import {
   DEFAULT_HOLE_PADDING,
   DEFAULT_HOLE_RADIUS,
   DIM_OPACITY_DARK,
   DIM_OPACITY_LIGHT,
-  HOLE_FADE_MS,
-  SPOTLIGHT_ANIMATION_MS,
   TOOLTIP_ARROW_SIZE,
   TOOLTIP_FADE_MS,
   TOOLTIP_MARGIN,
@@ -37,8 +35,8 @@ import { useReducedMotion } from "@common/tour/useReducedMotion";
 type Props = {
   visible: boolean;
   /**
-   * The step's target is still being located: the screen stays dimmed, the
-   * spotlight closes where it was, and no card shows yet.
+   * The step's target is still being located: the whole screen stays dimmed,
+   * with no spotlight and no card yet.
    */
   pending?: boolean;
   /** Null spotlights nothing: the whole screen dims and the card is centered. */
@@ -62,21 +60,42 @@ type Props = {
 };
 
 /**
- * Only opacity and transform can run on the native driver: those animations
- * then keep going while the JS thread is busy, as when a list unfolds.
+ * Opacity and transform run on the native driver: they keep going while the
+ * JS thread is busy, as when a list unfolds.
  */
-const timing = (
-  value: Animated.Value,
-  toValue: number,
-  duration: number,
-  useNativeDriver = false,
-) =>
+const timing = (value: Animated.Value, toValue: number, duration: number) =>
   Animated.timing(value, {
     toValue,
     duration,
     easing: Easing.out(Easing.cubic),
-    useNativeDriver,
+    useNativeDriver: true,
   });
+
+/**
+ * Fades its content in once `shown`. Keyed per step: its value is created
+ * with it and only runs forward, never animated back to hidden. Hiding is
+ * unmounting, which takes effect in the very render that changes the step.
+ */
+const FadeIn = ({
+  shown,
+  reducedMotion,
+  children,
+}: PropsWithChildren<{ shown: boolean; reducedMotion: boolean }>) => {
+  const [opacity] = useState(() => new Animated.Value(0));
+
+  useEffect(() => {
+    if (!shown) return;
+    if (reducedMotion) {
+      opacity.setValue(1);
+      return;
+    }
+    const animation = timing(opacity, 1, TOOLTIP_FADE_MS);
+    animation.start();
+    return () => animation.stop();
+  }, [shown, reducedMotion, opacity]);
+
+  return <Animated.View style={{ opacity }}>{children}</Animated.View>;
+};
 
 export const TourOverlay = ({
   visible,
@@ -117,100 +136,16 @@ export const TourOverlay = ({
     setTooltipHeight(undefined);
   }
 
-  // While the next target is being located, the spotlight closes where it was
-  // instead of blinking out, then reopens right on the new target once it has
-  // come to rest: no glide across a screen still unfolding or scrolling.
-  const measuredHole =
-    visible && rect ? computeHole(rect, padding, window) : null;
-  const [lastHole, setLastHole] = useState<TargetRect | null>(null);
-  if (!visible && lastHole !== null) setLastHole(null);
-  if (measuredHole && !isSameRect(measuredHole, lastHole))
-    setLastHole(measuredHole);
-  const hole = measuredHole ?? (visible && pending ? lastHole : null);
+  // While the next target is being located, the spotlight and the card are
+  // not rendered at all: they vanish in the render that changes the step, then
+  // show up afresh on the new target once it has come to rest.
+  const hole =
+    visible && !pending && rect ? computeHole(rect, padding, window) : null;
   const holeRadius = hole ? computeHoleRadius(hole, radius) : 0;
 
-  const [spotlight] = useState(() => ({
-    x: new Animated.Value(0),
-    y: new Animated.Value(0),
-    width: new Animated.Value(0),
-    height: new Animated.Value(0),
-  }));
-  // 1 fills the hole with the dim color: closed.
-  const [holeCover] = useState(() => new Animated.Value(1));
-  const [tooltipOpacity] = useState(() => new Animated.Value(0));
   const [tooltipScale] = useState(() => new Animated.Value(1));
-  const [beacon] = useState(() => new Animated.Value(0));
-  const isHoleOpen = useRef(false);
-
-  const holeX = hole?.x;
-  const holeY = hole?.y;
-  const holeWidth = hole?.width;
-  const holeHeight = hole?.height;
-
-  // Layout effect: the spotlight must be in place before the first paint.
-  useLayoutEffect(() => {
-    if (
-      holeX === undefined ||
-      holeY === undefined ||
-      holeWidth === undefined ||
-      holeHeight === undefined
-    ) {
-      isHoleOpen.current = false;
-      holeCover.setValue(1);
-      return;
-    }
-    const target = { x: holeX, y: holeY, width: holeWidth, height: holeHeight };
-    const keys = ["x", "y", "width", "height"] as const;
-    const cover = pending ? 1 : 0;
-    // Only a target that moves while shown is followed with a glide. Anywhere
-    // else the hole is closed, or about to open: it jumps into place.
-    const glides = isHoleOpen.current && !pending && !reducedMotion;
-    isHoleOpen.current = !pending;
-
-    if (!glides) keys.forEach((key) => spotlight[key].setValue(target[key]));
-    // Closing is immediate: the hole must not linger on the previous target
-    // while the screen unfolds or scrolls.
-    if (pending || reducedMotion) {
-      holeCover.setValue(cover);
-      return;
-    }
-
-    const animation = Animated.parallel([
-      ...(glides
-        ? keys.map((key) =>
-            timing(spotlight[key], target[key], SPOTLIGHT_ANIMATION_MS),
-          )
-        : []),
-      timing(holeCover, cover, HOLE_FADE_MS, true),
-    ]);
-    animation.start();
-    return () => animation.stop();
-  }, [
-    holeX,
-    holeY,
-    holeWidth,
-    holeHeight,
-    pending,
-    reducedMotion,
-    spotlight,
-    holeCover,
-  ]);
 
   const isTooltipShown = visible && !pending && tooltipHeight !== undefined;
-
-  useEffect(() => {
-    if (!isTooltipShown) {
-      tooltipOpacity.setValue(0);
-      return;
-    }
-    if (reducedMotion) {
-      tooltipOpacity.setValue(1);
-      return;
-    }
-    const animation = timing(tooltipOpacity, 1, TOOLTIP_FADE_MS, true);
-    animation.start();
-    return () => animation.stop();
-  }, [isTooltipShown, reducedMotion, tooltipOpacity]);
 
   // Moves screen reader focus onto each new card, so it is read right away.
   const titleRef = useRef<View>(null);
@@ -224,50 +159,21 @@ export const TourOverlay = ({
     AccessibilityInfo.sendAccessibilityEvent(titleRef.current, "focus");
   }, [isTooltipShown, contentKey]);
 
-  // A pulsing ring around the element the user is expected to tap.
-  const showBeacon = visible && !pending && interactive && hole !== null;
-  useEffect(() => {
-    if (!showBeacon || reducedMotion) {
-      beacon.setValue(0);
-      return;
-    }
-    const loop = Animated.loop(
-      Animated.timing(beacon, {
-        toValue: 1,
-        duration: 1400,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true,
-      }),
-    );
-    loop.start();
-    return () => {
-      loop.stop();
-      beacon.setValue(0);
-    };
-  }, [showBeacon, reducedMotion, beacon]);
-
   // Tapping outside the card is not an error, just a nudge back to it.
   const nudge = () => {
     if (reducedMotion) return;
     Animated.sequence([
-      timing(tooltipScale, 1.04, 90, true),
-      timing(tooltipScale, 1, 140, true),
+      timing(tooltipScale, 1.04, 90),
+      timing(tooltipScale, 1, 140),
     ]).start();
   };
 
   if (!visible) return null;
 
-  // Giant border trick: a view whose border covers the whole screen, leaving
-  // a rounded, transparent hole in its middle. Unlike four dim rectangles, it
-  // keeps the hole's corners dimmed too.
-  const cover = Math.max(window.width, window.height);
-
   const blockers = hole
     ? computeDimRects(hole, window)
     : [{ x: 0, y: 0, width: window.width, height: window.height }];
-  // While the next target is located, the hole still frames the previous one:
-  // a tap there would reach whatever the new screen holds underneath.
-  if (hole && (!interactive || pending)) blockers.push(hole);
+  if (hole && !interactive) blockers.push(hole);
 
   const layout = hole
     ? computeTooltipLayout({
@@ -291,14 +197,6 @@ export const TourOverlay = ({
         right: TOOLTIP_MARGIN,
       };
 
-  const spotlightFrame = {
-    position: "absolute" as const,
-    left: spotlight.x,
-    top: spotlight.y,
-    width: spotlight.width,
-    height: spotlight.height,
-  };
-
   return (
     <Portal>
       <View
@@ -308,68 +206,15 @@ export const TourOverlay = ({
         style={StyleSheet.absoluteFill}
       >
         {hole ? (
-          <>
-            <Animated.View
-              style={{
-                position: "absolute",
-                left: Animated.subtract(spotlight.x, cover),
-                top: Animated.subtract(spotlight.y, cover),
-                width: Animated.add(spotlight.width, 2 * cover),
-                height: Animated.add(spotlight.height, 2 * cover),
-                borderWidth: cover,
-                borderRadius: holeRadius + cover,
-                borderColor: dimColor,
-              }}
-            />
-            <Animated.View style={spotlightFrame}>
-              <View
-                style={[
-                  StyleSheet.absoluteFill,
-                  {
-                    borderRadius: holeRadius,
-                    borderWidth: 2,
-                    borderColor: colors.primary,
-                  },
-                ]}
-              />
-              {showBeacon && (
-                <Animated.View
-                  style={[
-                    StyleSheet.absoluteFill,
-                    {
-                      borderRadius: holeRadius,
-                      borderWidth: 3,
-                      borderColor: colors.primary,
-                      opacity: beacon.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [0.9, 0],
-                      }),
-                      transform: [
-                        {
-                          scale: beacon.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [1, 1.12],
-                          }),
-                        },
-                      ],
-                    },
-                  ]}
-                />
-              )}
-              <Animated.View
-                style={[
-                  StyleSheet.absoluteFill,
-                  {
-                    borderRadius: holeRadius,
-                    backgroundColor: dimColor,
-                    // Bound to the render, not to an effect: the hole closes
-                    // in the very frame the next step starts.
-                    opacity: pending ? 1 : holeCover,
-                  },
-                ]}
-              />
-            </Animated.View>
-          </>
+          <TourSpotlight
+            key={contentKey}
+            hole={hole}
+            radius={holeRadius}
+            dimColor={dimColor}
+            outlineColor={colors.primary}
+            showBeacon={interactive}
+            reducedMotion={reducedMotion}
+          />
         ) : (
           <View
             style={[StyleSheet.absoluteFill, { backgroundColor: dimColor }]}
@@ -395,64 +240,67 @@ export const TourOverlay = ({
         />
       ))}
 
-      <Animated.View
-        pointerEvents={pending ? "none" : "box-none"}
-        accessibilityViewIsModal={!interactive}
-        style={[
-          styles.tooltip,
-          tooltipStyle,
-          {
-            // Bound to the render too: the card hides in the same frame.
-            opacity: isTooltipShown ? tooltipOpacity : 0,
-            transform: [{ scale: tooltipScale }],
-          },
-        ]}
-      >
-        {layout && (
-          <View
-            pointerEvents="none"
-            style={[
-              styles.arrow,
-              {
-                left: layout.arrowLeft,
-                ...(layout.side === "bottom"
-                  ? {
-                      top: -TOOLTIP_ARROW_SIZE,
-                      borderBottomWidth: TOOLTIP_ARROW_SIZE,
-                      borderBottomColor: colors.elevation.level3,
-                    }
-                  : {
-                      bottom: -TOOLTIP_ARROW_SIZE,
-                      borderTopWidth: TOOLTIP_ARROW_SIZE,
-                      borderTopColor: colors.elevation.level3,
-                    }),
-              },
-            ]}
-          />
-        )}
-        <TourTooltip
-          // Remounted on every new step: `onLayout` only fires when the frame
-          // changes, so a card the same size as the previous one would never
-          // report its height and would stay invisible.
-          key={contentKey}
-          title={title}
-          body={body}
-          stepIndex={stepIndex}
-          stepCount={stepCount}
-          progressLabel={progressLabel}
-          labels={labels}
-          showPrevious={showPrevious}
-          isActionStep={interactive}
-          isLastStep={isLastStep}
-          onPrevious={onPrevious}
-          onNext={onNext}
-          onSkip={onSkip}
-          titleRef={titleRef}
-          onLayout={(event) =>
-            setTooltipHeight(event.nativeEvent.layout.height)
-          }
-        />
-      </Animated.View>
+      {visible && !pending && (
+        <Animated.View
+          pointerEvents="box-none"
+          accessibilityViewIsModal={!interactive}
+          style={[
+            styles.tooltip,
+            tooltipStyle,
+            { transform: [{ scale: tooltipScale }] },
+          ]}
+        >
+          <FadeIn
+            // Remounted on every new step: its opacity starts afresh, and
+            // `onLayout` only fires when the frame changes, so a card the same
+            // size as the previous one would never report its height.
+            key={contentKey}
+            shown={isTooltipShown}
+            reducedMotion={reducedMotion}
+          >
+            {layout && (
+              <View
+                pointerEvents="none"
+                style={[
+                  styles.arrow,
+                  {
+                    left: layout.arrowLeft,
+                    ...(layout.side === "bottom"
+                      ? {
+                          top: -TOOLTIP_ARROW_SIZE,
+                          borderBottomWidth: TOOLTIP_ARROW_SIZE,
+                          borderBottomColor: colors.elevation.level3,
+                        }
+                      : {
+                          bottom: -TOOLTIP_ARROW_SIZE,
+                          borderTopWidth: TOOLTIP_ARROW_SIZE,
+                          borderTopColor: colors.elevation.level3,
+                        }),
+                  },
+                ]}
+              />
+            )}
+            <TourTooltip
+              title={title}
+              body={body}
+              stepIndex={stepIndex}
+              stepCount={stepCount}
+              progressLabel={progressLabel}
+              labels={labels}
+              showPrevious={showPrevious}
+              isActionStep={interactive}
+              isLastStep={isLastStep}
+              onPrevious={onPrevious}
+              onNext={onNext}
+              onSkip={onSkip}
+              titleRef={titleRef}
+              onLayout={(event) =>
+                setTooltipHeight(event.nativeEvent.layout.height)
+              }
+            />
+          </FadeIn>
+        </Animated.View>
+      )}
     </Portal>
   );
 };
