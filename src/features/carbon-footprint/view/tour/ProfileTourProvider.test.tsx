@@ -53,13 +53,14 @@ const AllTargets = () => {
 };
 
 const TourProbe = () => {
-  const { step } = useTour();
+  const { step, status } = useTour();
   const { completeStep } = useTourRegistry();
   const { startTour, isRunning } = useProfileTour();
 
   return (
     <>
       <Text testID="stepId">{step?.id ?? "none"}</Text>
+      <Text testID="status">{status}</Text>
       <Text testID="running">{String(isRunning)}</Text>
       <Pressable testID="help" onPress={() => startTour("help_icon")}>
         <Text>help</Text>
@@ -99,6 +100,14 @@ const renderProfileTour = async (currentScreen = PROFILE_TOUR_HUB_SCREEN) => {
 };
 
 const stepIdText = () => screen.getByTestId("stepId").props.children;
+const statusText = () => screen.getByTestId("status").props.children;
+
+/** The card only takes presses once its target has come to rest. */
+const waitForShownStep = (stepId: string) =>
+  waitFor(() => {
+    expect(stepIdText()).toBe(stepId);
+    expect(statusText()).toBe("visible");
+  });
 
 const nav = intro.tour.nav;
 
@@ -172,9 +181,10 @@ describe("ProfileTourProvider", () => {
     const hubSteps = PROFILE_TOUR_STEPS.filter((step) =>
       step.screens.includes(PROFILE_TOUR_HUB_SCREEN),
     );
-    for (let index = 1; index < hubSteps.length; index += 1) {
-      await userEvent.press(screen.getByText(nav.next));
-      await waitFor(() => expect(stepIdText()).toBe(hubSteps[index].id));
+    for (const [index, step] of hubSteps.entries()) {
+      await waitForShownStep(step.id);
+      if (index < hubSteps.length - 1)
+        await userEvent.press(screen.getByText(nav.next));
     }
 
     await update(PROFILE_TOUR_CATEGORY_SCREENS[0]);
@@ -184,7 +194,7 @@ describe("ProfileTourProvider", () => {
       (step) => !step.screens.includes(PROFILE_TOUR_HUB_SCREEN),
     );
     for (const [index, step] of categorySteps.entries()) {
-      await waitFor(() => expect(stepIdText()).toBe(step.id));
+      await waitForShownStep(step.id);
       const isLastStep = index === categorySteps.length - 1;
       if (step.advance === "action")
         await userEvent.press(screen.getByTestId("act"));
@@ -200,7 +210,7 @@ describe("ProfileTourProvider", () => {
 
   it("stops asking once the user has dismissed the tour", async () => {
     await renderProfileTour();
-    await waitFor(() => expect(stepIdText()).toBe(firstStepId));
+    await waitForShownStep(firstStepId);
 
     await userEvent.press(screen.getByLabelText(nav.close));
 

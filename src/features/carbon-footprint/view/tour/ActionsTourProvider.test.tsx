@@ -46,12 +46,13 @@ const AllTargets = () => {
 };
 
 const TourProbe = () => {
-  const { step, stepCount } = useTour();
+  const { step, stepCount, status } = useTour();
   const { startTour } = useActionsTour();
 
   return (
     <>
       <Text testID="stepId">{step?.id ?? "none"}</Text>
+      <Text testID="status">{status}</Text>
       <Text testID="stepCount">{String(stepCount)}</Text>
       <Pressable testID="help" onPress={() => startTour("help_icon")}>
         <Text>help</Text>
@@ -84,6 +85,14 @@ const renderActionsTour = () =>
   );
 
 const stepIdText = () => screen.getByTestId("stepId").props.children;
+const statusText = () => screen.getByTestId("status").props.children;
+
+/** The card only takes presses once its target has come to rest. */
+const waitForShownStep = (stepId: string) =>
+  waitFor(() => {
+    expect(stepIdText()).toBe(stepId);
+    expect(statusText()).toBe("visible");
+  });
 const stepCountText = () => screen.getByTestId("stepCount").props.children;
 
 const nav = intro.tour.nav;
@@ -161,7 +170,7 @@ describe("ActionsTourProvider", () => {
     await renderActionsTour();
 
     for (const [index, step] of ACTIONS_TOUR_STEPS.entries()) {
-      await waitFor(() => expect(stepIdText()).toBe(step.id));
+      await waitForShownStep(step.id);
       const isLastStep = index === ACTIONS_TOUR_STEPS.length - 1;
       await userEvent.press(
         await screen.findByText(isLastStep ? nav.finish : nav.next),
@@ -174,7 +183,7 @@ describe("ActionsTourProvider", () => {
 
   it("stops asking once the user has dismissed the tour", async () => {
     await renderActionsTour();
-    await waitFor(() => expect(stepIdText()).toBe(firstStepId));
+    await waitForShownStep(firstStepId);
 
     await userEvent.press(screen.getByLabelText(nav.close));
 
