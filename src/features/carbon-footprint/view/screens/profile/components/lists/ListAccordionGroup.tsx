@@ -32,8 +32,14 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
   useTourScrollContainer(scrollViewRef);
 
   const handleAccordionPress = (id: string | number) => {
-    handleExpandProfileSection(id);
-    completeSectionStep();
+    if (!completeSectionStep()) {
+      handleExpandProfileSection(id);
+      return;
+    }
+    // Unfolding a section is a heavy render: rendered with the tour's next
+    // step, it would keep the spotlight on this header until it is done.
+    // A frame later, the spotlight has already closed.
+    requestAnimationFrame(() => handleExpandProfileSection(id));
   };
 
   return (

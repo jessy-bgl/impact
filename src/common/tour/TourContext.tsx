@@ -70,8 +70,11 @@ export type TourContextValue = {
 export type TourRegistryValue = {
   /** Active steps of this tour and of every enclosing one. */
   activeStepIds: string[];
-  /** Moves past `stepId` if it is the active step, no-op otherwise. */
-  completeStep: (stepId: string) => void;
+  /**
+   * Moves past `stepId` if it is the active step of this tour or of an
+   * enclosing one, no-op otherwise. True when it moved a tour on.
+   */
+  completeStep: (stepId: string) => boolean;
   registerTarget: (
     id: string,
     node: MeasurableNode,
@@ -100,7 +103,7 @@ const TourContext = createContext<TourContextValue>({
 
 const TourRegistryContext = createContext<TourRegistryValue>({
   activeStepIds: [],
-  completeStep: noop,
+  completeStep: () => false,
   registerTarget: () => noop,
   registerScrollContainer: () => noop,
   setStepAvailability: noop,
@@ -373,8 +376,10 @@ export const TourProvider = ({
   const completeParentStep = parent.completeStep;
   const completeStep = useCallback(
     (stepId: string) => {
-      completeParentStep(stepId);
-      if (stepIdRef.current === stepId) nextRef.current();
+      const hasCompletedParent = completeParentStep(stepId);
+      if (stepIdRef.current !== stepId) return hasCompletedParent;
+      nextRef.current();
+      return true;
     },
     [completeParentStep],
   );

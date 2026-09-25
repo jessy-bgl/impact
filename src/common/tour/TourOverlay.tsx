@@ -61,12 +61,21 @@ type Props = {
   onSkip: () => void;
 };
 
-const timing = (value: Animated.Value, toValue: number, duration: number) =>
+/**
+ * Only opacity and transform can run on the native driver: those animations
+ * then keep going while the JS thread is busy, as when a list unfolds.
+ */
+const timing = (
+  value: Animated.Value,
+  toValue: number,
+  duration: number,
+  useNativeDriver = false,
+) =>
   Animated.timing(value, {
     toValue,
     duration,
     easing: Easing.out(Easing.cubic),
-    useNativeDriver: false,
+    useNativeDriver,
   });
 
 export const TourOverlay = ({
@@ -159,7 +168,9 @@ export const TourOverlay = ({
     isHoleOpen.current = !pending;
 
     if (!glides) keys.forEach((key) => spotlight[key].setValue(target[key]));
-    if (reducedMotion) {
+    // Closing is immediate: the hole must not linger on the previous target
+    // while the screen unfolds or scrolls.
+    if (pending || reducedMotion) {
       holeCover.setValue(cover);
       return;
     }
@@ -170,7 +181,7 @@ export const TourOverlay = ({
             timing(spotlight[key], target[key], SPOTLIGHT_ANIMATION_MS),
           )
         : []),
-      timing(holeCover, cover, HOLE_FADE_MS),
+      timing(holeCover, cover, HOLE_FADE_MS, true),
     ]);
     animation.start();
     return () => animation.stop();
@@ -196,7 +207,7 @@ export const TourOverlay = ({
       tooltipOpacity.setValue(1);
       return;
     }
-    const animation = timing(tooltipOpacity, 1, TOOLTIP_FADE_MS);
+    const animation = timing(tooltipOpacity, 1, TOOLTIP_FADE_MS, true);
     animation.start();
     return () => animation.stop();
   }, [isTooltipShown, reducedMotion, tooltipOpacity]);
@@ -239,8 +250,8 @@ export const TourOverlay = ({
   const nudge = () => {
     if (reducedMotion) return;
     Animated.sequence([
-      timing(tooltipScale, 1.04, 90),
-      timing(tooltipScale, 1, 140),
+      timing(tooltipScale, 1.04, 90, true),
+      timing(tooltipScale, 1, 140, true),
     ]).start();
   };
 
@@ -351,7 +362,9 @@ export const TourOverlay = ({
                   {
                     borderRadius: holeRadius,
                     backgroundColor: dimColor,
-                    opacity: holeCover,
+                    // Bound to the render, not to an effect: the hole closes
+                    // in the very frame the next step starts.
+                    opacity: pending ? 1 : holeCover,
                   },
                 ]}
               />
@@ -388,7 +401,11 @@ export const TourOverlay = ({
         style={[
           styles.tooltip,
           tooltipStyle,
-          { opacity: tooltipOpacity, transform: [{ scale: tooltipScale }] },
+          {
+            // Bound to the render too: the card hides in the same frame.
+            opacity: isTooltipShown ? tooltipOpacity : 0,
+            transform: [{ scale: tooltipScale }],
+          },
         ]}
       >
         {layout && (

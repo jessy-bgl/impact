@@ -22,9 +22,10 @@ export const SETTLE_MAX_MS = 800;
 
 /**
  * Samples without any registered target before an optional step is skipped.
- * Targets register in the commit that mounts them, so a couple is plenty.
+ * Targets register in the commit that mounts them, so a few are plenty, even
+ * when the screen defers that commit by a frame (an unfolding section).
  */
-export const OPTIONAL_TARGET_SAMPLES = 2;
+export const OPTIONAL_TARGET_SAMPLES = 3;
 
 /** Re-measure period while a step is visible, to follow scroll and layout shifts. */
 export const REMEASURE_POLL_MS = 100;
@@ -44,7 +45,7 @@ export const TOOLTIP_ARROW_SIZE = 8;
 
 /** Spotlight glide between two positions; skipped when "reduce motion" is on. */
 export const SPOTLIGHT_ANIMATION_MS = 220;
-/** Closing the hole while the next step is located, and reopening it on it. */
+/** Hole reopening on the next target. Closing it is immediate. */
 export const HOLE_FADE_MS = 150;
 export const TOOLTIP_FADE_MS = 180;
 
