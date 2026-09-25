@@ -37,11 +37,7 @@ export type MeasurableNode = {
 export type TourScrollContainer = {
   /** Route name of the screen holding it; only that screen's container scrolls. */
   screen: string;
-  /**
-   * Resolves where the target will rest once the scroll ends, so the spotlight
-   * can move along with it; null when it did not have to scroll.
-   */
-  ensureVisible: (node: MeasurableNode) => Promise<TargetRect | null>;
+  ensureVisible: (node: MeasurableNode) => Promise<void>;
 };
 
 export type TourStep = {

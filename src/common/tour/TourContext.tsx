@@ -13,12 +13,13 @@ import { useWindowDimensions } from "react-native";
 import { isSameRect } from "@common/tour/geometry";
 import { measureNode } from "@common/tour/measureNode";
 import {
-  MAX_MEASURE_ATTEMPTS,
-  MAX_MEASURE_ATTEMPTS_OPTIONAL,
-  MEASURE_RETRY_DELAY_MS,
+  MEASURE_TIMEOUT_MS,
+  MEASURE_TIMEOUT_OPTIONAL_MS,
+  OPTIONAL_TARGET_SAMPLES,
   REMEASURE_POLL_MAX_MS,
   REMEASURE_POLL_MS,
-  SCROLL_SETTLE_MS,
+  SETTLE_MAX_MS,
+  SETTLE_SAMPLE_MS,
 } from "@common/tour/tourConstants";
 import {
   MeasurableNode,
@@ -162,8 +163,6 @@ export const TourProvider = ({
   const scrollContainers = useRef<TourScrollContainer[]>([]);
   const stepsViewed = useRef(0);
   const viewedIds = useRef(new Set<string>());
-  // Set while an auto-scroll brings the target to its predicted place.
-  const pollPausedUntil = useRef(0);
 
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
 
@@ -386,17 +385,23 @@ export const TourProvider = ({
   const isMeasured = rect !== null;
 
   // Measure the current step's target, retrying while it mounts and lays out,
-  // and scrolling it into view first when the screen allows it.
+  // and scrolling it into view first when the screen allows it. The step only
+  // shows once its target stops moving: a section still unfolding or a list
+  // still scrolling, whether the tour or the app scrolls it, would otherwise
+  // leave the spotlight chasing the target.
   useEffect(() => {
     if (!targetId || !stepId || isMeasured) return;
 
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
-    let attempts = 0;
     let hasTriedScrolling = false;
-    const maxAttempts = isOptionalStep
-      ? MAX_MEASURE_ATTEMPTS_OPTIONAL
-      : MAX_MEASURE_ATTEMPTS;
+    let lastRect: TargetRect | null = null;
+    let settleStart: number | undefined;
+    let unregisteredSamples = 0;
+    const startedAt = Date.now();
+    const timeout = isOptionalStep
+      ? MEASURE_TIMEOUT_OPTIONAL_MS
+      : MEASURE_TIMEOUT_MS;
 
     const attempt = async () => {
       const entry = targets.current.get(targetId)?.[0];
@@ -411,32 +416,35 @@ export const TourProvider = ({
         );
         if (!hasTriedScrolling && container) {
           hasTriedScrolling = true;
-          const predicted = await container
-            .ensureVisible(entry.node)
-            .catch(() => null);
+          await container.ensureVisible(entry.node).catch(() => {});
           if (cancelled) return;
-          if (predicted) {
-            // Spotlight where the target will rest, so both move together
-            // instead of the spotlight waiting for the scroll to end. The
-            // re-measure poll holds off until then, and fixes any drift.
-            pollPausedUntil.current = Date.now() + SCROLL_SETTLE_MS;
-            setMeasured({ stepId, rect: predicted, label: entry.label });
-            return;
-          }
         }
-        setMeasured({ stepId, rect, label: entry.label });
-        return;
-      }
 
-      attempts += 1;
-      if (attempts >= maxAttempts) {
-        onStepSkippedRef.current?.({ stepId, reason: "target_missing" });
-        // The tour moves on to the next visible step on its own, or finishes
-        // without counting this one when it was the last.
-        setMissing((current) => ({ ...current, [stepId]: true }));
-        return;
+        settleStart ??= Date.now();
+        const isSettled =
+          isSameRect(rect, lastRect) ||
+          Date.now() - settleStart >= SETTLE_MAX_MS;
+        if (isSettled) {
+          setMeasured({ stepId, rect, label: entry.label });
+          return;
+        }
+        lastRect = rect;
+      } else {
+        if (!entry) unregisteredSamples += 1;
+        // Targets register in the very commit that mounts them: an optional
+        // step whose target is still not registered a moment later has none
+        // on this screen (a section without default values, for instance).
+        const hasNoTarget =
+          isOptionalStep && unregisteredSamples >= OPTIONAL_TARGET_SAMPLES;
+        if (hasNoTarget || Date.now() - startedAt >= timeout) {
+          onStepSkippedRef.current?.({ stepId, reason: "target_missing" });
+          // The tour moves on to the next visible step on its own, or
+          // finishes without counting this one when it was the last.
+          setMissing((current) => ({ ...current, [stepId]: true }));
+          return;
+        }
       }
-      timer = setTimeout(attempt, MEASURE_RETRY_DELAY_MS);
+      timer = setTimeout(attempt, SETTLE_SAMPLE_MS);
     };
 
     attempt();
@@ -456,8 +464,9 @@ export const TourProvider = ({
     measure,
   ]);
 
-  // Follow scroll and layout shifts (accordion expansion, keyboard) once shown.
-  // Polls fast while the target moves, and slows down once it stays put.
+  // Follow the target once shown, should it still move (list scrolled through
+  // the hole, window resized, late layout). Polls fast while it moves, and
+  // slows down once it stays put.
   useEffect(() => {
     if (!targetId || !stepId || !isMeasured) return;
 
@@ -486,12 +495,7 @@ export const TourProvider = ({
       timer = setTimeout(poll, delay);
     };
 
-    // Measuring mid-scroll would drag the spotlight back toward the scrolling
-    // target, restarting its glide at every poll.
-    timer = setTimeout(
-      poll,
-      Math.max(delay, pollPausedUntil.current - Date.now()),
-    );
+    timer = setTimeout(poll, delay);
 
     return () => {
       cancelled = true;

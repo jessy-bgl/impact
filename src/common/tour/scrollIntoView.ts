@@ -20,14 +20,12 @@ export const isRectInside = (
 /**
  * Offset that vertically centers `rect` in `container`, or aligns its top when
  * it is too tall to fit. `innerTop` is the content view's window-absolute top,
- * so the current offset is `container.y - innerTop`. Clamped to the offsets
- * the scroll view can reach, so the target's resting place can be predicted.
+ * so the current offset is `container.y - innerTop`.
  */
 export const computeScrollOffset = (
   rect: TargetRect,
   container: TargetRect,
   innerTop: number,
-  contentHeight: number,
   margin = VISIBILITY_MARGIN,
 ) => {
   const currentOffset = container.y - innerTop;
@@ -35,38 +33,27 @@ export const computeScrollOffset = (
   const desiredTop = fits
     ? container.y + (container.height - rect.height) / 2
     : container.y + margin;
-  const maxOffset = Math.max(0, contentHeight - container.height);
-  return Math.min(maxOffset, Math.max(0, currentOffset + rect.y - desiredTop));
+  return Math.max(0, currentOffset + rect.y - desiredTop);
 };
 
-/**
- * Scrolls `scrollView` so `node` is comfortably visible. Resolves where the
- * node will rest once the animated scroll ends, or null when it did not scroll.
- */
+/** Scrolls `scrollView` so `node` is comfortably visible. */
 export const scrollNodeIntoView = async (
   scrollView: ScrollableView | null,
   node: MeasurableNode,
-): Promise<TargetRect | null> => {
+): Promise<void> => {
   const inner = scrollView?.getInnerViewRef?.();
-  if (!scrollView || !inner) return null;
+  if (!scrollView || !inner) return;
 
   const [container, innerRect, rect] = await Promise.all([
     measureNode(scrollView),
     measureNode(inner),
     measureNode(node),
   ]);
-  if (!container || !innerRect || !rect) return null;
-  if (isRectInside(rect, container)) return null;
+  if (!container || !innerRect || !rect) return;
+  if (isRectInside(rect, container)) return;
 
-  const currentOffset = container.y - innerRect.y;
-  const offset = computeScrollOffset(
-    rect,
-    container,
-    innerRect.y,
-    innerRect.height,
-  );
-  if (offset === currentOffset) return null;
-
-  scrollView.scrollTo({ y: offset, animated: true });
-  return { ...rect, y: rect.y - (offset - currentOffset) };
+  scrollView.scrollTo({
+    y: computeScrollOffset(rect, container, innerRect.y),
+    animated: true,
+  });
 };

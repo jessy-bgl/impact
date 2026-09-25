@@ -3,8 +3,6 @@ import { TargetRect } from "@common/tour/types";
 
 const container: TargetRect = { x: 0, y: 100, width: 320, height: 500 };
 const MARGIN = 20;
-/** Tall enough for any offset these tests reach. */
-const LONG_CONTENT = 5000;
 
 describe("isRectInside", () => {
   it("accepts a target comfortably inside the container", () => {
@@ -32,13 +30,7 @@ describe("computeScrollOffset", () => {
     const innerTop = container.y - currentOffset;
     const rect = { x: 0, y: 900, width: 100, height: 40 };
 
-    const offset = computeScrollOffset(
-      rect,
-      container,
-      innerTop,
-      LONG_CONTENT,
-      MARGIN,
-    );
+    const offset = computeScrollOffset(rect, container, innerTop, MARGIN);
 
     const targetTopAfterScroll = rect.y - (offset - currentOffset);
     expect(targetTopAfterScroll + rect.height / 2).toBe(
@@ -50,13 +42,7 @@ describe("computeScrollOffset", () => {
     const innerTop = container.y;
     const rect = { x: 0, y: 900, width: 100, height: 800 };
 
-    const offset = computeScrollOffset(
-      rect,
-      container,
-      innerTop,
-      LONG_CONTENT,
-      MARGIN,
-    );
+    const offset = computeScrollOffset(rect, container, innerTop, MARGIN);
 
     expect(rect.y - offset).toBe(container.y + MARGIN);
   });
@@ -65,18 +51,6 @@ describe("computeScrollOffset", () => {
     const innerTop = container.y;
     const rect = { x: 0, y: 110, width: 100, height: 40 };
 
-    expect(
-      computeScrollOffset(rect, container, innerTop, LONG_CONTENT, MARGIN),
-    ).toBe(0);
-  });
-
-  it("never scrolls past the bottom of the content", () => {
-    const innerTop = container.y;
-    const contentHeight = 1000;
-    const rect = { x: 0, y: 1050, width: 100, height: 40 };
-
-    expect(
-      computeScrollOffset(rect, container, innerTop, contentHeight, MARGIN),
-    ).toBe(contentHeight - container.height);
+    expect(computeScrollOffset(rect, container, innerTop, MARGIN)).toBe(0);
   });
 });

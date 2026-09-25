@@ -1,5 +1,4 @@
 import {
-  act,
   render,
   screen,
   userEvent,
@@ -15,10 +14,8 @@ import {
   useTourRegistry,
 } from "@common/tour/TourContext";
 import {
-  MAX_MEASURE_ATTEMPTS,
-  MAX_MEASURE_ATTEMPTS_OPTIONAL,
-  REMEASURE_POLL_MS,
-  SCROLL_SETTLE_MS,
+  MEASURE_TIMEOUT_OPTIONAL_MS,
+  SETTLE_MAX_MS,
 } from "@common/tour/tourConstants";
 import {
   MeasurableNode,
@@ -35,8 +32,6 @@ const HUB = "Hub";
 const DETAIL = "Detail";
 
 const MEASURED_RECT: TargetRect = { x: 10, y: 20, width: 100, height: 40 };
-/** Where a scroll container announces the target will rest. */
-const PREDICTED_RECT: TargetRect = { ...MEASURED_RECT, y: 300 };
 
 const steps: TourStep[] = [
   { id: "intro", screens: [HUB], i18nKey: "intro" },
@@ -75,11 +70,18 @@ type StubNode = MeasurableNode & { targetId: string };
 class StubMeasurer {
   calls: string[] = [];
   measurable = new Set<string>();
+  /** Rects returned first, as a target still moving before it rests. */
+  moves = new Map<string, TargetRect[]>();
+  /** Targets that never rest: each measure finds them somewhere else. */
+  restless = new Set<string>();
 
   measure = async (node: MeasurableNode) => {
     const { targetId } = node as StubNode;
     this.calls.push(targetId);
-    return this.measurable.has(targetId) ? MEASURED_RECT : null;
+    if (!this.measurable.has(targetId)) return null;
+    if (this.restless.has(targetId))
+      return { ...MEASURED_RECT, y: MEASURED_RECT.y + this.calls.length };
+    return this.moves.get(targetId)?.shift() ?? MEASURED_RECT;
   };
 }
 
@@ -96,18 +98,13 @@ class TourRecorder {
   onFinish = (info: TourFinishInfo) => this.finished.push(info);
 }
 
-/** Scrolls on its first `scrollsNeeded` calls, as an off-screen target would. */
 class StubScrollContainer implements TourScrollContainer {
   calls = 0;
 
-  constructor(
-    private scrollsNeeded: number,
-    public screen = HUB,
-  ) {}
+  constructor(public screen = HUB) {}
 
   ensureVisible = async () => {
     this.calls += 1;
-    return this.calls <= this.scrollsNeeded ? PREDICTED_RECT : null;
   };
 }
 
@@ -320,9 +317,9 @@ describe("TourProvider", () => {
     expect(statusText()).toBe("measuring");
   });
 
-  it("spotlights where the scroll brings the target, without waiting for it to settle", async () => {
+  it("scrolls an off-screen target into view before showing its step", async () => {
     measurer.measurable.add("cardTarget");
-    const scrollContainer = new StubScrollContainer(1);
+    const scrollContainer = new StubScrollContainer();
     await renderTour({
       children: (
         <>
@@ -337,42 +334,83 @@ describe("TourProvider", () => {
 
     await waitFor(() => expect(statusText()).toBe("visible"));
     expect(scrollContainer.calls).toBe(1);
-    expect(rectText()).toBe(`${PREDICTED_RECT.x},${PREDICTED_RECT.y}`);
   });
 
-  it("re-measures the target only once the scroll has settled", async () => {
+  it("waits for the target to come to rest before showing its step", async () => {
     measurer.measurable.add("cardTarget");
-    const scrollContainer = new StubScrollContainer(1);
+    const moves: TargetRect[] = [
+      { ...MEASURED_RECT, y: MEASURED_RECT.y + 200 },
+      { ...MEASURED_RECT, y: MEASURED_RECT.y + 100 },
+    ];
+    measurer.moves.set("cardTarget", [...moves]);
+    const shownRects = new Set<string>();
+    const RectProbe = () => {
+      const { status, rect } = useTour();
+      if (status === "visible" && rect) shownRects.add(`${rect.x},${rect.y}`);
+      return null;
+    };
     await renderTour({
       children: (
         <>
-          <StubScrollView container={scrollContainer} />
           <StubTarget targetId="cardTarget" />
+          <RectProbe />
         </>
       ),
     });
 
     await press("start");
     await press("next");
+
     await waitFor(() => expect(statusText()).toBe("visible"));
-
-    // Past a regular poll, but before the scroll settles.
-    await act(
-      () =>
-        new Promise((resolve) =>
-          setTimeout(resolve, (REMEASURE_POLL_MS + SCROLL_SETTLE_MS) / 2),
-        ),
+    expect(rectText()).toBe(`${MEASURED_RECT.x},${MEASURED_RECT.y}`);
+    expect(shownRects).toEqual(
+      new Set([`${MEASURED_RECT.x},${MEASURED_RECT.y}`]),
     );
-    expect(rectText()).toBe(`${PREDICTED_RECT.x},${PREDICTED_RECT.y}`);
+  });
 
-    await waitFor(() =>
-      expect(rectText()).toBe(`${MEASURED_RECT.x},${MEASURED_RECT.y}`),
+  it("shows a target that never comes to rest once the settle time is out", async () => {
+    measurer.measurable.add("cardTarget");
+    measurer.restless.add("cardTarget");
+    await renderTour({ children: <StubTarget targetId="cardTarget" /> });
+
+    await press("start");
+    await press("next");
+
+    await waitFor(() => expect(statusText()).toBe("visible"), {
+      timeout: SETTLE_MAX_MS * 2,
+    });
+  });
+
+  it("skips an optional step without any target right away", async () => {
+    const optionalSteps: TourStep[] = [
+      { id: "intro", screens: [HUB], i18nKey: "intro" },
+      {
+        id: "tip",
+        screens: [HUB],
+        target: "tipTarget",
+        i18nKey: "tip",
+        optional: true,
+      },
+      { id: "outro", screens: [HUB], i18nKey: "outro" },
+    ];
+    await renderTour({ tourSteps: optionalSteps });
+
+    await press("start");
+    const nextPressedAt = Date.now();
+    await press("next");
+
+    await waitFor(() => expect(stepIdText()).toBe("outro"));
+    expect(Date.now() - nextPressedAt).toBeLessThan(
+      MEASURE_TIMEOUT_OPTIONAL_MS,
     );
+    expect(recorder.skipped).toEqual([
+      { stepId: "tip", reason: "target_missing" },
+    ]);
   });
 
   it("leaves alone the scroll container of a screen not on display", async () => {
     measurer.measurable.add("cardTarget");
-    const scrollContainer = new StubScrollContainer(1, DETAIL);
+    const scrollContainer = new StubScrollContainer(DETAIL);
     await renderTour({
       children: (
         <>
@@ -391,7 +429,7 @@ describe("TourProvider", () => {
 
   it("scrolls the target into view again when the tour restarts", async () => {
     measurer.measurable.add("cardTarget");
-    const scrollContainer = new StubScrollContainer(0);
+    const scrollContainer = new StubScrollContainer();
     await renderTour({
       children: (
         <>
@@ -445,8 +483,6 @@ describe("TourProvider", () => {
         ]),
       { timeout: 5000 },
     );
-    expect(measurer.calls.length).toBeGreaterThanOrEqual(MAX_MEASURE_ATTEMPTS);
-    expect(MAX_MEASURE_ATTEMPTS_OPTIONAL).toBeLessThan(MAX_MEASURE_ATTEMPTS);
     // The skipped step leaves no gap in the progress indicator.
     expect(stepIdText()).toBe("detail");
     expect(progressText()).toBe(`1/${steps.length - 1}`);
@@ -462,7 +498,7 @@ describe("TourProvider", () => {
     await update(DETAIL, <StubTarget targetId="detailTarget" />);
 
     await waitFor(() => expect(stepIdText()).toBe("detail"));
-    expect(statusText()).toBe("visible");
+    await waitFor(() => expect(statusText()).toBe("visible"));
   });
 
   it("rewinds to the step that led to a screen when the user leaves it", async () => {

@@ -25,6 +25,7 @@ import {
   DEFAULT_HOLE_RADIUS,
   DIM_OPACITY_DARK,
   DIM_OPACITY_LIGHT,
+  HOLE_FADE_MS,
   SPOTLIGHT_ANIMATION_MS,
   TOOLTIP_ARROW_SIZE,
   TOOLTIP_FADE_MS,
@@ -36,8 +37,8 @@ import { useReducedMotion } from "@common/tour/useReducedMotion";
 type Props = {
   visible: boolean;
   /**
-   * The step's target is still being located: the screen stays dimmed and the
-   * spotlight holds its last position, but no card shows yet.
+   * The step's target is still being located: the screen stays dimmed, the
+   * spotlight closes where it was, and no card shows yet.
    */
   pending?: boolean;
   /** Null spotlights nothing: the whole screen dims and the card is centered. */
@@ -107,8 +108,9 @@ export const TourOverlay = ({
     setTooltipHeight(undefined);
   }
 
-  // While the next target is being located, the spotlight stays where it was
-  // and then glides to its new position, instead of blinking out and back.
+  // While the next target is being located, the spotlight closes where it was
+  // instead of blinking out, then reopens right on the new target once it has
+  // come to rest: no glide across a screen still unfolding or scrolling.
   const measuredHole =
     visible && rect ? computeHole(rect, padding, window) : null;
   const [lastHole, setLastHole] = useState<TargetRect | null>(null);
@@ -124,10 +126,12 @@ export const TourOverlay = ({
     width: new Animated.Value(0),
     height: new Animated.Value(0),
   }));
+  // 1 fills the hole with the dim color: closed.
+  const [holeCover] = useState(() => new Animated.Value(1));
   const [tooltipOpacity] = useState(() => new Animated.Value(0));
   const [tooltipScale] = useState(() => new Animated.Value(1));
   const [beacon] = useState(() => new Animated.Value(0));
-  const hasSpotlight = useRef(false);
+  const isHoleOpen = useRef(false);
 
   const holeX = hole?.x;
   const holeY = hole?.y;
@@ -142,26 +146,44 @@ export const TourOverlay = ({
       holeWidth === undefined ||
       holeHeight === undefined
     ) {
-      hasSpotlight.current = false;
+      isHoleOpen.current = false;
+      holeCover.setValue(1);
       return;
     }
     const target = { x: holeX, y: holeY, width: holeWidth, height: holeHeight };
     const keys = ["x", "y", "width", "height"] as const;
+    const cover = pending ? 1 : 0;
+    // Only a target that moves while shown is followed with a glide. Anywhere
+    // else the hole is closed, or about to open: it jumps into place.
+    const glides = isHoleOpen.current && !pending && !reducedMotion;
+    isHoleOpen.current = !pending;
 
-    if (!hasSpotlight.current || reducedMotion) {
-      hasSpotlight.current = true;
-      keys.forEach((key) => spotlight[key].setValue(target[key]));
+    if (!glides) keys.forEach((key) => spotlight[key].setValue(target[key]));
+    if (reducedMotion) {
+      holeCover.setValue(cover);
       return;
     }
 
-    const animation = Animated.parallel(
-      keys.map((key) =>
-        timing(spotlight[key], target[key], SPOTLIGHT_ANIMATION_MS),
-      ),
-    );
+    const animation = Animated.parallel([
+      ...(glides
+        ? keys.map((key) =>
+            timing(spotlight[key], target[key], SPOTLIGHT_ANIMATION_MS),
+          )
+        : []),
+      timing(holeCover, cover, HOLE_FADE_MS),
+    ]);
     animation.start();
     return () => animation.stop();
-  }, [holeX, holeY, holeWidth, holeHeight, reducedMotion, spotlight]);
+  }, [
+    holeX,
+    holeY,
+    holeWidth,
+    holeHeight,
+    pending,
+    reducedMotion,
+    spotlight,
+    holeCover,
+  ]);
 
   const isTooltipShown = visible && !pending && tooltipHeight !== undefined;
 
@@ -323,6 +345,16 @@ export const TourOverlay = ({
                   ]}
                 />
               )}
+              <Animated.View
+                style={[
+                  StyleSheet.absoluteFill,
+                  {
+                    borderRadius: holeRadius,
+                    backgroundColor: dimColor,
+                    opacity: holeCover,
+                  },
+                ]}
+              />
             </Animated.View>
           </>
         ) : (
