@@ -1,10 +1,10 @@
 import { Image } from "expo-image";
-import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 
 import { ImageAssets } from "@common/utils/imageAssets";
+import { openUrl } from "@common/utils/openUrl";
 
 type DataSource = {
   id: string;
@@ -41,22 +41,13 @@ export const Sources = () => {
     },
   ];
 
-  const handleOpenUrl = useCallback(async (url: string) => {
-    try {
-      const supported = await Linking.canOpenURL(url);
-      if (supported) await Linking.openURL(url);
-    } catch (error) {
-      console.error("Error opening URL:", error);
-    }
-  }, []);
-
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
       {dataSources.map((source) => (
         <Card
           key={source.id}
           mode="elevated"
-          onPress={() => handleOpenUrl(source.url)}
+          onPress={() => openUrl(source.url)}
         >
           <Card.Content style={{ flexDirection: "row", gap: 16 }}>
             <View style={{ flex: 1, gap: 4 }}>

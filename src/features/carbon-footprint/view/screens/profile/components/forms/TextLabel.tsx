@@ -3,6 +3,7 @@ import { Icon, Text, useTheme } from "react-native-paper";
 
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 import { PROFILE_TOUR_TARGETS } from "@carbonFootprint/domain/entities/tour/profileTour";
+import { DescriptionSheetContent } from "@carbonFootprint/view/components/DescriptionSheetContent";
 import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
 import { useTourTarget } from "@common/tour/useTourTarget";
 
@@ -14,13 +15,14 @@ type Props = {
 export const TextLabel = ({ question, style }: Props) => {
   const { present } = useCustomBottomSheetModal();
 
-  const showBottomSheetModal = (content?: string) => {
-    present(<Text>{content}</Text>);
-  };
-
   const handlePress = () => {
     if (question.description) {
-      showBottomSheetModal(question.description);
+      present(
+        <DescriptionSheetContent
+          title={question.title}
+          description={question.description}
+        />,
+      );
     }
   };
 

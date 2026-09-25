@@ -1,7 +1,7 @@
 import * as Clipboard from "expo-clipboard";
 import { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   Button,
   Card,
@@ -16,6 +16,7 @@ import {
 import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
+import { openUrl } from "@common/utils/openUrl";
 import { AnalyticsConsentChoices } from "@consent/view/components/AnalyticsConsentChoices";
 
 const PRIVACY_POLICY_URL =
@@ -61,13 +62,10 @@ export const DataPolicy = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
 
-  const handleOpenPrivacyPolicy = useCallback(async () => {
-    try {
-      await Linking.openURL(PRIVACY_POLICY_URL);
-    } catch (error) {
-      console.error("Error opening URL:", error);
-    }
-  }, []);
+  const handleOpenPrivacyPolicy = useCallback(
+    () => openUrl(PRIVACY_POLICY_URL),
+    [],
+  );
 
   const handleCopyId = useCallback(async () => {
     await Clipboard.setStringAsync(posthog.getDistinctId());

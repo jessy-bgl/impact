@@ -1,10 +1,11 @@
 import { useCallback, useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { UsecasesContext } from "@common/context/UsecasesContext";
+import { openUrl } from "@common/utils/openUrl";
 
 const PRIVACY_POLICY_URL =
   "https://github.com/jessy-bgl/impact/blob/main/docs/privacy-policy/privacy_policy.md";
@@ -17,13 +18,10 @@ export const ConsentScreen = () => {
   const { grantAnalyticsConsent, revokeAnalyticsConsent } =
     useContext(UsecasesContext);
 
-  const handleOpenPrivacyPolicy = useCallback(async () => {
-    try {
-      await Linking.openURL(PRIVACY_POLICY_URL);
-    } catch (error) {
-      console.error("Error opening URL:", error);
-    }
-  }, []);
+  const handleOpenPrivacyPolicy = useCallback(
+    () => openUrl(PRIVACY_POLICY_URL),
+    [],
+  );
 
   return (
     <SafeAreaView
