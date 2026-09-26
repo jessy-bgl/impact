@@ -23,18 +23,24 @@ export abstract class AdemeEngine {
     }
   };
 
-  public static setSituation = (
-    profile: Profile,
-    keepPreviousSituation = false,
-  ): void => {
+  /**
+   * Replaces the whole situation with the profile.
+   *
+   * @returns false when the engine rejected it and kept the previous one
+   */
+  public static setSituation = (profile: Profile): boolean => {
+    // A key without a value (an answer a migration removed) is no answer: the
+    // strict mode would reject the whole situation for that unknown key.
+    const situation = Object.fromEntries(
+      Object.entries(profile).filter(([, value]) => value !== undefined),
+    );
     try {
-      ademeFootprintModel.setSituation(profile, {
-        strict: true,
-        keepPreviousSituation,
-      });
+      ademeFootprintModel.setSituation(situation, { strict: true });
+      return true;
     } catch (e) {
       console.error(e);
       posthog.captureException(new Error("ademe_engine_set_situation_failed"));
+      return false;
     }
   };
 

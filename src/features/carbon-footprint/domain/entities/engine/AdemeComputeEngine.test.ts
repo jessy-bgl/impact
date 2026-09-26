@@ -226,4 +226,26 @@ describe("AdemeComputeEngine", () => {
       expect(engine.computeFrenchAverageFootprint()).toMatchSnapshot();
     });
   });
+
+  describe("setProfile", () => {
+    const answered: Profile = { "transport . voiture . km": 1000 };
+
+    it("ignores the keys without a value", () => {
+      const profile = { ...answered, "stale . key": undefined } as Profile;
+
+      engine.setProfile(profile);
+
+      expect(engine.getProfile()).toBe(profile);
+      expect(AdemeEngine.getSituation()).toEqual(answered);
+    });
+
+    it("keeps the previous profile when the engine rejects the situation", () => {
+      engine.setProfile(answered);
+
+      engine.setProfile({ "stale . key": 5 } as Profile);
+
+      expect(engine.getProfile()).toBe(answered);
+      expect(AdemeEngine.getSituation()).toEqual(answered);
+    });
+  });
 });

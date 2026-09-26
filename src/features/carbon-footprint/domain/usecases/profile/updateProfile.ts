@@ -82,8 +82,12 @@ export const createUpdateProfile = (
       value = question.minValue || 0;
     }
 
-    computeEngine.setProfile({ [question.label]: value }, true);
-
+    // Engine first: a store subscriber rendering in between would otherwise
+    // read the engine with the previous answer and keep the result.
+    computeEngine.setProfile({
+      ...profileRepository.fetchAdemeProfile(),
+      [question.label]: value,
+    });
     profileRepository.updateProfileKey(question.label, value);
   };
 
