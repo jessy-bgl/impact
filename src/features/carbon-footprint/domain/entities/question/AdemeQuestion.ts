@@ -5,7 +5,44 @@ import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
+type Overrides = {
+  title?: string;
+  description?: string;
+  /**
+   * A mosaic option is never evaluated on its own: it is shown with its
+   * parent, whose applicability it takes. The screens filter the options on
+   * `isInactive` only.
+   */
+  isApplicable?: boolean;
+};
+
+type SubQuestionSpec = {
+  key: keyof Profile;
+  rule: NGCRuleNode;
+  overrides: Overrides;
+};
+
+/**
+ * What a question reads from its rule only: it never changes between two
+ * profiles, so it is computed once per rule and shared by every instance.
+ */
+type StaticData = Pick<
+  Question,
+  | "type"
+  | "title"
+  | "description"
+  | "note"
+  | "warning"
+  | "isInactive"
+  | "minValue"
+  | "maxValue"
+  | "unit"
+  | "options"
+> & { subQuestionSpecs?: SubQuestionSpec[] };
+
 export class AdemeQuestion extends Question {
+  private static staticDataByKey = new Map<keyof Profile, StaticData>();
+
   private rule: NGCRuleNode;
   private ruleKey: keyof Profile;
 
@@ -13,33 +50,75 @@ export class AdemeQuestion extends Question {
     profile: Profile,
     ruleKey: keyof Profile,
     rule: NGCRuleNode,
-    overrides?: { title?: string; description?: string },
+    overrides?: Overrides,
   ) {
     super();
 
     this.rule = rule;
     this.ruleKey = ruleKey;
-
     this.label = ruleKey;
-    this.type = this.getType();
-    const rawNode = rule.rawNode;
-    this.title = overrides?.title ?? rawNode.question ?? "";
-    this.description = rawNode.description ?? overrides?.description;
-    this.note = rawNode.note;
-    this.warning = rawNode.avertissement;
-    this.isApplicable = this.getIsApplicable();
-    this.isInactive = rawNode.inactif === "oui";
-    this.minValue = rawNode.plancher as number | undefined;
-    this.maxValue = rawNode.plafond as number | undefined;
-    this.unit = this.getUnit();
-    this.options = this.getOptions();
-    this.subQuestions = this.getSubQuestions(profile);
-    this.defaultValue = profile[ruleKey]?.toString() ?? this.getDefaultValue();
-    this.isEngineDefaultValueUsed = profile[ruleKey]?.toString() ? false : true;
+
+    const { subQuestionSpecs, ...staticData } = AdemeQuestion.getStaticData(
+      ruleKey,
+      rule,
+    );
+    Object.assign(this, staticData);
+    this.title = overrides?.title ?? staticData.title;
+    this.description = staticData.description ?? overrides?.description;
+
+    // Only what depends on the situation is evaluated per instance.
+    this.isApplicable =
+      (overrides?.isApplicable ?? this.getIsApplicable()) && !this.isInactive;
+    this.subQuestions = subQuestionSpecs?.map(
+      (spec) =>
+        new AdemeQuestion(profile, spec.key, spec.rule, {
+          ...spec.overrides,
+          isApplicable: this.isApplicable,
+        }),
+    );
+    const answer = profile[ruleKey]?.toString();
+    this.defaultValue = answer ?? this.getDefaultValue();
+    this.isEngineDefaultValueUsed = !answer;
   }
 
-  private getType(): Question["type"] {
-    const rawNode = this.rule.rawNode;
+  private static getStaticData(
+    ruleKey: keyof Profile,
+    rule: NGCRuleNode,
+  ): StaticData {
+    let staticData = AdemeQuestion.staticDataByKey.get(ruleKey);
+    if (!staticData) {
+      staticData = AdemeQuestion.computeStaticData(ruleKey, rule);
+      AdemeQuestion.staticDataByKey.set(ruleKey, staticData);
+    }
+    return staticData;
+  }
+
+  private static computeStaticData(
+    ruleKey: keyof Profile,
+    rule: NGCRuleNode,
+  ): StaticData {
+    const rawNode = rule.rawNode;
+    const type = AdemeQuestion.getType(ruleKey, rule);
+    return {
+      type,
+      title: rawNode.question ?? "",
+      description: rawNode.description,
+      note: rawNode.note,
+      warning: rawNode.avertissement,
+      isInactive: rawNode.inactif === "oui",
+      minValue: rawNode.plancher as number | undefined,
+      maxValue: rawNode.plafond as number | undefined,
+      unit: AdemeQuestion.getUnit(ruleKey, rule),
+      options: AdemeQuestion.getOptions(ruleKey, rule, type),
+      subQuestionSpecs: AdemeQuestion.getSubQuestionSpecs(ruleKey, rule, type),
+    };
+  }
+
+  private static getType(
+    ruleKey: keyof Profile,
+    rule: NGCRuleNode,
+  ): Question["type"] {
+    const rawNode = rule.rawNode;
 
     if (rawNode.mosaique) {
       return rawNode.mosaique.type === "selection"
@@ -57,62 +136,47 @@ export class AdemeQuestion extends Question {
     if (defaultValue === "oui" || defaultValue === "non")
       return "select-boolean";
 
-    const nodeValue = AdemeEngine.evaluate(this.ruleKey).nodeValue;
-    return typeof nodeValue !== "number" ? "select-boolean" : "number";
+    // Cached per rule: the value read here must not depend on the situation.
+    // A yes/no question always declares a literal default (`ademe-model-patch`
+    // guarantees it), so a rule that evaluates to null because it is not
+    // applicable right now can only be numeric.
+    const nodeValue = AdemeEngine.evaluateRule(rule).nodeValue;
+    return typeof nodeValue === "boolean" ? "select-boolean" : "number";
   }
 
-  private getUnit(): string | undefined {
-    const unit = this.rule.rawNode["unité"];
+  private static getUnit(
+    ruleKey: keyof Profile,
+    rule: NGCRuleNode,
+  ): string | undefined {
+    const unit = rule.rawNode["unité"];
     if (unit) return unit;
 
     // Some "estimated" consumption rules don't carry the unit themselves,
     // but their "précise" sibling (same physical quantity) does.
-    try {
-      return AdemeEngine.getRule(`${this.ruleKey} précise` as keyof Profile)
-        .rawNode["unité"];
-    } catch {
-      return undefined;
+    const preciseKey = `${ruleKey} précise` as keyof Profile;
+    if (!AdemeEngine.containsKey(preciseKey)) return undefined;
+    return AdemeEngine.getRule(preciseKey).rawNode["unité"];
+  }
+
+  private static getOptions(
+    ruleKey: keyof Profile,
+    rule: NGCRuleNode,
+    type: Question["type"],
+  ): Question["options"] | undefined {
+    if (type === "select") {
+      const possibilities = rule.rawNode["une possibilité"] as
+        string[] | undefined;
+      if (possibilities === undefined) return undefined;
+      return possibilities.map((option: string) => {
+        const optionKey = (ruleKey + " . " + option) as DottedName;
+        const optionValue = option.startsWith("'") ? option : `'${option}'`;
+        return {
+          label: AdemeEngine.getRule(optionKey).title,
+          value: optionValue,
+        };
+      });
     }
-  }
-
-  private getIsApplicable(): boolean {
-    let isApplicable = AdemeEngine.evaluate(
-      this.getApplicabilityExpression(),
-    ).nodeValue;
-    if (isApplicable === undefined) isApplicable = true;
-    const isActive = this.rule.rawNode.inactif !== "oui";
-    return (isApplicable as boolean) && isActive;
-  }
-
-  // Publicodes treats a "oui / non" rule as an applicability flag: answering
-  // "non" sets its value to null, which makes "est applicable" false and would
-  // hide the question right after the user answered it. Neutralizing the
-  // answer to "oui" keeps only the parent chain as the display condition.
-  private getApplicabilityExpression(): PublicodesExpression {
-    if (this.type !== "select-boolean") return { "est applicable": this.rule };
-    return {
-      "est applicable": {
-        valeur: this.ruleKey,
-        contexte: { [this.ruleKey]: "oui" },
-      },
-    };
-  }
-
-  private getOptions(): Question["options"] | undefined {
-    if (this.type === "select") {
-      if (this.rule.rawNode["une possibilité"] === undefined) return undefined;
-      return (this.rule.rawNode["une possibilité"] as string[]).map(
-        (option: string) => {
-          const optionKey = (this.ruleKey + " . " + option) as DottedName;
-          const optionValue = option.startsWith("'") ? option : `'${option}'`;
-          return {
-            label: AdemeEngine.getRule(optionKey).title,
-            value: optionValue,
-          };
-        },
-      );
-    }
-    if (this.type === "select-boolean") {
+    if (type === "select-boolean") {
       return [
         { label: "Oui", value: "oui" },
         { label: "Non", value: "non" },
@@ -121,37 +185,57 @@ export class AdemeQuestion extends Question {
     return undefined;
   }
 
-  private getSubQuestions(profile: Profile): Question[] | undefined {
-    if (this.type !== "multi-select" && this.type !== "multi-number")
-      return undefined;
-    const options: string[] = this.rule.rawNode.mosaique?.options as string[];
-    const subQuestions: Question[] = [];
+  private static getSubQuestionSpecs(
+    ruleKey: keyof Profile,
+    rule: NGCRuleNode,
+    type: Question["type"],
+  ): SubQuestionSpec[] | undefined {
+    if (type !== "multi-select" && type !== "multi-number") return undefined;
+    const options: string[] = rule.rawNode.mosaique?.options as string[];
+    const specs: SubQuestionSpec[] = [];
     for (const option of options) {
-      try {
-        let optionKey = `${this.ruleKey} . ${option}` as keyof Profile;
-        if (!AdemeEngine.containsKey(optionKey))
-          optionKey =
-            `${this.removeLastPartOfKey(this.ruleKey)} . ${option}` as keyof Profile;
-        const optionRule = AdemeEngine.getRule(optionKey);
-        const optionParentKey = this.removeLastPartOfKey(optionKey);
-        const optionParentRule = AdemeEngine.getRule(optionParentKey);
-        const icon = optionParentRule.rawNode["icônes"];
-        const title = icon
-          ? `${optionParentRule.title} ${icon}`
-          : optionParentRule.title;
-        // A mosaic option answers on its leaf rule ("… . nombre", "… . présent"),
-        // which carries no description: the explanation of what the option covers
-        // ("Repas sans produits animaux.") lives on its parent, like the title.
-        const newQuestion = new AdemeQuestion(profile, optionKey, optionRule, {
-          title,
-          description: optionParentRule.rawNode.description,
-        });
-        subQuestions.push(newQuestion);
-      } catch {
-        // ignore unknown questions
-      }
+      let optionKey = `${ruleKey} . ${option}` as keyof Profile;
+      if (!AdemeEngine.containsKey(optionKey))
+        optionKey =
+          `${AdemeQuestion.removeLastPartOfKey(ruleKey)} . ${option}` as keyof Profile;
+      if (!AdemeEngine.containsKey(optionKey)) continue; // ignore unknown questions
+      const optionRule = AdemeEngine.getRule(optionKey);
+      const optionParentKey = AdemeQuestion.removeLastPartOfKey(optionKey);
+      if (!AdemeEngine.containsKey(optionParentKey)) continue;
+      const optionParentRule = AdemeEngine.getRule(optionParentKey);
+      const icon = optionParentRule.rawNode["icônes"];
+      const title = icon
+        ? `${optionParentRule.title} ${icon}`
+        : optionParentRule.title;
+      // A mosaic option answers on its leaf rule ("… . nombre", "… . présent"),
+      // which carries no description: the explanation of what the option covers
+      // ("Repas sans produits animaux.") lives on its parent, like the title.
+      specs.push({
+        key: optionKey,
+        rule: optionRule,
+        overrides: { title, description: optionParentRule.rawNode.description },
+      });
     }
-    return subQuestions;
+    return specs;
+  }
+
+  private getIsApplicable(): boolean {
+    // Unknown applicability keeps the question visible.
+    if (this.type !== "select-boolean")
+      return AdemeEngine.isRuleApplicable(this.rule) ?? true;
+
+    // Publicodes treats a "oui / non" rule as an applicability flag: answering
+    // "non" sets its value to null, which makes "est applicable" false and would
+    // hide the question right after the user answered it. Neutralizing the
+    // answer to "oui" keeps only the parent chain as the display condition.
+    const expression: PublicodesExpression = {
+      "est applicable": {
+        valeur: this.ruleKey,
+        contexte: { [this.ruleKey]: "oui" },
+      },
+    };
+    const isApplicable = AdemeEngine.evaluate(expression).nodeValue;
+    return isApplicable === undefined || (isApplicable as boolean);
   }
 
   private getDefaultValue(): string {
@@ -164,9 +248,8 @@ export class AdemeQuestion extends Question {
         return declaredDefault;
     }
 
-    let defaultValue = AdemeEngine.evaluate({
-      "par défaut": this.rule,
-    }).nodeValue;
+    // Unanswered, the rule evaluates to its `par défaut`.
+    let defaultValue = AdemeEngine.evaluateRule(this.rule).nodeValue;
 
     if (defaultValue === undefined || defaultValue === null) return "";
 
@@ -194,7 +277,7 @@ export class AdemeQuestion extends Question {
     return value.startsWith("'") ? value : `'${value}'`;
   }
 
-  private removeLastPartOfKey(key: string): keyof Profile {
+  private static removeLastPartOfKey(key: string): keyof Profile {
     return key.slice(0, key.lastIndexOf(" . ")) as keyof Profile;
   }
 }
