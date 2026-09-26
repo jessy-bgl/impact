@@ -12,6 +12,7 @@ import { Question } from "@carbonFootprint/domain/entities/question/Question";
 export class ComputeEngineStub implements ComputeEngine {
   lastProfile: Profile | undefined = undefined;
   questions: Partial<Record<keyof Profile, Question>> = {};
+  actions: Action[] = [];
   frenchAverageFootprint = 0;
 
   transportFootprint = new TransportFootprint({});
@@ -74,6 +75,6 @@ export class ComputeEngineStub implements ComputeEngine {
   }
 
   getActions(): Action[] {
-    return [];
+    return this.actions;
   }
 }

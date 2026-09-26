@@ -14,30 +14,26 @@ export const useActions = () => {
     store.actions.some((action) => action.state === "notStarted"),
   );
 
+  // The engine is not observable, but every change of its situation ends
+  // with the footprints being stored (startup synchronization, answers): a
+  // new footprints reference is the signal to synchronize the actions again.
+  // The synchronization itself does nothing when the engine did not change.
+  const footprints = useAppStore((store) => store.footprints);
+
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (!isFocused) return;
 
-    const syncActions = async () => {
-      try {
-        // Wrap the expensive synchronous operation in a promise
-        // to allow the UI to remain responsive
-        await new Promise<void>((resolve) => {
-          setTimeout(() => {
-            syncEngineWithStoredActions();
-            resolve();
-          }, 0);
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    // Deferred: the synchronization is heavy and synchronous, the screen
+    // renders first.
+    const timeout = setTimeout(() => {
+      syncEngineWithStoredActions();
+      setIsLoading(false);
+    }, 0);
 
-    syncActions();
-
-    return () => setIsLoading(true);
-  }, [syncEngineWithStoredActions, isFocused]);
+    return () => clearTimeout(timeout);
+  }, [syncEngineWithStoredActions, isFocused, footprints]);
 
   return { isLoading, hasAvailableAction, updateActionState };
 };
