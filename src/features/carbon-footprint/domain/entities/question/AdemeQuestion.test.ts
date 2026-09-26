@@ -1,9 +1,11 @@
 import { DottedName, NGCRules } from "@incubateur-ademe/nosgestesclimat";
 import AdemeModel from "@incubateur-ademe/nosgestesclimat/public/co2-model.FR-lang.fr.json";
 
+import { ademeFootprintModel } from "@carbonFootprint/data/ademe-footprint-model";
 import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { AdemeQuestion } from "@carbonFootprint/domain/entities/question/AdemeQuestion";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
@@ -52,6 +54,51 @@ describe("AdemeQuestion", () => {
       [bikeKey, "select-boolean"],
     ])("types %s as %s", (key, type) => {
       expect(getQuestion(key).type).toBe(type);
+    });
+
+    // The type is cached per rule, so the first situation a question is built
+    // in must not decide it: `voyageurs` (no unit, a computed default) is null
+    // while the user never drives, and numeric again afterwards.
+    // The fallback of `getType` reads the evaluated value, and the type is
+    // cached from the first situation: it is only safe as long as every
+    // question that reaches it is numeric by nature.
+    it("leaves only numeric questions to the evaluation fallback", () => {
+      engine.setProfile({});
+      const keys = Object.values(profileSections).flatMap(
+        (section) => Object.values(section.questionKeys) as (keyof Profile)[],
+      );
+      const withoutShape: (keyof Profile)[] = [];
+      const visit = (question: Question) => {
+        question.subQuestions?.forEach(visit);
+        const rawNode = AdemeEngine.getRule(question.label).rawNode;
+        const declaredType =
+          rawNode.mosaique ||
+          rawNode["une possibilité"] ||
+          rawNode["unité"] !== undefined ||
+          rawNode["par défaut"] === "oui" ||
+          rawNode["par défaut"] === "non";
+        if (!declaredType) withoutShape.push(question.label);
+      };
+      Object.values(engine.getQuestions({}, keys)).forEach(visit);
+
+      // What publicodes infers from the rule itself, whatever the situation.
+      const nodesTypes = (ademeFootprintModel as any).context.nodesTypes;
+      for (const key of withoutShape) {
+        expect([key, nodesTypes.get(AdemeEngine.getRule(key)).type]).toEqual([
+          key,
+          "number",
+        ]);
+      }
+    });
+
+    it("types a numeric question the same whether it is applicable or not", () => {
+      const notDriving = getQuestion(passengersKey, {
+        "transport . voiture . utilisateur": "'jamais'",
+      });
+      const driving = getQuestion(passengersKey, carOwnerProfile);
+
+      expect(notDriving.type).toBe("number");
+      expect(driving.type).toBe("number");
     });
   });
 
