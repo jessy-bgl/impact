@@ -34,7 +34,7 @@
         "title": "Un thème à la fois",
         "body": "Chaque catégorie est découpée en thèmes. Ouvre « {{label}} » pour découvrir les questions associées."
       },
-      "defaultValue": {
+      "question": {
         "title": "Questionnaire",
         "body": "Chaque réponse est sauvegardée automatiquement. Certaines d'entre elles sont pré-remplies avec des valeurs moyennes."
       },

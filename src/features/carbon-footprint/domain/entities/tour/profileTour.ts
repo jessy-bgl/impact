@@ -7,7 +7,7 @@ export const PROFILE_TOUR_TARGETS = {
   categoryCard: "profile.categoryCard",
   sectionHeader: "profile.sectionHeader",
   infoIcon: "profile.infoIcon",
-  defaultValue: "profile.defaultValue",
+  question: "profile.question",
   validateButton: "profile.validateButton",
 } as const;
 
@@ -15,7 +15,7 @@ export const PROFILE_TOUR_STEP_IDS = {
   categoryCard: "categoryCard",
   openCategory: "openCategory",
   sectionHeader: "sectionHeader",
-  defaultValue: "defaultValue",
+  question: "question",
   infoIcon: "infoIcon",
   validateButton: "validateButton",
 } as const;
@@ -67,12 +67,10 @@ export const PROFILE_TOUR_STEPS: TourStep[] = [
     advance: "action",
   },
   {
-    id: PROFILE_TOUR_STEP_IDS.defaultValue,
+    id: PROFILE_TOUR_STEP_IDS.question,
     screens: categories,
-    target: PROFILE_TOUR_TARGETS.defaultValue,
-    i18nKey: PROFILE_TOUR_STEP_IDS.defaultValue,
-    // Nothing is pre-filled once every answer of the section has been edited.
-    optional: true,
+    target: PROFILE_TOUR_TARGETS.question,
+    i18nKey: PROFILE_TOUR_STEP_IDS.question,
   },
   {
     id: PROFILE_TOUR_STEP_IDS.infoIcon,

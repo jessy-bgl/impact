@@ -29,11 +29,9 @@ export const ListItemQuestion = ({
   divider = false,
   step,
 }: Props) => {
-  // Spotlighted by the guided tour, which explains that a greyed-out answer is
-  // an engine default the user has not touched yet.
-  const defaultValueTourRef = useTourTarget(PROFILE_TOUR_TARGETS.defaultValue, {
-    enabled: Boolean(question?.isEngineDefaultValueUsed),
-  });
+  // Spotlighted by the guided tour, which explains how answers are saved and
+  // pre-filled. The first question of the open section is the one shown.
+  const questionTourRef = useTourTarget(PROFILE_TOUR_TARGETS.question);
 
   if (!question || !question.isApplicable) return;
 
@@ -93,7 +91,7 @@ export const ListItemQuestion = ({
   return (
     <>
       {divider && <ListItemQuestionDivider hidden={!question.isApplicable} />}
-      <View ref={defaultValueTourRef} collapsable={false}>
+      <View ref={questionTourRef} collapsable={false}>
         {item}
       </View>
     </>
