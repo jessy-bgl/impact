@@ -56,13 +56,19 @@ describe("createUpdateProfile", () => {
     });
   });
 
-  it("adds the answer to the engine situation without dropping the previous ones", () => {
+  it("sets the stored profile, answer included, on the engine", () => {
+    profileRepository.profile = { "transport . voiture . voyageurs": 2 };
+
     updateProfile.updateTransportProfile(
       makeQuestion("transport . voiture . km"),
       15000,
     );
 
-    expect(computeEngine.lastKeepCurrentValues).toBe(true);
+    expect(computeEngine.lastProfile).toEqual(profileRepository.profile);
+    expect(computeEngine.lastProfile).toEqual({
+      "transport . voiture . voyageurs": 2,
+      "transport . voiture . km": 15000,
+    });
   });
 
   // societalServices has no update method — its footprint is determined solely by the engine.

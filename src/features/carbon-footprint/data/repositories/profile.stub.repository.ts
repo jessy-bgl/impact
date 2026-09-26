@@ -25,7 +25,9 @@ export class ProfileStubRepository implements ProfileRepository {
     key: keyof Profile,
     value: string | number | undefined,
   ): void {
-    this.profile = { ...this.profile, [key]: value };
+    const { [key]: _removed, ...profile }: Profile = this.profile;
+    if (value !== undefined) (profile as Profile)[key] = value;
+    this.profile = profile;
   }
 
   updateProfileCompletion(

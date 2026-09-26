@@ -19,16 +19,13 @@ export class ProfileStoreRepository implements ProfileRepository {
   }
 
   updateProfileKey(key: keyof Profile, value: string | number | undefined) {
-    this.store.setState((state) => ({
-      ...state,
-      profile: {
-        ...state.profile,
-        ademe: {
-          ...state.profile.ademe,
-          [key]: value,
-        },
-      },
-    }));
+    this.store.setState((state) => {
+      // No value means no answer: the key leaves the profile instead of
+      // staying as `undefined`, which the engine would reject as unknown.
+      const { [key]: _removed, ...ademe }: Profile = state.profile.ademe;
+      if (value !== undefined) (ademe as Profile)[key] = value;
+      return { ...state, profile: { ...state.profile, ademe } };
+    });
   }
 
   updateProfileCompletion(

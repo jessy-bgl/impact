@@ -10,8 +10,7 @@ import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
 export class ComputeEngineStub implements ComputeEngine {
-  lastProfile: Profile | null = null;
-  lastKeepCurrentValues: boolean | undefined = undefined;
+  lastProfile: Profile | undefined = undefined;
   questions: Partial<Record<keyof Profile, Question>> = {};
   frenchAverageFootprint = 0;
 
@@ -21,9 +20,12 @@ export class ComputeEngineStub implements ComputeEngine {
   readonly everydayThingsFootprint = new EverydayThingsFootprint({});
   readonly societalServicesFootprint = new SocietalServicesFootprint({});
 
-  setProfile(profile: Profile, keepPreviousValues?: boolean): void {
+  setProfile(profile: Profile): void {
     this.lastProfile = profile;
-    this.lastKeepCurrentValues = keepPreviousValues;
+  }
+
+  getProfile(): Profile | undefined {
+    return this.lastProfile;
   }
 
   computeTransportFootprint(): TransportFootprint {

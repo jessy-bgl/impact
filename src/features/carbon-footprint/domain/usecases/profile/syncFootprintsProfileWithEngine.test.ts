@@ -127,6 +127,9 @@ describe("syncFootprintsProfileWithEngine", () => {
       await syncFootprintsProfileWithEngine({ handleMigration: true });
 
       expect(profileStub.getTestProfileKey(key)).toBe(expected);
+      // A removed key leaves the profile: the engine rejects unknown keys.
+      if (expected === undefined)
+        expect(profileStub.profile).not.toHaveProperty(key);
     });
   });
 
