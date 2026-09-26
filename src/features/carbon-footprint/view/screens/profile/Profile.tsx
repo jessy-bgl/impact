@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useLayoutEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Animated, ScrollView, View } from "react-native";
-import { Icon, useTheme } from "react-native-paper";
+import { ScrollView } from "react-native";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
@@ -18,8 +17,6 @@ export const Profile = () => {
 
   const { navigate, setOptions } = useNavigation<EmissionsNavigatorProp>();
 
-  const { colors } = useTheme();
-
   const {
     profileCompletion,
     transportFootprint,
@@ -29,38 +26,11 @@ export const Profile = () => {
     societalServicesFootprint,
   } = useProfile();
 
-  const { isSyncing, syncAnimation } = useProfileSync();
+  useProfileSync();
 
   useLayoutEffect(
-    () =>
-      setOptions({
-        headerRight: () => (
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {isSyncing && (
-              <Animated.View
-                style={{
-                  transform: [
-                    {
-                      rotate: syncAnimation.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: ["0deg", "360deg"],
-                      }),
-                    },
-                  ],
-                }}
-              >
-                <Icon
-                  source="sync"
-                  size={24}
-                  color={colors.onSurfaceDisabled}
-                />
-              </Animated.View>
-            )}
-            <ProfileTourHelpButton />
-          </View>
-        ),
-      }),
-    [setOptions, isSyncing, syncAnimation, colors.onSurfaceDisabled],
+    () => setOptions({ headerRight: () => <ProfileTourHelpButton /> }),
+    [setOptions],
   );
 
   // The tour may start after the user scrolled down: let it bring the
