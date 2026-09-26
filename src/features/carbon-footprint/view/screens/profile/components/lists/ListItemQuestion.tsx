@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Control } from "react-hook-form";
 import { View, ViewStyle } from "react-native";
 
@@ -21,7 +22,7 @@ type Props = {
   style?: ViewStyle;
 };
 
-export const ListItemQuestion = ({
+const ListItemQuestionComponent = ({
   style,
   question,
   control,
@@ -97,3 +98,7 @@ export const ListItemQuestion = ({
     </>
   );
 };
+
+// Every prop but `question` is stable across answers: the item renders again
+// only when its question changed state (see `useGetQuestions`).
+export const ListItemQuestion = memo(ListItemQuestionComponent);
