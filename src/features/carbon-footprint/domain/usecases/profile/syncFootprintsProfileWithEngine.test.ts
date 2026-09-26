@@ -7,6 +7,7 @@ import {
   computeProfileSectionVersion,
   profileSections,
 } from "@carbonFootprint/domain/entities/profile/profileSections";
+import { TransportFootprint } from "@carbonFootprint/domain/entities/footprints/TransportFootprint";
 import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/usecases/profile/syncFootprintsProfileWithEngine";
 
 type RawRules = ReturnType<typeof AdemeEngine.getRules>;
@@ -61,6 +62,31 @@ describe("syncFootprintsProfileWithEngine", () => {
       expect(footprintsStub.societalServices).toBe(
         engineStub.societalServicesFootprint,
       );
+    });
+
+    it("computes again only once the stored profile changed", async () => {
+      await syncFootprintsProfileWithEngine();
+      const first = footprintsStub.transport;
+      engineStub.transportFootprint = new TransportFootprint({
+        carFootprint: 1,
+      });
+
+      await syncFootprintsProfileWithEngine();
+      expect(footprintsStub.transport).toBe(first);
+
+      profileStub.updateProfileKey("transport . voiture . km", 15000);
+      await syncFootprintsProfileWithEngine();
+      expect(footprintsStub.transport).toBe(engineStub.transportFootprint);
+    });
+
+    it("always computes when handling a migration", async () => {
+      await syncFootprintsProfileWithEngine();
+      engineStub.transportFootprint = new TransportFootprint({
+        carFootprint: 1,
+      });
+
+      await syncFootprintsProfileWithEngine({ handleMigration: true });
+      expect(footprintsStub.transport).toBe(engineStub.transportFootprint);
     });
 
     it("does not remove profile keys or track versions when handleMigration is false", async () => {
@@ -127,6 +153,9 @@ describe("syncFootprintsProfileWithEngine", () => {
       await syncFootprintsProfileWithEngine({ handleMigration: true });
 
       expect(profileStub.getTestProfileKey(key)).toBe(expected);
+      // A removed key leaves the profile: the engine rejects unknown keys.
+      if (expected === undefined)
+        expect(profileStub.profile).not.toHaveProperty(key);
     });
   });
 

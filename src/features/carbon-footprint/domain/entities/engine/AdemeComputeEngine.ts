@@ -73,8 +73,8 @@ export class AdemeComputeEngine implements ComputeEngine {
           AdemeEngine.getIsApplicable(actionRuleName),
         )
         .map((actionRuleName: DottedName) => {
-          const evaluation = AdemeEngine.evaluate(actionRuleName);
           const rule = AdemeEngine.getRule(actionRuleName);
+          const evaluation = AdemeEngine.evaluateRule(rule);
           return {
             ...evaluation,
             ...rule,
@@ -175,9 +175,16 @@ export class AdemeComputeEngine implements ComputeEngine {
   public computeFrenchAverageFootprint = (): number =>
     roundFootprint(this.evaluateRule(ademeFrenchAverageRule)) ?? 0;
 
-  public setProfile = (profile: Profile, keepPreviousSituation = false) => {
-    return AdemeEngine.setSituation(profile, keepPreviousSituation);
+  // The profile the engine situation was last set from, and only when the
+  // engine accepted it. Compared by reference: a profile is never mutated
+  // in place.
+  private profile: Profile | undefined;
+
+  public setProfile = (profile: Profile) => {
+    if (AdemeEngine.setSituation(profile)) this.profile = profile;
   };
+
+  public getProfile = (): Profile | undefined => this.profile;
 
   private sumRules = (dottedNames: readonly DottedName[]): number => {
     return dottedNames.reduce(
@@ -187,6 +194,8 @@ export class AdemeComputeEngine implements ComputeEngine {
   };
 
   private evaluateRule = (dottedName: DottedName): number => {
-    return (AdemeEngine.evaluate(dottedName).nodeValue as number) ?? 0;
+    return (
+      (AdemeEngine.evaluateRuleByName(dottedName).nodeValue as number) ?? 0
+    );
   };
 }

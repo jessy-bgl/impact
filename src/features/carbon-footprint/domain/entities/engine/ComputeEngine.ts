@@ -9,6 +9,9 @@ import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
 
 export interface ComputeEngine {
+  /** The profile given to the last `setProfile`, undefined before any. */
+  getProfile: () => Profile | undefined;
+  setProfile: (profile: Profile) => void;
   getQuestions: (
     profile: Profile,
     questionKeys: (keyof Profile)[],
@@ -21,5 +24,4 @@ export interface ComputeEngine {
   computeSocietalServicesFootprint: () => SocietalServicesFootprint;
   computeFootprints: () => Footprints;
   computeFrenchAverageFootprint: () => number;
-  setProfile: (profile: Profile, keepCurrentValues?: boolean) => void;
 }

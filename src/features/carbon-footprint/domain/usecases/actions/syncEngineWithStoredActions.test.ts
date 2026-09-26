@@ -1,5 +1,4 @@
 import { ActionStub } from "@carbonFootprint/domain/entities/action/Action.stub";
-import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
 import { initFakeRepositories } from "@common/context/UsecasesContext";
 
@@ -14,6 +13,26 @@ describe("syncEngineWithStoredActions", () => {
       repositories.computeEngine,
       repositories.actionsRepository,
     ));
+  });
+
+  // Actions only depend on the engine situation: a new profile set on the
+  // engine is what makes a synchronization compute again.
+  const changeProfile = (km: number) => {
+    repositories.computeEngine.setProfile({ "transport . voiture . km": km });
+  };
+
+  describe("engine holds no profile yet", () => {
+    it("should leave the stored actions untouched", () => {
+      const { computeEngine, actionsRepository } = initFakeRepositories();
+      const stored = [new ActionStub("actions . stored")];
+      actionsRepository.updateActions(stored);
+      const { syncEngineWithStoredActions: sync } =
+        createSyncEngineWithStoredActions(computeEngine, actionsRepository);
+
+      sync();
+
+      expect(actionsRepository.fetchActions()).toBe(stored);
+    });
   });
 
   describe("actions store is empty", () => {
@@ -33,13 +52,24 @@ describe("syncEngineWithStoredActions", () => {
       syncEngineWithStoredActions(); // pre-populate store with default profile
     });
 
-    describe("actions and profile did not change", () => {
+    describe("profile did not change", () => {
+      it("should keep the stored actions as they are", () => {
+        const before = repositories.actionsRepository.actions;
+
+        syncEngineWithStoredActions();
+
+        expect(repositories.actionsRepository.actions).toBe(before);
+      });
+    });
+
+    describe("profile changed", () => {
       it("should restore each action state independently", () => {
         const [a, b, c] = repositories.actionsRepository.actions;
         a.state = "inProgress";
         b.state = "skipped";
         // c stays "notStarted"
 
+        changeProfile(30000);
         syncEngineWithStoredActions();
 
         const find = (id: string) =>
@@ -55,6 +85,7 @@ describe("syncEngineWithStoredActions", () => {
       const engineFootprint = target.savedFootprint;
       target.savedFootprint = 999999;
 
+      changeProfile(30000);
       syncEngineWithStoredActions();
 
       const updated = repositories.actionsRepository.actions.find(
@@ -67,9 +98,7 @@ describe("syncEngineWithStoredActions", () => {
       const target = repositories.actionsRepository.actions[0];
       target.state = "inProgress";
 
-      repositories.computeEngine.setProfile({
-        "transport . voiture . km": 30000,
-      } as Profile);
+      changeProfile(30000);
       syncEngineWithStoredActions();
 
       const afterSync = repositories.actionsRepository.actions.find(
@@ -83,6 +112,7 @@ describe("syncEngineWithStoredActions", () => {
       const staleId = "actions . fake . obsolete";
       repositories.actionsRepository.actions.push(new ActionStub(staleId));
 
+      changeProfile(30000);
       syncEngineWithStoredActions();
 
       expect(
@@ -94,6 +124,7 @@ describe("syncEngineWithStoredActions", () => {
       const [removed, ...rest] = repositories.actionsRepository.actions;
       repositories.actionsRepository.actions = rest;
 
+      changeProfile(30000);
       syncEngineWithStoredActions();
 
       const added = repositories.actionsRepository.actions.find(
