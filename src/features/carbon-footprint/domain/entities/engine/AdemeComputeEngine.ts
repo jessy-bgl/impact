@@ -73,8 +73,8 @@ export class AdemeComputeEngine implements ComputeEngine {
           AdemeEngine.getIsApplicable(actionRuleName),
         )
         .map((actionRuleName: DottedName) => {
-          const evaluation = AdemeEngine.evaluate(actionRuleName);
           const rule = AdemeEngine.getRule(actionRuleName);
+          const evaluation = AdemeEngine.evaluateRule(rule);
           return {
             ...evaluation,
             ...rule,
@@ -187,6 +187,8 @@ export class AdemeComputeEngine implements ComputeEngine {
   };
 
   private evaluateRule = (dottedName: DottedName): number => {
-    return (AdemeEngine.evaluate(dottedName).nodeValue as number) ?? 0;
+    return (
+      (AdemeEngine.evaluateRuleByName(dottedName).nodeValue as number) ?? 0
+    );
   };
 }
