@@ -14,7 +14,7 @@ export class ComputeEngineStub implements ComputeEngine {
   questions: Partial<Record<keyof Profile, Question>> = {};
   frenchAverageFootprint = 0;
 
-  readonly transportFootprint = new TransportFootprint({});
+  transportFootprint = new TransportFootprint({});
   readonly foodFootprint = new FoodFootprint({});
   readonly housingFootprint = new HousingFootprint({});
   readonly everydayThingsFootprint = new EverydayThingsFootprint({});

@@ -13,9 +13,21 @@ export const createSyncFootprintsProfileWithEngine = (
   profileRepository: ProfileRepository,
   footprintsRepository: FootprintsRepository,
 ) => {
+  // The stored profile the footprints were last computed from. The store
+  // never mutates a profile in place, so a same reference means no answer
+  // changed since: a full recomputation takes a few hundred milliseconds
+  // and would only produce the same footprints.
+  let syncedProfile: Profile | undefined;
+
   const syncFootprintsProfileWithEngine = async ({
     handleMigration = false,
   }: { handleMigration?: boolean } = {}): Promise<void> => {
+    if (
+      !handleMigration &&
+      profileRepository.fetchAdemeProfile() === syncedProfile
+    )
+      return;
+
     // Wait for the UI to go idle before starting heavy computation
     await waitForIdle();
 
@@ -32,6 +44,8 @@ export const createSyncFootprintsProfileWithEngine = (
       resetCompletionForChangedSections(profile);
     }
 
+    // Fetched again: the migration may have changed the stored profile.
+    const profileToSync = profileRepository.fetchAdemeProfile();
     computeEngine.setProfile(profile);
 
     const footprints = {
@@ -51,6 +65,9 @@ export const createSyncFootprintsProfileWithEngine = (
     };
 
     updateStoredFootprints(footprints);
+    // Keep the profile read before computing, not the current one: if the
+    // user answers during computation, the next sync must still run.
+    syncedProfile = profileToSync;
   };
 
   const resetCompletionForChangedSections = (
