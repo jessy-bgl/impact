@@ -15,8 +15,8 @@ import {
   ACTIONS_TOUR_TARGETS,
 } from "@carbonFootprint/domain/entities/tour/actionsTour";
 import { useActions } from "@carbonFootprint/domain/hooks/useActions";
-import { BottomSheetHost } from "@carbonFootprint/view/components/BottomSheet";
 import { ActionsList } from "@carbonFootprint/view/screens/actions/ActionsList";
+import { BottomSheetProvider } from "@common/context/BottomSheetContext";
 import { useAppStore } from "@common/store/useStore";
 import { useTourStepAvailability } from "@common/tour/useTourStepAvailability";
 import { useTourTarget } from "@common/tour/useTourTarget";
@@ -66,7 +66,7 @@ export const Actions = () => {
   useCardTourStepsAvailability(isLoading, hasAvailableAction);
 
   return (
-    <BottomSheetHost>
+    <BottomSheetProvider>
       <Tab.Navigator tabBar={renderTabBar}>
         <Tab.Screen
           name={ACTIONS_TOUR_SCREEN}
@@ -133,7 +133,7 @@ export const Actions = () => {
           )}
         </Tab.Screen>
       </Tab.Navigator>
-    </BottomSheetHost>
+    </BottomSheetProvider>
   );
 };
 
