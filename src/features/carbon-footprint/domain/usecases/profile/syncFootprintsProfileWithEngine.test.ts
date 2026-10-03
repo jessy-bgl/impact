@@ -128,6 +128,40 @@ describe("syncFootprintsProfileWithEngine", () => {
       expect(historyStub.history).toHaveLength(1);
     });
 
+    describe("when the user answers during computation", () => {
+      const staleTransport = new TransportFootprint({ carFootprint: 1 });
+
+      beforeEach(() => {
+        Object.values(profileSections).forEach(({ category, subCategory }) =>
+          profileStub.updateProfileCompletion(category, subCategory, true),
+        );
+        footprintsStub.updateTransportFootprint(staleTransport);
+
+        // The answer lands between two category computations of the first sync.
+        const computeFood = engineStub.computeFoodFootprint.bind(engineStub);
+        engineStub.computeFoodFootprint = () => {
+          engineStub.computeFoodFootprint = computeFood;
+          profileStub.updateProfileKey("transport . voiture . km", 15000);
+          return computeFood();
+        };
+      });
+
+      it("writes neither the footprints nor a snapshot", async () => {
+        await syncFootprintsProfileWithEngine();
+
+        expect(footprintsStub.transport).toBe(staleTransport);
+        expect(historyStub.history).toEqual([]);
+      });
+
+      it("computes again on the next sync", async () => {
+        await syncFootprintsProfileWithEngine();
+        await syncFootprintsProfileWithEngine();
+
+        expect(footprintsStub.transport).toBe(engineStub.transportFootprint);
+        expect(historyStub.history).toHaveLength(1);
+      });
+    });
+
     it("does not remove profile keys or track versions when handleMigration is false", async () => {
       profileStub.setTestProfileKey("some . key", 5);
       await syncFootprintsProfileWithEngine();

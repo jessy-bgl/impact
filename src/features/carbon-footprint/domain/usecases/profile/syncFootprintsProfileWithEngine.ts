@@ -70,9 +70,12 @@ export const createSyncFootprintsProfileWithEngine = (
       ),
     };
 
+    // The user answered during computation: the categories computed before
+    // the answer are stale, and writing them would overwrite the fresh one.
+    // `syncedProfile` is left as is, so the next sync runs again.
+    if (profileRepository.fetchAdemeProfile() !== profileToSync) return;
+
     updateStoredFootprints(footprints);
-    // Keep the profile read before computing, not the current one: if the
-    // user answers during computation, the next sync must still run.
     syncedProfile = profileToSync;
   };
 
