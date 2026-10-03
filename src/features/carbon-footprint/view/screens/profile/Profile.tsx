@@ -7,7 +7,6 @@ import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { posthog } from "@common/config/posthog";
 import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
-import { useProfileSync } from "@carbonFootprint/domain/hooks/useProfileSync";
 import { ProfileCategoryCard } from "@carbonFootprint/view/screens/profile/ProfileCategoryCard";
 import { ProfileTourHelpButton } from "@carbonFootprint/view/tour/ProfileTourHelpButton";
 import { useTourScrollContainer } from "@common/tour/useTourScrollContainer";
@@ -25,8 +24,6 @@ export const Profile = () => {
     everydayThingsFootprint,
     societalServicesFootprint,
   } = useProfile();
-
-  useProfileSync();
 
   useLayoutEffect(
     () => setOptions({ headerRight: () => <ProfileTourHelpButton /> }),

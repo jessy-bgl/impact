@@ -3,6 +3,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { List } from "react-native-paper";
 
 import { useProfileScroll } from "@carbonFootprint/domain/hooks/useProfileScroll";
+import { useProfileSync } from "@carbonFootprint/domain/hooks/useProfileSync";
 import { PROFILE_TOUR_STEP_IDS } from "@carbonFootprint/domain/entities/tour/profileTour";
 import { ProfileCompletionCelebrationProvider } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebrationContext";
 import { ScrollProfileSectionContext } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
@@ -19,6 +20,9 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
     registerSectionRef,
     expandedId,
   } = useProfileScroll();
+
+  // Every category screen with questions is built on this list.
+  useProfileSync();
 
   // The tour asks the user to open a section themselves: start from a clean,
   // collapsed list so the spotlighted header is exactly one row.
