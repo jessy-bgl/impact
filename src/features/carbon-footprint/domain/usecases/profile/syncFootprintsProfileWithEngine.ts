@@ -12,6 +12,7 @@ export const createSyncFootprintsProfileWithEngine = (
   computeEngine: ComputeEngine,
   profileRepository: ProfileRepository,
   footprintsRepository: FootprintsRepository,
+  recordFootprintsSnapshot: () => void,
 ) => {
   // The stored profile the footprints were last computed from. The store
   // never mutates a profile in place, so a same reference means no answer
@@ -25,8 +26,13 @@ export const createSyncFootprintsProfileWithEngine = (
     if (
       !handleMigration &&
       profileRepository.fetchAdemeProfile() === syncedProfile
-    )
+    ) {
+      // The stored footprints already match the profile, as a whole: still
+      // record them, as validating the last section completes the profile
+      // without changing any answer.
+      recordFootprintsSnapshot();
       return;
+    }
 
     // Wait for the UI to go idle before starting heavy computation
     await waitForIdle();
@@ -177,6 +183,10 @@ export const createSyncFootprintsProfileWithEngine = (
     footprintsRepository.updateSocietalServicesFootprint(
       footprints.societalServices,
     );
+
+    // The only place a snapshot is taken after a computation: an answer only
+    // recomputes its own category, while it can move the others too.
+    recordFootprintsSnapshot();
   };
 
   return { syncFootprintsProfileWithEngine };

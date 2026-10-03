@@ -16,6 +16,28 @@ describe("mergePersistedState", () => {
     expect(merged.theme).toBe(currentState.theme);
   });
 
+  // `arrayMerge` replaces rather than concatenates, so a rehydration must not
+  // duplicate or interleave the snapshots.
+  it("replaces the default footprints history with the persisted one", () => {
+    const footprintsHistory = [
+      {
+        date: "2026-03-12",
+        footprints: {
+          transport: 3100,
+          food: 2400,
+          housing: 3500,
+          everydayThings: 1200,
+          societalServices: 1500,
+        },
+      },
+    ];
+    const persistedState = { footprintsHistory } as unknown as AppStore;
+
+    const merged = mergePersistedState(persistedState, currentState);
+
+    expect(merged.footprintsHistory).toEqual(footprintsHistory);
+  });
+
   it("keeps the persisted completion of a known sub-category", () => {
     const persistedState = {
       profile: { completion: { transport: { car: true } } },
