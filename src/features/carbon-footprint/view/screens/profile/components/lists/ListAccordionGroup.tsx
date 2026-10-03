@@ -4,9 +4,9 @@ import { List } from "react-native-paper";
 
 import { useProfileScroll } from "@carbonFootprint/domain/hooks/useProfileScroll";
 import { PROFILE_TOUR_STEP_IDS } from "@carbonFootprint/domain/entities/tour/profileTour";
-import { BottomSheetHost } from "@carbonFootprint/view/components/BottomSheet";
 import { ProfileCompletionCelebrationProvider } from "@carbonFootprint/view/screens/profile/ProfileCompletionCelebrationContext";
 import { ScrollProfileSectionContext } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
+import { BottomSheetProvider } from "@common/context/BottomSheetContext";
 import { useTourScrollContainer } from "@common/tour/useTourScrollContainer";
 import { useTourStepAction } from "@common/tour/useTourStepAction";
 import { useTourStepEffect } from "@common/tour/useTourStepEffect";
@@ -41,7 +41,7 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <BottomSheetHost>
+    <BottomSheetProvider>
       <ScrollProfileSectionContext.Provider
         value={{
           registerSectionRef,
@@ -66,6 +66,6 @@ export const ListAccordionGroup = ({ children }: PropsWithChildren) => {
           </List.AccordionGroup>
         </ProfileCompletionCelebrationProvider>
       </ScrollProfileSectionContext.Provider>
-    </BottomSheetHost>
+    </BottomSheetProvider>
   );
 };
