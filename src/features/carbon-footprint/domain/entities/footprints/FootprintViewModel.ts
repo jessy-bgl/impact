@@ -39,6 +39,10 @@ export class FootprintCategoryViewModel {
       0,
     );
 
+    // Every part is already 0: there is no 100 to distribute, and the loop
+    // below would run past the categories.
+    if (totalFootprint === 0) return footprints;
+
     const parts = categories.map((category) =>
       category.computePart(totalFootprint),
     );
