@@ -1,6 +1,9 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
-import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/Footprints";
+import {
+  FootprintCategory,
+  mapFootprintCategories,
+} from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { ImageAssets } from "@common/utils/imageAssets";
 
 export type FootprintViewModels = Record<
@@ -62,40 +65,39 @@ export class FootprintCategoryViewModel {
     return footprints;
   };
 
-  static forTransport(
+  static forCategory(
+    category: FootprintCategory,
     footprint: number,
     totalFootprint: number,
   ): FootprintCategoryViewModel {
-    return new FootprintCategoryTransport(footprint, totalFootprint);
+    switch (category) {
+      case "transport":
+        return new FootprintCategoryTransport(footprint, totalFootprint);
+      case "food":
+        return new FootprintCategoryFood(footprint, totalFootprint);
+      case "housing":
+        return new FootprintCategoryHousing(footprint, totalFootprint);
+      case "everydayThings":
+        return new FootprintCategoryEverydayThings(footprint, totalFootprint);
+      case "societalServices":
+        return new FootprintCategoryPublicServices(footprint, totalFootprint);
+    }
   }
 
-  static forFood(
-    footprint: number,
+  /** Every category, with the rounded parts distributed so they sum to 100. */
+  static forCategories = (
+    footprints: Record<FootprintCategory, number>,
     totalFootprint: number,
-  ): FootprintCategoryViewModel {
-    return new FootprintCategoryFood(footprint, totalFootprint);
-  }
-
-  static forHousing(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintCategoryViewModel {
-    return new FootprintCategoryHousing(footprint, totalFootprint);
-  }
-
-  static forEverydayThings(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintCategoryViewModel {
-    return new FootprintCategoryEverydayThings(footprint, totalFootprint);
-  }
-
-  static forSocietalServices(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintCategoryViewModel {
-    return new FootprintCategoryPublicServices(footprint, totalFootprint);
-  }
+  ): FootprintViewModels =>
+    FootprintCategoryViewModel.distributeParts(
+      mapFootprintCategories((category) =>
+        FootprintCategoryViewModel.forCategory(
+          category,
+          footprints[category],
+          totalFootprint,
+        ),
+      ),
+    );
 
   static forPublicServices(
     footprint: number,
