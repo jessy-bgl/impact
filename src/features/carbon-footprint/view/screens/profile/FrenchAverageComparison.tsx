@@ -6,14 +6,12 @@ import {
   FrenchAverageComparison as Comparison,
   FrenchAverageComparisonViewModel,
 } from "@carbonFootprint/domain/entities/footprints/FrenchAverageComparisonViewModel";
+import { formatTonnes } from "@common/utils/formatTonnes";
 
 type Props = {
   myFootprint: number;
   averageFootprint: number;
 };
-
-const formatTonnes = (footprint: number) =>
-  `${(footprint / 1000).toFixed(2)} tCO2e`;
 
 export const FrenchAverageComparison = ({
   myFootprint,
@@ -48,7 +46,7 @@ export const FrenchAverageComparison = ({
           {label}
         </Text>
         <Text variant="bodyMedium" style={{ color }}>
-          {formatTonnes(footprint)}
+          {`${formatTonnes(footprint)} tCO2e`}
         </Text>
       </View>
       <View style={[styles.track, { backgroundColor: colors.surfaceVariant }]}>

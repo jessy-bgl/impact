@@ -4,6 +4,7 @@ import { PieChart } from "react-native-gifted-charts";
 import { Text, useTheme } from "react-native-paper";
 
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { formatTonnes } from "@common/utils/formatTonnes";
 import { Skeleton } from "moti/skeleton";
 
 const pieWidthAndHeight = 250;
@@ -66,7 +67,7 @@ export const EmissionsDistribution = ({
           }))}
           centerLabelComponent={() => (
             <Text variant="titleLarge" style={{ textAlign: "center" }}>
-              {`${(totalFootprint / 1000).toFixed(2)}\ntCO2e/${t("year")}`}
+              {`${formatTonnes(totalFootprint)}\ntCO2e/${t("year")}`}
             </Text>
           )}
         />
