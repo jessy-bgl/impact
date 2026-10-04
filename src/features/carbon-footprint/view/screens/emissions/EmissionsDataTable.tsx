@@ -1,13 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { DataTable, Text, useTheme } from "react-native-paper";
+import { DataTable, Icon, Text, useTheme } from "react-native-paper";
 
 import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
-import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
+import { useProfileCompletion } from "@carbonFootprint/domain/hooks/useProfileCompletion";
 import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
-import { useAppStore } from "@common/store/useStore";
+import { useOpenCategoryProfile } from "@carbonFootprint/view/hooks/useOpenCategoryProfile";
+import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
+import { CompletionStatus } from "@carbonFootprint/view/components/CompletionStatus";
 import { formatTonnes } from "@common/utils/formatTonnes";
 import { Skeleton } from "moti/skeleton";
 
@@ -21,17 +23,14 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
 
   const { colors, dark } = useTheme();
 
-  const profileCompletion = useAppStore((state) => state.profile.completion);
+  const openCategory = useOpenCategoryProfile();
+
+  const profileCompletion = useProfileCompletion();
 
   const palette = useCategoryPalette();
 
   return (
     <DataTable>
-      <DataTable.Header>
-        <DataTable.Title>{t("category")}</DataTable.Title>
-        <DataTable.Title numeric>{t("annualFootprint")}</DataTable.Title>
-      </DataTable.Header>
-
       {/* Ranked by impact, the heaviest first; ties keep the donut's order. */}
       {categoryOrder
         .map((category) => footprints[category])
@@ -49,38 +48,61 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
                 </DataTable.Cell>
               </DataTable.Row>
             );
+          const categoryName = t(`categories.${emissionsCategory.category}`);
+          const fill = palette[emissionsCategory.styleKey];
+          const tonnes = formatTonnes(emissionsCategory.footprint);
+          const footprint = `${tonnes} ${t("common:footprintTonnes")}`;
           return (
-            <DataTable.Row key={emissionsCategory.category}>
-              <DataTable.Cell>
+            <DataTable.Row
+              key={emissionsCategory.category}
+              onPress={() => openCategory(emissionsCategory.category)}
+              accessibilityRole="button"
+              accessibilityLabel={[
+                categoryName,
+                `${emissionsCategory.part}%`,
+                t("common:footprintTonnesPerYearA11y", { value: tonnes }),
+                ...(isCompleted ? [] : [t("common:toComplete")]),
+              ].join(", ")}
+            >
+              <DataTable.Cell style={{ flex: 3 }}>
                 <View
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
                     gap: 10,
+                    flex: 1,
                   }}
                 >
                   <CategoryBadge
-                    color={palette[emissionsCategory.styleKey]}
+                    color={fill}
                     label={`${emissionsCategory.part}%`}
                     fontSize={12}
                   />
-                  <View style={{ flexDirection: "column", gap: 2 }}>
-                    <Text>{t(`categories.${emissionsCategory.category}`)}</Text>
-                    {!isCompleted && (
-                      <Text
-                        variant="labelSmall"
-                        style={{ color: colors.error }}
-                      >
-                        {t(`common:toComplete`)}
-                      </Text>
-                    )}
+                  {/* Baseline, not center: the two sizes would sit off. Wraps
+                      the status under the name when the row runs short, which
+                      takes a width set by the row, not by the content. */}
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      alignItems: "baseline",
+                      columnGap: 10,
+                      flex: 1,
+                    }}
+                  >
+                    <Text>{categoryName}</Text>
+                    {!isCompleted && <CompletionStatus isCompleted={false} />}
                   </View>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell numeric>
-                {formatTonnes(emissionsCategory.footprint)}{" "}
-                {t("common:footprintTonnes")}
-              </DataTable.Cell>
+              <DataTable.Cell numeric>{footprint}</DataTable.Cell>
+              <View style={{ justifyContent: "center", marginLeft: 4 }}>
+                <Icon
+                  source="chevron-right"
+                  size={20}
+                  color={colors.onSurfaceVariant}
+                />
+              </View>
             </DataTable.Row>
           );
         })}

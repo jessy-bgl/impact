@@ -25,7 +25,7 @@ export const Emissions = () => {
   const topTabsColors = useTopTabsColors();
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["top", "left", "right"]}>
+    <SafeAreaView style={{ flex: 1 }} edges={["left", "right"]}>
       <BottomSheetProvider>
         <Tab.Navigator screenOptions={topTabsColors}>
           <Tab.Screen

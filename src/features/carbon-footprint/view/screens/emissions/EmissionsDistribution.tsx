@@ -11,20 +11,20 @@ import { formatTonnes } from "@common/utils/formatTonnes";
 import { readableTextOn } from "@common/utils/readableTextOn";
 import { Skeleton } from "moti/skeleton";
 
-const pieWidthAndHeight = 250;
-const radius = pieWidthAndHeight / 2;
-const innerRadius = pieWidthAndHeight / 3.5;
+const innerRadiusRatio = 0.6;
 
 type Props = {
   isLoading: boolean;
   footprints: FootprintViewModels;
   totalFootprint: number;
+  radius: number;
 };
 
 export const EmissionsDistribution = ({
   isLoading,
   footprints,
   totalFootprint,
+  radius,
 }: Props) => {
   const { t } = useTranslation("emissions");
 
@@ -36,6 +36,7 @@ export const EmissionsDistribution = ({
     (category) => footprints[category],
   );
 
+  const innerRadius = radius * innerRadiusRatio;
   const iconSize = Math.max(14, Math.round((radius - innerRadius) * 0.4));
 
   // gifted-charts only writes text on its slices, placed by its baseline three
@@ -81,14 +82,30 @@ export const EmissionsDistribution = ({
             radius={radius}
             innerRadius={innerRadius}
             innerCircleColor={colors.background}
+            strokeWidth={2}
+            strokeColor={colors.background}
             data={footprintByCategories.map((viewModel) => ({
               value: viewModel.footprint,
               color: palette[viewModel.styleKey],
             }))}
             centerLabelComponent={() => (
-              <Text variant="titleLarge" style={{ textAlign: "center" }}>
-                {`${formatTonnes(totalFootprint)}\ntCO2e/${t("year")}`}
-              </Text>
+              <View style={{ alignItems: "center" }}>
+                <Text
+                  variant={radius >= 100 ? "headlineSmall" : "titleMedium"}
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                >
+                  {formatTonnes(totalFootprint)}
+                </Text>
+                <Text
+                  variant="labelSmall"
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  style={{ color: colors.onSurfaceVariant }}
+                >
+                  {t("common:footprintTonnesPerYear")}
+                </Text>
+              </View>
             )}
           />
           {footprintByCategories.map((viewModel, index) => {

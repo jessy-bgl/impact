@@ -6,6 +6,7 @@
   "validate": "Valider",
   "footprintTonnes": "t",
   "footprintTonnesPerYear": "tCO2e/an",
+  "footprintTonnesPerYearA11y": "{{value}} tonnes de CO2 équivalent par an",
   "lessThanA11y": "moins de {{value}}",
   "completed": "Complété",
   "toComplete": "À compléter",
