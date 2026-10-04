@@ -29,8 +29,18 @@ export const useApp = () => {
         if (!isReady) {
           restoreNavigationState();
           // Sync profile with engine at startup is important in case
-          // the engine has been updated
-          syncFootprintsProfileWithEngine({ handleMigration: true });
+          // the engine has been updated. Not awaited, so the surrounding
+          // try/catch never sees its rejection: it is handled here.
+          syncFootprintsProfileWithEngine({ handleMigration: true }).catch(
+            (error) => {
+              console.error("Startup profile sync error:", error);
+              // Never forward the raw error: it can embed the user's footprint
+              // answers. See docs/gdpr-compliance.md.
+              posthog.captureException(
+                new Error("startup_profile_sync_failed"),
+              );
+            },
+          );
         }
       } catch (e) {
         console.error(e);
