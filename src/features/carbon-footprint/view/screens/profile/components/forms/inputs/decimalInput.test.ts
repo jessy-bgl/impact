@@ -6,6 +6,7 @@ import {
   parseDecimal,
   roundDecimal,
   stripTrailingSeparator,
+  toDisplayDecimal,
 } from "@carbonFootprint/view/screens/profile/components/forms/inputs/decimalInput";
 
 describe("isDecimalInput", () => {
@@ -129,5 +130,19 @@ describe("roundDecimal", () => {
   it("rounds beyond the supported precision", () => {
     const beyondPrecision = 1 / 10 ** (DECIMAL_PRECISION + 1);
     expect(roundDecimal(1 + beyondPrecision)).toBe(1);
+  });
+});
+
+describe("toDisplayDecimal", () => {
+  it("shows the decimal separator as a comma", () => {
+    expect(toDisplayDecimal("1.6")).toBe("1,6");
+  });
+
+  it("leaves what the user is typing as it is", () => {
+    expect(toDisplayDecimal("1,")).toBe("1,");
+  });
+
+  it("leaves an absent value absent", () => {
+    expect(toDisplayDecimal(undefined)).toBeUndefined();
   });
 });
