@@ -6,6 +6,8 @@
   "validate": "Valider",
   "footprintKg": "kgCO2e",
   "footprintKgPerYear": "kgCO2e/an",
+  "footprintTonnes": "t",
+  "footprintTonnesPerYear": "tCO2e/an",
   "completed": "Complété",
   "toComplete": "À compléter",
   "units": {

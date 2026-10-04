@@ -18,7 +18,7 @@ export const LeisureSection = () => {
   return (
     <ListAccordion
       title={t("emissions:housing.leisure")}
-      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      footprint={annualFootprint}
       icon="beach"
       completed={isCompleted}
     >

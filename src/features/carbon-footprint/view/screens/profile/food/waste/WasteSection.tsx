@@ -18,7 +18,7 @@ export const WasteSection = () => {
   return (
     <ListAccordion
       title={t("emissions:food.waste")}
-      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      footprint={annualFootprint}
       icon="recycle"
       completed={isCompleted}
     >

@@ -1,4 +1,5 @@
 import { PropsWithChildren, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Icon, List, useTheme } from "react-native-paper";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
@@ -7,17 +8,19 @@ import { PROFILE_TOUR_TARGETS } from "@carbonFootprint/domain/entities/tour/prof
 import { ListTitle } from "@carbonFootprint/view/screens/profile/components/lists/ListTitle";
 import { useScrollProfileSection } from "@carbonFootprint/view/screens/profile/ScrollProfileSectionContext";
 import { useTourTarget } from "@common/tour/useTourTarget";
+import { formatTonnes } from "@common/utils/formatTonnes";
 
 type Props = {
   title: string;
-  subtitle?: string;
+  /** kgCO2e/year of the section. */
+  footprint: number;
   icon: IconSource;
   completed: boolean;
 };
 
 export const ListAccordion = ({
   title,
-  subtitle,
+  footprint,
   icon,
   completed,
   children,
@@ -25,6 +28,8 @@ export const ListAccordion = ({
   const { registerSectionRef } = useScrollProfileSection();
 
   const { colors } = useTheme();
+
+  const { t } = useTranslation("common");
 
   // Anchored on the section's own view, not on the accordion title: Paper
   // renders that title inside a <Text>, where a View cannot be measured.
@@ -72,7 +77,12 @@ export const ListAccordion = ({
     <View ref={registerSection} collapsable={false}>
       <List.Accordion
         id={title}
-        title={<ListTitle title={title} subtitle={subtitle} />}
+        title={
+          <ListTitle
+            title={title}
+            subtitle={`${formatTonnes(footprint)} ${t("footprintTonnesPerYear")}`}
+          />
+        }
         left={renderIcon}
       >
         {children}

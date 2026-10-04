@@ -18,7 +18,7 @@ export const DigitalSection = () => {
   return (
     <ListAccordion
       title={t("emissions:everydayThings.digital")}
-      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      footprint={annualFootprint}
       icon="devices"
       completed={isCompleted}
     >

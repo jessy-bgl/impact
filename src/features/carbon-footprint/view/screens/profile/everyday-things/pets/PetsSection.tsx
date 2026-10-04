@@ -18,7 +18,7 @@ export const PetsSection = () => {
   return (
     <ListAccordion
       title={t("emissions:everydayThings.pets")}
-      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      footprint={annualFootprint}
       icon="dog"
       completed={isCompleted}
     >

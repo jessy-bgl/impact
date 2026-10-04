@@ -36,7 +36,7 @@ export const HistoryEmptyState = ({ variant }: Props) => {
 
       {variant.name === "singleSnapshot" && (
         <Text variant="displaySmall" style={{ color: colors.primary }}>
-          {`${formatTonnes(variant.value)} ${t("history.perYear")}`}
+          {`${formatTonnes(variant.value)} ${t("common:footprintTonnesPerYear")}`}
         </Text>
       )}
 

@@ -46,7 +46,7 @@ export const FrenchAverageComparison = ({
           {label}
         </Text>
         <Text variant="bodyMedium" style={{ color }}>
-          {`${formatTonnes(footprint)} tCO2e`}
+          {`${formatTonnes(footprint)} ${t("common:footprintTonnesPerYear")}`}
         </Text>
       </View>
       <View style={[styles.track, { backgroundColor: colors.surfaceVariant }]}>

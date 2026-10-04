@@ -34,7 +34,6 @@
     "allFilter": "Total",
     "filterTitle": "Filtrer par catégorie",
     "filterA11y": "Filtrer : {{filter}}",
-    "perYear": "tCO2e/an",
     "since": "depuis le {{date}}",
     "stable": "Stable",
     "comparedToCurrent": "par rapport à aujourd'hui",

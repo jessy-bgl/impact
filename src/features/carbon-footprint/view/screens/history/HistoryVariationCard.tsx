@@ -20,7 +20,7 @@ export const HistoryVariationCard = ({ currentValue, variation }: Props) => {
     <OutlinedCard style={{ marginHorizontal: 16 }}>
       <Card.Content style={{ gap: 4 }}>
         <Text variant="titleLarge">
-          {`${formatTonnes(currentValue)} ${t("history.perYear")}`}
+          {`${formatTonnes(currentValue)} ${t("common:footprintTonnesPerYear")}`}
         </Text>
 
         <HistoryTrendLine variation={variation} />
