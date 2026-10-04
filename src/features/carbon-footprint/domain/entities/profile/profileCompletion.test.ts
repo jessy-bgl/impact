@@ -2,6 +2,7 @@ import { FootprintCategory } from "@carbonFootprint/domain/entities/footprints/F
 import {
   ProfileCompletion,
   completableSubCategories,
+  computeProfileProgress,
   isCategoryCompleted,
   isProfileCompleted,
   isProfileStarted,
@@ -129,6 +130,39 @@ describe("profileCompletion", () => {
 
     it("is true when everything is validated", () => {
       expect(isProfileStarted(completeEverything())).toBe(true);
+    });
+  });
+
+  describe("computeProfileProgress", () => {
+    const answerableSubCategoriesCount = categoriesWithSections.reduce(
+      (count, category) => count + completableSubCategories[category].length,
+      0,
+    );
+
+    it("is 0 when nothing has been validated", () => {
+      expect(computeProfileProgress({})).toBe(0);
+    });
+
+    it("counts each validated sub-category", () => {
+      const [category] = categoriesWithSections;
+      const [firstSubCategory] = completableSubCategories[category];
+
+      expect(
+        computeProfileProgress({ [category]: { [firstSubCategory]: true } }),
+      ).toBe(1 / answerableSubCategoriesCount);
+    });
+
+    it("ignores a sub-category left unvalidated", () => {
+      const [category] = categoriesWithSections;
+      const [firstSubCategory] = completableSubCategories[category];
+
+      expect(
+        computeProfileProgress({ [category]: { [firstSubCategory]: false } }),
+      ).toBe(0);
+    });
+
+    it("is 1 when everything is validated", () => {
+      expect(computeProfileProgress(completeEverything())).toBe(1);
     });
   });
 });

@@ -28,19 +28,6 @@ const groupSubCategoriesByCategory = () => {
 // section (societalServices) has nothing to answer, so it is always completed.
 export const completableSubCategories = groupSubCategoriesByCategory();
 
-export const isProfileCompleted = (completion: ProfileCompletion): boolean =>
-  (Object.keys(completableSubCategories) as FootprintCategory[]).every(
-    (category) => isCategoryCompleted(completion, category),
-  );
-
-export const isProfileStarted = (completion: ProfileCompletion): boolean =>
-  (Object.keys(completableSubCategories) as FootprintCategory[]).some(
-    (category) =>
-      completableSubCategories[category].some(
-        (subCategory) => completion[category]?.[subCategory] === true,
-      ),
-  );
-
 export const isCategoryCompleted = (
   completion: ProfileCompletion,
   category: FootprintCategory,
@@ -48,3 +35,25 @@ export const isCategoryCompleted = (
   completableSubCategories[category].every(
     (subCategory) => completion[category]?.[subCategory] === true,
   );
+
+/** Share of the answerable sub-categories validated, from 0 to 1. */
+export const computeProfileProgress = (
+  completion: ProfileCompletion,
+): number => {
+  const validations = (
+    Object.keys(completableSubCategories) as FootprintCategory[]
+  ).flatMap((category) =>
+    completableSubCategories[category].map(
+      (subCategory) => completion[category]?.[subCategory] === true,
+    ),
+  );
+
+  if (validations.length === 0) return 1;
+  return validations.filter(Boolean).length / validations.length;
+};
+
+export const isProfileStarted = (completion: ProfileCompletion): boolean =>
+  computeProfileProgress(completion) > 0;
+
+export const isProfileCompleted = (completion: ProfileCompletion): boolean =>
+  computeProfileProgress(completion) === 1;

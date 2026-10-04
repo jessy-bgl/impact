@@ -42,7 +42,8 @@ export const EmissionsNavigator = () => {
       <EmissionsStack.Screen
         name="Emissions"
         component={Emissions}
-        options={{ headerShown: false }}
+        // Its tabs sit right under the title: one block, one shadow.
+        options={{ title: t("Emissions"), headerShadowVisible: false }}
       />
       <EmissionsStack.Screen
         name="Profile"

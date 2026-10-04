@@ -1,11 +1,13 @@
 {
-  "impactDistributionTitle": "Mes émissions par catégories",
   "estimate": "Estimer mon impact carbone",
   "resumeEstimate": "Compléter mon bilan carbone",
   "updateEstimate": "Mettre à jour mon bilan carbone",
-  "year": "an",
-  "category": "Catégorie",
-  "annualFootprint": "Émissions annuelles",
+  "estimationPanel": {
+    "progressTitle": "Progression de mon bilan",
+    "progress": "{{percent}} %",
+    "notStartedTitle": "Estimation à personnaliser",
+    "notStartedBody": "Réponds à quelques questions pour l'adapter à ton mode de vie."
+  },
   "part": "Proportion",
   "validateResponses": "Valider mes réponses",
   "profileCompleted": {
