@@ -8,6 +8,10 @@ export const normalizeDecimal = (value: string | number | undefined | null) => {
   return String(value).replace(",", ".");
 };
 
+/** Values are kept with a dot; French readers expect a comma. */
+export const toDisplayDecimal = (value: string | undefined) =>
+  value?.replace(".", ",");
+
 export const parseDecimal = (value: string | number | undefined | null) =>
   Number(normalizeDecimal(value));
 

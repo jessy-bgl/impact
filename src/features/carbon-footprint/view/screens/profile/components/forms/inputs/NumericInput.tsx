@@ -26,6 +26,7 @@ import {
   parseDecimal,
   roundDecimal,
   stripTrailingSeparator,
+  toDisplayDecimal,
 } from "@carbonFootprint/view/screens/profile/components/forms/inputs/decimalInput";
 
 const MAX_INLINE_UNIT_CHARS = 10;
@@ -148,6 +149,7 @@ export const NumericInput = ({
         </Button>
         <TextInput
           {...props}
+          value={toDisplayDecimal(value)}
           ref={inputRef}
           inputAccessoryViewID={hasAccessoryView ? accessoryViewID : undefined}
           right={
