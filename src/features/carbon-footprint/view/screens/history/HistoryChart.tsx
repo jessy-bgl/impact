@@ -13,6 +13,7 @@ import {
   formatLongDate,
   formatShortDate,
 } from "@carbonFootprint/view/screens/history/historyFormat";
+import { niceYAxis } from "@carbonFootprint/view/screens/history/niceYAxis";
 import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { formatTonnes } from "@common/utils/formatTonnes";
 
@@ -32,7 +33,14 @@ const endLabelMargin = xLabelWidth / 2;
  * The first label needs the same half, but half alone leaves the line starting
  * flush against the y axis, so the first point gets a whole label of room.
  */
-const initialSpacing = xLabelWidth;
+const restingInitialSpacing = xLabelWidth;
+/**
+ * Once the plot scrolls, the point just off its left edge would still show the
+ * tail of its label past the axis. Half a label of room, with points at least
+ * a label apart, hides that tail at every point the scroll snaps to.
+ */
+const scrollingInitialSpacing = xLabelWidth / 2;
+const ySections = 4;
 export const maxHistoryContentWidth = yAxisLabelWidth + maxChartWidth;
 
 /** Past this, points are too cramped to be readable, so the chart scrolls. */
@@ -69,7 +77,18 @@ export const HistoryChart = ({
   // Spacing is set by the widest readable point count, not by the data: past
   // `maxVisiblePoints` the extra points spill outside the viewport instead of
   // squeezing the visible ones.
-  const visiblePoints = Math.min(points.length, maxVisiblePoints);
+  const isScrollable = points.length > maxVisiblePoints;
+  const initialSpacing = isScrollable
+    ? scrollingInitialSpacing
+    : restingInitialSpacing;
+  // Scrolling, the hidden label tail needs points a whole label apart: narrow
+  // screens show fewer of them rather than let it through.
+  const visiblePoints = isScrollable
+    ? Math.min(
+        maxVisiblePoints,
+        Math.floor((chartWidth - initialSpacing) / xLabelWidth) + 1,
+      )
+    : points.length;
   const pointSpacing =
     visiblePoints > 1 ? (chartWidth - initialSpacing) / (visiblePoints - 1) : 0;
   const plotContentWidth = initialSpacing + pointSpacing * (points.length - 1);
@@ -101,7 +120,10 @@ export const HistoryChart = ({
     xAxisLabelTextStyle: { color: colors.onSurfaceVariant, fontSize: 10 },
     yAxisLabelSuffix: " t",
     formatYLabel: (label: string) => formatTonnes(Number(label) * 1000),
-    noOfSections: 4,
+    ...niceYAxis(Math.max(...data.map(({ value }) => value)), ySections),
+    noOfSections: ySections,
+    showFractionalValues: true,
+    roundToDigits: 2,
   };
 
   // gifted-charts derives the y scale from the data's minimum, maximum and the
@@ -132,6 +154,8 @@ export const HistoryChart = ({
             // Scrolling here rather than through the chart's own scroll view:
             // that one wraps the plot only, leaving the selection overlay behind.
             scrollEnabled={contentWidth > visibleWidth}
+            snapToInterval={pointSpacing}
+            decelerationRate="fast"
             // The latest snapshot is the one worth landing on.
             onContentSizeChange={() =>
               scrollRef.current?.scrollToEnd({ animated: false })
