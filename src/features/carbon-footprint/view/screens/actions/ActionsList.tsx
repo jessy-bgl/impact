@@ -2,7 +2,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Image } from "expo-image";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, View } from "react-native";
+import { FlatList, View, useWindowDimensions } from "react-native";
 import { ActivityIndicator, Text } from "react-native-paper";
 
 import {
@@ -10,23 +10,25 @@ import {
   ActionState,
 } from "@carbonFootprint/domain/entities/action/Action";
 import { ACTIONS_TOUR_STEP_IDS } from "@carbonFootprint/domain/entities/tour/actionsTour";
+import { useActionsInState } from "@carbonFootprint/domain/hooks/useActions";
 import { ActionCard } from "@carbonFootprint/view/screens/actions/ActionCard";
-import { useAppStore } from "@common/store/useStore";
 import { useTourStepEffect } from "@common/tour/useTourStepEffect";
 import { getImageAsset } from "@common/utils/imageAssets";
+
+const maxCardWidth = 300;
+const listPadding = 10;
+const cardGap = 10;
 
 type Props = {
   state: ActionState;
   isLoading: boolean;
-  updateActionState: (id: string, state: ActionState) => void;
+  changeActionState: (action: Action, state: ActionState) => void;
 };
 
-export const ActionsList = ({ state, isLoading, updateActionState }: Props) => {
+export const ActionsList = ({ state, isLoading, changeActionState }: Props) => {
   const { t } = useTranslation("actions");
 
-  const actions = useAppStore((store) => store.actions).filter(
-    (action) => action.state === state,
-  );
+  const actions = useActionsInState(state);
 
   // The tour explains the first available action: bring it back into view,
   // the list may have been scrolled far enough to unmount it.
@@ -35,6 +37,17 @@ export const ActionsList = ({ state, isLoading, updateActionState }: Props) => {
     if (state !== "notStarted") return;
     listRef.current?.scrollToOffset({ offset: 0, animated: false });
   });
+
+  const { width } = useWindowDimensions();
+  const availableWidth = width - listPadding * 2;
+  const columns = Math.max(
+    1,
+    Math.floor((availableWidth + cardGap) / (maxCardWidth + cardGap)),
+  );
+  const cardWidth = Math.min(
+    maxCardWidth,
+    (availableWidth - cardGap * (columns - 1)) / columns,
+  );
 
   // This is a workaround to improve performance (mainly for Profil screen)
   const isFocused = useIsFocused();
@@ -71,8 +84,9 @@ export const ActionsList = ({ state, isLoading, updateActionState }: Props) => {
       key={action.id}
       action={action}
       isTourTarget={state === "notStarted" && index === 0}
+      width={cardWidth}
       updateState={(newState: ActionState) =>
-        updateActionState(action.id, newState)
+        changeActionState(action, newState)
       }
     />
   );
@@ -80,15 +94,19 @@ export const ActionsList = ({ state, isLoading, updateActionState }: Props) => {
   return (
     <FlatList
       ref={listRef}
-      numColumns={1}
+      key={columns}
+      numColumns={columns}
+      columnWrapperStyle={
+        columns > 1 ? { gap: cardGap, justifyContent: "center" } : undefined
+      }
       data={actions}
       renderItem={renderActionCardItem}
       keyExtractor={(action) => action.id.toString()}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
-        paddingVertical: 20,
-        alignItems: "center",
-        gap: 15,
+        padding: listPadding,
+        alignItems: columns > 1 ? undefined : "center",
+        gap: cardGap,
       }}
     />
   );

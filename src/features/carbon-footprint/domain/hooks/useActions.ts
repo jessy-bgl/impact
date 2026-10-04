@@ -1,6 +1,10 @@
 import { useIsFocused } from "@react-navigation/native";
 import { useContext, useEffect, useState } from "react";
 
+import {
+  ActionState,
+  hasKnownSavings,
+} from "@carbonFootprint/domain/entities/action/Action";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
 
@@ -13,6 +17,12 @@ export const useActions = () => {
   const hasAvailableAction = useAppStore((store) =>
     store.actions.some((action) => action.state === "notStarted"),
   );
+
+  // The one the actions tour explains: the first available.
+  const hasFirstAvailableActionSavings = useAppStore((store) => {
+    const first = store.actions.find((action) => action.state === "notStarted");
+    return first !== undefined && hasKnownSavings(first);
+  });
 
   // The engine is not observable, but every change of its situation ends
   // with the footprints being stored (startup synchronization, answers): a
@@ -35,5 +45,15 @@ export const useActions = () => {
     return () => clearTimeout(timeout);
   }, [syncEngineWithStoredActions, isFocused, footprints]);
 
-  return { isLoading, hasAvailableAction, updateActionState };
+  return {
+    isLoading,
+    hasAvailableAction,
+    hasFirstAvailableActionSavings,
+    updateActionState,
+  };
 };
+
+export const useActionsInState = (state: ActionState) =>
+  useAppStore((store) => store.actions).filter(
+    (action) => action.state === state,
+  );

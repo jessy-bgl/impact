@@ -4,10 +4,9 @@
   "ok": "OK",
   "close": "FERMER",
   "validate": "Valider",
-  "footprintKg": "kgCO2e",
-  "footprintKgPerYear": "kgCO2e/an",
   "footprintTonnes": "t",
   "footprintTonnesPerYear": "tCO2e/an",
+  "lessThanA11y": "moins de {{value}}",
   "completed": "Complété",
   "toComplete": "À compléter",
   "units": {

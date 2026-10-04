@@ -7,5 +7,20 @@
     "notStarted": "Aucune action disponible",
     "inProgress": "Aucune action en cours",
     "skipped": "Aucune action écartée"
-  }
+  },
+  "showDetails": "Affiche le détail de l'action",
+  "buttons": {
+    "skip": "Écarter",
+    "start": "Sélectionner",
+    "remove": "Retirer",
+    "restore": "Remettre dans la liste"
+  },
+  "stateChanged": {
+    "inProgress": "Action ajoutée à « En cours »",
+    "skipped": "Action écartée",
+    "notStarted": "Action remise dans « Disponibles »"
+  },
+  "undo": "Annuler",
+  "savingsA11y": "économise {{value}} tonnes de CO2 équivalent par an",
+  "totalShare": "{{part}} % de ton empreinte totale"
 }

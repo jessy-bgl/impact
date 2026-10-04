@@ -45,3 +45,10 @@ export abstract class Action {
     this.state = action.state;
   }
 }
+
+/**
+ * Whether the engine could tell how much the action saves: when it cannot,
+ * the saving is left at zero.
+ */
+export const hasKnownSavings = (action: Action): boolean =>
+  action.savedFootprint > 0;
