@@ -4,26 +4,25 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 
 import { EmissionsNavigatorProp } from "@app/EmissionsNavigator";
+import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
-import { posthog } from "@common/config/posthog";
-import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
+import { useFootprints } from "@carbonFootprint/domain/hooks/useFootprints";
+import { useProfileCompletion } from "@carbonFootprint/domain/hooks/useProfileCompletion";
+import { useOpenCategoryProfile } from "@carbonFootprint/view/hooks/useOpenCategoryProfile";
 import { ProfileCategoryCard } from "@carbonFootprint/view/screens/profile/ProfileCategoryCard";
 import { ProfileTourHelpButton } from "@carbonFootprint/view/tour/ProfileTourHelpButton";
 import { useTourScrollContainer } from "@common/tour/useTourScrollContainer";
 
 export const Profile = () => {
-  const { t } = useTranslation("pages");
+  const { t } = useTranslation("emissions");
 
-  const { navigate, setOptions } = useNavigation<EmissionsNavigatorProp>();
+  const { setOptions } = useNavigation<EmissionsNavigatorProp>();
 
-  const {
-    profileCompletion,
-    transportFootprint,
-    housingFootprint,
-    foodFootprint,
-    everydayThingsFootprint,
-    societalServicesFootprint,
-  } = useProfile();
+  const openCategory = useOpenCategoryProfile();
+
+  const { footprints } = useFootprints();
+
+  const profileCompletion = useProfileCompletion();
 
   useLayoutEffect(
     () => setOptions({ headerRight: () => <ProfileTourHelpButton /> }),
@@ -46,55 +45,15 @@ export const Profile = () => {
         gap: 10,
       }}
     >
-      <ProfileCategoryCard
-        title={t("Transport")}
-        footprintCategory={transportFootprint}
-        onClick={() => {
-          posthog.capture("profile_category_opened", { category: "transport" });
-          navigate("TransportProfile");
-        }}
-        isCompleted={isCategoryCompleted(profileCompletion, "transport")}
-      />
-      <ProfileCategoryCard
-        title={t("Housing")}
-        footprintCategory={housingFootprint}
-        onClick={() => {
-          posthog.capture("profile_category_opened", { category: "housing" });
-          navigate("HousingProfile");
-        }}
-        isCompleted={isCategoryCompleted(profileCompletion, "housing")}
-      />
-      <ProfileCategoryCard
-        title={t("Food")}
-        footprintCategory={foodFootprint}
-        onClick={() => {
-          posthog.capture("profile_category_opened", { category: "food" });
-          navigate("FoodProfile");
-        }}
-        isCompleted={isCategoryCompleted(profileCompletion, "food")}
-      />
-      <ProfileCategoryCard
-        title={t("EverydayThings")}
-        footprintCategory={everydayThingsFootprint}
-        onClick={() => {
-          posthog.capture("profile_category_opened", {
-            category: "everydayThings",
-          });
-          navigate("EverydayThingsProfile");
-        }}
-        isCompleted={isCategoryCompleted(profileCompletion, "everydayThings")}
-      />
-      <ProfileCategoryCard
-        title={t("SocietalServices")}
-        footprintCategory={societalServicesFootprint}
-        onClick={() => {
-          posthog.capture("profile_category_opened", {
-            category: "societalServices",
-          });
-          navigate("SocietalServicesProfile");
-        }}
-        isCompleted={isCategoryCompleted(profileCompletion, "societalServices")}
-      />
+      {categoryOrder.map((category) => (
+        <ProfileCategoryCard
+          key={category}
+          title={t(`categories.${category}`)}
+          footprintCategory={footprints[category]}
+          onClick={() => openCategory(category)}
+          isCompleted={isCategoryCompleted(profileCompletion, category)}
+        />
+      ))}
     </ScrollView>
   );
 };

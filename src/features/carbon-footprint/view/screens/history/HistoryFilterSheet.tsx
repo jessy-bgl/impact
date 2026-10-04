@@ -2,17 +2,16 @@ import { useTranslation } from "react-i18next";
 import { Pressable, View } from "react-native";
 import { Icon, Text, useTheme } from "react-native-paper";
 
-import { footprintCategories } from "@carbonFootprint/domain/entities/footprints/Footprints";
+import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { HistoryFilter } from "@carbonFootprint/domain/entities/history/FootprintsHistoryViewModel";
-import { CategoryBadge } from "@carbonFootprint/view/screens/history/CategoryBadge";
-import {
-  categoryStyles,
-  filterColor,
-} from "@carbonFootprint/view/screens/history/historyFormat";
+import { categoryIcons } from "@carbonFootprint/domain/entities/footprints/categoryIcons";
+import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
+import { filterColor } from "@carbonFootprint/view/screens/history/historyFormat";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 
 const rowHeight = 48;
 
-export const historyFilters: HistoryFilter[] = ["all", ...footprintCategories];
+export const historyFilters: HistoryFilter[] = ["all", ...categoryOrder];
 
 type Props = {
   filter: HistoryFilter;
@@ -30,6 +29,8 @@ export const HistoryFilterSheet = ({ filter, onSelect }: Props) => {
   const { t } = useTranslation("emissions");
   const { colors } = useTheme();
 
+  const palette = useCategoryPalette();
+
   const label = useHistoryFilterLabel();
 
   return (
@@ -46,7 +47,6 @@ export const HistoryFilterSheet = ({ filter, onSelect }: Props) => {
             key={value}
             onPress={() => onSelect(value)}
             accessibilityRole="button"
-            // Without it the name would also carry the badge's emoji.
             accessibilityLabel={label(value)}
             accessibilityState={{ selected }}
             style={{
@@ -57,8 +57,8 @@ export const HistoryFilterSheet = ({ filter, onSelect }: Props) => {
             }}
           >
             <CategoryBadge
-              color={filterColor(value, colors.primary)}
-              label={value === "all" ? "∑" : categoryStyles[value].icon}
+              color={filterColor(value, colors.primary, palette)}
+              icon={value === "all" ? "sigma" : categoryIcons[value]}
             />
 
             <Text

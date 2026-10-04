@@ -1,12 +1,16 @@
 import { Image } from "expo-image";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Avatar, Card, Icon, Text, useTheme } from "react-native-paper";
+import { Avatar, Card, Text } from "react-native-paper";
 
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
+import { CompletionStatus } from "@carbonFootprint/view/components/CompletionStatus";
 import { PROFILE_TOUR_TARGETS } from "@carbonFootprint/domain/entities/tour/profileTour";
+import { OutlinedCard } from "@common/components/OutlinedCard";
 import { useTourTarget } from "@common/tour/useTourTarget";
 import { getImageAsset } from "@common/utils/imageAssets";
+import { readableTextOn } from "@common/utils/readableTextOn";
 
 type Props = {
   title: string;
@@ -23,9 +27,9 @@ export const ProfileCategoryCard = ({
 }: Props) => {
   const { t } = useTranslation("common");
 
-  const { colors } = useTheme();
+  const { image, footprint, icon } = footprintCategory;
 
-  const { image, footprint, color, materialIcon } = footprintCategory;
+  const color = useCategoryPalette()[footprintCategory.styleKey];
 
   // The guided tour spotlights the first card rendered on the profile screen.
   const cardTourRef = useTourTarget(PROFILE_TOUR_TARGETS.categoryCard, {
@@ -38,7 +42,7 @@ export const ProfileCategoryCard = ({
       collapsable={false}
       style={{ width: "100%", maxWidth: 500 }}
     >
-      <Card style={{ width: "100%" }} onPress={onClick}>
+      <OutlinedCard style={{ width: "100%" }} onPress={onClick}>
         <Card.Title
           title={
             <View
@@ -49,27 +53,14 @@ export const ProfileCategoryCard = ({
               }}
             >
               <Text variant="titleMedium">{title}</Text>
-              <View
-                style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-              >
-                <Icon
-                  source={isCompleted ? "check-circle" : "information-outline"}
-                  color={isCompleted ? colors.primary : colors.error}
-                  size={12}
-                />
-                <Text
-                  variant="bodySmall"
-                  style={{ color: colors.onSurfaceVariant }}
-                >
-                  {isCompleted ? t("completed") : t("toComplete")}
-                </Text>
-              </View>
+              <CompletionStatus isCompleted={isCompleted} />
             </View>
           }
           left={(props) => (
             <Avatar.Icon
               {...props}
-              icon={materialIcon}
+              icon={icon}
+              color={readableTextOn(color)}
               style={{ backgroundColor: color }}
             />
           )}
@@ -106,7 +97,6 @@ export const ProfileCategoryCard = ({
             </View>
           )}
           style={{ paddingRight: 16 }}
-          subtitleStyle={{ marginTop: -5, color: colors.onSurfaceVariant }}
         />
         <Card.Content>
           <Image
@@ -115,7 +105,7 @@ export const ProfileCategoryCard = ({
             style={{ height: 130 }}
           />
         </Card.Content>
-      </Card>
+      </OutlinedCard>
     </View>
   );
 };
