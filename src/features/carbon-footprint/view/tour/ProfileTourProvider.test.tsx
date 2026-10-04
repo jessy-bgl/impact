@@ -130,6 +130,12 @@ describe("ProfileTourProvider", () => {
     await waitFor(() => expect(stepIdText()).toBe(firstStepId));
   });
 
+  it("starts inside the category the user opened first", async () => {
+    await renderProfileTour(PROFILE_TOUR_CATEGORY_SCREENS[0]);
+
+    await waitFor(() => expect(stepIdText()).toBe(firstCategoryStepId));
+  });
+
   it("stays out of the way once the tour has been seen", async () => {
     useAppStore.setState((state) => ({
       ...state,
