@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { EmissionsSummary } from "@carbonFootprint/view/screens/emissions/EmissionsSummary";
 import { EmissionsHistory } from "@carbonFootprint/view/screens/history/EmissionsHistory";
 import { BottomSheetProvider } from "@common/context/BottomSheetContext";
+import { useTopTabsColors } from "@common/navigation/useTopTabsColors";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -21,10 +22,12 @@ const HistoryScreen: ComponentType = __DEV__
 export const Emissions = () => {
   const { t } = useTranslation("emissions");
 
+  const topTabsColors = useTopTabsColors();
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["top", "left", "right"]}>
       <BottomSheetProvider>
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={topTabsColors}>
           <Tab.Screen
             name="distribution"
             component={EmissionsSummary}

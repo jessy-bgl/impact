@@ -10,13 +10,14 @@ import { LightTheme } from "@app/AppTheme";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { getImageAsset } from "@common/utils/imageAssets";
 
-const GRADIENT_COLORS = ["#FFFFFF", "#d8F9d9"] as const;
-
 /**
  * The intro illustration is a GIF with a baked-in white background, so this
- * screen keeps the light palette even when the device is in dark mode.
+ * screen keeps the light palette even when the device is in dark mode, and
+ * starts its gradient from plain white.
  */
 const colors = LightTheme.colors;
+
+const GRADIENT_COLORS = ["#FFFFFF", colors.elevation.level5] as const;
 
 export const Intro = () => {
   const { t } = useTranslation("intro");

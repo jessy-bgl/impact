@@ -13,6 +13,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
+import { OutlinedCard } from "@common/components/OutlinedCard";
 import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { useAppStore } from "@common/store/useStore";
@@ -34,7 +35,7 @@ const SectionCard = ({ icon, title, children }: SectionCardProps) => {
   const { colors } = useTheme();
 
   return (
-    <Card mode="elevated">
+    <OutlinedCard>
       <Card.Content style={styles.cardContent}>
         <View style={styles.sectionHeader}>
           <Icon source={icon} size={20} color={colors.primary} />
@@ -44,7 +45,7 @@ const SectionCard = ({ icon, title, children }: SectionCardProps) => {
         </View>
         {children}
       </Card.Content>
-    </Card>
+    </OutlinedCard>
   );
 };
 

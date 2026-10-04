@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ComparatorNavigator } from "@app/ComparatorNavigator";
@@ -19,6 +18,7 @@ import {
 } from "@carbonFootprint/domain/entities/tour/actionsTour";
 import { ActionsTabParamList } from "@carbonFootprint/view/screens/actions/Actions";
 import { useActionsTour } from "@carbonFootprint/view/tour/ActionsTourContext";
+import { TourHelpButton } from "@common/tour/TourHelpButton";
 import { useTourTarget } from "@common/tour/useTourTarget";
 
 export type AppTabParamList = {
@@ -89,6 +89,8 @@ export const AppNavigator = () => {
         options={({ navigation }) => ({
           lazy: false,
           title: t("pages:Actions"),
+          // Its tabs sit right under the title: one block, one shadow.
+          headerShadowVisible: false,
           tabBarIcon: ({ focused, color }) => {
             return (
               <Icons
@@ -98,12 +100,8 @@ export const AppNavigator = () => {
               />
             );
           },
-          headerRight: (props) => (
-            <IconButton
-              {...props}
-              icon="help-circle"
-              size={iconSize}
-              accessibilityLabel={t("intro:tour.nav.help")}
+          headerRight: () => (
+            <TourHelpButton
               onPress={() => {
                 // The whole tour runs on the available actions tab.
                 navigation.navigate("Actions", { screen: ACTIONS_TOUR_SCREEN });

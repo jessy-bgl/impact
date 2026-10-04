@@ -17,6 +17,7 @@ import {
 import { useActions } from "@carbonFootprint/domain/hooks/useActions";
 import { ActionsList } from "@carbonFootprint/view/screens/actions/ActionsList";
 import { BottomSheetProvider } from "@common/context/BottomSheetContext";
+import { useTopTabsColors } from "@common/navigation/useTopTabsColors";
 import { useAppStore } from "@common/store/useStore";
 import { useTourStepAvailability } from "@common/tour/useTourStepAvailability";
 import { useTourTarget } from "@common/tour/useTourTarget";
@@ -65,9 +66,11 @@ export const Actions = () => {
 
   useCardTourStepsAvailability(isLoading, hasAvailableAction);
 
+  const topTabsColors = useTopTabsColors();
+
   return (
     <BottomSheetProvider>
-      <Tab.Navigator tabBar={renderTabBar}>
+      <Tab.Navigator tabBar={renderTabBar} screenOptions={topTabsColors}>
         <Tab.Screen
           name={ACTIONS_TOUR_SCREEN}
           options={{

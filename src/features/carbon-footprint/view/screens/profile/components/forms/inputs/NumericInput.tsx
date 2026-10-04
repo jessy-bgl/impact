@@ -137,11 +137,9 @@ export const NumericInput = ({
           mode="outlined"
           disabled={isDecreaseDisabled}
           onPress={handleDecrement}
-          textColor={colors.tertiary}
           labelStyle={{ marginHorizontal: 0 }}
           style={{
             flex: 0,
-            borderColor: isDecreaseDisabled ? undefined : colors.tertiary,
             alignSelf: "center",
           }}
         >
@@ -197,11 +195,9 @@ export const NumericInput = ({
           mode="outlined"
           disabled={isIncreaseDisabled}
           onPress={handleIncrement}
-          textColor={colors.secondary}
           labelStyle={{ marginHorizontal: 0 }}
           style={{
             flex: 0,
-            borderColor: isIncreaseDisabled ? undefined : colors.secondary,
             alignSelf: "center",
           }}
         >
