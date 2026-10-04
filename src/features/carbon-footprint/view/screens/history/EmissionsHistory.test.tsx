@@ -3,6 +3,7 @@ import { PropsWithChildren } from "react";
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { LightTheme } from "@app/AppTheme";
 import { FootprintsHistory } from "@carbonFootprint/domain/entities/history/FootprintSnapshot";
 import { profileSections } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { EmissionsHistory } from "@carbonFootprint/view/screens/history/EmissionsHistory";
@@ -15,7 +16,9 @@ import emissions from "@common/translations/fr/emissions.json";
 
 import "@common/translations/i18n";
 
+// The rest of the module stays real: the app theme is built on its themes.
 jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
   useNavigation: () => ({ navigate: () => {} }),
 }));
 
@@ -74,7 +77,7 @@ const Providers = ({ children }: PropsWithChildren) => (
       insets: { top: 0, left: 0, right: 0, bottom: 0 },
     }}
   >
-    <PaperProvider>
+    <PaperProvider theme={LightTheme}>
       {/* Hosted by the Emissions page, above the tabs, in the app. */}
       <BottomSheetProvider>{children}</BottomSheetProvider>
     </PaperProvider>

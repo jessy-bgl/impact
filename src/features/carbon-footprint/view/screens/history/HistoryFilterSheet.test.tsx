@@ -1,11 +1,17 @@
 import { render, screen, userEvent } from "@testing-library/react-native";
+import { PropsWithChildren } from "react";
 import { PaperProvider } from "react-native-paper";
 
+import { LightTheme } from "@app/AppTheme";
 import { HistoryFilter } from "@carbonFootprint/domain/entities/history/FootprintsHistoryViewModel";
 import { HistoryFilterSheet } from "@carbonFootprint/view/screens/history/HistoryFilterSheet";
 import emissions from "@common/translations/fr/emissions.json";
 
 import "@common/translations/i18n";
+
+const Providers = ({ children }: PropsWithChildren) => (
+  <PaperProvider theme={LightTheme}>{children}</PaperProvider>
+);
 
 const selections: HistoryFilter[] = [];
 
@@ -15,7 +21,7 @@ const renderSheet = async (filter: HistoryFilter) =>
       filter={filter}
       onSelect={(next) => selections.push(next)}
     />,
-    { wrapper: PaperProvider },
+    { wrapper: Providers },
   );
 
 describe("HistoryFilterSheet", () => {

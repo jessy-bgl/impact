@@ -11,6 +11,7 @@ import { ActionCardButtons } from "@carbonFootprint/view/screens/actions/ActionC
 import { ActionCardCategory } from "@carbonFootprint/view/screens/actions/ActionCardCategory";
 import { ActionCardContent } from "@carbonFootprint/view/screens/actions/ActionCardContent";
 import { ActionCardTitle } from "@carbonFootprint/view/screens/actions/ActionCardTitle";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { useTourTarget } from "@common/tour/useTourTarget";
 
 type Props = {
@@ -29,6 +30,8 @@ export const ActionCard = ({
   const { footprints } = useFootprints();
 
   const footprintViewModel = footprints[action.category];
+
+  const palette = useCategoryPalette();
 
   const tourOptions = { enabled: isTourTarget };
   const savingsTourRef = useTourTarget(
@@ -51,7 +54,7 @@ export const ActionCard = ({
   return (
     <Card
       style={{
-        borderColor: footprintViewModel.color,
+        borderColor: palette[footprintViewModel.styleKey],
         borderRadius: roundness,
         width: 250,
         borderWidth: 1,

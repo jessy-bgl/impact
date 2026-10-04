@@ -4,7 +4,10 @@ import { Card, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
+import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
 import { SocietalServicesEmissionsDistribution } from "@carbonFootprint/view/screens/profile/public-services/EmissionsDistribution";
+import { OutlinedCard } from "@common/components/OutlinedCard";
 import { useAppStore } from "@common/store/useStore";
 
 export const SocietalServicesProfile = () => {
@@ -13,6 +16,8 @@ export const SocietalServicesProfile = () => {
   );
 
   const { t } = useTranslation("societalServices");
+
+  const palette = useCategoryPalette();
 
   const publicServices = FootprintCategoryViewModel.forPublicServices(
     societalServicesFootprint.publicServicesFootprint,
@@ -35,11 +40,11 @@ export const SocietalServicesProfile = () => {
           paddingBottom: 10,
         }}
       >
-        <Card mode="outlined">
+        <OutlinedCard>
           <Card.Content>
             <Text variant="bodyMedium">{t("info")}</Text>
           </Card.Content>
-        </Card>
+        </OutlinedCard>
 
         <Text variant="bodyMedium">{t("description")}</Text>
 
@@ -50,27 +55,33 @@ export const SocietalServicesProfile = () => {
           />
         </View>
 
-        <Card>
-          <Card.Content>
-            <Text variant="bodyMedium">
+        <OutlinedCard>
+          <Card.Content style={{ flexDirection: "row", gap: 12 }}>
+            <CategoryBadge
+              color={palette[publicServices.styleKey]}
+              icon={publicServices.icon}
+            />
+            <Text variant="bodyMedium" style={{ flex: 1 }}>
               {t("publicServicesDescription", {
-                icon: publicServices.icon,
                 footprint: publicServices.footprint,
               })}
             </Text>
           </Card.Content>
-        </Card>
+        </OutlinedCard>
 
-        <Card>
-          <Card.Content>
-            <Text variant="bodyMedium">
+        <OutlinedCard>
+          <Card.Content style={{ flexDirection: "row", gap: 12 }}>
+            <CategoryBadge
+              color={palette[merchantServices.styleKey]}
+              icon={merchantServices.icon}
+            />
+            <Text variant="bodyMedium" style={{ flex: 1 }}>
               {t("merchantDescription", {
-                icon: merchantServices.icon,
                 footprint: merchantServices.footprint,
               })}
             </Text>
           </Card.Content>
-        </Card>
+        </OutlinedCard>
       </ScrollView>
     </SafeAreaView>
   );

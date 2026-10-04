@@ -2,8 +2,11 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 
+import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
+import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { useAppStore } from "@common/store/useStore";
 import { Skeleton } from "moti/skeleton";
 
@@ -19,6 +22,8 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
 
   const profileCompletion = useAppStore((state) => state.profile.completion);
 
+  const palette = useCategoryPalette();
+
   return (
     <DataTable>
       <DataTable.Header>
@@ -26,7 +31,9 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
         <DataTable.Title numeric>{t("annualFootprint")}</DataTable.Title>
       </DataTable.Header>
 
-      {Object.values(footprints)
+      {/* Ranked by impact, the heaviest first; ties keep the donut's order. */}
+      {categoryOrder
+        .map((category) => footprints[category])
         .sort((a, b) => b.footprint - a.footprint)
         .map((emissionsCategory) => {
           const isCompleted = isCategoryCompleted(
@@ -51,26 +58,11 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
                     gap: 10,
                   }}
                 >
-                  <View
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 32 / 2,
-                      backgroundColor: emissionsCategory.color,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: colors.background,
-                        fontSize: 12,
-                      }}
-                    >
-                      {emissionsCategory.part}%
-                    </Text>
-                  </View>
+                  <CategoryBadge
+                    color={palette[emissionsCategory.styleKey]}
+                    label={`${emissionsCategory.part}%`}
+                    fontSize={12}
+                  />
                   <View style={{ flexDirection: "column", gap: 2 }}>
                     <Text>{t(`categories.${emissionsCategory.category}`)}</Text>
                     {!isCompleted && (

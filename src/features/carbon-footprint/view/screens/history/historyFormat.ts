@@ -1,19 +1,13 @@
-import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
-import { mapFootprintCategories } from "@carbonFootprint/domain/entities/footprints/Footprints";
 import { parseDayKey } from "@carbonFootprint/domain/entities/history/FootprintSnapshot";
 import { HistoryFilter } from "@carbonFootprint/domain/entities/history/FootprintsHistoryViewModel";
+import { CategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { formatTonnes } from "@common/utils/formatTonnes";
 
-/**
- * Colour and emoji per category, taken from the same view models that paint the
- * donut so the history and the distribution never drift apart.
- */
-export const categoryStyles = mapFootprintCategories((category) =>
-  FootprintCategoryViewModel.forCategory(category, 0, 0),
-);
-
-export const filterColor = (filter: HistoryFilter, fallback: string): string =>
-  filter === "all" ? fallback : categoryStyles[filter].color;
+export const filterColor = (
+  filter: HistoryFilter,
+  fallback: string,
+  palette: CategoryPalette,
+): string => (filter === "all" ? fallback : palette[filter]);
 
 const longDate = new Intl.DateTimeFormat("fr-FR", {
   day: "numeric",

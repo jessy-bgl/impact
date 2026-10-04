@@ -6,6 +6,10 @@ import merge from "deepmerge";
 import { useColorScheme } from "react-native";
 import { MD3DarkTheme, MD3LightTheme } from "react-native-paper";
 
+import {
+  darkCategoryPalette,
+  lightCategoryPalette,
+} from "@carbonFootprint/view/theme/categoryPalette";
 import { useAppStore } from "@common/store/useStore";
 
 /**
@@ -61,6 +65,7 @@ const DarkMaterialTheme = {
     surfaceDisabled: "rgba(223, 228, 217, 0.12)",
     onSurfaceDisabled: "rgba(223, 228, 217, 0.38)",
     backdrop: "rgba(41, 51, 39, 0.4)",
+    categories: darkCategoryPalette,
   },
 };
 
@@ -107,6 +112,7 @@ const LightMaterialTheme = {
     surfaceDisabled: "rgba(24, 29, 22, 0.12)",
     onSurfaceDisabled: "rgba(24, 29, 22, 0.38)",
     backdrop: "rgba(41, 51, 39, 0.4)",
+    categories: lightCategoryPalette,
   },
 };
 

@@ -1,6 +1,10 @@
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 
 import {
+  CategoryStyleKey,
+  categoryIcons,
+} from "@carbonFootprint/domain/entities/footprints/categoryIcons";
+import {
   FootprintCategory,
   mapFootprintCategories,
 } from "@carbonFootprint/domain/entities/footprints/Footprints";
@@ -12,11 +16,10 @@ export type FootprintViewModels = Record<
 >;
 
 export class FootprintCategoryViewModel {
-  public color: string = "";
-  public icon: string = "";
+  public styleKey: CategoryStyleKey;
+  public icon: IconSource;
   public part: number;
   public image!: keyof typeof ImageAssets;
-  public materialIcon: IconSource = "";
 
   protected constructor(
     public category: FootprintCategory,
@@ -24,6 +27,8 @@ export class FootprintCategoryViewModel {
     public totalFootprint: number,
   ) {
     this.part = this.computePart(totalFootprint);
+    this.styleKey = category;
+    this.icon = categoryIcons[category];
   }
 
   private computePart = (totalFootprint: number) =>
@@ -121,9 +126,6 @@ export class FootprintCategoryViewModel {
 class FootprintCategoryTransport extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("transport", footprint, totalFootprint);
-    this.color = "cadetblue";
-    this.icon = "🚗";
-    this.materialIcon = "car";
     this.image = "transport";
   }
 }
@@ -131,9 +133,6 @@ class FootprintCategoryTransport extends FootprintCategoryViewModel {
 class FootprintCategoryFood extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("food", footprint, totalFootprint);
-    this.color = "lightcoral";
-    this.icon = "🍲";
-    this.materialIcon = "food";
     this.image = "food";
   }
 }
@@ -141,9 +140,6 @@ class FootprintCategoryFood extends FootprintCategoryViewModel {
 class FootprintCategoryHousing extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("housing", footprint, totalFootprint);
-    this.color = "#4d90c6ff";
-    this.icon = "🏠";
-    this.materialIcon = "home";
     this.image = "house";
   }
 }
@@ -151,9 +147,6 @@ class FootprintCategoryHousing extends FootprintCategoryViewModel {
 class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("everydayThings", footprint, totalFootprint);
-    this.color = "#c37ec3ff";
-    this.icon = "🛍️";
-    this.materialIcon = "package";
     this.image = "goods";
   }
 }
@@ -161,9 +154,6 @@ class FootprintCategoryEverydayThings extends FootprintCategoryViewModel {
 class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("societalServices", footprint, totalFootprint);
-    this.color = "burlywood";
-    this.icon = "🏛️";
-    this.materialIcon = "bank";
     this.image = "public_services";
   }
 }
@@ -171,8 +161,7 @@ class FootprintCategoryPublicServices extends FootprintCategoryViewModel {
 class FootprintCategoryMerchantServices extends FootprintCategoryViewModel {
   constructor(footprint: number, totalFootprint: number) {
     super("societalServices", footprint, totalFootprint);
-    this.color = "cadetblue";
-    this.icon = "✉️";
-    this.materialIcon = "post";
+    this.styleKey = "merchantServices";
+    this.icon = categoryIcons.merchantServices;
   }
 }

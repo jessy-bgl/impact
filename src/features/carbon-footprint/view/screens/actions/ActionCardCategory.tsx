@@ -6,7 +6,9 @@ import { Icon, IconButton, Text, useTheme } from "react-native-paper";
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { DescriptionSheetContent } from "@carbonFootprint/view/components/DescriptionSheetContent";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { useCustomBottomSheetModal } from "@common/context/BottomSheetContext";
+import { readableTextOn } from "@common/utils/readableTextOn";
 
 type Props = {
   action: Action;
@@ -19,7 +21,10 @@ export const ActionCardCategory = ({
   footprintViewModel,
   tourRef,
 }: Props) => {
-  const { colors, roundness } = useTheme();
+  const { roundness } = useTheme();
+
+  const fill = useCategoryPalette()[footprintViewModel.styleKey];
+  const ink = readableTextOn(fill);
 
   const { t } = useTranslation("common");
 
@@ -37,14 +42,14 @@ export const ActionCardCategory = ({
             alignSelf: "flex-start",
             alignItems: "center",
             gap: 4,
-            backgroundColor: footprintViewModel.color,
+            backgroundColor: fill,
             borderRadius: roundness,
             paddingVertical: 2,
             paddingHorizontal: 6,
           }}
         >
-          <Icon source="arrow-down" size={16} color={colors.surface} />
-          <Text variant="labelLarge" style={{ color: colors.surface }}>
+          <Icon source="arrow-down" size={16} color={ink} />
+          <Text variant="labelLarge" style={{ color: ink }}>
             {`${action.savedFootprint} ${t("footprintKgPerYear")}`}
           </Text>
         </View>
@@ -59,7 +64,7 @@ export const ActionCardCategory = ({
         position: "absolute",
         bottom: 0,
         left: 0,
-        backgroundColor: footprintViewModel.color,
+        backgroundColor: fill,
         borderTopRightRadius: roundness,
         borderBottomLeftRadius: roundness,
         width: 50,
@@ -70,9 +75,9 @@ export const ActionCardCategory = ({
       }}
     >
       <IconButton
-        icon={footprintViewModel.materialIcon}
+        icon={footprintViewModel.icon}
         size={25}
-        iconColor={colors.surfaceVariant}
+        iconColor={ink}
         onPress={showDescription}
       />
     </View>

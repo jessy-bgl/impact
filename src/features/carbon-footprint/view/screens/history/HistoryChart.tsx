@@ -13,6 +13,7 @@ import {
   formatLongDate,
   formatShortDate,
 } from "@carbonFootprint/view/screens/history/historyFormat";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { formatTonnes } from "@common/utils/formatTonnes";
 
 const chartHeight = 200;
@@ -55,7 +56,7 @@ export const HistoryChart = ({
   const { width } = useWindowDimensions();
   const scrollRef = useRef<ScrollView>(null);
 
-  const color = filterColor(filter, colors.primary);
+  const color = filterColor(filter, colors.primary, useCategoryPalette());
 
   const availableWidth = width - horizontalPadding * 2;
   const plotWidth = Math.min(availableWidth - yAxisLabelWidth, maxChartWidth);

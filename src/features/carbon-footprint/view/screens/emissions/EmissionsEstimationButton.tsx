@@ -8,7 +8,7 @@ import {
   isProfileCompleted,
   isProfileStarted,
 } from "@carbonFootprint/domain/entities/profile/profileCompletion";
-import { useProfile } from "@carbonFootprint/domain/hooks/useProfile";
+import { useProfileCompletion } from "@carbonFootprint/domain/hooks/useProfileCompletion";
 import { posthog } from "@common/config/posthog";
 
 export const EmissionsEstimationButton = () => {
@@ -18,7 +18,7 @@ export const EmissionsEstimationButton = () => {
 
   const { navigate } = useNavigation<EmissionsNavigatorProp>();
 
-  const { profileCompletion } = useProfile();
+  const profileCompletion = useProfileCompletion();
 
   const estimationLabel = (completion: ProfileCompletion) => {
     if (isProfileCompleted(completion)) return "updateEstimate";

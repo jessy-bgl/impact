@@ -2,11 +2,14 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { Button, Card, Divider, Text, useTheme } from "react-native-paper";
 
+import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { HistoryVariation } from "@carbonFootprint/domain/entities/history/FootprintsHistoryViewModel";
-import { CategoryBadge } from "@carbonFootprint/view/screens/history/CategoryBadge";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
+import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
 import { HistoryTrendLine } from "@carbonFootprint/view/screens/history/HistoryTrendLine";
 import { formatLongDate } from "@carbonFootprint/view/screens/history/historyFormat";
+import { OutlinedCard } from "@common/components/OutlinedCard";
 import { formatTonnes } from "@common/utils/formatTonnes";
 
 type Props = {
@@ -33,8 +36,10 @@ export const HistorySelectionCard = ({
   const { t } = useTranslation(["emissions", "common"]);
   const { colors } = useTheme();
 
+  const palette = useCategoryPalette();
+
   return (
-    <Card mode="outlined" style={{ marginHorizontal: 16 }}>
+    <OutlinedCard style={{ marginHorizontal: 16 }}>
       <Card.Content style={{ gap: 4 }}>
         <Text variant="bodySmall" style={{ color: colors.onSurfaceVariant }}>
           {formatLongDate(date)}
@@ -52,33 +57,34 @@ export const HistorySelectionCard = ({
 
         {breakdown && <Divider style={{ marginVertical: 12 }} />}
 
-        {Object.values(breakdown ?? {})
-          .sort((a, b) => b.footprint - a.footprint)
-          .map((category) => (
-            <View
-              key={category.category}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-                paddingVertical: 4,
-              }}
-            >
-              <CategoryBadge
-                color={category.color}
-                label={`${category.part}%`}
-                fontSize={12}
-              />
+        {breakdown &&
+          categoryOrder
+            .map((category) => breakdown[category])
+            .map((category) => (
+              <View
+                key={category.category}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 10,
+                  paddingVertical: 4,
+                }}
+              >
+                <CategoryBadge
+                  color={palette[category.styleKey]}
+                  label={`${category.part}%`}
+                  fontSize={12}
+                />
 
-              <Text style={{ flex: 1 }}>
-                {t(`categories.${category.category}`)}
-              </Text>
+                <Text style={{ flex: 1 }}>
+                  {t(`categories.${category.category}`)}
+                </Text>
 
-              <Text variant="bodyMedium">
-                {`${category.footprint} ${t("common:footprintKg")}`}
-              </Text>
-            </View>
-          ))}
+                <Text variant="bodyMedium">
+                  {`${category.footprint} ${t("common:footprintKg")}`}
+                </Text>
+              </View>
+            ))}
       </Card.Content>
 
       <Card.Actions>
@@ -86,6 +92,6 @@ export const HistorySelectionCard = ({
           {t("history.backToCurrentDate")}
         </Button>
       </Card.Actions>
-    </Card>
+    </OutlinedCard>
   );
 };

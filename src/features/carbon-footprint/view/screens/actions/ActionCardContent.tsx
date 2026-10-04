@@ -5,6 +5,8 @@ import { Card, Icon, Text, useTheme } from "react-native-paper";
 
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
 import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
+import { readableTextOn } from "@common/utils/readableTextOn";
 
 type Props = {
   action: Action;
@@ -19,7 +21,10 @@ export const ActionCardContent = ({
   footprintViewModel,
   tourRef,
 }: Props) => {
-  const { colors, roundness } = useTheme();
+  const { roundness } = useTheme();
+
+  const fill = useCategoryPalette()[footprintViewModel.styleKey];
+  const ink = readableTextOn(fill);
 
   const { t } = useTranslation(["common", "actions"]);
 
@@ -47,13 +52,13 @@ export const ActionCardContent = ({
             justifyContent: "center",
             alignItems: "center",
             gap: 5,
-            backgroundColor: footprintViewModel.color,
+            backgroundColor: fill,
             borderRadius: roundness,
             padding: 5,
           }}
         >
-          <Icon source="arrow-down" size={20} color={colors.surface} />
-          <Text style={{ color: colors.surface, marginBottom: 2 }}>
+          <Icon source="arrow-down" size={20} color={ink} />
+          <Text style={{ color: ink, marginBottom: 2 }}>
             {savedFootprintPart}%
           </Text>
         </View>
