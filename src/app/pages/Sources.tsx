@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 
+import { OutlinedCard } from "@common/components/OutlinedCard";
 import { ImageAssets } from "@common/utils/imageAssets";
 import { openUrl } from "@common/utils/openUrl";
 
@@ -44,11 +45,7 @@ export const Sources = () => {
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
       {dataSources.map((source) => (
-        <Card
-          key={source.id}
-          mode="elevated"
-          onPress={() => openUrl(source.url)}
-        >
+        <OutlinedCard key={source.id} onPress={() => openUrl(source.url)}>
           <Card.Content style={{ flexDirection: "row", gap: 16 }}>
             <View style={{ flex: 1, gap: 4 }}>
               <Text variant="titleMedium" style={{ fontWeight: "600" }}>
@@ -64,7 +61,7 @@ export const Sources = () => {
               />
             </View>
           </Card.Content>
-        </Card>
+        </OutlinedCard>
       ))}
     </ScrollView>
   );

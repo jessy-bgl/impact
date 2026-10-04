@@ -4,6 +4,7 @@ import { Card, Text, useTheme } from "react-native-paper";
 import { HistoryVariation } from "@carbonFootprint/domain/entities/history/FootprintsHistoryViewModel";
 import { HistoryTrendLine } from "@carbonFootprint/view/screens/history/HistoryTrendLine";
 import { formatLongDate } from "@carbonFootprint/view/screens/history/historyFormat";
+import { OutlinedCard } from "@common/components/OutlinedCard";
 import { formatTonnes } from "@common/utils/formatTonnes";
 
 type Props = {
@@ -16,7 +17,7 @@ export const HistoryVariationCard = ({ currentValue, variation }: Props) => {
   const { colors } = useTheme();
 
   return (
-    <Card mode="outlined" style={{ marginHorizontal: 16 }}>
+    <OutlinedCard style={{ marginHorizontal: 16 }}>
       <Card.Content style={{ gap: 4 }}>
         <Text variant="titleLarge">
           {`${formatTonnes(currentValue)} ${t("history.perYear")}`}
@@ -28,6 +29,6 @@ export const HistoryVariationCard = ({ currentValue, variation }: Props) => {
           {t("history.since", { date: formatLongDate(variation.fromDate) })}
         </Text>
       </Card.Content>
-    </Card>
+    </OutlinedCard>
   );
 };

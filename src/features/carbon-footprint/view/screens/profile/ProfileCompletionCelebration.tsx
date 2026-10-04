@@ -23,11 +23,6 @@ import { useFrenchAverageFootprint } from "@carbonFootprint/domain/hooks/useFren
 import { FrenchAverageComparison } from "@carbonFootprint/view/screens/profile/FrenchAverageComparison";
 import { posthog } from "@common/config/posthog";
 
-const GRADIENT_COLORS: Record<"light" | "dark", [string, string]> = {
-  light: ["#FFFFFF", "#d8F9d9"],
-  dark: ["#121212", "#1B2E1B"],
-};
-
 type Props = {
   visible: boolean;
   onDismiss: () => void;
@@ -36,7 +31,7 @@ type Props = {
 export const ProfileCompletionCelebration = ({ visible, onDismiss }: Props) => {
   const { t } = useTranslation("emissions");
 
-  const { colors, dark } = useTheme();
+  const { colors } = useTheme();
 
   const navigation = useNavigation<EmissionsNavigatorProp>();
 
@@ -79,7 +74,7 @@ export const ProfileCompletionCelebration = ({ visible, onDismiss }: Props) => {
         contentContainerStyle={styles.modalContent}
       >
         <LinearGradient
-          colors={GRADIENT_COLORS[dark ? "dark" : "light"]}
+          colors={[colors.background, colors.elevation.level5]}
           style={styles.gradient}
         >
           <SafeAreaView style={styles.safeArea}>

@@ -60,8 +60,7 @@ export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
       />
       <View ref={validateTourRef} collapsable={false}>
         <Button
-          compact
-          mode="outlined"
+          mode="contained"
           onPress={() => {
             posthog.capture("profile_section_completed", {
               category,
