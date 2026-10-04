@@ -9,6 +9,7 @@ import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
 import { SocietalServicesEmissionsDistribution } from "@carbonFootprint/view/screens/profile/public-services/EmissionsDistribution";
 import { OutlinedCard } from "@common/components/OutlinedCard";
 import { useAppStore } from "@common/store/useStore";
+import { formatTonnes } from "@common/utils/formatTonnes";
 
 export const SocietalServicesProfile = () => {
   const societalServicesFootprint = useAppStore(
@@ -63,7 +64,7 @@ export const SocietalServicesProfile = () => {
             />
             <Text variant="bodyMedium" style={{ flex: 1 }}>
               {t("publicServicesDescription", {
-                footprint: publicServices.footprint,
+                footprint: formatTonnes(publicServices.footprint),
               })}
             </Text>
           </Card.Content>
@@ -77,7 +78,7 @@ export const SocietalServicesProfile = () => {
             />
             <Text variant="bodyMedium" style={{ flex: 1 }}>
               {t("merchantDescription", {
-                footprint: merchantServices.footprint,
+                footprint: formatTonnes(merchantServices.footprint),
               })}
             </Text>
           </Card.Content>

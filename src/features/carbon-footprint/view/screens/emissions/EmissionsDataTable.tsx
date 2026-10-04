@@ -8,6 +8,7 @@ import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/pr
 import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
 import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { useAppStore } from "@common/store/useStore";
+import { formatTonnes } from "@common/utils/formatTonnes";
 import { Skeleton } from "moti/skeleton";
 
 type Props = {
@@ -77,7 +78,8 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
                 </View>
               </DataTable.Cell>
               <DataTable.Cell numeric>
-                {emissionsCategory.footprint} {t("common:footprintKg")}
+                {formatTonnes(emissionsCategory.footprint)}{" "}
+                {t("common:footprintTonnes")}
               </DataTable.Cell>
             </DataTable.Row>
           );

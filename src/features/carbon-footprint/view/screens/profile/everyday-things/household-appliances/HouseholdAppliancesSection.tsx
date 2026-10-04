@@ -18,7 +18,7 @@ export const HouseholdAppliancesSection = () => {
   return (
     <ListAccordion
       title={t("emissions:everydayThings.householdAppliances")}
-      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      footprint={annualFootprint}
       icon="microwave"
       completed={isCompleted}
     >

@@ -46,7 +46,7 @@ export const HistorySelectionCard = ({
         </Text>
 
         <Text variant="titleLarge">
-          {`${formatTonnes(value)} ${t("history.perYear")}`}
+          {`${formatTonnes(value)} ${t("common:footprintTonnesPerYear")}`}
         </Text>
 
         <HistoryTrendLine variation={variation} />
@@ -81,7 +81,7 @@ export const HistorySelectionCard = ({
                 </Text>
 
                 <Text variant="bodyMedium">
-                  {`${category.footprint} ${t("common:footprintKg")}`}
+                  {`${formatTonnes(category.footprint)} ${t("common:footprintTonnes")}`}
                 </Text>
               </View>
             ))}

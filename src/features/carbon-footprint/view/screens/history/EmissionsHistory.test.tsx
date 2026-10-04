@@ -141,7 +141,7 @@ describe("EmissionsHistory", () => {
       screen.getByText(emissions.history.singleSnapshot.title),
     ).toBeOnTheScreen();
     expect(
-      screen.getByText(`11,70 ${emissions.history.perYear}`),
+      screen.getByText(`11,70 ${common.footprintTonnesPerYear}`),
     ).toBeOnTheScreen();
     expect(screen.getByTestId(historyChartPreviewTestId)).toBeOnTheScreen();
     // Updating the profile is what writes the second snapshot, so the way out
@@ -155,7 +155,7 @@ describe("EmissionsHistory", () => {
 
       expect(screen.getByText(emissions.history.title)).toBeOnTheScreen();
       expect(
-        screen.getByText(`10,20 ${emissions.history.perYear}`),
+        screen.getByText(`10,20 ${common.footprintTonnesPerYear}`),
       ).toBeOnTheScreen();
       expect(
         screen.queryByTestId(historyChartPreviewTestId),
@@ -197,7 +197,7 @@ describe("EmissionsHistory", () => {
 
       // Transport alone: 2950 → 2750.
       expect(
-        screen.getByText(`2,75 ${emissions.history.perYear}`),
+        screen.getByText(`2,75 ${common.footprintTonnesPerYear}`),
       ).toBeOnTheScreen();
       expect(screen.getByText("▼ −0,20 t (7 %)")).toBeOnTheScreen();
     });
@@ -214,7 +214,7 @@ describe("EmissionsHistory", () => {
 
       expect(screen.getByText("14 mai 2026")).toBeOnTheScreen();
       expect(
-        screen.getByText(`2,95 ${emissions.history.perYear}`),
+        screen.getByText(`2,95 ${common.footprintTonnesPerYear}`),
       ).toBeOnTheScreen();
       expect(screen.getByText("▲ +0,20 t (7 %)")).toBeOnTheScreen();
       expect(
@@ -224,7 +224,7 @@ describe("EmissionsHistory", () => {
       // The sheet lists every category by name, so the split is looked for by
       // one of its values instead.
       expect(
-        screen.queryByText(`2950 ${common.footprintKg}`),
+        screen.queryByText(`2,95 ${common.footprintTonnes}`),
       ).not.toBeOnTheScreen();
     });
 
@@ -239,7 +239,7 @@ describe("EmissionsHistory", () => {
 
       expect(screen.getByText("14 mai 2026")).toBeOnTheScreen();
       expect(
-        screen.getByText(`10,90 ${emissions.history.perYear}`),
+        screen.getByText(`10,90 ${common.footprintTonnesPerYear}`),
       ).toBeOnTheScreen();
       // That date sat above today's footprint, so it reads as a plus.
       expect(screen.getByText("▲ +0,70 t (7 %)")).toBeOnTheScreen();
@@ -249,7 +249,9 @@ describe("EmissionsHistory", () => {
       expect(
         screen.getByText(emissions.categories.transport),
       ).toBeOnTheScreen();
-      expect(screen.getByText(`3200 ${common.footprintKg}`)).toBeOnTheScreen();
+      expect(
+        screen.getByText(`3,20 ${common.footprintTonnes}`),
+      ).toBeOnTheScreen();
     });
 
     it("replaces the current-value card while a point is selected", async () => {
@@ -260,7 +262,7 @@ describe("EmissionsHistory", () => {
       );
 
       expect(
-        screen.queryByText(`10,20 ${emissions.history.perYear}`),
+        screen.queryByText(`10,20 ${common.footprintTonnesPerYear}`),
       ).not.toBeOnTheScreen();
       expect(screen.queryByText("depuis le 14 mai 2026")).not.toBeOnTheScreen();
     });

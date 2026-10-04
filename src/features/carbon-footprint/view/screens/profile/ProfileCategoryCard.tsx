@@ -9,6 +9,7 @@ import { CompletionStatus } from "@carbonFootprint/view/components/CompletionSta
 import { PROFILE_TOUR_TARGETS } from "@carbonFootprint/domain/entities/tour/profileTour";
 import { OutlinedCard } from "@common/components/OutlinedCard";
 import { useTourTarget } from "@common/tour/useTourTarget";
+import { formatTonnes } from "@common/utils/formatTonnes";
 import { getImageAsset } from "@common/utils/imageAssets";
 import { readableTextOn } from "@common/utils/readableTextOn";
 
@@ -84,7 +85,7 @@ export const ProfileCategoryCard = ({
                   textAlign: "center",
                 }}
               >
-                {footprint}
+                {formatTonnes(footprint)}
               </Text>
               <Text
                 variant="labelSmall"
@@ -92,7 +93,7 @@ export const ProfileCategoryCard = ({
                   textAlign: "center",
                 }}
               >
-                {t("footprintKgPerYear")}
+                {t("footprintTonnesPerYear")}
               </Text>
             </View>
           )}

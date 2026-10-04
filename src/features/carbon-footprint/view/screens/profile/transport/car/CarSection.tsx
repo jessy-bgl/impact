@@ -18,7 +18,7 @@ export const CarSection = () => {
   return (
     <ListAccordion
       title={t("emissions:transport.car")}
-      subtitle={`${annualFootprint} ${t("common:footprintKgPerYear")}`}
+      footprint={annualFootprint}
       icon="car"
       completed={isCompleted}
     >
