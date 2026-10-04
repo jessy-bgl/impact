@@ -4,21 +4,28 @@ import {
   MaterialTopTabBarProps,
   createMaterialTopTabNavigator,
 } from "@react-navigation/material-top-tabs";
+import { ComponentProps, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Badge, Snackbar, useTheme } from "react-native-paper";
 
-import { ActionState } from "@carbonFootprint/domain/entities/action/Action";
+import {
+  Action,
+  ActionState,
+} from "@carbonFootprint/domain/entities/action/Action";
 import {
   ACTIONS_TOUR_SCREEN,
   ACTIONS_TOUR_STEP_IDS,
   ACTIONS_TOUR_TARGETS,
 } from "@carbonFootprint/domain/entities/tour/actionsTour";
-import { useActions } from "@carbonFootprint/domain/hooks/useActions";
+import {
+  useActions,
+  useActionsInState,
+} from "@carbonFootprint/domain/hooks/useActions";
 import { ActionsList } from "@carbonFootprint/view/screens/actions/ActionsList";
+import { posthog } from "@common/config/posthog";
 import { BottomSheetProvider } from "@common/context/BottomSheetContext";
 import { useTopTabsColors } from "@common/navigation/useTopTabsColors";
-import { useAppStore } from "@common/store/useStore";
 import { useTourStepAvailability } from "@common/tour/useTourStepAvailability";
 import { useTourTarget } from "@common/tour/useTourTarget";
 
@@ -30,17 +37,24 @@ export type ActionsTabParamList = {
 
 const Tab = createMaterialTopTabNavigator<ActionsTabParamList>();
 
+type StateChange = { actionId: string; from: ActionState; to: ActionState };
+
 /**
- * Explaining an action takes one. While the actions load, the card steps are
- * kept: dropping them then re-inserting them mid-tour would skip them.
+ * Explaining an action takes one, and explaining its savings takes known
+ * ones: the card shows none otherwise. While the actions load, the card steps
+ * are kept: dropping them then re-inserting them mid-tour would skip them.
  */
 const useCardTourStepsAvailability = (
   isLoading: boolean,
   hasAvailableAction: boolean,
+  hasFirstAvailableActionSavings: boolean,
 ) => {
   const available = isLoading || hasAvailableAction;
 
-  useTourStepAvailability(ACTIONS_TOUR_STEP_IDS.savings, available);
+  useTourStepAvailability(
+    ACTIONS_TOUR_STEP_IDS.savings,
+    isLoading || hasFirstAvailableActionSavings,
+  );
   useTourStepAvailability(ACTIONS_TOUR_STEP_IDS.category, available);
   useTourStepAvailability(ACTIONS_TOUR_STEP_IDS.buttons, available);
 };
@@ -62,11 +76,35 @@ const renderTabBar = (props: MaterialTopTabBarProps) => (
 export const Actions = () => {
   const { t } = useTranslation("actions");
 
-  const { isLoading, hasAvailableAction, updateActionState } = useActions();
+  const {
+    isLoading,
+    hasAvailableAction,
+    hasFirstAvailableActionSavings,
+    updateActionState,
+  } = useActions();
 
-  useCardTourStepsAvailability(isLoading, hasAvailableAction);
+  useCardTourStepsAvailability(
+    isLoading,
+    hasAvailableAction,
+    hasFirstAvailableActionSavings,
+  );
 
   const topTabsColors = useTopTabsColors();
+
+  const [lastChange, setLastChange] = useState<StateChange>();
+  const [changeCount, setChangeCount] = useState(0);
+
+  const changeActionState = (action: Action, state: ActionState) => {
+    setLastChange({ actionId: action.id, from: action.state, to: state });
+    setChangeCount((count) => count + 1);
+    updateActionState(action.id, state);
+  };
+
+  const undoLastChange = () => {
+    if (!lastChange) return;
+    posthog.capture("action_change_undone", { state: lastChange.to });
+    updateActionState(lastChange.actionId, lastChange.from);
+  };
 
   return (
     <BottomSheetProvider>
@@ -75,11 +113,13 @@ export const Actions = () => {
           name={ACTIONS_TOUR_SCREEN}
           options={{
             title: t("actionsList"),
-            tabBarBadge: isLoading
-              ? undefined
-              : () => <ActionsTabBadge state="notStarted" />,
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="apps" color={color} size={20} />
+              <ActionsTabIcon
+                icon="apps"
+                color={color}
+                state="notStarted"
+                showCount={!isLoading}
+              />
             ),
           }}
         >
@@ -87,7 +127,7 @@ export const Actions = () => {
             <ActionsList
               state="notStarted"
               isLoading={isLoading}
-              updateActionState={updateActionState}
+              changeActionState={changeActionState}
             />
           )}
         </Tab.Screen>
@@ -95,11 +135,13 @@ export const Actions = () => {
           name="inProgressActions"
           options={{
             title: t("actionsInProgress"),
-            tabBarBadge: isLoading
-              ? undefined
-              : () => <ActionsTabBadge state="inProgress" />,
             tabBarIcon: ({ color }) => (
-              <MaterialIcons name="sync" color={color} size={20} />
+              <ActionsTabIcon
+                icon="sync"
+                color={color}
+                state="inProgress"
+                showCount={!isLoading}
+              />
             ),
           }}
         >
@@ -107,7 +149,7 @@ export const Actions = () => {
             <ActionsList
               state="inProgress"
               isLoading={isLoading}
-              updateActionState={updateActionState}
+              changeActionState={changeActionState}
             />
           )}
         </Tab.Screen>
@@ -115,14 +157,12 @@ export const Actions = () => {
           name="skippedActions"
           options={{
             title: t("actionsSkipped"),
-            tabBarBadge: isLoading
-              ? undefined
-              : () => <ActionsTabBadge state="skipped" />,
             tabBarIcon: ({ color }) => (
-              <MaterialIcons
-                name="remove-circle-outline"
+              <ActionsTabIcon
+                icon="remove-circle-outline"
                 color={color}
-                size={20}
+                state="skipped"
+                showCount={!isLoading}
               />
             ),
           }}
@@ -131,36 +171,61 @@ export const Actions = () => {
             <ActionsList
               state="skipped"
               isLoading={isLoading}
-              updateActionState={updateActionState}
+              changeActionState={changeActionState}
             />
           )}
         </Tab.Screen>
       </Tab.Navigator>
+      <Snackbar
+        // Paper only starts its timer when the Snackbar shows: a new one per
+        // change gives each change its full duration to be undone.
+        key={changeCount}
+        visible={lastChange !== undefined}
+        onDismiss={() => setLastChange(undefined)}
+        // Paper pads it by the bottom safe area, which the tab bar under it
+        // already takes care of.
+        wrapperStyle={{ paddingBottom: 0 }}
+        action={{ label: t("undo"), onPress: undoLastChange }}
+      >
+        {lastChange && t(`stateChanged.${lastChange.to}`)}
+      </Snackbar>
     </BottomSheetProvider>
   );
 };
 
-const ActionsTabBadge = ({ state }: { state: ActionState }) => {
+/** The tab's icon, with its action count on it once there is one to show. */
+const ActionsTabIcon = ({
+  icon,
+  color,
+  state,
+  showCount,
+}: {
+  icon: ComponentProps<typeof MaterialIcons>["name"];
+  color: string;
+  state: ActionState;
+  showCount: boolean;
+}) => {
   const { colors } = useTheme();
 
-  const actionsCounter = useAppStore((store) => store.actions).filter(
-    (action) => action.state === state,
-  ).length;
+  const actionsCounter = useActionsInState(state).length;
 
   return (
-    <View
-      style={{
-        marginTop: 5,
-        marginRight: 15,
-        width: 16,
-        height: 16,
-        borderRadius: 12,
-        backgroundColor: colors.surfaceVariant,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text style={{ fontSize: 10 }}>{actionsCounter}</Text>
+    <View>
+      <MaterialIcons name={icon} color={color} size={20} />
+      <Badge
+        visible={showCount && actionsCounter > 0}
+        size={16}
+        style={{
+          position: "absolute",
+          top: -6,
+          left: 12,
+          fontSize: 11,
+          backgroundColor: colors.surfaceVariant,
+          color: colors.onSurfaceVariant,
+        }}
+      >
+        {actionsCounter}
+      </Badge>
     </View>
   );
 };

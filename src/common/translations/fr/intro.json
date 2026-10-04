@@ -56,15 +56,15 @@
       },
       "savings": {
         "title": "Ce que tu économises",
-        "body": "La part de l'empreinte de la catégorie et la quantité de CO2 évitées chaque année si tu réalises cette action."
+        "body": "Le CO2 que tu éviterais chaque année avec cette action, et la part de ton empreinte totale que cela représente."
       },
       "category": {
         "title": "Envie d'en savoir plus ?",
-        "body": "Touche l'icône de la catégorie pour découvrir le détail de l'action."
+        "body": "L'icône indique la catégorie de l'action. Touche la zone pour en découvrir le détail."
       },
       "buttons": {
         "title": "À toi de choisir",
-        "body": "Coche l'action pour la démarrer, ou écarte-la si elle ne te correspond pas. Tu pourras toujours changer d'avis."
+        "body": "Sélectionne une action pour la démarrer, ou écarte-la si elle ne te correspond pas. Tu pourras toujours changer d'avis."
       },
       "tabs": {
         "title": "Tes listes d'actions",

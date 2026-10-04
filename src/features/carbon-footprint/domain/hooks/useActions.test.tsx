@@ -4,7 +4,10 @@ import { PropsWithChildren, useContext } from "react";
 import { ActionsStubRepository } from "@carbonFootprint/data/repositories/actions.stub.repository";
 import { ActionStub } from "@carbonFootprint/domain/entities/action/Action.stub";
 import { ComputeEngineStub } from "@carbonFootprint/domain/entities/engine/ComputeEngine.stub";
-import { useActions } from "@carbonFootprint/domain/hooks/useActions";
+import {
+  useActions,
+  useActionsInState,
+} from "@carbonFootprint/domain/hooks/useActions";
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
 import { UsecasesContext } from "@common/context/UsecasesContext";
 import { defaultAppStore } from "@common/store/store";
@@ -102,5 +105,56 @@ describe("useActions", () => {
     await rerender(undefined);
 
     await waitForStoredActions(["updated"]);
+  });
+
+  describe("hasFirstAvailableActionSavings", () => {
+    const actionSaving = (id: string, savedFootprint: number) => {
+      const action = new ActionStub(id);
+      action.savedFootprint = savedFootprint;
+      return action;
+    };
+
+    const storeActions = (actions: ActionStub[]) =>
+      act(async () => {
+        zustandAppStore.setState({ actions });
+      });
+
+    it("is true when the first available action has known savings", async () => {
+      await storeActions([actionSaving("first", 120), actionSaving("next", 0)]);
+
+      const { result } = await renderActions();
+
+      expect(result.current.hasFirstAvailableActionSavings).toBe(true);
+    });
+
+    it("is false when the first available action has none", async () => {
+      const started = actionSaving("started", 120);
+      started.state = "inProgress";
+      await storeActions([started, actionSaving("first", 0)]);
+
+      const { result } = await renderActions();
+
+      expect(result.current.hasFirstAvailableActionSavings).toBe(false);
+    });
+  });
+});
+
+describe("useActionsInState", () => {
+  afterEach(async () => {
+    await act(async () => {
+      zustandAppStore.setState(defaultAppStore());
+    });
+  });
+
+  it("keeps the stored actions in that state only", async () => {
+    const started = new ActionStub("started");
+    started.state = "inProgress";
+    await act(async () => {
+      zustandAppStore.setState({ actions: [new ActionStub("new"), started] });
+    });
+
+    const { result } = await renderHook(() => useActionsInState("inProgress"));
+
+    expect(result.current.map((action) => action.id)).toEqual(["started"]);
   });
 });

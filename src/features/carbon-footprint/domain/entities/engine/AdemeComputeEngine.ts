@@ -81,7 +81,6 @@ export class AdemeComputeEngine implements ComputeEngine {
             dottedName: actionRuleName,
           };
         });
-    // TODO : filter irrelevant actions ?
     // sort actions by impact
     actionEvaluatedNodes = [...actionEvaluatedNodes].sort(
       (a, b) =>

@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import { Button, ButtonProps, Card, Icon, useTheme } from "react-native-paper";
+import { useTranslation } from "react-i18next";
+import { Button, Card, useTheme } from "react-native-paper";
 
 import { ActionState } from "@carbonFootprint/domain/entities/action/Action";
 import { posthog } from "@common/config/posthog";
@@ -10,38 +10,32 @@ type Props = {
 };
 
 export const ActionCardButtons = ({ actionState, updateState }: Props) => {
-  const { colors } = useTheme();
+  const { t } = useTranslation("actions");
 
-  const buttonStyle: ButtonProps["style"] = {
-    borderStyle: "solid",
-    borderWidth: 1,
-    height: 40,
-  };
+  const { colors } = useTheme();
 
   if (actionState === "notStarted")
     return (
       <Card.Actions>
         <Button
+          mode="text"
+          textColor={colors.onSurfaceVariant}
           onPress={() => {
             posthog.capture("action_skipped");
             updateState("skipped");
           }}
-          style={buttonStyle}
         >
-          <IconView icon="cancel" />
+          {t("buttons.skip")}
         </Button>
         <Button
+          mode="text"
+          icon="check"
           onPress={() => {
             posthog.capture("action_started");
             updateState("inProgress");
           }}
-          style={{
-            ...buttonStyle,
-            borderColor: colors.primary,
-          }}
-          buttonColor={"transparent"}
         >
-          <IconView icon="check-outline" color={colors.primary} />
+          {t("buttons.start")}
         </Button>
       </Card.Actions>
     );
@@ -50,37 +44,30 @@ export const ActionCardButtons = ({ actionState, updateState }: Props) => {
     return (
       <Card.Actions>
         <Button
+          mode="text"
+          textColor={colors.onSurfaceVariant}
           onPress={() => {
             posthog.capture("action_reset", { previous_state: "inProgress" });
             updateState("notStarted");
           }}
-          style={buttonStyle}
         >
-          <IconView icon="close" />
+          {t("buttons.remove")}
         </Button>
       </Card.Actions>
     );
 
-  if (actionState === "skipped")
-    return (
-      <Card.Actions>
-        <Button
-          onPress={() => {
-            posthog.capture("action_reset", { previous_state: "skipped" });
-            updateState("notStarted");
-          }}
-          style={buttonStyle}
-        >
-          <IconView icon="restore" />
-        </Button>
-      </Card.Actions>
-    );
-};
-
-const IconView = ({ icon, color }: { icon: string; color?: string }) => {
   return (
-    <View style={{ display: "flex", alignItems: "center" }}>
-      <Icon source={icon} size={19} color={color} />
-    </View>
+    <Card.Actions>
+      <Button
+        mode="text"
+        icon="restore"
+        onPress={() => {
+          posthog.capture("action_reset", { previous_state: "skipped" });
+          updateState("notStarted");
+        }}
+      >
+        {t("buttons.restore")}
+      </Button>
+    </Card.Actions>
   );
 };
