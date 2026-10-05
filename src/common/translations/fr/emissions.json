@@ -5,7 +5,7 @@
   "estimationPanel": {
     "progressTitle": "Progression de mon bilan",
     "progress": "{{percent}} %",
-    "notStartedTitle": "Estimation à personnaliser",
+    "notStartedTitle": "Bilan carbone",
     "notStartedBody": "Réponds à quelques questions pour l'adapter à ton mode de vie."
   },
   "part": "Proportion",
