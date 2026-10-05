@@ -1,15 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { DataTable, Icon, Text, useTheme } from "react-native-paper";
+import { DataTable, Text, useTheme } from "react-native-paper";
 
 import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
 import { isCategoryCompleted } from "@carbonFootprint/domain/entities/profile/profileCompletion";
 import { useProfileCompletion } from "@carbonFootprint/domain/hooks/useProfileCompletion";
-import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
-import { useOpenCategoryProfile } from "@carbonFootprint/view/hooks/useOpenCategoryProfile";
 import { CategoryBadge } from "@carbonFootprint/view/components/CategoryBadge";
 import { CompletionStatus } from "@carbonFootprint/view/components/CompletionStatus";
+import { useOpenCategoryProfile } from "@carbonFootprint/view/hooks/useOpenCategoryProfile";
+import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
 import { formatTonnes } from "@common/utils/formatTonnes";
 import { Skeleton } from "moti/skeleton";
 
@@ -51,7 +51,6 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
           const categoryName = t(`categories.${emissionsCategory.category}`);
           const fill = palette[emissionsCategory.styleKey];
           const tonnes = formatTonnes(emissionsCategory.footprint);
-          const footprint = `${tonnes} ${t("common:footprintTonnes")}`;
           return (
             <DataTable.Row
               key={emissionsCategory.category}
@@ -78,31 +77,23 @@ export const EmissionsDataTable = ({ footprints, isLoading }: Props) => {
                     label={`${emissionsCategory.part}%`}
                     fontSize={12}
                   />
-                  {/* Baseline, not center: the two sizes would sit off. Wraps
-                      the status under the name when the row runs short, which
-                      takes a width set by the row, not by the content. */}
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      alignItems: "baseline",
-                      columnGap: 10,
-                      flex: 1,
-                    }}
-                  >
+                  <View style={{ flex: 1, alignItems: "flex-start" }}>
                     <Text>{categoryName}</Text>
                     {!isCompleted && <CompletionStatus isCompleted={false} />}
                   </View>
                 </View>
               </DataTable.Cell>
-              <DataTable.Cell numeric>{footprint}</DataTable.Cell>
-              <View style={{ justifyContent: "center", marginLeft: 4 }}>
-                <Icon
-                  source="chevron-right"
-                  size={20}
-                  color={colors.onSurfaceVariant}
-                />
-              </View>
+              <DataTable.Cell numeric style={{ flex: 0, marginLeft: 12 }}>
+                <View style={{ alignItems: "flex-end" }}>
+                  <Text>{tonnes}</Text>
+                  <Text
+                    variant="labelSmall"
+                    style={{ color: colors.onSurfaceVariant }}
+                  >
+                    {t("common:footprintTonnesPerYear")}
+                  </Text>
+                </View>
+              </DataTable.Cell>
             </DataTable.Row>
           );
         })}
