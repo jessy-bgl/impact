@@ -8,6 +8,7 @@ import {
   FootprintCategory,
   mapFootprintCategories,
 } from "@carbonFootprint/domain/entities/footprints/Footprints";
+import { SocietalServicesFootprint } from "@carbonFootprint/domain/entities/footprints/SocietalServicesFootprint";
 import { ImageAssets } from "@common/utils/imageAssets";
 
 export type FootprintViewModels = Record<
@@ -37,19 +38,27 @@ export class FootprintCategoryViewModel {
   static distributeParts = (
     footprints: FootprintViewModels,
   ): FootprintViewModels => {
-    const categories = Object.values(footprints);
+    FootprintCategoryViewModel.distributeRoundedParts(
+      Object.values(footprints),
+    );
+    return footprints;
+  };
 
-    const totalFootprint = categories.reduce(
-      (sum, category) => sum + category.footprint,
+  /** Rounds the parts of `viewModels`, so that they sum to 100. */
+  private static distributeRoundedParts = (
+    viewModels: FootprintCategoryViewModel[],
+  ) => {
+    const totalFootprint = viewModels.reduce(
+      (sum, viewModel) => sum + viewModel.footprint,
       0,
     );
 
     // Every part is already 0: there is no 100 to distribute, and the loop
     // below would run past the categories.
-    if (totalFootprint === 0) return footprints;
+    if (totalFootprint === 0) return;
 
-    const parts = categories.map((category) =>
-      category.computePart(totalFootprint),
+    const parts = viewModels.map((viewModel) =>
+      viewModel.computePart(totalFootprint),
     );
 
     const roundedParts = parts.map(Math.floor);
@@ -67,11 +76,9 @@ export class FootprintCategoryViewModel {
       roundedParts[remainders[i].index]++;
     }
 
-    Object.keys(footprints).forEach((key, index) => {
-      footprints[key as FootprintCategory].part = roundedParts[index];
+    viewModels.forEach((viewModel, index) => {
+      viewModel.part = roundedParts[index];
     });
-
-    return footprints;
   };
 
   static forCategory(
@@ -108,19 +115,31 @@ export class FootprintCategoryViewModel {
       ),
     );
 
-  static forPublicServices(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintCategoryViewModel {
-    return new FootprintCategoryPublicServices(footprint, totalFootprint);
-  }
+  /**
+   * The two halves of the societal services, each with its rounded part of
+   * their sum.
+   */
+  static forSocietalServices = ({
+    publicServicesFootprint,
+    merchantServicesFootprint,
+  }: SocietalServicesFootprint) => {
+    const totalFootprint = publicServicesFootprint + merchantServicesFootprint;
+    const publicServices = new FootprintCategoryPublicServices(
+      publicServicesFootprint,
+      totalFootprint,
+    );
+    const merchantServices = new FootprintCategoryMerchantServices(
+      merchantServicesFootprint,
+      totalFootprint,
+    );
 
-  static forMerchantServices(
-    footprint: number,
-    totalFootprint: number,
-  ): FootprintCategoryViewModel {
-    return new FootprintCategoryMerchantServices(footprint, totalFootprint);
-  }
+    FootprintCategoryViewModel.distributeRoundedParts([
+      publicServices,
+      merchantServices,
+    ]);
+
+    return { publicServices, merchantServices, totalFootprint };
+  };
 }
 
 class FootprintCategoryTransport extends FootprintCategoryViewModel {

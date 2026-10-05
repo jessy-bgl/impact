@@ -1,4 +1,4 @@
-import { computeDonutSliceCenters } from "@carbonFootprint/view/screens/emissions/donutSliceCenters";
+import { computeDonutSliceCenters } from "@carbonFootprint/view/components/donutSliceCenters";
 
 const radius = 100;
 const innerRadius = 50;
