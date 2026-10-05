@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { LayoutRectangle, ScrollView, View } from "react-native";
 
+import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
 import { useFootprints } from "@carbonFootprint/domain/hooks/useFootprints";
+import { FootprintDonut } from "@carbonFootprint/view/components/FootprintDonut";
 import { EmissionsDataTable } from "@carbonFootprint/view/screens/emissions/EmissionsDataTable";
-import { EmissionsDistribution } from "@carbonFootprint/view/screens/emissions/EmissionsDistribution";
 import { EmissionsEstimationPanel } from "@carbonFootprint/view/screens/emissions/EmissionsEstimationPanel";
 
 const minRadius = 90;
@@ -51,9 +52,9 @@ export const EmissionsSummary = () => {
           }}
         >
           {radius !== undefined && (
-            <EmissionsDistribution
+            <FootprintDonut
               isLoading={isLoading}
-              footprints={footprints}
+              categories={categoryOrder.map((category) => footprints[category])}
               totalFootprint={annualFootprint}
               radius={radius}
             />

@@ -1,13 +1,6 @@
 export type Point = { x: number; y: number };
 
-/**
- * Middle of each donut slice, halfway through the ring, in a square of side
- * `2 * radius`.
- *
- * Slices start at 12 o'clock and run clockwise, like gifted-charts' PieChart
- * with its default `initialAngle`. A slice whose arc is shorter than
- * `minArcLength` gets no center: what is drawn there would overflow it.
- */
+/** Slice middles, clockwise from 12 o'clock; none under `minArcLength`. */
 export const computeDonutSliceCenters = (
   values: number[],
   radius: number,

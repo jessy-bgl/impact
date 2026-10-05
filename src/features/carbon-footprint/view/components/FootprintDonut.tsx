@@ -3,10 +3,9 @@ import { View } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import { Icon, Text, useTheme } from "react-native-paper";
 
-import { categoryOrder } from "@carbonFootprint/domain/entities/footprints/categoryOrder";
-import { FootprintViewModels } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { FootprintCategoryViewModel } from "@carbonFootprint/domain/entities/footprints/FootprintViewModel";
+import { computeDonutSliceCenters } from "@carbonFootprint/view/components/donutSliceCenters";
 import { useCategoryPalette } from "@carbonFootprint/view/theme/categoryPalette";
-import { computeDonutSliceCenters } from "@carbonFootprint/view/screens/emissions/donutSliceCenters";
 import { formatTonnes } from "@common/utils/formatTonnes";
 import { readableTextOn } from "@common/utils/readableTextOn";
 import { Skeleton } from "moti/skeleton";
@@ -15,14 +14,15 @@ const innerRadiusRatio = 0.6;
 
 type Props = {
   isLoading: boolean;
-  footprints: FootprintViewModels;
+  /** The slices, clockwise from 12 o'clock. */
+  categories: FootprintCategoryViewModel[];
   totalFootprint: number;
   radius: number;
 };
 
-export const EmissionsDistribution = ({
+export const FootprintDonut = ({
   isLoading,
-  footprints,
+  categories,
   totalFootprint,
   radius,
 }: Props) => {
@@ -32,17 +32,12 @@ export const EmissionsDistribution = ({
 
   const palette = useCategoryPalette();
 
-  const footprintByCategories = categoryOrder.map(
-    (category) => footprints[category],
-  );
-
   const innerRadius = radius * innerRadiusRatio;
   const iconSize = Math.max(14, Math.round((radius - innerRadius) * 0.4));
 
-  // gifted-charts only writes text on its slices, placed by its baseline three
-  // quarters of the way out. Draw the icons ourselves, mid-ring.
+  // gifted-charts cannot center icons mid-ring: draw them ourselves.
   const iconCenters = computeDonutSliceCenters(
-    footprintByCategories.map(({ footprint }) => footprint),
+    categories.map(({ footprint }) => footprint),
     radius,
     innerRadius,
     iconSize * 1.5,
@@ -84,7 +79,7 @@ export const EmissionsDistribution = ({
             innerCircleColor={colors.background}
             strokeWidth={2}
             strokeColor={colors.background}
-            data={footprintByCategories.map((viewModel) => ({
+            data={categories.map((viewModel) => ({
               value: viewModel.footprint,
               color: palette[viewModel.styleKey],
             }))}
@@ -108,12 +103,12 @@ export const EmissionsDistribution = ({
               </View>
             )}
           />
-          {footprintByCategories.map((viewModel, index) => {
+          {categories.map((viewModel, index) => {
             const center = iconCenters[index];
             if (!center) return null;
             return (
               <View
-                key={viewModel.category}
+                key={viewModel.styleKey}
                 pointerEvents="none"
                 importantForAccessibility="no-hide-descendants"
                 style={{
