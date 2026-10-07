@@ -212,20 +212,20 @@ const ActionsTabIcon = ({
   return (
     <View>
       <MaterialIcons name={icon} color={color} size={20} />
-      <Badge
-        visible={showCount && actionsCounter > 0}
-        size={16}
-        style={{
-          position: "absolute",
-          top: -6,
-          left: 12,
-          fontSize: 11,
-          backgroundColor: colors.surfaceVariant,
-          color: colors.onSurfaceVariant,
-        }}
-      >
-        {actionsCounter}
-      </Badge>
+      <View style={{ position: "absolute", top: -6, left: 12, width: 32 }}>
+        <Badge
+          visible={showCount && actionsCounter > 0}
+          size={16}
+          style={{
+            alignSelf: "flex-start",
+            fontSize: 11,
+            backgroundColor: colors.surfaceVariant,
+            color: colors.onSurfaceVariant,
+          }}
+        >
+          {actionsCounter}
+        </Badge>
+      </View>
     </View>
   );
 };
