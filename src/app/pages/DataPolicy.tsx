@@ -76,7 +76,12 @@ export const DataPolicy = () => {
 
   const handleConfirmClearLocalData = useCallback(() => {
     setIsClearDialogOpen(false);
-    clearLocalData();
+    clearLocalData().catch((error) => {
+      console.error("Clear local data sync error:", error);
+      // Never forward the raw error: it can embed the user's footprint
+      // answers. See docs/gdpr-compliance.md.
+      posthog.captureException(new Error("clear_local_data_sync_failed"));
+    });
   }, [clearLocalData]);
 
   return (

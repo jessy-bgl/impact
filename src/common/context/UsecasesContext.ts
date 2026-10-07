@@ -118,16 +118,19 @@ const initUsecases = (repositories: Repositories) => {
     footprintsHistoryRepository,
   );
 
-  return {
-    ...createUpdateActionState(actionsRepository),
-    ...createSyncEngineWithStoredActions(computeEngine, actionsRepository),
-    ...createFetchQuestions(computeEngine),
-    ...createSyncFootprintsProfileWithEngine(
+  const { syncFootprintsProfileWithEngine } =
+    createSyncFootprintsProfileWithEngine(
       computeEngine,
       profileRepository,
       footprintsRepository,
       recordFootprintsSnapshot,
-    ),
+    );
+
+  return {
+    ...createUpdateActionState(actionsRepository),
+    ...createSyncEngineWithStoredActions(computeEngine, actionsRepository),
+    ...createFetchQuestions(computeEngine),
+    syncFootprintsProfileWithEngine,
     ...createUpdateProfile(
       computeEngine,
       profileRepository,
@@ -141,7 +144,7 @@ const initUsecases = (repositories: Repositories) => {
     ...createGrantAnalyticsConsent(consentRepository, analyticsRepository),
     ...createRevokeAnalyticsConsent(consentRepository, analyticsRepository),
     ...createCaptureAnalyticsEvent(consentRepository, analyticsRepository),
-    ...createClearLocalData(appDataRepository),
+    ...createClearLocalData(appDataRepository, syncFootprintsProfileWithEngine),
   };
 };
 
