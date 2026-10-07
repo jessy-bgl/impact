@@ -2,6 +2,8 @@ import Constants from "expo-constants";
 import PostHog from "posthog-react-native";
 import { Platform } from "react-native";
 
+import { createBeforeSend } from "@common/config/posthogBeforeSend";
+
 const projectToken = Constants.expoConfig?.extra?.posthogProjectToken as
   string | undefined;
 const host =
@@ -22,13 +24,6 @@ if (__DEV__ && !isTestEnv && !isPostHogConfigured) {
       "This error stops appearing once POSTHOG_PROJECT_TOKEN is configured",
   );
 }
-
-// $exception properties can carry a raw error message, which — for the catch
-// sites in AdemeEngine.ts/useProfileSync.ts — is now always a static message
-// (see those files). This is a backstop for exception sources we don't
-// control (native crashes, unhandled promise rejections) that might still
-// carry dynamic content.
-const MAX_EXCEPTION_MESSAGE_LENGTH = 200;
 
 export const posthog = new PostHog(projectToken || "placeholder_key", {
   host,
@@ -51,31 +46,7 @@ export const posthog = new PostHog(projectToken || "placeholder_key", {
       nativeCrashes: true,
     },
   },
-  before_send: (event) => {
-    if (!event || event.event !== "$exception") return event;
-    const exceptionList = event.properties?.$exception_list;
-    if (!Array.isArray(exceptionList)) return event;
-    return {
-      ...event,
-      properties: {
-        ...event.properties,
-        $exception_list: exceptionList.map((exception) => {
-          if (typeof exception !== "object" || exception === null)
-            return exception;
-          const value = (exception as { value?: unknown }).value;
-          if (
-            typeof value !== "string" ||
-            value.length <= MAX_EXCEPTION_MESSAGE_LENGTH
-          )
-            return exception;
-          return {
-            ...exception,
-            value: `${value.slice(0, MAX_EXCEPTION_MESSAGE_LENGTH)}…`,
-          };
-        }),
-      },
-    };
-  },
+  before_send: createBeforeSend(__DEV__ ? "development" : "production"),
   flushAt: 20,
   flushInterval: 10000,
   maxBatchSize: 100,
