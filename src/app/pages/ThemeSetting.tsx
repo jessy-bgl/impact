@@ -21,16 +21,19 @@ export const ThemeSetting = () => {
     { value: "dark", label: t("menu:theme.dark") },
   ];
 
+  const changeTheme = (value: ThemeMode) => {
+    if (value === theme) return;
+    posthog.capture("theme_changed", { theme: value });
+    setTheme(value);
+  };
+
   return (
     <ScrollView>
       <Text variant="titleMedium" style={{ padding: 16 }}>
         {t("menu:theme.description")}
       </Text>
       <RadioButton.Group
-        onValueChange={(value) => {
-          posthog.capture("theme_changed", { theme: value });
-          setTheme(value as ThemeMode);
-        }}
+        onValueChange={(value) => changeTheme(value as ThemeMode)}
         value={theme}
       >
         {themeOptions.map((option) => (
@@ -42,10 +45,7 @@ export const ThemeSetting = () => {
                 ? t("menu:theme.autoDescription")
                 : undefined
             }
-            onPress={() => {
-              posthog.capture("theme_changed", { theme: option.value });
-              setTheme(option.value);
-            }}
+            onPress={() => changeTheme(option.value)}
             style={{ paddingLeft: 16 }}
             left={() => (
               <RadioButton.Android
