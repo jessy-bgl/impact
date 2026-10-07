@@ -44,7 +44,7 @@ export const useApp = () => {
         }
       } catch (e) {
         console.error(e);
-        posthog.captureException(e);
+        posthog.captureException(new Error("app_init_failed"));
       } finally {
         setIsReady(true);
       }
