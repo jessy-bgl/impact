@@ -1,4 +1,3 @@
-import "@expo/metro-runtime";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   NavigationContainer,

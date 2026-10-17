@@ -2,7 +2,7 @@
 
 # Impact
 
-**Impact** est une application Web (PWA) et Mobile basée sur les travaux de l'[ADEME](https://www.ademe.fr/) qui permet d'estimer, comprendre et diminuer son impact carbone personnel.
+**Impact** est une application mobile basée sur les travaux de l'[ADEME](https://www.ademe.fr/) qui permet d'estimer, comprendre et diminuer son impact carbone personnel.
 
 ## Fonctionnalités
 
@@ -34,7 +34,6 @@ Commande pour regénérer les fichiers android et iOS en fonction de la configur
 
 ### Run
 
-- web : `npm run web` ou `npx expo start --web`
 - android : `npm run android` ou `npx expo run:android`
 
 ### Build - internal
@@ -45,14 +44,10 @@ Commande pour regénérer les fichiers android et iOS en fonction de la configur
 ### Build - production
 
 - mobile : `eas build --platform android`
-- web : `npm run build:web`.
-
-Pour exécuter la version de production web en local, retirer la partie "/impact/" de la source du dernier script dans index.html, puis lancer `npx serve -s dist`.
 
 ### Deploy
 
 - mobile : `eas submit --platform android`
-- web : `npm run deploy:web`
 
 ### Mise à jour du modèle de calcul ADEME (`@incubateur-ademe/nosgestesclimat`)
 

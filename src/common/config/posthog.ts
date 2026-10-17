@@ -1,6 +1,5 @@
 import Constants from "expo-constants";
 import PostHog from "posthog-react-native";
-import { Platform } from "react-native";
 
 import { createBeforeSend } from "@common/config/posthogBeforeSend";
 
@@ -60,19 +59,3 @@ export const posthog = new PostHog(projectToken || "placeholder_key", {
   fetchRetryCount: 3,
   fetchRetryDelay: 3000,
 });
-
-// On web, the SDK's uncaught-exception autocapture hooks ErrorUtils, which
-// react-native-web never wires up to window.onerror. Bridge it manually so
-// synchronous errors are reported. Unhandled rejections are already covered.
-if (Platform.OS === "web" && typeof window !== "undefined") {
-  window.addEventListener("error", (event) => {
-    // Resource load failures (<img>, <script>) surface here without an error
-    if (!event.error) return;
-
-    posthog.captureException(
-      event.error,
-      {},
-      { mechanism: { type: "onuncaughtexception", handled: false } },
-    );
-  });
-}

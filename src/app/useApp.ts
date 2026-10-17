@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, useEffect, useState } from "react";
-import { Linking, Platform } from "react-native";
+import { Linking } from "react-native";
 
 import { posthog } from "@common/config/posthog";
 import { UsecasesContext } from "@common/context/UsecasesContext";
@@ -17,7 +17,7 @@ export const useApp = () => {
   useEffect(() => {
     const restoreNavigationState = async () => {
       const initialUrl = await Linking.getInitialURL();
-      if (Platform.OS !== "web" && initialUrl == null) {
+      if (initialUrl == null) {
         const savedState = await AsyncStorage.getItem(PERSISTENCE_KEY);
         const state = savedState ? JSON.parse(savedState) : undefined;
         if (state !== undefined) setInitialState(state);

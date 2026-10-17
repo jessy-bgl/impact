@@ -13,5 +13,5 @@ module.exports = defineConfig([
       globals: pluginJest.environments.globals.globals,
     },
   },
-  { ignores: ["node_modules/", "web-build/", "dist/", "assets/", "scripts/"] },
+  { ignores: ["node_modules/", "dist/", "assets/", "scripts/"] },
 ]);

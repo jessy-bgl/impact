@@ -3,7 +3,6 @@ import {
   AccessibilityInfo,
   Animated,
   Easing,
-  Platform,
   Pressable,
   StyleSheet,
   View,
@@ -151,11 +150,6 @@ export const TourOverlay = ({
   const titleRef = useRef<View>(null);
   useEffect(() => {
     if (!isTooltipShown || !titleRef.current) return;
-    // react-native-web has no sendAccessibilityEvent: move DOM focus instead.
-    if (Platform.OS === "web") {
-      titleRef.current.focus();
-      return;
-    }
     AccessibilityInfo.sendAccessibilityEvent(titleRef.current, "focus");
   }, [isTooltipShown, contentKey]);
 

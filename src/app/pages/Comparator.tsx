@@ -1,9 +1,7 @@
 import { useIsFocused, useRoute } from "@react-navigation/native";
-import { Platform } from "react-native";
 
 import { AdemeComparatorType } from "@carbonFootprint/domain/entities/comparator/AdemeComparator";
 import { ComparatorForMobile } from "@carbonFootprint/view/screens/comparator/ComparatorMobile";
-import { ComparatorForWeb } from "@carbonFootprint/view/screens/comparator/ComparatorWeb";
 
 export const Comparator = () => {
   const { params } = useRoute();
@@ -16,9 +14,5 @@ export const Comparator = () => {
 
   const type: AdemeComparatorType = (params as any).type;
 
-  return Platform.OS === "web" ? (
-    <ComparatorForWeb type={type} />
-  ) : (
-    <ComparatorForMobile type={type} />
-  );
+  return <ComparatorForMobile type={type} />;
 };

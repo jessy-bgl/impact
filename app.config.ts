@@ -5,12 +5,6 @@ import pkg from "./package.json";
 
 const pkgVersion = pkg.version;
 
-// baseUrl is the GitHub Pages subpath for the PWA. It must not reach a native
-// build: export:embed prefixes the asset destination with it, so assets land in
-// Impact.app/impact/, which collides with the Impact binary on macOS's
-// case-insensitive filesystem and fails the Xcode bundle phase with ENOTDIR.
-const isWebExport = process.env.EXPO_WEB_EXPORT === "1";
-
 const config: ExpoConfig = {
   owner: "jessy-bgl",
   githubUrl: "https://github.com/jessy-bgl/impact",
@@ -59,12 +53,7 @@ const config: ExpoConfig = {
   assetBundlePatterns: ["**/*"],
   experiments: {
     tsconfigPaths: true,
-    ...(isWebExport ? { baseUrl: "/impact" } : {}),
     reactCompiler: true,
-  },
-  web: {
-    bundler: "metro",
-    favicon: "./assets/favicon.png",
   },
   android: {
     package: "com.impactech.impact",
