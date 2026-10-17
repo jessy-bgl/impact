@@ -27,8 +27,8 @@ export const createSyncEngineWithStoredActions = (
 
   const _restoreActionStates = (actions: Action[], storedActions: Action[]) => {
     actions.forEach((action) => {
-      const storedAction = storedActions.find(
-        (storedAction) => action.id === storedAction.id,
+      const storedAction = storedActions.find((storedAction) =>
+        action.isStoredAs(storedAction),
       );
       if (storedAction) action.restoreState(storedAction);
     });

@@ -1,17 +1,18 @@
 import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
-import { EvaluatedNode } from "publicodes";
 
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
+import { legacyActionIds } from "@carbonFootprint/domain/entities/action/legacyActions";
 import { AdemeEngine } from "@carbonFootprint/domain/entities/engine/AdemeEngine";
 
 export class AdemeAction extends Action {
-  constructor(rule: NGCRuleNode & EvaluatedNode) {
+  constructor(rule: NGCRuleNode, savedFootprint: number) {
+    const dottedName = rule.dottedName as DottedName;
     super({
-      id: rule.dottedName!,
-      label: (rule.title as string | undefined) ?? "",
-      description: (rule.rawNode as any)?.description ?? "",
-      category: AdemeEngine.getCategory(rule.dottedName as DottedName),
-      savedFootprint: rule.nodeValue ? Math.round(rule.nodeValue as number) : 0,
+      id: AdemeEngine.getActionId(rule)!,
+      label: rule.title ?? "",
+      category: AdemeEngine.getActionCategory(dottedName),
+      savedFootprint: Math.round(savedFootprint),
+      legacyId: legacyActionIds[dottedName],
     });
   }
 }

@@ -22,7 +22,7 @@
   "dependencies": {
     "@expo/vector-icons": "~15.1.1",
     "@gorhom/bottom-sheet": "5.2.14",
-    "@incubateur-ademe/nosgestesclimat": "4.13.1",
+    "@incubateur-ademe/nosgestesclimat": "4.17.2",
     "@posthog/react-native-plugin": "2.12.5",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "7.20.0",

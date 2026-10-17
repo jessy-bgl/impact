@@ -1,5 +1,6 @@
 import { createContext } from "react";
 
+import { ActionContentsNgcRepository } from "@carbonFootprint/data/repositories/actionContents.ngc.repository";
 import { ActionsStoreRepository } from "@carbonFootprint/data/repositories/actions.store.repository";
 import { ActionsStubRepository } from "@carbonFootprint/data/repositories/actions.stub.repository";
 import { FootprintsStoreRepository } from "@carbonFootprint/data/repositories/footprints.store.repository";
@@ -8,11 +9,13 @@ import { IntroStoreRepository } from "@carbonFootprint/data/repositories/intro.s
 import { ProfileStoreRepository } from "@carbonFootprint/data/repositories/profile.store.repository";
 import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
 import { ComputeEngine } from "@carbonFootprint/domain/entities/engine/ComputeEngine";
+import { ActionContentsRepository } from "@carbonFootprint/domain/repositories/actionContents.repository";
 import { ActionsRepository } from "@carbonFootprint/domain/repositories/actions.repository";
 import { FootprintsRepository } from "@carbonFootprint/domain/repositories/footprints.repository";
 import { FootprintsHistoryRepository } from "@carbonFootprint/domain/repositories/footprintsHistory.repository";
 import { IntroRepository } from "@carbonFootprint/domain/repositories/intro.repository";
 import { ProfileRepository } from "@carbonFootprint/domain/repositories/profile.repository";
+import { createFetchActionContent } from "@carbonFootprint/domain/usecases/actions/fetchActionContent";
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
 import { createUpdateActionState } from "@carbonFootprint/domain/usecases/actions/updateActionState";
 import { createComputeAnnualFootprint } from "@carbonFootprint/domain/usecases/footprints/computeAnnualFootprint";
@@ -51,6 +54,7 @@ export interface Repositories {
   footprintsRepository: FootprintsRepository;
   footprintsHistoryRepository: FootprintsHistoryRepository;
   actionsRepository: ActionsRepository;
+  actionContentsRepository: ActionContentsRepository;
   introRepository: IntroRepository;
   settingsRepository: SettingsRepository;
   consentRepository: ConsentRepository;
@@ -67,6 +71,7 @@ const initRealRepositories = () => ({
     useAppStore,
   ),
   actionsRepository: new ActionsStoreRepository(useAppStore),
+  actionContentsRepository: new ActionContentsNgcRepository(),
   introRepository: new IntroStoreRepository(useAppStore),
   settingsRepository: new SettingsStoreRepository(useAppStore),
   consentRepository: new ConsentStoreRepository(useAppStore),
@@ -83,6 +88,7 @@ export const initFakeRepositories = () => ({
     useAppStore,
   ),
   actionsRepository: new ActionsStubRepository(),
+  actionContentsRepository: new ActionContentsNgcRepository(),
   introRepository: new IntroStoreRepository(useAppStore),
   settingsRepository: new SettingsStoreRepository(useAppStore),
   consentRepository: new ConsentStubRepository(),
@@ -102,6 +108,7 @@ const initUsecases = (repositories: Repositories) => {
     footprintsRepository,
     footprintsHistoryRepository,
     actionsRepository,
+    actionContentsRepository,
     introRepository,
     settingsRepository,
     consentRepository,
@@ -129,6 +136,7 @@ const initUsecases = (repositories: Repositories) => {
   return {
     ...createUpdateActionState(actionsRepository),
     ...createSyncEngineWithStoredActions(computeEngine, actionsRepository),
+    ...createFetchActionContent(actionContentsRepository),
     ...createFetchQuestions(computeEngine),
     syncFootprintsProfileWithEngine,
     ...createUpdateProfile(

@@ -248,4 +248,78 @@ describe("AdemeComputeEngine", () => {
       expect(AdemeEngine.getSituation()).toEqual(answered);
     });
   });
+
+  describe("getActions", () => {
+    const actionRules = Object.entries(
+      AdemeModel as unknown as Record<
+        string,
+        { meta?: { id?: string }; formule?: unknown } | null
+      >,
+    ).filter(
+      ([dottedName, rule]) =>
+        dottedName.startsWith("actions . ") && rule?.meta?.id !== undefined,
+    );
+    const unquantifiedIds = actionRules
+      .filter(([, rule]) => rule?.formule === 0)
+      .map(([, rule]) => rule?.meta?.id);
+
+    // The persona with the most quantified actions, so both kinds show up.
+    const sandy = profiles.find(([name]) => name === "Sandy")![1];
+
+    const getActions = () => {
+      engine.setProfile(sandy);
+      return engine.getActions();
+    };
+
+    it("identifies every action by its model id", () => {
+      const modelIds = actionRules.map(([, rule]) => rule?.meta?.id);
+
+      for (const action of getActions()) expect(modelIds).toContain(action.id);
+    });
+
+    it("lists the quantified actions first, by decreasing savings", () => {
+      const actions = getActions();
+      const quantified = actions.filter(
+        (action) => !unquantifiedIds.includes(action.id),
+      );
+
+      expect(quantified.length).toBeGreaterThan(0);
+      expect(actions.slice(0, quantified.length)).toEqual(quantified);
+      expect(quantified.map((action) => action.savedFootprint)).toEqual(
+        quantified.map((action) => action.savedFootprint).sort((a, b) => b - a),
+      );
+    });
+
+    it("keeps a quantified action only when it saves something", () => {
+      const quantified = getActions().filter(
+        (action) => !unquantifiedIds.includes(action.id),
+      );
+
+      for (const action of quantified)
+        expect(action.savedFootprint).toBeGreaterThan(0);
+    });
+
+    it("keeps the unquantified actions, with no savings", () => {
+      const unquantified = getActions().filter((action) =>
+        unquantifiedIds.includes(action.id),
+      );
+
+      expect(unquantified.length).toBeGreaterThan(0);
+      for (const action of unquantified) expect(action.savedFootprint).toBe(0);
+    });
+
+    // An action group points to the footprint root it belongs to.
+    it.each([
+      ["actions . mobilités . écoconduite", "transport"],
+      ["actions . alimentation . réduire viande", "food"],
+      ["actions . logement . isoler", "housing"],
+      ["actions . consommation . achat malin", "everydayThings"],
+      ["actions . vie quotidienne . finance durable", "societalServices"],
+    ] as [DottedName, FootprintCategory][])(
+      "files %s under %s",
+      (dottedName, category) => {
+        expect(AdemeEngine.getActionCategory(dottedName)).toBe(category);
+      },
+    );
+  });
 });

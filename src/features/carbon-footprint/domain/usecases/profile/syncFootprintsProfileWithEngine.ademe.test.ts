@@ -1,6 +1,11 @@
 import { FootprintsStubRepository } from "@carbonFootprint/data/repositories/footprints.stub.repository";
 import { ProfileStubRepository } from "@carbonFootprint/data/repositories/profile.stub.repository";
 import { AdemeComputeEngine } from "@carbonFootprint/domain/entities/engine/AdemeComputeEngine";
+import { Profile } from "@carbonFootprint/domain/entities/profile/Profile";
+import {
+  computeProfileSectionVersion,
+  profileSections,
+} from "@carbonFootprint/domain/entities/profile/profileSections";
 import { createSyncFootprintsProfileWithEngine } from "@carbonFootprint/domain/usecases/profile/syncFootprintsProfileWithEngine";
 
 // Integration test against the real ADEME model. The yes/no defaults live in the
@@ -67,5 +72,74 @@ describe("syncFootprintsProfileWithEngine with the ADEME engine", () => {
     expect(footprintsRepository.transport?.twoWheelerFootprint).toBeGreaterThan(
       0,
     );
+  });
+
+  // nosgestesclimat 4.17 split the air conditioning questions by heat pump and
+  // turned the breakfast type into a selection: a user who completed both
+  // sections before the update has to answer them again.
+  describe("after an update that replaced some question keys", () => {
+    const { energy, meals } = profileSections;
+    const { heatPumpCoolingUsage: _added, ...energyKeysKept } =
+      energy.questionKeys;
+    const legacyEnergyKeys = {
+      ...energyKeysKept,
+      airConditioningUsage: "logement . climatisation . présent",
+      airConditioningNumber: "logement . climatisation . nombre",
+    } as unknown as Record<string, keyof Profile>;
+    const legacyMealsKeys = {
+      ...meals.questionKeys,
+      breakfast: "alimentation . petit déjeuner . type",
+    } as unknown as Record<string, keyof Profile>;
+
+    beforeEach(() => {
+      for (const section of Object.values(profileSections)) {
+        profileRepository.updateProfileCompletion(
+          section.category,
+          section.subCategory,
+          true,
+        );
+        profileRepository.updateProfileCompletionVersion(
+          section.category,
+          section.subCategory,
+          computeProfileSectionVersion(section.questionKeys),
+        );
+      }
+      profileRepository.updateProfileCompletionVersion(
+        energy.category,
+        energy.subCategory,
+        computeProfileSectionVersion(legacyEnergyKeys),
+      );
+      profileRepository.updateProfileCompletionVersion(
+        meals.category,
+        meals.subCategory,
+        computeProfileSectionVersion(legacyMealsKeys),
+      );
+      profileRepository.setTestProfileKey(
+        "logement . climatisation . présent",
+        "'oui et utilisation'",
+      );
+      profileRepository.setTestProfileKey(
+        "alimentation . petit déjeuner . type",
+        "'continental'",
+      );
+    });
+
+    it("marks only the sections whose questions changed as not completed", async () => {
+      await syncFootprintsProfileWithEngine({ handleMigration: true });
+
+      const notCompleted = Object.values(profileSections)
+        .filter(
+          ({ category, subCategory }) =>
+            profileRepository.completion[category]?.[subCategory] !== true,
+        )
+        .map(({ subCategory }) => subCategory);
+      expect(notCompleted).toEqual([energy.subCategory, meals.subCategory]);
+    });
+
+    it("drops the answers to the removed questions", async () => {
+      await syncFootprintsProfileWithEngine({ handleMigration: true });
+
+      expect(profileRepository.profile).toEqual({});
+    });
   });
 });

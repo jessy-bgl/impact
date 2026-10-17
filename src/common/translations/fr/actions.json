@@ -9,6 +9,12 @@
     "skipped": "Aucune action écartée"
   },
   "showDetails": "Affiche le détail de l'action",
+  "learnMore": "En savoir plus sur Nos Gestes Climat",
+  "sections": {
+    "understand": "Je comprends l'enjeu",
+    "act": "J'agis",
+    "benefits": "J'y gagne"
+  },
   "buttons": {
     "skip": "Écarter",
     "start": "Sélectionner",

@@ -19,26 +19,24 @@ import { collectAppUsedKeys } from "./questions-utils.mjs";
 // ---------------------------------------------------------------------------
 
 /**
- * Mirror of AdemeQuestion.getSubQuestions():
+ * Mirror of AdemeQuestion.getSubQuestionSpecs():
  * For a mosaique parent key, return the resolved child keys.
  *
- * Each mosaique option is looked up as:
- *   1. `${parentKey} . ${option}`   (preferred)
- *   2. `${parentKeyWithoutLast} . ${option}`  (fallback, same logic as AdemeQuestion)
+ * Each mosaique option is a Publicodes reference, looked up from the parent's
+ * own namespace up to the root (same logic as AdemeQuestion.resolveReference).
  */
 function getMosaïqueChildKeys(parentKey, mosaïqueOptions, allRules) {
-  const removeLastPart = (key) => key.slice(0, key.lastIndexOf(" . "));
-  const children = [];
-  for (const option of mosaïqueOptions) {
-    let childKey = `${parentKey} . ${option}`;
-    if (!allRules[childKey]) {
-      childKey = `${removeLastPart(parentKey)} . ${option}`;
+  const resolve = (option) => {
+    let namespace = parentKey;
+    while (namespace) {
+      const key = `${namespace} . ${option}`;
+      if (allRules[key]) return key;
+      const separator = namespace.lastIndexOf(" . ");
+      namespace = separator === -1 ? "" : namespace.slice(0, separator);
     }
-    if (allRules[childKey]) {
-      children.push(childKey);
-    }
-  }
-  return children;
+    return allRules[option] ? option : undefined;
+  };
+  return mosaïqueOptions.map(resolve).filter(Boolean);
 }
 
 /**

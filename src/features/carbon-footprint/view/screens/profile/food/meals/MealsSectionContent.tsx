@@ -21,7 +21,7 @@ export const MealsSectionContent = () => {
       />
       <ListItemQuestion
         divider
-        question={mealsQuestions.breakfastType}
+        question={mealsQuestions.breakfast}
         control={control}
         handleUpdate={updateFoodProfile}
       />

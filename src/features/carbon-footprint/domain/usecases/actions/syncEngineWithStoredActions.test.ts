@@ -1,4 +1,6 @@
+import { ActionState } from "@carbonFootprint/domain/entities/action/Action";
 import { ActionStub } from "@carbonFootprint/domain/entities/action/Action.stub";
+import { legacyActionIds } from "@carbonFootprint/domain/entities/action/legacyActions";
 import { createSyncEngineWithStoredActions } from "@carbonFootprint/domain/usecases/actions/syncEngineWithStoredActions";
 import { initFakeRepositories } from "@common/context/UsecasesContext";
 
@@ -132,6 +134,69 @@ describe("syncEngineWithStoredActions", () => {
       );
       expect(added).toBeDefined();
       expect(added?.state).toBe("notStarted");
+    });
+  });
+
+  // nosgestesclimat 4.14.4 replaced every action: the ones with a direct
+  // equivalent keep the state the user gave them.
+  describe("actions stored before the model replaced them", () => {
+    const storeLegacyAction = (state: ActionState) => {
+      const action = repositories.computeEngine
+        .getActions()
+        .find((action) => action.legacyId !== undefined)!;
+      const legacyAction = new ActionStub(action.legacyId!);
+      legacyAction.state = state;
+      repositories.actionsRepository.updateActions([legacyAction]);
+      return action;
+    };
+
+    beforeEach(() => {
+      // A car driver: the legacy car actions have an equivalent to apply to.
+      repositories.computeEngine.setProfile({
+        "transport . voiture . km": 30000,
+      });
+    });
+
+    it.each<ActionState>(["inProgress", "skipped"])(
+      "carries a %s state over to the equivalent action",
+      (state) => {
+        const action = storeLegacyAction(state);
+
+        syncEngineWithStoredActions();
+
+        expect(
+          repositories.actionsRepository.actions.find((a) => a.id === action.id)
+            ?.state,
+        ).toBe(state);
+      },
+    );
+
+    it("drops the legacy action itself", () => {
+      const action = storeLegacyAction("inProgress");
+
+      syncEngineWithStoredActions();
+
+      expect(
+        repositories.actionsRepository.actions.find(
+          (a) => a.id === action.legacyId,
+        ),
+      ).toBeUndefined();
+    });
+
+    it("drops a legacy action without equivalent", () => {
+      const withoutEquivalent = "transport . voiture . réduire taille";
+      expect(Object.values(legacyActionIds)).not.toContain(withoutEquivalent);
+      const legacyAction = new ActionStub(withoutEquivalent);
+      legacyAction.state = "inProgress";
+      repositories.actionsRepository.updateActions([legacyAction]);
+
+      syncEngineWithStoredActions();
+
+      expect(
+        repositories.actionsRepository.actions.filter(
+          (a) => a.state === "inProgress",
+        ),
+      ).toEqual([]);
     });
   });
 });

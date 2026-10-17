@@ -72,6 +72,21 @@ class ThemedRenderer extends Renderer implements RendererInterface {
     );
   }
 
+  // The `list` style only reaches the bullets: a wrapper spaces the list like a paragraph.
+  list(
+    ordered: boolean,
+    li: ReactNode[],
+    listStyle?: ViewStyle,
+    textStyle?: TextStyle,
+    startIndex?: number,
+  ) {
+    return (
+      <View key={this.getKey()} style={{ paddingVertical: BLOCK_SPACING }}>
+        {super.list(ordered, li, listStyle, textStyle, startIndex)}
+      </View>
+    );
+  }
+
   blockquote(children: ReactNode[], styles?: ViewStyle) {
     return (
       <View key={this.getKey()} style={styles}>
@@ -111,7 +126,7 @@ const getStyles = ({ colors, fonts, roundness }: MD3Theme): MarkedStyles => {
       fontStyle: "normal",
       textDecorationLine: "underline",
     },
-    paragraph: { paddingVertical: 6 },
+    paragraph: { paddingVertical: BLOCK_SPACING },
     blockquote: {
       flexDirection: "row",
       gap: 10,
@@ -130,3 +145,5 @@ const getStyles = ({ colors, fonts, roundness }: MD3Theme): MarkedStyles => {
     h6: heading,
   };
 };
+
+const BLOCK_SPACING = 6;

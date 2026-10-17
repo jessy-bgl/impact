@@ -27,6 +27,7 @@ exports[`applyDefaultBooleanAnswers patches exactly the questions the ADEME mode
   "logement . chauffage . bois . système . foyer ouvert . présent",
   "logement . chauffage . bois . système . poêle bûches . présent",
   "logement . chauffage . bois . système . poêle granulés . présent",
+  "logement . climatisation . avec PAC air air . mode réversible",
   "logement . extérieur . barbecue charbon . présent",
   "logement . extérieur . barbecue électrique ou gaz . présent",
   "logement . extérieur . salon de jardin bois . présent",

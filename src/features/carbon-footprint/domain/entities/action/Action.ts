@@ -13,32 +13,40 @@ export type ActionCategory = FootprintCategory;
 export abstract class Action {
   id: string;
   label: string;
-  description: string;
   category: ActionCategory;
   state: ActionState;
   savedFootprint: number;
+  /** Id the action was stored under before the model renamed it in v4.14.4. */
+  legacyId?: string;
 
   constructor({
     id,
     label,
-    description,
     category,
     state = "notStarted",
     savedFootprint = 0,
+    legacyId,
   }: {
     id: string;
     label: string;
-    description: string;
     category: ActionCategory;
     state?: ActionState;
     savedFootprint?: number;
+    legacyId?: string;
   }) {
     this.id = id;
     this.label = label;
-    this.description = description;
     this.category = category;
     this.state = state;
     this.savedFootprint = savedFootprint;
+    this.legacyId = legacyId;
+  }
+
+  isStoredAs(storedAction: Action): boolean {
+    return (
+      storedAction.id === this.id ||
+      (this.legacyId !== undefined && storedAction.id === this.legacyId)
+    );
   }
 
   restoreState(action: Action): void {

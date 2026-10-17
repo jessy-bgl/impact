@@ -215,6 +215,12 @@ export const EnergySectionContent = () => {
         handleUpdate={updateHousingProfile}
       />
       <ListItemQuestion
+        divider
+        question={energyQuestions.heatPumpCoolingUsage}
+        control={control}
+        handleUpdate={updateHousingProfile}
+      />
+      <ListItemQuestion
         question={energyQuestions.photovoltaicProduction}
         control={control}
         handleUpdate={updateHousingProfile}

@@ -6,7 +6,7 @@ import { MarkdownText } from "@carbonFootprint/view/components/MarkdownText";
 
 type Props = PropsWithChildren<{
   title: string;
-  description: string;
+  description?: string;
 }>;
 
 /**
@@ -21,6 +21,6 @@ export const DescriptionSheetContent = ({
   <View style={{ gap: 6 }}>
     <Text variant="titleMedium">{title}</Text>
     {children}
-    <MarkdownText value={description} />
+    {description && <MarkdownText value={description} />}
   </View>
 );

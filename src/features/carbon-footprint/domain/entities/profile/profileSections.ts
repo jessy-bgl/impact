@@ -141,8 +141,12 @@ export const profileSections = {
     fuelOilConsumption: "logement . chauffage . fioul . consommation",
     fuelOilPreciseConsumption:
       "logement . chauffage . fioul . consommation précise",
-    airConditioningUsage: "logement . climatisation . présent",
-    airConditioningNumber: "logement . climatisation . nombre",
+    airConditioningUsage:
+      "logement . climatisation . sans PAC air air . présent",
+    airConditioningNumber:
+      "logement . climatisation . sans PAC air air . nombre",
+    heatPumpCoolingUsage:
+      "logement . climatisation . avec PAC air air . mode réversible",
     photovoltaicProduction:
       "logement . électricité . photovoltaique . production",
     photovoltaicPart:
@@ -185,7 +189,7 @@ export const profileSections = {
   meals: defineSection("food", "meals", {
     meals: "alimentation . plats",
     localProducts: "alimentation . local . consommation",
-    breakfastType: "alimentation . petit déjeuner . type",
+    breakfast: "alimentation . petit déjeuner . par jour",
     milkType: "alimentation . boisson . type de lait",
     seasonalProducts: "alimentation . de saison . consommation",
   }),

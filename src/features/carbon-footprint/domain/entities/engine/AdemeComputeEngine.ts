@@ -1,5 +1,4 @@
 import { DottedName, NGCRuleNode } from "@incubateur-ademe/nosgestesclimat";
-import { EvaluatedNode } from "publicodes";
 
 import { NGCRulesNodes } from "@carbonFootprint/data/ademe-footprint-model";
 import { Action } from "@carbonFootprint/domain/entities/action/Action";
@@ -65,49 +64,41 @@ export class AdemeComputeEngine implements ComputeEngine {
     return AdemeEngine.getCategory(questionKey);
   };
 
+  /**
+   * The applicable actions, the quantified ones first by decreasing savings.
+   * A quantified action saving nothing for the user is left out.
+   */
   public getActions = (): Action[] => {
-    // remove not applicable / completed actions
-    let actionEvaluatedNodes: (NGCRuleNode & EvaluatedNode)[] =
-      this.getActionNames()
-        .filter((actionRuleName: DottedName) =>
-          AdemeEngine.getIsApplicable(actionRuleName),
-        )
-        .map((actionRuleName: DottedName) => {
-          const rule = AdemeEngine.getRule(actionRuleName);
-          const evaluation = AdemeEngine.evaluateRule(rule);
-          return {
-            ...evaluation,
-            ...rule,
-            dottedName: actionRuleName,
-          };
-        });
-    // sort actions by impact
-    actionEvaluatedNodes = [...actionEvaluatedNodes].sort(
-      (a, b) =>
-        (AdemeEngine.getNumericValue(b) ?? 1) -
-        (AdemeEngine.getNumericValue(a) ?? 1),
-    );
+    const quantified: Action[] = [];
+    const unquantified: Action[] = [];
 
-    // filter disabled actions
-    const rules = AdemeEngine.getRules();
-    actionEvaluatedNodes = actionEvaluatedNodes.filter((action) => {
-      const flatRule = rules[action.dottedName as DottedName] as {
-        formule?: string;
-      };
-      return !AdemeEngine.getIsDisabled(
-        flatRule,
-        AdemeEngine.getNumericValue(action),
+    for (const rule of this.getActionRules()) {
+      if (!AdemeEngine.isRuleApplicable(rule)) continue;
+
+      if (AdemeEngine.isUnquantifiedAction(rule)) {
+        unquantified.push(new AdemeAction(rule, 0));
+        continue;
+      }
+
+      const action = new AdemeAction(
+        rule,
+        AdemeEngine.getNumericValue(AdemeEngine.evaluateRule(rule)) ?? 0,
       );
-    });
-    return actionEvaluatedNodes.map((action) => new AdemeAction(action));
+      if (action.savedFootprint > 0) quantified.push(action);
+    }
+
+    quantified.sort((a, b) => b.savedFootprint - a.savedFootprint);
+    return [...quantified, ...unquantified];
   };
 
-  private getActionNames = (): DottedName[] => {
-    const actionsNode = AdemeEngine.getRules().actions;
-    const formule = actionsNode.rawNode.formule as
-      { somme?: DottedName[] } | undefined;
-    return formule?.somme ?? [];
-  };
+  private getActionRules = (): NGCRuleNode[] =>
+    Object.entries(AdemeEngine.getRules())
+      .filter(
+        ([dottedName, rule]) =>
+          dottedName.startsWith("actions . ") &&
+          AdemeEngine.getActionId(rule) !== undefined,
+      )
+      .map(([, rule]) => rule);
 
   public computeTransportFootprint = () => {
     const rules = ademeCategoryRules.transport;

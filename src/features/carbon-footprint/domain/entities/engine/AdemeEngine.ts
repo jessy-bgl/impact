@@ -134,13 +134,21 @@ export abstract class AdemeEngine {
     return rule !== undefined && this.isRuleApplicable(rule) === true;
   }
 
-  public static getIsDisabled(
-    flatRule: { formule?: string },
-    nodeValue?: number | boolean,
-  ) {
-    return flatRule?.formule === null
-      ? false
-      : nodeValue === 0 || nodeValue === false || nodeValue === null;
+  /** The `meta.id` the model gives an action: stable across renames. */
+  public static getActionId(rule: NGCRuleNode): string | undefined {
+    return (rule.rawNode as { meta?: { id?: string } }).meta?.id;
+  }
+
+  /** An action is filed under the footprint root its group points to. */
+  public static getActionCategory(actionKey: DottedName): FootprintCategory {
+    const group = actionKey.split(" . ").slice(0, 2).join(" . ");
+    const root = this.getRule(group as DottedName).rawNode.valeur;
+    return this.getCategory(root as DottedName);
+  }
+
+  /** An action the model does not quantify: only an advice to follow. */
+  public static isUnquantifiedAction(rule: NGCRuleNode): boolean {
+    return rule.rawNode.formule === 0;
   }
 
   public static getNumericValue({

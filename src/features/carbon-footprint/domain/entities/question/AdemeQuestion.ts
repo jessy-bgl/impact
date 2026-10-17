@@ -194,11 +194,8 @@ export class AdemeQuestion extends Question {
     const options: string[] = rule.rawNode.mosaique?.options as string[];
     const specs: SubQuestionSpec[] = [];
     for (const option of options) {
-      let optionKey = `${ruleKey} . ${option}` as keyof Profile;
-      if (!AdemeEngine.containsKey(optionKey))
-        optionKey =
-          `${AdemeQuestion.removeLastPartOfKey(ruleKey)} . ${option}` as keyof Profile;
-      if (!AdemeEngine.containsKey(optionKey)) continue; // ignore unknown questions
+      const optionKey = AdemeQuestion.resolveReference(ruleKey, option);
+      if (!optionKey) continue; // ignore unknown questions
       const optionRule = AdemeEngine.getRule(optionKey);
       const optionParentKey = AdemeQuestion.removeLastPartOfKey(optionKey);
       if (!AdemeEngine.containsKey(optionParentKey)) continue;
@@ -275,6 +272,23 @@ export class AdemeQuestion extends Question {
     if (value === "true") return "oui";
     if (value === "false") return "non";
     return value.startsWith("'") ? value : `'${value}'`;
+  }
+
+  /** Resolves a reference the way Publicodes does: from the rule's own namespace up to the root. */
+  private static resolveReference(
+    ruleKey: keyof Profile,
+    reference: string,
+  ): keyof Profile | undefined {
+    let namespace: string = ruleKey;
+    while (namespace) {
+      const key = `${namespace} . ${reference}` as keyof Profile;
+      if (AdemeEngine.containsKey(key)) return key;
+      namespace = namespace.includes(" . ")
+        ? AdemeQuestion.removeLastPartOfKey(namespace)
+        : "";
+    }
+    const rootKey = reference as keyof Profile;
+    return AdemeEngine.containsKey(rootKey) ? rootKey : undefined;
   }
 
   private static removeLastPartOfKey(key: string): keyof Profile {

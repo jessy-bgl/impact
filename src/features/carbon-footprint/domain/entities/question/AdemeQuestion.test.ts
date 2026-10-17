@@ -16,6 +16,8 @@ const model = AdemeModel as unknown as NGCRules;
 const mealsKey = "alimentation . plats" as keyof Profile;
 const veganKey = "alimentation . plats . végétalien" as keyof Profile;
 const veganMealsKey = `${veganKey} . nombre` as keyof Profile;
+const airConditionersKey =
+  "logement . climatisation . sans PAC air air . nombre" as keyof Profile;
 const gentleMobilityKey = "transport . mobilité douce" as keyof Profile;
 const bikeKey = "transport . mobilité douce . vélo . présent" as keyof Profile;
 const carKmKey = "transport . voiture . km" as keyof Profile;
@@ -227,6 +229,20 @@ describe("AdemeQuestion", () => {
         .map((subQuestion) => subQuestion.label);
 
       expect(withoutDescription).toEqual([]);
+    });
+
+    // Options are Publicodes references: "sans PAC air air . climatiseurs
+    // mobiles . nombre" only resolves two namespaces above the mosaic rule.
+    it("resolves options declared higher up in the namespace", () => {
+      const airConditioners = getQuestion(airConditionersKey);
+
+      expect(
+        airConditioners.subQuestions?.map((subQuestion) => subQuestion.label),
+      ).toEqual(
+        (model[airConditionersKey]?.mosaique?.options as string[]).map(
+          (option) => `logement . climatisation . ${option}`,
+        ),
+      );
     });
 
     it("titles a sub-question with its parent rule title and icon", () => {

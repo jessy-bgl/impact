@@ -22,6 +22,8 @@ import { collectAppUsedKeysWithFiles } from "./questions-utils.mjs";
 // 1. Render helpers
 // ---------------------------------------------------------------------------
 
+const LEGACY_FILES = ["domain/entities/action/legacyActions.ts"];
+
 const CATEGORY_ORDER = [
   "transport",
   "alimentation",
@@ -84,6 +86,14 @@ async function checkMissingQuestions() {
   const srcDir = join(cwd, "src");
   console.log(`Scanning source files under ${srcDir}...`);
   const keyToFiles = collectAppUsedKeysWithFiles(srcDir, cwd);
+  // Rules removed from the model on purpose: kept to migrate stored data.
+  for (const [key, files] of keyToFiles) {
+    for (const file of files) {
+      if (LEGACY_FILES.some((legacyFile) => file.endsWith(legacyFile)))
+        files.delete(file);
+    }
+    if (files.size === 0) keyToFiles.delete(key);
+  }
   console.log(`Found ${keyToFiles.size} unique dottedName strings in the app`);
 
   // --- Identify missing keys ---
