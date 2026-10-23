@@ -4,16 +4,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MotiView } from "moti";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, View } from "react-native";
-import {
-  Button,
-  Icon,
-  IconButton,
-  Modal,
-  Portal,
-  Text,
-  useTheme,
-} from "react-native-paper";
+import { Modal, ScrollView, StyleSheet, View } from "react-native";
+import { Button, Icon, IconButton, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AppTabParamList } from "@app/AppNavigator";
@@ -66,96 +58,86 @@ export const ProfileCompletionCelebration = ({ visible, onDismiss }: Props) => {
   };
 
   return (
-    <Portal>
-      <Modal
-        visible={visible}
-        onDismiss={dismiss}
-        style={styles.modal}
-        contentContainerStyle={styles.modalContent}
+    // Hosting Moti animations, Paper's Modal stayed an invisible touch-blocking overlay on iOS.
+    <Modal
+      visible={visible}
+      animationType="fade"
+      onRequestClose={dismiss}
+      statusBarTranslucent
+      navigationBarTranslucent
+    >
+      <LinearGradient
+        colors={[colors.background, colors.elevation.level5]}
+        style={styles.gradient}
       >
-        <LinearGradient
-          colors={[colors.background, colors.elevation.level5]}
-          style={styles.gradient}
-        >
-          <SafeAreaView style={styles.safeArea}>
-            <IconButton
-              icon="close"
-              accessibilityLabel={t("profileCompleted.close")}
-              onPress={dismiss}
-              style={styles.closeButton}
-            />
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-              <MotiView
-                from={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: "spring", damping: 12 }}
+        <SafeAreaView style={styles.safeArea}>
+          <IconButton
+            icon="close"
+            accessibilityLabel={t("profileCompleted.close")}
+            onPress={dismiss}
+            style={styles.closeButton}
+          />
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <MotiView
+              from={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", damping: 12 }}
+            >
+              <Icon source="check-decagram" size={96} color={colors.primary} />
+            </MotiView>
+            <MotiView
+              from={{ opacity: 0, translateY: 16 }}
+              animate={{ opacity: 1, translateY: 0 }}
+              transition={{ type: "timing", duration: 400, delay: 150 }}
+              style={styles.textContainer}
+            >
+              <Text
+                variant="headlineSmall"
+                style={{ ...styles.centeredText, color: colors.onSurface }}
               >
-                <Icon
-                  source="check-decagram"
-                  size={96}
-                  color={colors.primary}
-                />
-              </MotiView>
-              <MotiView
-                from={{ opacity: 0, translateY: 16 }}
-                animate={{ opacity: 1, translateY: 0 }}
-                transition={{ type: "timing", duration: 400, delay: 150 }}
-                style={styles.textContainer}
+                {t("profileCompleted.title")}
+              </Text>
+              <FrenchAverageComparison
+                myFootprint={annualFootprint}
+                averageFootprint={frenchAverageFootprint}
+              />
+              <Text
+                variant="bodyLarge"
+                style={{
+                  ...styles.centeredText,
+                  color: colors.onSurface,
+                  marginTop: 16,
+                }}
               >
-                <Text
-                  variant="headlineSmall"
-                  style={{ ...styles.centeredText, color: colors.onSurface }}
-                >
-                  {t("profileCompleted.title")}
-                </Text>
-                <FrenchAverageComparison
-                  myFootprint={annualFootprint}
-                  averageFootprint={frenchAverageFootprint}
-                />
-                <Text
-                  variant="bodyLarge"
-                  style={{
-                    ...styles.centeredText,
-                    color: colors.onSurface,
-                    marginTop: 16,
-                  }}
-                >
-                  {t("profileCompleted.subtitle")}
-                </Text>
-                <Text
-                  variant="bodyLarge"
-                  style={{ ...styles.centeredText, color: colors.onSurface }}
-                >
-                  {t("profileCompleted.actionsEncouragement")}
-                </Text>
-              </MotiView>
-            </ScrollView>
-            <View style={styles.actionsContainer}>
-              <Button
-                mode="contained"
-                icon="chart-donut"
-                onPress={goToEmissions}
+                {t("profileCompleted.subtitle")}
+              </Text>
+              <Text
+                variant="bodyLarge"
+                style={{ ...styles.centeredText, color: colors.onSurface }}
               >
-                {t("profileCompleted.seeMyImpact")}
-              </Button>
-              <Button
-                mode="text"
-                icon="lightbulb-on-outline"
-                onPress={goToActions}
-              >
-                {t("profileCompleted.discoverActions")}
-              </Button>
-            </View>
-          </SafeAreaView>
-        </LinearGradient>
-      </Modal>
-    </Portal>
+                {t("profileCompleted.actionsEncouragement")}
+              </Text>
+            </MotiView>
+          </ScrollView>
+          <View style={styles.actionsContainer}>
+            <Button mode="contained" icon="chart-donut" onPress={goToEmissions}>
+              {t("profileCompleted.seeMyImpact")}
+            </Button>
+            <Button
+              mode="text"
+              icon="lightbulb-on-outline"
+              onPress={goToActions}
+            >
+              {t("profileCompleted.discoverActions")}
+            </Button>
+          </View>
+        </SafeAreaView>
+      </LinearGradient>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  modal: { margin: 0 },
-  modalContent: { flex: 1 },
   gradient: { flex: 1 },
   safeArea: { flex: 1 },
   closeButton: { alignSelf: "flex-end" },
