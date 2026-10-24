@@ -30,6 +30,12 @@ export class ProfileStubRepository implements ProfileRepository {
     this.profile = profile;
   }
 
+  updateProfileKeys(
+    values: Partial<Record<keyof Profile, string | number>>,
+  ): void {
+    this.profile = { ...this.profile, ...values } as Profile;
+  }
+
   updateProfileCompletion(
     category: FootprintCategory,
     subCategory: FootprintSubCategory,

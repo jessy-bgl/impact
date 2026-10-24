@@ -33,7 +33,7 @@ export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
 
   const { celebrate } = useProfileCompletionCelebration();
 
-  const { updateProfileCompletion } = useContext(UsecasesContext);
+  const { validateProfileSection } = useContext(UsecasesContext);
 
   const isCompleted = useAppStore((state) => {
     const completion = state.profile.completion[category];
@@ -66,10 +66,9 @@ export const ValidateResponsesButton = ({ category, subCategory }: Props) => {
               category,
               sub_category: subCategory,
             });
-            const { profileJustCompleted } = updateProfileCompletion({
+            const { profileJustCompleted } = validateProfileSection({
               category,
               subCategory,
-              completed: true,
             });
             resetExpandedSection();
             if (profileJustCompleted) celebrate();

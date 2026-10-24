@@ -7,6 +7,7 @@ import {
   profileSections,
 } from "@carbonFootprint/domain/entities/profile/profileSections";
 import { Question } from "@carbonFootprint/domain/entities/question/Question";
+import { QuestionStub } from "@carbonFootprint/domain/entities/question/Question.stub";
 import { createUpdateProfile } from "@carbonFootprint/domain/usecases/profile/updateProfile";
 
 const makeQuestion = (label: keyof Profile): Question =>
@@ -158,6 +159,116 @@ describe("createUpdateProfile", () => {
           "publicServices"
         ],
       ).toBeUndefined();
+    });
+  });
+
+  describe("validateProfileSection", () => {
+    const { kmPerYear, carSize, averagePassengers } =
+      profileSections.car.questionKeys;
+
+    const validateCar = () =>
+      updateProfile.validateProfileSection({
+        category: "transport",
+        subCategory: "car",
+      });
+
+    it("saves the default value of a visible unanswered question", () => {
+      computeEngine.questions = {
+        [carSize]: new QuestionStub(carSize, {
+          type: "select",
+          defaultValue: "'moyenne'",
+        }),
+      };
+
+      validateCar();
+
+      expect(profileRepository.profile).toEqual({ [carSize]: "'moyenne'" });
+      expect(computeEngine.lastProfile).toEqual(profileRepository.profile);
+    });
+
+    it("saves a numeric default value as a number", () => {
+      computeEngine.questions = {
+        [kmPerYear]: new QuestionStub(kmPerYear, { defaultValue: "12000.5" }),
+      };
+
+      validateCar();
+
+      expect(profileRepository.profile[kmPerYear]).toBe(12000.5);
+    });
+
+    it("keeps an answered question as answered", () => {
+      profileRepository.profile = { [kmPerYear]: 8000 };
+      computeEngine.questions = {
+        [kmPerYear]: new QuestionStub(kmPerYear, {
+          defaultValue: "8000",
+          isEngineDefaultValueUsed: false,
+        }),
+      };
+
+      validateCar();
+
+      expect(profileRepository.profile).toEqual({ [kmPerYear]: 8000 });
+    });
+
+    it("skips hidden questions and questions without a default value", () => {
+      computeEngine.questions = {
+        [kmPerYear]: new QuestionStub(kmPerYear, {
+          defaultValue: "12000",
+          isApplicable: false,
+        }),
+        [averagePassengers]: new QuestionStub(averagePassengers),
+      };
+
+      validateCar();
+
+      expect(profileRepository.profile).toEqual({});
+    });
+
+    it("saves the active options of a mosaic, not the mosaic itself", () => {
+      const { meals } = profileSections.meals.questionKeys;
+      const activeOption = `${meals} . végétalien . nombre` as keyof Profile;
+      const inactiveOption = `${meals} . poisson 1 . nombre` as keyof Profile;
+      computeEngine.questions = {
+        [meals]: new QuestionStub(meals, {
+          type: "multi-number",
+          defaultValue: "14",
+          subQuestions: [
+            new QuestionStub(activeOption, { defaultValue: "2" }),
+            new QuestionStub(inactiveOption, {
+              defaultValue: "1",
+              isInactive: true,
+            }),
+          ],
+        }),
+      };
+
+      updateProfile.validateProfileSection({
+        category: "food",
+        subCategory: "meals",
+      });
+
+      expect(profileRepository.profile).toEqual({ [activeOption]: 2 });
+    });
+
+    it("recomputes the footprint of the section's category", () => {
+      computeEngine.questions = {
+        [kmPerYear]: new QuestionStub(kmPerYear, { defaultValue: "12000" }),
+      };
+
+      validateCar();
+
+      expect(footprintsRepository.transport).toBe(
+        computeEngine.transportFootprint,
+      );
+    });
+
+    it("marks the section as completed with its version", () => {
+      validateCar();
+
+      expect(profileRepository.completion.transport?.car).toBe(true);
+      expect(profileRepository.completionVersions.transport?.car).toBe(
+        computeProfileSectionVersion(profileSections.car.questionKeys),
+      );
     });
   });
 

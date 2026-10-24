@@ -28,6 +28,16 @@ export class ProfileStoreRepository implements ProfileRepository {
     });
   }
 
+  updateProfileKeys(values: Partial<Record<keyof Profile, string | number>>) {
+    this.store.setState((state) => ({
+      ...state,
+      profile: {
+        ...state.profile,
+        ademe: { ...state.profile.ademe, ...values } as Profile,
+      },
+    }));
+  }
+
   updateProfileCompletion(
     category: FootprintCategory,
     subCategory: FootprintSubCategory,

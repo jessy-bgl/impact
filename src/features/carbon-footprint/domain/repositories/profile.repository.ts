@@ -12,6 +12,9 @@ export interface ProfileRepository {
     key: keyof Profile,
     value: string | number | undefined,
   ): void;
+  updateProfileKeys(
+    values: Partial<Record<keyof Profile, string | number>>,
+  ): void;
   updateProfileCompletion(
     category: FootprintCategory,
     subCategory: FootprintSubCategory,
