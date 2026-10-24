@@ -1,5 +1,7 @@
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import {
+  Icon,
   RadioButton,
   RadioButtonGroupProps,
   RadioButtonProps,
@@ -16,6 +18,7 @@ type Props = RadioButtonProps &
 
 export const SelectRadio = ({ question, value, onValueChange }: Props) => {
   const { colors } = useTheme();
+  const { t } = useTranslation("common");
 
   const color = question.isEngineDefaultValueUsed
     ? colors.onSurfaceDisabled
@@ -23,8 +26,36 @@ export const SelectRadio = ({ question, value, onValueChange }: Props) => {
 
   if (!question.options) return;
 
+  // Rules without `par défaut` stay unanswered: the model then uses an average.
+  const isUnanswered = !question.options.some(
+    (option) => option.value === value,
+  );
+
   return (
     <RadioButton.Group onValueChange={onValueChange} value={value}>
+      {isUnanswered && (
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 6,
+            paddingHorizontal: 15,
+            marginBottom: 4,
+          }}
+        >
+          <Icon
+            source="information-outline"
+            size={16}
+            color={colors.onSurfaceVariant}
+          />
+          <Text
+            variant="bodySmall"
+            style={{ flex: 1, color: colors.onSurfaceVariant }}
+          >
+            {t("unansweredAverageUsed")}
+          </Text>
+        </View>
+      )}
       {question.options.map((option) => {
         return (
           <View

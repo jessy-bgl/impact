@@ -10,6 +10,7 @@
   "lessThanA11y": "moins de {{value}}",
   "completed": "Complété",
   "toComplete": "À compléter",
+  "unansweredAverageUsed": "Non renseigné · une valeur moyenne est utilisée",
   "units": {
     "kWh": "kWh",
     "kg": "kg",
