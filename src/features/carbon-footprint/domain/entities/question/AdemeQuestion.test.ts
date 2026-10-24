@@ -206,6 +206,16 @@ describe("AdemeQuestion", () => {
       expect(passengers.note).toBe(model[passengersKey]?.note);
       expect(passengers.warning).toBe(model[passengersKey]?.avertissement);
     });
+
+    it("trims the trailing whitespace of a rule question", () => {
+      const clothesQualityKey = "divers . textile . qualité" as keyof Profile;
+      const clothesQuality = getQuestion(clothesQualityKey);
+
+      expect(clothesQuality.title).toBe(
+        model[clothesQualityKey]?.question?.trim(),
+      );
+      expect(clothesQuality.title).not.toMatch(/\s$/);
+    });
   });
 
   describe("mosaic sub-questions", () => {

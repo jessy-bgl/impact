@@ -101,7 +101,8 @@ export class AdemeQuestion extends Question {
     const type = AdemeQuestion.getType(ruleKey, rule);
     return {
       type,
-      title: rawNode.question ?? "",
+      // Some ADEME questions end with a stray "\n".
+      title: rawNode.question?.trim() ?? "",
       description: rawNode.description,
       note: rawNode.note,
       warning: rawNode.avertissement,
