@@ -3,6 +3,7 @@ import {
   NavigationContainer,
   useNavigationContainerRef,
 } from "@react-navigation/native";
+import { NavigationBar } from "expo-navigation-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import "intl-pluralrules";
@@ -18,10 +19,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AppNavigator, AppTabParamList } from "@app/AppNavigator";
 import { useAppTheme } from "@app/AppTheme";
 import { Intro } from "@app/pages/Intro";
+import { DemoSafeArea } from "@app/DemoSafeArea";
 import { PERSISTENCE_KEY, useApp } from "@app/useApp";
 import { ActionsTourProvider } from "@carbonFootprint/view/tour/ActionsTourProvider";
 import { ProfileTourProvider } from "@carbonFootprint/view/tour/ProfileTourProvider";
 import { posthog } from "@common/config/posthog";
+import { isDemoMode } from "@common/constants";
 import { useAppStore } from "@common/store/useStore";
 import { setCurrentScreen } from "@common/tour/currentScreen";
 import "@common/translations/i18n";
@@ -94,25 +97,28 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style={theme.dark ? "light" : "dark"} />
-      <PaperProvider theme={theme}>
-        <KeyboardProvider>
-          <NavigationContainer
-            ref={navigationRef}
-            theme={theme}
-            initialState={initialState}
-            onReady={handleScreenChange}
-            onStateChange={(state) => {
-              AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
-              handleScreenChange();
-            }}
-          >
-            <ProfileTourProvider>
-              <ActionsTourProvider>{content}</ActionsTourProvider>
-            </ProfileTourProvider>
-          </NavigationContainer>
-        </KeyboardProvider>
-      </PaperProvider>
+      <StatusBar style={theme.dark ? "light" : "dark"} hidden={isDemoMode} />
+      <NavigationBar hidden={isDemoMode} />
+      <DemoSafeArea>
+        <PaperProvider theme={theme}>
+          <KeyboardProvider>
+            <NavigationContainer
+              ref={navigationRef}
+              theme={theme}
+              initialState={initialState}
+              onReady={handleScreenChange}
+              onStateChange={(state) => {
+                AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+                handleScreenChange();
+              }}
+            >
+              <ProfileTourProvider>
+                <ActionsTourProvider>{content}</ActionsTourProvider>
+              </ProfileTourProvider>
+            </NavigationContainer>
+          </KeyboardProvider>
+        </PaperProvider>
+      </DemoSafeArea>
     </SafeAreaProvider>
   );
 };

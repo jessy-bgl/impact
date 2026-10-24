@@ -7,6 +7,7 @@ import {
   devHistoryOverrides,
 } from "@carbonFootprint/view/screens/history/devFakeHistory";
 import { EmissionsHistoryContent } from "@carbonFootprint/view/screens/history/EmissionsHistory";
+import { isDemoMode } from "@common/constants";
 
 /**
  * Development scaffolding: the history screen with a picker to walk it through
@@ -15,14 +16,18 @@ import { EmissionsHistoryContent } from "@carbonFootprint/view/screens/history/E
  */
 export const DevEmissionsHistory = () => {
   const storedSource = useStoredFootprintsHistory();
-  const [preview, setPreview] = useState<DevHistoryPreview>("real");
+  const [preview, setPreview] = useState<DevHistoryPreview>(
+    isDemoMode ? "fullHistory" : "real",
+  );
 
   return (
     <EmissionsHistoryContent
       source={devHistoryOverrides[preview] ?? storedSource}
       // Stays visible on the empty states: that is exactly where it is needed.
       header={
-        <DevHistoryPreviewPicker value={preview} onValueChange={setPreview} />
+        !isDemoMode && (
+          <DevHistoryPreviewPicker value={preview} onValueChange={setPreview} />
+        )
       }
     />
   );
